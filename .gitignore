@@ -1,0 +1,9 @@
+# Keep XCode build files out.
+*/build/*
+
+# Root files are big.
+*.root
+
+# Columbia and Demat exercise files.
+columbia-tut/exercises/
+demat-tut/
