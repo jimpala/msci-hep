@@ -109,6 +109,9 @@ int main(int argc, char **argv)
    Int_t arg5   = 600;     //default number of tracks per event
    Int_t netf   = 0;
    Int_t punzip = 0;
+    
+    TFile *myFile = nullptr;
+    TTree *myTree = nullptr;
 
    if (argc > 1)  nevent = atoi(argv[1]);
    if (argc > 2)  comp   = atoi(argv[2]);
@@ -130,6 +133,9 @@ int main(int argc, char **argv)
    Int_t branchStyle = 1; //new style by default
    if (split < 0) {branchStyle = 0; split = -1-split;}
 
+    /*
+     Jimmy's variable declarations right here
+     */
    TFile *hfile;
    TTree *tree;
    Event *event = 0;
@@ -263,5 +269,17 @@ int main(int argc, char **argv)
       //printf("file compression factor = %f\n",hfile.GetCompressionFactor());
    }
    hfile->Close();
+    
+    /*
+     Jimmy's test code right here
+     */
+    
+    myFile = new TFile("experiment.root");
+    myFile->ls();
+    myFile->GetObject("tree1", myTree);
+    
+    myTree->Print();
+    myTree->Draw("zv");
+    
    return 0;
 }
