@@ -31,6 +31,7 @@ def GetJetProperties(tree_name):
         if nb <= 0: continue #Breaks this pass and moves on to next.
         if not np.array(mychain.jet_pt).size: continue  # Checks if entry is empty
 
+        underflow = 1
         i = 0
 
         for jet in xrange(np.array(mychain.jet_pt).size):
@@ -48,14 +49,15 @@ def GetJetProperties(tree_name):
                 jet_properties['sv0_mass'] = mychain.jet_sv0_m[i]
                 jet_properties['sv0_ntracks_v'] = mychain.jet_sv0_ntrkv[i]
                 jet_properties['sv0_normdist'] = mychain.jet_sv0_normdist[i]
+            else: underflow += 1
 
             jets_array.append(jet_properties)
             i+=1
 
-    return jets_array
+    return jets_array, underflow
 
 
-def BandPlot(jets_array):
+def BandPlot(jets_array, underflow):
     hists = {}
 
     # Create hists for all flavour, pt band and sv0 stat combos
@@ -77,6 +79,8 @@ def BandPlot(jets_array):
             except LookupError:
                 pass
 
+    for hist in hists.values():
+        hist.Fill(-100, underflow)
 
     histcontainers = []
     for hist in hists.values():

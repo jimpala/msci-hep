@@ -26,7 +26,6 @@ def HistMaker(flavour, title, sv0_parameter):
     return hist
 
 
-
 class histContainer(object):
     flavours = ['light', 'charm', 'bottom', 'tau']
     pt_bands = ['20-40GeV', '40-80GeV', '80-140GeV', '140GeV+']
@@ -49,3 +48,8 @@ class histContainer(object):
     def GetSv0Stat(self):
         for stat in histContainer.sv0_stats:
             if stat in self.title: return stat
+
+    def Prettify(self):
+        self.hist.SetMarkerColor(flav_colours[self.GetFlavour()])
+        self.hist.SetLineColor(flav_colours[self.GetFlavour()])
+        self.hist.SetFillColorAlpha(flav_colours[self.GetFlavour()], 0.5)

@@ -1,6 +1,6 @@
 import flavtag
 import histmaker
-from histmaker import histContainer
+from histmaker import histContainer, flav_colours
 from ROOT import TFile, TCanvas, TLegend
 
 
@@ -8,9 +8,12 @@ def main():
 
     myFile = TFile('group.perf-flavtag.8324358.Akt4EMTo._000501.root')
 
-    myjets = flavtag.GetJetProperties('bTag_AntiKt4EMTopoJets')
+    myjets, underflow = flavtag.GetJetProperties('bTag_AntiKt4EMTopoJets')
 
-    myhistcontainers = flavtag.BandPlot(myjets)
+    myhistcontainers = flavtag.BandPlot(myjets, underflow)
+
+    for histcont in myhistcontainers:
+        histcont.hist.SetFillColorAlpha(flav_colours[histcont.GetFlavour()], 0.5)
 
     mycanvasses = []
     mylegends = []
@@ -27,8 +30,9 @@ def main():
             plot = sorted(plot, key=lambda x : histContainer(x).nentries, reverse=True)
             for hist in plot:
                 hist.Print()
-                hist.Draw('same')
+                hist.Draw('same e4')
                 mylegends[i].AddEntry(hist, "%s Jets" % hist.GetTitle()[0], "l")
+
             mylegends[i].Draw()
             i += 1
 
