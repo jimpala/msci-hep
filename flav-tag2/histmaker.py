@@ -5,7 +5,7 @@ sv0_stats = {'sv0_mass' : (50, 0, 4000), 'sv0_ntracks_v' : (10, 0, 10),
              'sv0_normdist' : (50, 0, 120)}
 
 # Flavour colours
-flav_colours = {'light' : ROOT.kBlue, 'charm' : ROOT.kPink,
+flav_colours = {'light' : ROOT.kBlue, 'charm' : ROOT.kOrange,
                 'bottom' : ROOT.kRed, 'tau' : ROOT.kGreen}
 
 def HistMaker(flavour, title, sv0_parameter):
@@ -25,10 +25,6 @@ def HistMaker(flavour, title, sv0_parameter):
 
     return hist
 
-
-def CanvasDraw(hist, canvas):
-    canvas.cd()
-    hist.Draw()
 
 
 class histContainer(object):
