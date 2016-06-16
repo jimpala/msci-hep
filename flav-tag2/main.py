@@ -1,4 +1,6 @@
 import flavtag
+import histmaker
+from histmaker import histContainer
 from ROOT import TFile, TCanvas
 
 
@@ -8,9 +10,27 @@ def main():
 
     myjets = flavtag.GetJetProperties('bTag_AntiKt4EMTopoJets')
 
-    myhists = flavtag.BandPlot(myjets)
+    myhistcontainers = flavtag.BandPlot(myjets)
 
-    myhists['charm 40-80GeV sv0_mass'].Draw()
+    mycanvasses = []
+    for i in xrange(12):
+        mycanvasses.append(TCanvas('c%s' % i, 'Canvas %s' % i, 1))
+
+    i = 0
+    for band in histContainer.pt_bands:
+        for stat in histContainer.sv0_stats:
+            plot1 = [x.hist for x in myhistcontainers if x.GetPtBand()
+                     == '%s' % band and x.GetSv0Stat() == '%s' % stat]
+            mycanvasses[i].cd()
+            plot1 = sorted(plot1, key=lambda x : histContainer(x).nentries, reverse=True)
+            for hist in plot1:
+                hist.Print()
+                hist.Draw('same')
+            i += 1
+
+
+
+
 
     raw_input("Press Enter to close program.")
 

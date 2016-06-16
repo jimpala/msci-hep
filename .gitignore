@@ -10,3 +10,4 @@ demat-tut/
 
 # Keep PyCharm away.
 .idea
+*.pyc

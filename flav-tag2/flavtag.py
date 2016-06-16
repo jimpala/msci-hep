@@ -1,6 +1,7 @@
 from ROOT import TFile, gDirectory
 import numpy as np
 import histmaker
+from histmaker import histContainer
 
 #mychain = gDirectory.Get('bTag_AntiKt4EMTopoJets')
 
@@ -12,7 +13,7 @@ truthflav_lookup = {0 : 'light', 4 : 'charm',
 
 # Root file has pt measurements in MeV
 pt_bands = {20000 : '20-40GeV', 40000 : '40-80GeV', 80000 : '80-140GeV',
-            140000 : '140Gev+'}
+            140000 : '140GeV+'}
 
 
 
@@ -73,9 +74,13 @@ def BandPlot(jets_array):
             try_name = "%s %s %s" % (jet['flav'], jet['pt_band'], key)
             try:
                 hists[try_name].Fill(jet[key])
-            except:
+            except LookupError:
                 pass
 
 
+    histcontainers = []
+    for hist in hists.values():
+        histcontainers.append(histContainer(hist))
 
-    return hists
+
+    return histcontainers
