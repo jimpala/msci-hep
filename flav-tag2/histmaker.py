@@ -21,7 +21,7 @@ def HistMaker(flavour, title, sv0_parameter):
     hist.GetYaxis().SetTitle('n')
     hist.SetMarkerColor(flav_colours[flavour])
     hist.SetLineColor(flav_colours[flavour])
-    hist.SetFillColorAlpha(flav_colours[flavour], 0.5)
+    # hist.SetFillColorAlpha(flav_colours[flavour], 0.5)
 
     return hist
 

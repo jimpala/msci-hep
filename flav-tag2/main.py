@@ -30,7 +30,8 @@ def main():
             plot = sorted(plot, key=lambda x : histContainer(x).nentries, reverse=True)
             for hist in plot:
                 hist.Print()
-                hist.Draw('same e4')
+                hist.Rebin(2)
+                hist.Draw('same hist')
                 mylegends[i].AddEntry(hist, "%s Jets" % hist.GetTitle()[0], "l")
 
             mylegends[i].Draw()
