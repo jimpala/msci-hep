@@ -3,6 +3,7 @@ import histmaker
 from histmaker import histContainer, flav_colours
 from ROOT import TFile, TCanvas, TLegend, TTree, TChain
 import os
+import sys
 import fnmatch
 
 
@@ -83,8 +84,8 @@ def main():
 
 
 
-
-    raw_input("Press Enter to close program.")
+    #### Use when wanting to view graphs.
+    # raw_input("Press Enter to close program.")
 
 if __name__ == "__main__":
     main()
