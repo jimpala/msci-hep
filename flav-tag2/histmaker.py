@@ -14,14 +14,15 @@ def HistMaker(flavour, title, sv0_parameter):
     assert type(sv0_parameter) == str
 
     # Create hist.
-    hist = ROOT.TH1D(title, title, *sv0_stats[sv0_parameter]) #  * unpacks the tuple
+    hist = ROOT.TH1D(title, title, *sv0_stats[sv0_parameter]) # the * unpacks the tuple
+
+
 
     # Format hist.
     hist.GetXaxis().SetTitle(title)
     hist.GetYaxis().SetTitle('n')
     hist.SetMarkerColor(flav_colours[flavour])
     hist.SetLineColor(flav_colours[flavour])
-    # hist.SetFillColorAlpha(flav_colours[flavour], 0.5)
 
     return hist
 
@@ -52,4 +53,4 @@ class histContainer(object):
     def Prettify(self):
         self.hist.SetMarkerColor(flav_colours[self.GetFlavour()])
         self.hist.SetLineColor(flav_colours[self.GetFlavour()])
-        self.hist.SetFillColorAlpha(flav_colours[self.GetFlavour()], 0.5)
+        #self.hist.SetFillColorAlpha(flav_colours[self.GetFlavour()], 0.5)

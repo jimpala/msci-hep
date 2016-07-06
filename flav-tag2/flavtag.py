@@ -9,7 +9,7 @@ from histmaker import histContainer
 
 # Truth flav lookup dict
 truthflav_lookup = {0 : 'light', 4 : 'charm',
-                    5 : 'bottom', 15: 'tau'}
+                    5 : 'bottom'}
 
 # Root file has pt measurements in MeV
 pt_bands = {20000 : '20-40GeV', 40000 : '40-80GeV', 80000 : '80-140GeV',
@@ -37,8 +37,14 @@ def GetJetProperties(tree_name):
         for jet in xrange(np.array(mychain.jet_pt).size):
             jet_properties = dict()
 
-            # Extract properties for jet
-            jet_properties['flav'] = truthflav_lookup[mychain.jet_truthflav[i]]
+            # Extract properties for jet. Ignore taus
+            try:
+                jet_properties['flav'] = truthflav_lookup[mychain.jet_truthflav[i]]
+            except LookupError:
+                underflow += 1
+                continue
+
+
             jet_properties['pt'] = mychain.jet_pt[i]
             for key in sorted(pt_bands.keys(), key=int):
                 if jet_properties['pt'] >= key:
