@@ -1,7 +1,9 @@
 import flavtag
 import histmaker
 from histmaker import histContainer, flav_colours
-from ROOT import TFile, TCanvas, TLegend
+from ROOT import TFile, TCanvas, TLegend, TTree, TChain
+import os
+import fnmatch
 
 
 def main():
@@ -9,9 +11,11 @@ def main():
     # Import TFile/TChain object via ROOT for analysis.
     # NOTE: Even though the IDE produces a warning that this variable
     # is never used, it is nonetheless required.
-    myFile = TFile('group.perf-flavtag.8324358.Akt4EMTo._000501.root')
 
-    myjets, underflow = flavtag.GetJetProperties('bTag_AntiKt4EMTopoJets')
+    root_files_in_directory = [f for f in os.listdir('.') if os.path.isfile(f) and
+                               fnmatch.fnmatch(f, '*.root')]
+
+    myjets, underflow = flavtag.GetJetProperties(root_files_in_directory)
 
 
     myhistcontainers = flavtag.BandPlot(myjets, underflow)
@@ -47,7 +51,6 @@ def main():
             for hist in plot:
                 maxbin = hist.GetMaximumBin()
                 maxfreq = hist.GetBinContent(maxbin)
-                print maxfreq
                 if maxfreq > freqlim:
                     freqlim = maxfreq
 
@@ -55,7 +58,6 @@ def main():
 
 
                 # Draw hist.
-                hist.Print()
                 hist.Draw('same hist')
                 mylegends[i].AddEntry(hist, "%s Jets" % hist.GetTitle()[0], "l")
 
@@ -65,9 +67,18 @@ def main():
                 hist.SetTitle(title)
                 hist.SetXTitle(stat)
 
+            # Draw legend on to canvas, output to pdf and increase counter
+            multipage_token = ""
+            if i==0:
+                multipage_token = "("
+            elif i==11:
+                multipage_token = ")"
 
             mylegends[i].Draw()
+            mycanvasses[i].Print('plots.pdf%s' % multipage_token, 'Title:%s' % title)
+
             i += 1
+
 
 
 

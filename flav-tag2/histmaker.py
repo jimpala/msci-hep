@@ -53,4 +53,3 @@ class histContainer(object):
     def Prettify(self):
         self.hist.SetMarkerColor(flav_colours[self.GetFlavour()])
         self.hist.SetLineColor(flav_colours[self.GetFlavour()])
-        #self.hist.SetFillColorAlpha(flav_colours[self.GetFlavour()], 0.5)

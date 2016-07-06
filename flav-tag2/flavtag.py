@@ -15,16 +15,23 @@ pt_bands = {20000 : '20-40GeV', 40000 : '40-80GeV', 80000 : '80-140GeV',
 
 
 
-def GetJetProperties():
-    """"Creates an array of jet property dicts for all jets in a given tree of events."""
+def GetJetProperties(root_filenames):
+    """"Creates an array of jet property dicts for all jets in a given list of .root files."""
 
     mychain = TChain()
-    mychain.Add("*.root")
-    entries = mychain.GetEntriesFast()
+
+    for filename in root_filenames:
+        current_file = TFile(filename)
+        current_file.ls()
+        tree_name = current_file.GetListOfKeys().At(0).GetName()
+
+
+        mychain.AddFile(current_file.GetName(), 100000, tree_name)
+
+    entries = mychain.GetEntriesFast() # no. of entries as long
 
     jets_array = []
     for jentry in xrange(entries):
-
         nb= mychain.GetEntry(jentry)
         if nb <= 0: continue #Breaks this pass and moves on to next.
         if not np.array(mychain.jet_pt).size: continue  # Checks if entry is empty
