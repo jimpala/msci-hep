@@ -1,11 +1,8 @@
-from ROOT import TFile, gDirectory
+from ROOT import TFile, TChain , gDirectory
 import numpy as np
 import histmaker
 from histmaker import histContainer
 
-#mychain = gDirectory.Get('bTag_AntiKt4EMTopoJets')
-
-# Definitions to aid output
 
 # Truth flav lookup dict
 truthflav_lookup = {0 : 'light', 4 : 'charm',
@@ -18,10 +15,11 @@ pt_bands = {20000 : '20-40GeV', 40000 : '40-80GeV', 80000 : '80-140GeV',
 
 
 
-def GetJetProperties(tree_name):
-    assert type(tree_name) == str
+def GetJetProperties():
+    """"Creates an array of jet property dicts for all jets in a given tree of events."""
 
-    mychain = gDirectory.Get('bTag_AntiKt4EMTopoJets')
+    mychain = TChain()
+    mychain.Add("*.root")
     entries = mychain.GetEntriesFast()
 
     jets_array = []
@@ -37,7 +35,7 @@ def GetJetProperties(tree_name):
         for jet in xrange(np.array(mychain.jet_pt).size):
             jet_properties = dict()
 
-            # Extract properties for jet. Ignore taus
+            # Extract properties for jet. Ignore tau jets (except clause).
             try:
                 jet_properties['flav'] = truthflav_lookup[mychain.jet_truthflav[i]]
             except LookupError:
@@ -64,17 +62,19 @@ def GetJetProperties(tree_name):
 
 
 def BandPlot(jets_array, underflow):
+    """pt-bins an array of jets property dicts and fills them into hists."""
+    # Initialize hists dict.
     hists = {}
 
-    # Create hists for all flavour, pt band and sv0 stat combos
+    # Initialize hists for all flavour, pt band and sv0 stat combos
+    # key:values are title:hists
     for flavour in truthflav_lookup.values():
         for band in pt_bands.values():
             for stat in histmaker.sv0_stats.keys():
                 name = "%s %s %s" % (flavour, band, stat)
                 hists[name] = histmaker.HistMaker(flavour, name, stat)
 
-    print hists.keys()
-
+    # Iterate through the jets
     for jet in jets_array:
         if not jet['sv0_exists']: continue
 
@@ -91,6 +91,5 @@ def BandPlot(jets_array, underflow):
     histcontainers = []
     for hist in hists.values():
         histcontainers.append(histContainer(hist))
-
 
     return histcontainers
