@@ -30,16 +30,41 @@
 #include <TH2.h>
 #include <TStyle.h>
 
+// INITIALISATIONS //
+
+// We'll use a TNtuple instead of a TTree.
+// TNtuples are a bit easier to set up as they
+// only store doubles.
+TNtuple *outputtree = nullptr;
+TFile *outputfile = nullptr;
+
+// This is for getting the tree name.
+// It isn't actually needed as fReader
+// does all the work.
 TTree *mytree = nullptr;
 TString treename;
 bool first_pass;
 
+TString dir_name;
+
+// Tree params of interest
+double pt;
+double truthflav;
+double sv0_sig3d;
+double sv0_m;
+double sv0_ntrkv;
+double sv0_normdist;
+
+
 void flattener::Begin(TTree * /*tree*/)
 {
-   
-
    TString option = GetOption();
+
    first_pass = true;
+
+   outputfile = new TFile("jimmysfile.root", "RECREATE");
+   outputtree = new TNtuple("outputtree","Jet Level Tree",
+   "jet_pt:jet_truthflav:jet_sv0_sig3d:jet_sv0_m:jet_sv0_ntrkv:jet_sv0_normdist");
 
 }
 
@@ -54,18 +79,34 @@ void flattener::SlaveBegin(TTree * /*tree*/)
 Bool_t flattener::Process(Long64_t entry)
 {
    // Remember to unpack TTreeReaderValue objects with a preceding *.
-   // You can get the tree name via fReader.GetTree()->
+   // TTreeReaderValueArray doesn't need this - just index.
 
    fReader.SetEntry(entry);
 
    if (first_pass) {
       mytree = fReader.GetTree();
       treename = mytree->GetName();
+
+      dir_name = gDirectory->GetName();
+
       first_pass = false;
    }
 
-   cout << *PVx << endl;
+   int i = 0;
+   for (auto thisjet : jet_truthflav) {
 
+   pt = jet_pt[i];
+   truthflav = jet_truthflav[i];
+   sv0_sig3d = jet_sv0_sig3d[i];
+   sv0_m = jet_sv0_m[i];
+   sv0_ntrkv = jet_sv0_ntrkv[i];
+   sv0_normdist = jet_sv0_normdist[i];
+
+   outputtree->Fill(pt,truthflav,sv0_sig3d,
+   sv0_m,sv0_ntrkv,sv0_normdist);
+
+   i++;
+   }
 
    return kTRUE;
 }
@@ -81,5 +122,6 @@ void flattener::Terminate()
    
 
    cout << treename << endl;
+   cout << dir_name << endl;
 
 }
