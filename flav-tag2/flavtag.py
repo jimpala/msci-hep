@@ -27,15 +27,30 @@ def GetJetProperties(root_filenames):
 
         mychain.AddFile(current_file.GetName(), 100000, tree_name)
 
+    print "Read-in complete."
+
+    #Turn all branches off
+    mychain.SetBranchStatus("*", 0)
+
+    #Turn on required branches
+    mychain.SetBranchStatus("jet_pt", 1)
+    mychain.SetBranchStatus("jet_truthflav", 1)
+    mychain.SetBranchStatus("jet_sv0_ntrkv", 1)
+    mychain.SetBranchStatus("jet_sv0_m", 1)
+    mychain.SetBranchStatus("jet_sv0_normdist", 1)
+    mychain.SetBranchStatus("jet_sv0_sig3d", 1)
+
     entries = mychain.GetEntriesFast() # no. of entries as long
+    print entries
 
     jets_array = []
+    underflow = 1
     for jentry in xrange(entries):
         nb= mychain.GetEntry(jentry)
         if nb <= 0: continue #Breaks this pass and moves on to next.
         if not np.array(mychain.jet_pt).size: continue  # Checks if entry is empty
 
-        underflow = 1
+
         i = 0
 
         for jet in xrange(np.array(mychain.jet_pt).size):
@@ -45,7 +60,6 @@ def GetJetProperties(root_filenames):
             try:
                 jet_properties['flav'] = truthflav_lookup[mychain.jet_truthflav[i]]
             except LookupError:
-                underflow += 1
                 continue
 
 
@@ -64,6 +78,7 @@ def GetJetProperties(root_filenames):
             jets_array.append(jet_properties)
             i+=1
 
+    print "Jet property collection completed."
     return jets_array, underflow
 
 

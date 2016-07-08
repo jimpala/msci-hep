@@ -1,11 +1,12 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Mon Jun 13 12:52:31 2016 by ROOT version 6.06/04
-// from TChain bTag_AntiKt4EMTopoJets/
+// Fri Jul  8 13:36:17 2016 by ROOT version 6.06/04
+// from TTree flattener/bTagAntiKt4EMTopoJets
+// found on file: group.perf-flavtag.8324358.Akt4EMTo._000501.root
 //////////////////////////////////////////////////////////
 
-#ifndef flavtag_h
-#define flavtag_h
+#ifndef flattener_h
+#define flattener_h
 
 #include <TROOT.h>
 #include <TChain.h>
@@ -20,7 +21,7 @@
 
 
 
-class flavtag : public TSelector {
+class flattener : public TSelector {
 public :
    TTreeReader     fReader;  //!the tree reader
    TTree          *fChain = 0;   //!pointer to the analyzed TTree or TChain
@@ -267,8 +268,8 @@ public :
    TTreeReaderArray<vector<double>> jet_trkjet_mv2c20 = {fReader, "jet_trkjet_mv2c20"};
 
 
-   flavtag(TTree * /*tree*/ =0) { }
-   virtual ~flavtag() { }
+   flattener(TTree * /*tree*/ =0) { }
+   virtual ~flattener() { }
    virtual Int_t   Version() const { return 2; }
    virtual void    Begin(TTree *tree);
    virtual void    SlaveBegin(TTree *tree);
@@ -283,14 +284,14 @@ public :
    virtual void    SlaveTerminate();
    virtual void    Terminate();
 
-   ClassDef(flavtag,0);
+   ClassDef(flattener,0);
 
 };
 
 #endif
 
-#ifdef flavtag_cxx
-void flavtag::Init(TTree *tree)
+#ifdef flattener_cxx
+void flattener::Init(TTree *tree)
 {
    // The Init() function is called when the selector needs to initialize
    // a new tree or chain. Typically here the reader is initialized.
@@ -302,19 +303,16 @@ void flavtag::Init(TTree *tree)
    fReader.SetTree(tree);
 }
 
-Bool_t flavtag::Notify()
+Bool_t flattener::Notify()
 {
    // The Notify() function is called when a new file is opened. This
    // can be either for a new TTree in a TChain or when when a new TTree
    // is started when using PROOF. It is normally not necessary to make changes
    // to the generated code, but the routine can be extended by the
    // user if needed. The return value is currently not used.
-   Init(fChain);
-
-   fChain.Print();
 
    return kTRUE;
 }
 
 
-#endif // #ifdef flavtag_cxx
+#endif // #ifdef flattener_cxx

@@ -17,7 +17,8 @@ def main():
     "BTAGNTUP_V47_full_Akt4EMTo/"
 
 
-    root_files_in_directory = [f for f in os.listdir(".") if fnmatch.fnmatch(f, "*.root")]
+    root_files_in_directory = [tim_directory + f for f in os.listdir(tim_directory)
+                               if fnmatch.fnmatch(f, "*.root")]
     print root_files_in_directory
     myjets, underflow = flavtag.GetJetProperties(root_files_in_directory)
 
@@ -88,7 +89,7 @@ def main():
 
 
     #### Use below when wanting to view graphs.
-    raw_input("Press Enter to close program.")
+    #raw_input("Press Enter to close program.")
 
 if __name__ == "__main__":
     main()
