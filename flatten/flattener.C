@@ -32,13 +32,14 @@
 
 TTree *mytree = nullptr;
 TString treename;
+bool first_pass;
 
 void flattener::Begin(TTree * /*tree*/)
 {
    
 
    TString option = GetOption();
-
+   first_pass = true;
 
 }
 
@@ -57,8 +58,11 @@ Bool_t flattener::Process(Long64_t entry)
 
    fReader.SetEntry(entry);
 
-   mytree = fReader.GetTree();
-   treename = mytree->GetName();
+   if (first_pass) {
+      mytree = fReader.GetTree();
+      treename = mytree->GetName();
+      first_pass = false;
+   }
 
    cout << *PVx << endl;
 
