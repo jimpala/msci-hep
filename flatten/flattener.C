@@ -1,5 +1,6 @@
 #define flattener_cxx
 #include <iostream>
+#include <string>
 // The class definition in flattener.h has been generated automatically
 // by the ROOT utility TTree::MakeSelector(). This class is derived
 // from the ROOT class TSelector. For more information on the TSelector
@@ -25,10 +26,12 @@
 // root> T->Process("flattener.C+")
 //
 
-
 #include "flattener.h"
 #include <TH2.h>
 #include <TStyle.h>
+
+
+
 
 // INITIALISATIONS //
 
@@ -45,7 +48,8 @@ TTree *mytree = nullptr;
 TString treename;
 bool first_pass;
 
-TString dir_name;
+std::string dir_name;
+std::string prefix;
 
 // Tree params of interest
 double pt;
@@ -56,13 +60,25 @@ double sv0_ntrkv;
 double sv0_normdist;
 
 
+
 void flattener::Begin(TTree * /*tree*/)
 {
    TString option = GetOption();
 
    first_pass = true;
 
-   outputfile = new TFile("jimmysfile.root", "RECREATE");
+   // gDirectory is the working root file.
+   // 
+   // Get its name as a string for renaming
+   // file to be created.
+   dir_name = gDirectory->GetName();
+
+   // Cut off .root suffix.
+   prefix = dir_name.substr(0, dir_name.size() - 5);
+
+
+   outputfile = new TFile((TString) prefix + "_proc.root", "RECREATE");
+
    outputtree = new TNtuple("outputtree","Jet Level Tree",
    "jet_pt:jet_truthflav:jet_sv0_sig3d:jet_sv0_m:jet_sv0_ntrkv:jet_sv0_normdist");
 
@@ -87,7 +103,7 @@ Bool_t flattener::Process(Long64_t entry)
       mytree = fReader.GetTree();
       treename = mytree->GetName();
 
-      dir_name = gDirectory->GetName();
+      
 
       first_pass = false;
    }
@@ -119,9 +135,10 @@ void flattener::SlaveTerminate()
 
 void flattener::Terminate()
 {
-   
 
-   cout << treename << endl;
-   cout << dir_name << endl;
+   outputfile->Write();
+   outputfile->Close();
 
 }
+
+
