@@ -57,8 +57,6 @@ void test::Loop()
 		nb = fChain->GetEntry(jentry);
      	nbytes += nb;
 
-     	cout << (*jet_pt)[0] <<endl;
-
 		if (first_pass) {
     	treename = fChain->GetName();
     	first_pass = false;
@@ -90,6 +88,12 @@ void test::Loop()
 
     outputtree->Print();
 
-    outputfile->Write();
-    outputfile->Close();
+    // Write to new root file.
+    // outputfile->Write();
+    //outputfile->Close();
+
+    // Self-destruct this instance.
+    // delete processtree;
+    // delete this;
+
 }

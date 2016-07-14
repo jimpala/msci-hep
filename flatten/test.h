@@ -568,10 +568,9 @@ test::test(TTree *tree) : fChain(0)
          f = new TFile("group.perf-flavtag.8324358.Akt4EMTo._002487.root");
       }
       f->GetObject("bTag_AntiKt4EMTopoJets",tree);
+   }
 
    tree->SetName("processtree");
-
-   }
    Init(tree);
 }
 
