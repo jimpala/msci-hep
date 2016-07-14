@@ -91,12 +91,7 @@ void test::Loop()
 
     outputtree->Print();
 
-    // Write to new root file.
-    // outputfile->Write();
-    //outputfile->Close();
-
-    // Self-destruct this instance.
-    // delete processtree;
-    // delete this;
+    // Close the output file.
+    outputfile->Close();
 
 }
