@@ -26,7 +26,7 @@ void test::Loop()
 	prefix = dir_name.substr(0, dir_name.size() - 5);
 
 	// Get rid of processtree.
-	gDirectory->Delete("processtree");
+	// gDirectory->Delete("processtree");
 
 	//Set new output file.
 	outputfile = new TFile((TString) prefix + "_proc.root", "RECREATE");
@@ -91,12 +91,11 @@ void test::Loop()
 
     outputtree->Print();
 
-    // Write to new root file.
-    // outputfile->Write();
-    //outputfile->Close();
+    // Write outputtree in memory to outputfile as key.
+    outputfile->Write();
 
-    // Self-destruct this instance.
-    // delete processtree;
-    // delete this;
+    // Delete all objects left in memory.
+    gDirectory->GetList()->Delete();
+
 
 }

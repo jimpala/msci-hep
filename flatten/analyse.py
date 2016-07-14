@@ -37,17 +37,30 @@ def MultipageToken(i):
 
 def Plot(root_filenames):
     """"Creates an array of jet property dicts for all jets in a given list of .root files."""
+
+
+    gSystem.Load("test_C.so")
+
     underflow = 0
     mychain = TChain()
 
     for filename in root_filenames:
         current_file = TFile(filename)
-        tree_name = current_file.GetListOfKeys().At(0).GetName()
+        current_tree = current_file.GetListOfKeys().At(0)
 
-        mychain.AddFile(current_file.GetName(), 100000, tree_name)
+        root_processor = test(current_tree)
+        root_processor.Loop()
+
+        processed_filename = filename[:-5] + "_proc.root"
+        print processed_filename
+        current_file = TFile(processed_filename)
+        processed_tree = current_file.GetListOfKeys().At(0)
+
+        mychain.Add(processed_tree)
 
     print "Read-in complete."
 
+    write_file = TFile("Output.root", "WRITE")
 
     print mychain.GetEntries()
 
@@ -78,46 +91,7 @@ def Plot(root_filenames):
 
         i_canvas+=1
 
-
-    # jet_sv0_m - SV N TRACKS ITERATION
-    for band in pt_bands:
-        stat = 'jet_sv0_ntrkv'
-
-        for truthflav in truthflavs:
-            dummy_canvas.cd()
-            filter_string = "%s && jet_truthflav == %s" % (str(pt_band_arg[band]), str(truthflav))
-            mychain.Draw("jet_sv0_ntrkv>>hist", filter_string, "same hist")
-            hist = gDirectory.Get("hist")
-            HistFormat(hist, truthflav, band, stat)
-            canvas_array[i_canvas].cd()
-            hist.Draw("same hist")
-            hist_array.append(hist)
-            i_hist += 1
-
-        legend_array[i_canvas].Draw()
-        canvas_array[i_canvas].Print('plots.pdf%s' % MultipageToken(i_canvas))
-
-        i_canvas += 1
-
-    # jet_sv0_ntrkv - SV NORMDIST ITERATION
-    for band in pt_bands:
-        stat = 'jet_sv0_normdist'
-        canvas_array[i_canvas].cd()
-        for truthflav in truthflavs:
-            dummy_canvas.cd()
-            filter_string = "%s && jet_truthflav == %s" % (str(pt_band_arg[band]), str(truthflav))
-            mychain.Draw("jet_sv0_m>>hist", filter_string, "same hist")
-            hist = gDirectory.Get("hist")
-            HistFormat(hist, truthflav, band, stat)
-            canvas_array[i_canvas].cd()
-            hist.Draw("same hist")
-            hist_array.append(hist)
-            i_hist += 1
-
-        legend_array[i_canvas].Draw()
-        canvas_array[i_canvas].Print('plots.pdf%s' % MultipageToken(i_canvas))
-
-        i_canvas += 1
+    write_file.Write()
 
 
 def HistFormat(hist, truthflav, band, stat):
