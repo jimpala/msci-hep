@@ -25,6 +25,9 @@ void test::Loop()
 	//Cut off .root suffix.
 	prefix = dir_name.substr(0, dir_name.size() - 5);
 
+	// Get rid of processtree.
+	gDirectory->Delete("processtree");
+
 	//Set new output file.
 	outputfile = new TFile((TString) prefix + "_proc.root", "RECREATE");
 
