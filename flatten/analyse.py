@@ -1,18 +1,28 @@
 from ROOT import TFile, TChain , gDirectory, TH1D, TColor, TCanvas, TLegend
+import ROOT
+import os
+import sys
+import fnmatch
 
 truthflavs = [0,4,5]
 
 truthflav_lookup = {0: 'light', 4: 'charm',
                     5: 'bottom'}
 
-jet_colour = {0: kBlue, 4: kYellow, 5: kRed}
+jet_colour = {0: ROOT.kBlue, 4: ROOT.kGreen, 5: ROOT.kRed}
 
-pt_bands = {20000: '20-40GeV', 40000: '40-80GeV', 80000: '80-140GeV',
-            140000: '140GeV+'}
+pt_bands = ['20-40GeV', '40-80GeV', '80-140GeV', '140GeV+']
 
-pt_band_arg = {1 : 'jet_pt > 20000 && jet_pt < 40000',
-               4 : 'jet_pt > 20000 && jet_pt < 40000',
-               5: 'jet_pt > 20000 && jet_pt < 40000'}
+pt_band_arg = {'20-40GeV' : 'jet_pt > 20000 && jet_pt < 40000',
+               '40-80GeV' : 'jet_pt > 40000 && jet_pt < 80000',
+               '80-140GeV': 'jet_pt > 80000 && jet_pt < 1400000',
+               '140GeV+': 'jet_pt > 140000'}
+
+# sv0 statistics to study with, given as name:hist_params
+sv0_stats = {'sv0_mass' : (50, 0, 4000), 'sv0_ntracks_v' : (10, 0, 10),
+             'sv0_normdist' : (50, 0, 120)}
+
+#-----------------------------------------------
 
 def GetFilenames(directory):
     root_files_in_directory = [directory + f for f in os.listdir(directory)
@@ -39,61 +49,79 @@ def Plot(root_filenames):
     print "Read-in complete."
 
 
-
+    print mychain.GetEntries()
 
     # Initialise canvas and hist arrays with counters.
-    canvas_array = [TCanvas() for x in range(12)]
-    legend_array = [TLegend(0.55,0.65,0.76,0.82)]
-    hist_array = [TH1D() for x in range(36)]
+    dummy_canvas = TCanvas('Dummy','Dummy',1)
+    canvas_array = [TCanvas('Canvas %s' % x,'Canvas %s' % x,1) for x in range(12)]
+    legend_array = [TLegend(0.55,0.65,0.76,0.82) for x in range(12)]
+    hist_array = []
     i_canvas = 0
     i_hist = 0
 
-    for bands in pt_bands.keys():
+    # jet_sv0_m - SV MASS ITERATION
+    for band in pt_bands:
         stat = 'jet_sv0_m'
-        canvas_array.cd(i_canvas)
         for truthflav in truthflavs:
-            mychain.Draw("jet_sv0_m>>hist_array[%s]" % i_canvas,
-                         "%s && jet_truthflav == %s" %
-                         (pt_band_arg[truthflav], truthflav), "same hist")
-            HistFormat(hist_array[i_hist])
+            dummy_canvas.cd()
+            filter_string = "%s && jet_truthflav == %s" % (str(pt_band_arg[band]), str(truthflav))
+            mychain.Draw("jet_sv0_m>>hist", filter_string, "same hist")
+            hist = gDirectory.Get("hist")
+            HistFormat(hist, truthflav, band, stat)
+            hist_array.append(hist)
+            canvas_array[i_canvas].cd()
+            hist.Draw("same hist")
             i_hist += 1
 
-        legend_array[i].Draw()
-        canvas_array[i].Print('plots.pdf%s' % MultipageToken(i_canvas))
+        legend_array[i_canvas].Draw()
+        canvas_array[i_canvas].Print('plots.pdf%s' % MultipageToken(i_canvas))
 
         i_canvas+=1
 
-    for bands in pt_bands.keys():
+
+    # jet_sv0_m - SV N TRACKS ITERATION
+    for band in pt_bands:
         stat = 'jet_sv0_ntrkv'
-        canvas_array.cd(i_canvas)
+
         for truthflav in truthflavs:
-            mychain.Draw("jet_sv0_ntrkv>>hist_array[%s]" % i_canvas,
-                         "%s && jet_truthflav == %s" %
-                         (pt_band_arg[truthflav], truthflav), "same hist")
-            HistFormat(hist_array[i_hist])
+            dummy_canvas.cd()
+            filter_string = "%s && jet_truthflav == %s" % (str(pt_band_arg[band]), str(truthflav))
+            mychain.Draw("jet_sv0_ntrkv>>hist", filter_string, "same hist")
+            hist = gDirectory.Get("hist")
+            HistFormat(hist, truthflav, band, stat)
+            canvas_array[i_canvas].cd()
+            hist.Draw("same hist")
+            hist_array.append(hist)
             i_hist += 1
+
+        legend_array[i_canvas].Draw()
+        canvas_array[i_canvas].Print('plots.pdf%s' % MultipageToken(i_canvas))
+
         i_canvas += 1
 
-        legend_array[i].Draw()
-        canvas_array[i].Print('plots.pdf%s' % MultipageToken(i_canvas))
-
-    for band in pt_bands.keys():
+    # jet_sv0_ntrkv - SV NORMDIST ITERATION
+    for band in pt_bands:
         stat = 'jet_sv0_normdist'
-        canvas_array.cd(i_canvas)
+        canvas_array[i_canvas].cd()
         for truthflav in truthflavs:
-            mychain.Draw("jet_sv0_normdist>>hist_array[%s]" % i_canvas,
-                         "%s && jet_truthflav == %s" %
-                         (pt_band_arg[truthflav], truthflav), "same hist")
-            HistFormat(hist_array[i_hist], truthflav, band, stat)
+            dummy_canvas.cd()
+            filter_string = "%s && jet_truthflav == %s" % (str(pt_band_arg[band]), str(truthflav))
+            mychain.Draw("jet_sv0_m>>hist", filter_string, "same hist")
+            hist = gDirectory.Get("hist")
+            HistFormat(hist, truthflav, band, stat)
+            canvas_array[i_canvas].cd()
+            hist.Draw("same hist")
+            hist_array.append(hist)
             i_hist += 1
-        i_canvas += 1
 
-        legend_array[i].Draw()
-        canvas_array[i].Print('plots.pdf%s' % MultipageToken(i_canvas))
+        legend_array[i_canvas].Draw()
+        canvas_array[i_canvas].Print('plots.pdf%s' % MultipageToken(i_canvas))
+
+        i_canvas += 1
 
 
 def HistFormat(hist, truthflav, band, stat):
-    title = pt_bands[band] + ' ' + stat
+    title = band + ' ' + stat
     hist.SetMarkerColor(jet_colour[truthflav])
     hist.SetLineColor(jet_colour[truthflav])
     hist.SetTitle(title)
@@ -110,5 +138,5 @@ def main():
     raw_input("Press Enter to close program.")
 
 
-if __name__ == __main__:
+if __name__ == "__main__":
     main()
