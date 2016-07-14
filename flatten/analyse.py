@@ -1,8 +1,11 @@
-from ROOT import TFile, TChain , gDirectory, TH1D, TColor, TCanvas, TLegend
+from ROOT import TFile, TChain , gDirectory, gSystem, TH1D, TColor, TCanvas, TLegend
 import ROOT
 import os
 import sys
 import fnmatch
+
+gSystem.Load('./test_C.so')
+from ROOT import test
 
 truthflavs = [0,4,5]
 
@@ -22,11 +25,14 @@ pt_band_arg = {'20-40GeV' : 'jet_pt > 20000 && jet_pt < 40000',
 sv0_stats = {'sv0_mass' : (50, 0, 4000), 'sv0_ntracks_v' : (10, 0, 10),
              'sv0_normdist' : (50, 0, 120)}
 
+stats = ["jet_sv0_m", "jet_sv0_normdist", "jet_sv0_ntrkv"]
+
 #-----------------------------------------------
 
 def GetFilenames(directory):
     root_files_in_directory = [directory + f for f in os.listdir(directory)
-                               if fnmatch.fnmatch(f, "*.root") and "proc" in f]
+                               if fnmatch.fnmatch(f, "*.root") and "proc" not in f
+                               and "Output" not in f]
     return root_files_in_directory
 
 
@@ -39,14 +45,15 @@ def Plot(root_filenames):
     """"Creates an array of jet property dicts for all jets in a given list of .root files."""
 
 
-    gSystem.Load("test_C.so")
-
-    underflow = 0
     mychain = TChain()
+
+    print root_filenames
 
     for filename in root_filenames:
         current_file = TFile(filename)
-        current_tree = current_file.GetListOfKeys().At(0)
+        tree_name = current_file.GetListOfKeys().At(0).GetName()
+        current_tree = current_file.Get(tree_name)
+        print current_tree
 
         root_processor = test(current_tree)
         root_processor.Loop()
@@ -54,44 +61,40 @@ def Plot(root_filenames):
         processed_filename = filename[:-5] + "_proc.root"
         print processed_filename
         current_file = TFile(processed_filename)
-        processed_tree = current_file.GetListOfKeys().At(0)
+        tree_name = current_file.GetListOfKeys().At(0).GetName()
 
-        mychain.Add(processed_tree)
+        mychain.AddFile(current_file.GetName(), 100000, tree_name)
 
     print "Read-in complete."
 
-    write_file = TFile("Output.root", "WRITE")
+    write_file = TFile("Output.root", "RECREATE")
 
     print mychain.GetEntries()
 
-    # Initialise canvas and hist arrays with counters.
-    dummy_canvas = TCanvas('Dummy','Dummy',1)
-    canvas_array = [TCanvas('Canvas %s' % x,'Canvas %s' % x,1) for x in range(12)]
-    legend_array = [TLegend(0.55,0.65,0.76,0.82) for x in range(12)]
-    hist_array = []
-    i_canvas = 0
+    #Counter
     i_hist = 0
 
     # jet_sv0_m - SV MASS ITERATION
     for band in pt_bands:
-        stat = 'jet_sv0_m'
-        for truthflav in truthflavs:
-            dummy_canvas.cd()
-            filter_string = "%s && jet_truthflav == %s" % (str(pt_band_arg[band]), str(truthflav))
-            mychain.Draw("jet_sv0_m>>hist", filter_string, "same hist")
-            hist = gDirectory.Get("hist")
-            HistFormat(hist, truthflav, band, stat)
-            hist_array.append(hist)
-            canvas_array[i_canvas].cd()
-            hist.Draw("same hist")
-            i_hist += 1
+        for stat in stats:
+            for truthflav in truthflavs:
+                filter_string = "%s && jet_truthflav == %s" % (str(pt_band_arg[band]), str(truthflav))
+                mychain.Draw("%s>>hist%s" % (stat, i_hist), filter_string)
+                write_file.ls()
+                write_file.Write()
+                gDirectory.GetList.Delete()
 
-        legend_array[i_canvas].Draw()
-        canvas_array[i_canvas].Print('plots.pdf%s' % MultipageToken(i_canvas))
+                hist_name = write_file.GetListOfKeys().At(i_hist).GetName()
+                hist = write_file.Get(hist_name)
 
-        i_canvas+=1
+                hist.SetTitle("%s %s %s" % (truthflav_lookup[truthflav], band, stat))
+                HistFormat(hist, truthflav, band, stat)
+                i_hist += 1
+
 
     write_file.Write()
+    write_file.ls()
+    write_file.Close()
 
 
 def HistFormat(hist, truthflav, band, stat):

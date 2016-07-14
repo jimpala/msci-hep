@@ -47,7 +47,6 @@ void test::Loop()
 	fChain->SetBranchStatus("jet_sv0_ntrkv",1);
 	fChain->SetBranchStatus("jet_sv0_normdist",1);
 
-	fChain->Print();
 
 
 
@@ -89,7 +88,6 @@ void test::Loop()
 		}   	
     }
 
-    outputtree->Print();
 
     // Write outputtree in memory to outputfile as key.
     outputfile->Write();
