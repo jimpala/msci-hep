@@ -53,19 +53,24 @@ def Plot(root_filenames):
     for filename in root_filenames:
         current_file = TFile(filename)
 
-        tree_name = current_file.GetListOfKeys().At(0).GetName()
-        current_tree = current_file.Get(tree_name)
-        print current_tree
+        # Make sure that the root file has a tree in it.
+        if current_file.GetNkeys() != 0:
+            tree_name = current_file.GetListOfKeys().At(0).GetName()
+            current_tree = current_file.Get(tree_name)
+            print current_tree
 
-        root_processor = test(current_tree)
-        root_processor.Loop()
+            root_processor = test(current_tree)
+            root_processor.Loop()
 
-        processed_filename = filename[:-5] + "_proc.root"
-        print processed_filename
-        current_file = TFile(processed_filename)
-        tree_name = current_file.GetListOfKeys().At(0).GetName()
+            processed_filename = filename[:-5] + "_proc.root"
+            print processed_filename
+            current_file = TFile(processed_filename)
+            tree_name = current_file.GetListOfKeys().At(0).GetName()
 
-        mychain.AddFile(current_file.GetName(), 100000, tree_name)
+            mychain.AddFile(current_file.GetName(), 100000, tree_name)
+
+        else:
+            print filename + " does not contain a tree."
 
         current_file.Close()
 
@@ -115,12 +120,19 @@ def HistFormat(hist, truthflav, band, stat):
 
 def main():
     jim_directory = "./"
+    tim_directory = "/unix/atlas2/scanlon/group.perf-flavtag.mc15_13TeV."\
+    "410000.PowhegPythiaEvtGen_s2608_s2183_r7725_r7676."\
+    "BTAGNTUP_V47_full_Akt4EMTo/"
 
-    filenames = GetFilenames(jim_directory)
+    mode = jim_directory
+
+    filenames = GetFilenames(mode)
 
     Plot(filenames)
 
-    raw_input("Press Enter to close program.")
+    # Immediately terminate unless in jim_directory mode.
+    if mode == jim_directory:
+        raw_input("Press Enter to close program.")
 
 
 if __name__ == "__main__":
