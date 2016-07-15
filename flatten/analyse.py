@@ -66,6 +66,8 @@ def Plot(root_filenames):
 
         mychain.AddFile(current_file.GetName(), 100000, tree_name)
 
+        current_file.Close()
+
     print "Read-in complete."
 
     create_file = TFile("Output.root", "RECREATE")
