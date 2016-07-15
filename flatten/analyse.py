@@ -1,13 +1,14 @@
-from ROOT import TFile, TChain , gDirectory, gSystem, TH1D, TColor, TCanvas, TLegend
+from ROOT import TFile, TChain, gDirectory, gSystem, TH1D, TColor, TCanvas, TLegend
 import ROOT
 import os
 import sys
 import fnmatch
 
+# Import test.C macro's shared library.
 gSystem.Load('./test_C.so')
 from ROOT import test
 
-truthflavs = [0,4,5]
+truthflavs = [0, 4, 5]
 
 truthflav_lookup = {0: 'light', 4: 'charm',
                     5: 'bottom'}
@@ -16,18 +17,19 @@ jet_colour = {0: ROOT.kBlue, 4: ROOT.kGreen, 5: ROOT.kRed}
 
 pt_bands = ['20-40GeV', '40-80GeV', '80-140GeV', '140GeV+']
 
-pt_band_arg = {'20-40GeV' : 'jet_pt > 20000 && jet_pt < 40000',
-               '40-80GeV' : 'jet_pt > 40000 && jet_pt < 80000',
+pt_band_arg = {'20-40GeV': 'jet_pt > 20000 && jet_pt < 40000',
+               '40-80GeV': 'jet_pt > 40000 && jet_pt < 80000',
                '80-140GeV': 'jet_pt > 80000 && jet_pt < 1400000',
                '140GeV+': 'jet_pt > 140000'}
 
 # sv0 statistics to study with, given as name:hist_params
-sv0_stats = {'sv0_mass' : (50, 0, 4000), 'sv0_ntracks_v' : (10, 0, 10),
-             'sv0_normdist' : (50, 0, 120)}
+sv0_stats = {'sv0_mass': (50, 0, 4000), 'sv0_ntracks_v': (10, 0, 10),
+             'sv0_normdist': (50, 0, 120)}
 
 stats = ["jet_sv0_m", "jet_sv0_normdist", "jet_sv0_ntrkv"]
 
-#-----------------------------------------------
+
+# -----------------------------------------------
 
 def GetFilenames(directory):
     root_files_in_directory = [directory + f for f in os.listdir(directory)
@@ -36,14 +38,13 @@ def GetFilenames(directory):
     return root_files_in_directory
 
 
-def MultipageToken(i):
-    if i==0: return "("
-    if i==11: return ")"
-    else: return ""
+# def MultipageToken(i):
+#     if i==0: return "("
+#     if i==11: return ")"
+#     else: return ""
 
 def Plot(root_filenames):
     """"Creates an array of jet property dicts for all jets in a given list of .root files."""
-
 
     mychain = TChain()
 
@@ -67,34 +68,39 @@ def Plot(root_filenames):
 
     print "Read-in complete."
 
-    write_file = TFile("Output.root", "RECREATE")
+    create_file = TFile("Output.root", "RECREATE")
+    create_file.Close()
 
     print mychain.GetEntries()
 
-    #Counter
+    # Counter
     i_hist = 0
 
-    # jet_sv0_m - SV MASS ITERATION
     for band in pt_bands:
         for stat in stats:
             for truthflav in truthflavs:
-                filter_string = "%s && jet_truthflav == %s" % (str(pt_band_arg[band]), str(truthflav))
+                # Open up Output.root for writing
+                write_file = TFile("Output.root", "UPDATE")
+
+                # Filter entries for current hist, plot. Write to file.
+                filter_string = "{0:s} && jet_truthflav == {1:s} && jet_sv0_sig3d > -40" \
+                    .format(str(pt_band_arg[band]), str(truthflav))
                 mychain.Draw("%s>>hist%s" % (stat, i_hist), filter_string)
-                write_file.ls()
+
                 write_file.Write()
-                gDirectory.GetList.Delete()
 
                 hist_name = write_file.GetListOfKeys().At(i_hist).GetName()
                 hist = write_file.Get(hist_name)
 
                 hist.SetTitle("%s %s %s" % (truthflav_lookup[truthflav], band, stat))
                 HistFormat(hist, truthflav, band, stat)
+
+                # Flush object memory by closing.
+                write_file.Close()
+
                 i_hist += 1
 
-
-    write_file.Write()
     write_file.ls()
-    write_file.Close()
 
 
 def HistFormat(hist, truthflav, band, stat):
@@ -102,7 +108,6 @@ def HistFormat(hist, truthflav, band, stat):
     hist.SetMarkerColor(jet_colour[truthflav])
     hist.SetLineColor(jet_colour[truthflav])
     hist.SetTitle(title)
-
 
 
 def main():
