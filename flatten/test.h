@@ -17,6 +17,7 @@
 
 //Jimmy's STL includes
 #include <string>
+#include <iostream>
 
 // Header file for the classes stored in the TTree if any.
 #include <vector>
@@ -563,11 +564,8 @@ test::test(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("group.perf-flavtag.8324358.Akt4EMTo._007171.root");
-      if (!f || !f->IsOpen()) {
-         f = new TFile("group.perf-flavtag.8324358.Akt4EMTo._007171.root");
-      }
-      f->GetObject("bTag_AntiKt4EMTopoJets",tree);
+      cout << "test needs to take a tree argument, champ. Terminating program.\n";
+      exit(1);
    }
 
    tree->SetName("processtree");

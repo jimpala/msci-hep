@@ -565,6 +565,7 @@ jetprocess::jetprocess(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
+      exit(0)
       TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("group.perf-flavtag.8324358.Akt4EMTo._002487.root");
       if (!f || !f->IsOpen()) {
          f = new TFile("group.perf-flavtag.8324358.Akt4EMTo._002487.root");
@@ -578,7 +579,7 @@ jetprocess::jetprocess(TTree *tree) : fChain(0)
 jetprocess::~jetprocess()
 {
    if (!fChain) return;
-   delete fChain->GetCurrentFile();
+   //delete fChain->GetCurrentFile();
 }
 
 Int_t jetprocess::GetEntry(Long64_t entry)
