@@ -93,7 +93,7 @@ void test::Loop()
     outputfile->Write();
 
     // Delete all objects left in memory.
-    gDirectory->GetList()->Delete();
+    outputfile->Close();
 
 
 }

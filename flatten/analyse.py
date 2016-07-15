@@ -52,6 +52,7 @@ def Plot(root_filenames):
 
     for filename in root_filenames:
         current_file = TFile(filename)
+
         tree_name = current_file.GetListOfKeys().At(0).GetName()
         current_tree = current_file.Get(tree_name)
         print current_tree

@@ -2,7 +2,7 @@
 // This class has been automatically generated on
 // Thu Jul 14 10:23:10 2016 by ROOT version 5.34/36
 // from TTree bTag_AntiKt4EMTopoJets/bTagAntiKt4EMTopoJets
-// found on file: group.perf-flavtag.8324358.Akt4EMTo._002487.root
+// found on file: group.perf-flavtag.8324358.Akt4EMTo._007171.root
 //////////////////////////////////////////////////////////
 
 #ifndef test_h
@@ -563,9 +563,9 @@ test::test(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("group.perf-flavtag.8324358.Akt4EMTo._002487.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("group.perf-flavtag.8324358.Akt4EMTo._007171.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("group.perf-flavtag.8324358.Akt4EMTo._002487.root");
+         f = new TFile("group.perf-flavtag.8324358.Akt4EMTo._007171.root");
       }
       f->GetObject("bTag_AntiKt4EMTopoJets",tree);
    }
@@ -577,7 +577,7 @@ test::test(TTree *tree) : fChain(0)
 test::~test()
 {
    if (!fChain) return;
-   delete fChain->GetCurrentFile();
+   //delete fChain->GetCurrentFile();
 }
 
 Int_t test::GetEntry(Long64_t entry)
