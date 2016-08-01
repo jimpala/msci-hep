@@ -31,17 +31,15 @@ void tag_metric::Loop()
 	//Set new output file.
 	outputfile = new TFile((TString) prefix + "_proc.root", "RECREATE");
 
+	// Blank output tree.
 	outputtree = new TNtuple("outputtree","Jet Level Tree",
-	"jet_pt:jet_truthflav:jet_sv0_sig3d:jet_mv2c20");
+	"jet_pt:jet_truthflav:jet_mv2c20");
 
 	
-
+	// Turn off all branches; switch on those wanted.
 	fChain->SetBranchStatus("*",0);
 
-	
-
 	fChain->SetBranchStatus("jet_pt",1);
-	fChain->SetBranchStatus("jet_sv0_sig3d",1);
 	fChain->SetBranchStatus("jet_truthflav",1);
 	fChain->SetBranchStatus("jet_mv2c20",1);
 
@@ -68,11 +66,10 @@ void tag_metric::Loop()
 
 			pt = (*jet_pt)[i];
 			truthflav = (*jet_truthflav)[i];
-			sv0_sig3d = (*jet_sv0_sig3d)[i];
 			mv2c20 = (*jet_mv2c20)[i];
 
-
-			outputtree->Fill(pt,truthflav,sv0_sig3d,mv2c20);
+			// Fill da tree.
+			outputtree->Fill(pt,truthflav,mv2c20);
 
 			i++;
 		}   	
