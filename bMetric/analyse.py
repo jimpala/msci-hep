@@ -6,7 +6,7 @@ import fnmatch
 
 # Import test.C macro's shared library.
 gSystem.Load('./tag_metric_C.so')
-from ROOT import test
+from ROOT import tag_metric
 
 
 # -----------------------------------------------
@@ -39,7 +39,7 @@ def Plot(root_filenames):
             current_tree = current_file.Get(tree_name)
             print current_tree
 
-            root_processor = test(current_tree)
+            root_processor = tag_metric(current_tree)
             root_processor.Loop()
 
             processed_filename = filename[:-5] + "_proc.root"
@@ -74,11 +74,6 @@ def Plot(root_filenames):
 
     write_file.Write()
 
-    hist_name = write_file.GetListOfKeys().At(i_hist).GetName()
-    hist = write_file.Get(hist_name)
-
-    hist.SetTitle("B jets (TRUTH)")
-
     # Flush object memory by closing.
     write_file.Close()
 
@@ -96,11 +91,6 @@ def Plot(root_filenames):
     mychain.Draw("jet_pt>>tagged_hist", filter_string)
 
     write_file.Write()
-
-    hist_name = write_file.GetListOfKeys().At(i_hist).GetName()
-    hist = write_file.Get(hist_name)
-
-    hist.SetTitle("B jets (TAGGED)")
 
     # Flush object memory by closing.
     write_file.Close()
