@@ -37,13 +37,11 @@ def Plot(root_filenames):
         if current_file.GetNkeys() != 0:
             tree_name = current_file.GetListOfKeys().At(0).GetName()
             current_tree = current_file.Get(tree_name)
-            print current_tree
 
             root_processor = tag_metric(current_tree)
             root_processor.Loop()
 
             processed_filename = filename[:-5] + "_proc.root"
-            print processed_filename
             current_file = TFile(processed_filename)
             tree_name = current_file.GetListOfKeys().At(0).GetName()
 
