@@ -18,11 +18,6 @@ def GetFilenames(directory):
     return root_files_in_directory
 
 
-# def MultipageToken(i):
-#     if i==0: return "("
-#     if i==11: return ")"
-#     else: return ""
-
 def Plot(root_filenames):
     """"Creates an array of jet property dicts for all jets in a given list of .root files."""
 
@@ -60,37 +55,24 @@ def Plot(root_filenames):
     create_file.Close()
 
 
-    # TRUTH HIST
-    # ----------
+    # Make hists (fine grained)
 
-    # Open up Output.root for writing
     write_file = TFile("Output.root", "UPDATE")
 
-    # Filter entries for current hist, plot. Write to file.
-    filter_string = "jet_truthflav == 5"
-    mychain.Draw("jet_pt>>truth_hist", filter_string)
+    # Note that jet pt cuts off below 20MeV
+    truth_hist = TH1D('truth_hist', 'B jets (TRUTH)', 2000, 20000, 50000)
+    tagged_hist = TH1D('tagged_hist', 'B jets (TAGGED)', 2000, 20000, 50000)
+    metric_hist = TH1D('metric_hist', 'B jets (TRUTH) / B jets (TAGGED)', 2000, 20000, 50000)
+
+    truth_filter = "jet_truthflav == 5"
+    tagged_filter = "jet_mv2c20 > 0"
+
+    mychain.Draw("jet_pt>>+truth_hist", truth_filter)
+    mychain.Draw("jet_pt>>+tagged_hist", tagged_filter)
+
+    metric_hist.Divide(truth_hist,tagged_hist,1,1,'B')
 
     write_file.Write()
-
-    # Flush object memory by closing.
-    write_file.Close()
-
-
-
-
-    # TAGGED HIST
-    # ----------
-
-    # Open up Output.root for writing
-    write_file = TFile("Output.root", "UPDATE")
-
-    # Filter entries for current hist, plot. Write to file.
-    filter_string = "jet_mv2c20 > 0"
-    mychain.Draw("jet_pt>>tagged_hist", filter_string)
-
-    write_file.Write()
-
-    # Flush object memory by closing.
     write_file.Close()
 
 
