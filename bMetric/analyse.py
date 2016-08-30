@@ -53,6 +53,8 @@ def Plot(root_filenames):
     # Initialise output root file.
     create_file = TFile("Output.root", "RECREATE")
     create_file.Close()
+    create_file2 = TFile("Output2.root", "RECREATE")
+    create_file2.Close()
 
 
     # Make hists (fine grained)
@@ -88,6 +90,30 @@ def Plot(root_filenames):
     write_file.Write()
     write_file.Close()
 
+    write_file2 = TFile("Output2.root", "UPDATE")
+
+    b_discrim_hist = TH1D('b_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
+    c_discrim_hist = TH1D('c_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
+    l_discrim_hist = TH1D('l_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
+
+    mychain.Draw("jet_mv2c20>>+b_discrim_hist", "jet_truthflav == 5")
+    mychain.Draw("jet_mv2c20>>+c_discrim_hist", "jet_truthflav == 4")
+    mychain.Draw("jet_mv2c20>>+l_discrim_hist", "jet_truthflav == 0")
+
+    normalise(b_discrim_hist)
+    normalise(c_discrim_hist)
+    normalise(l_discrim_hist)
+
+    write_file2.Write()
+    write_file2.Close()
+
+
+
+
+def normalise(hist):
+    integral = hist.Integral()
+    norm_factor = 1 / integral
+    hist.Scale(norm_factor)
 
 
 def main():
