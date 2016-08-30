@@ -1,4 +1,4 @@
-from ROOT import TFile, TChain, gDirectory, gSystem, TH1D, TCanvas
+from ROOT import TFile, TChain, gDirectory, gSystem, TH1D, TCanvas, TGraph
 import ROOT
 import os
 import sys
@@ -66,9 +66,9 @@ def Plot(root_filenames):
     bottom_hist = TH1D('bottom_hist', 'B jets (mv2c20 > 0)', 200, 20000, 50000)
     charm_hist = TH1D('charm_hist', 'C jets (mv2c20 > 0)', 200, 20000, 50000)
     light_hist = TH1D('light_hist', 'L jets (mv2c20 > 0)', 200, 20000, 50000)
-    b_efficiency_hist = TH1D('b_efficiency_hist', 'B-tag efficiency (mv2c20 > 0)', 200, 20000, 50000)
-    c_efficiency_hist = TH1D('c_efficiency_hist', 'C-tag efficiency (mv2c20 > 0)', 200, 20000, 50000)
-    l_efficiency_hist = TH1D('l_efficiency_hist', 'L-tag efficiency (mv2c20 > 0)', 200, 20000, 50000)
+    b_pt_efficiency_hist = TH1D('b_pt_efficiency_hist', 'B-tag efficiency (mv2c20 > 0)', 200, 20000, 50000)
+    c_pt_efficiency_hist = TH1D('c_pt_efficiency_hist', 'C-tag efficiency (mv2c20 > 0)', 200, 20000, 50000)
+    l_pt_efficiency_hist = TH1D('l_pt_efficiency_hist', 'L-tag efficiency (mv2c20 > 0)', 200, 20000, 50000)
 
     mv2c20_cut = "jet_mv2c20 > 0 "
     total_filter = mv2c20_cut
@@ -82,29 +82,68 @@ def Plot(root_filenames):
     mychain.Draw("jet_pt>>+charm_hist", charm_filter)
     mychain.Draw("jet_pt>>+light_hist", light_filter)
 
+
     # Divide to get efficiency hists.
-    b_efficiency_hist.Divide(bottom_hist, total_hist,1,1,'B')
-    c_efficiency_hist.Divide(charm_hist, total_hist,1,1,'B')
-    l_efficiency_hist.Divide(light_hist, total_hist,1,1,'B')
+    b_pt_efficiency_hist.Divide(bottom_hist, total_hist,1,1,'B')
+    c_pt_efficiency_hist.Divide(charm_hist, total_hist,1,1,'B')
+    l_pt_efficiency_hist.Divide(light_hist, total_hist,1,1,'B')
 
     write_file.Write()
     write_file.Close()
 
+    # ----------------
     write_file2 = TFile("Output2.root", "UPDATE")
 
+    total_discrim_hist = TH1D('total_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
+    total_discrim_hist_cl_merged = TH1D('total_discrim_hist_cl_merged', 'mv2c20 discriminant variable', 100, -1, 1)
     b_discrim_hist = TH1D('b_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
     c_discrim_hist = TH1D('c_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
     l_discrim_hist = TH1D('l_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
+    cl_discrim_hist = TH1D('cl_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
+
+    b_efficiency_hist = TH1D('b_efficiency_hist', 'Tag efficiency at mv2c20 cut', 100, -1, 1)
+    l_rejection_hist = TH1D('b_rejection_hist', 'Tag rejection at mv2c20 cut', 100, -1, 1)
+    cl_rejection_hist = TH1D('cl_rejection_hist', 'Tag rejection at mv2c20 cut', 100, -1, 1)
+
 
     # REMEMBER when using TBrowser to set y-axis to a log scale.
+    # Right click the canvas and select 'setlogy'.
     mychain.Draw("jet_mv2c20>>+b_discrim_hist", "jet_truthflav == 5")
     mychain.Draw("jet_mv2c20>>+c_discrim_hist", "jet_truthflav == 4")
     mychain.Draw("jet_mv2c20>>+l_discrim_hist", "jet_truthflav == 0")
 
+    # Normalise to obviate frequency distribution effects.
     normalise(b_discrim_hist)
     normalise(c_discrim_hist)
     normalise(l_discrim_hist)
 
+    # Get the c&l distn by adding. Normalise away the effects.
+    cl_discrim_hist.Add(c_discrim_hist, l_discrim_hist)
+    normalise(cl_discrim_hist)
+
+    # Get the total distn by adding up constituent parts.
+    total_discrim_hist.Add(l_discrim_hist, c_discrim_hist)
+    total_discrim_hist.Add(b_discrim_hist)
+
+    total_discrim_hist_cl_merged.Add(cl_discrim_hist, b_discrim_hist)
+
+    # Divide for our efficiency hists.
+    b_efficiency_hist.Divide(b_discrim_hist,total_discrim_hist,1,1,'B')
+    l_rejection_hist.Divide(l_discrim_hist,total_discrim_hist,1,1,'B')
+    cl_rejection_hist.Divide(cl_discrim_hist,total_discrim_hist_cl_merged,1,1,'B')
+
+    # l_rejection and cl_rejection need inverting.
+    invert(l_rejection_hist)
+    invert(cl_rejection_hist)
+
+    # ROC graphs
+    l_roc_curve = plotFreqs(b_efficiency_hist, l_rejection_hist)
+    cl_roc_curve = plotFreqs(b_efficiency_hist, cl_rejection_hist)
+    l_roc_curve.SetName('l_roc_curve')
+    cl_roc_curve.SetName('cl_roc_curve')
+
+
+    # Write and close.
     write_file2.Write()
     write_file2.Close()
 
@@ -115,6 +154,31 @@ def normalise(hist):
     integral = hist.Integral()
     norm_factor = 1 / integral
     hist.Scale(norm_factor)
+
+def invert(hist):
+    nbins = hist.GetNbinsX()
+
+    for bin_no in range(1, nbins + 1):
+        reciprocal = 1 / hist.GetBinContent(bin_no)
+        hist.SetBinContent(bin_no, reciprocal)
+
+def plotFreqs(hist1,hist2):
+    # Initialise plot arrays.
+    xplot = []
+    yplot = []
+
+    nbins1 = hist1.GetNbinsX()
+    nbins2 = hist2.GetNbinsX()
+    assert(nbins1 == nbins2)
+
+    for bin_no in range(1, nbins1 + 1):
+        xplot.append(hist1.GetBinContent(bin_no))
+        yplot.append(hist2.GetBinContent(bin_no))
+
+    graph = TGraph(xplot, yplot)
+    return graph
+
+
 
 
 def main():
