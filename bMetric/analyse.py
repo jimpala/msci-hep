@@ -96,6 +96,7 @@ def Plot(root_filenames):
     c_discrim_hist = TH1D('c_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
     l_discrim_hist = TH1D('l_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
 
+    # REMEMBER when using TBrowser to set y-axis to a log scale.
     mychain.Draw("jet_mv2c20>>+b_discrim_hist", "jet_truthflav == 5")
     mychain.Draw("jet_mv2c20>>+c_discrim_hist", "jet_truthflav == 4")
     mychain.Draw("jet_mv2c20>>+l_discrim_hist", "jet_truthflav == 0")
