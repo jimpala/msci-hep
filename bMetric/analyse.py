@@ -60,13 +60,13 @@ def Plot(root_filenames):
     write_file = TFile("Output.root", "UPDATE")
 
     # Note that jet pt cuts off below 20MeV
-    total_hist = TH1D('total_hist', 'All jets (mv2c20 > 0)', 2000, 20000, 50000)
-    bottom_hist = TH1D('bottom_hist', 'B jets (mv2c20 > 0)', 2000, 20000, 50000)
-    charm_hist = TH1D('charm_hist', 'C jets (mv2c20 > 0)', 2000, 20000, 50000)
-    light_hist = TH1D('light_hist', 'L jets (mv2c20 > 0)', 2000, 20000, 50000)
-    b_efficiency_hist = TH1D('b_efficiency_hist', 'B-tag efficiency (mv2c20 > 0)', 2000, 20000, 50000)
-    c_efficiency_hist = TH1D('c_efficiency_hist', 'C-tag efficiency (mv2c20 > 0)', 2000, 20000, 50000)
-    l_efficiency_hist = TH1D('l_efficiency_hist', 'L-tag efficiency (mv2c20 > 0)', 2000, 20000, 50000)
+    total_hist = TH1D('total_hist', 'All jets (mv2c20 > 0)', 200, 20000, 50000)
+    bottom_hist = TH1D('bottom_hist', 'B jets (mv2c20 > 0)', 200, 20000, 50000)
+    charm_hist = TH1D('charm_hist', 'C jets (mv2c20 > 0)', 200, 20000, 50000)
+    light_hist = TH1D('light_hist', 'L jets (mv2c20 > 0)', 200, 20000, 50000)
+    b_efficiency_hist = TH1D('b_efficiency_hist', 'B-tag efficiency (mv2c20 > 0)', 200, 20000, 50000)
+    c_efficiency_hist = TH1D('c_efficiency_hist', 'C-tag efficiency (mv2c20 > 0)', 200, 20000, 50000)
+    l_efficiency_hist = TH1D('l_efficiency_hist', 'L-tag efficiency (mv2c20 > 0)', 200, 20000, 50000)
 
     mv2c20_cut = "jet_mv2c20 > 0 "
     total_filter = mv2c20_cut
@@ -81,9 +81,9 @@ def Plot(root_filenames):
     mychain.Draw("jet_pt>>+light_hist", light_filter)
 
     # Divide to get efficiency hists.
-    b_efficiency_hist.Divide(total_hist,bottom_hist,1,1,'B')
-    c_efficiency_hist.Divide(total_hist,charm_hist,1,1,'B')
-    l_efficiency_hist.Divide(total_hist,light_hist,1,1,'B')
+    b_efficiency_hist.Divide(bottom_hist, total_hist,1,'B')
+    c_efficiency_hist.Divide(charm_hist, total_hist,1,1,'B')
+    l_efficiency_hist.Divide(light_hist, total_hist,1,1,'B')
 
     write_file.Write()
     write_file.Close()
