@@ -3,6 +3,7 @@ import ROOT
 import os
 import sys
 import fnmatch
+import array
 
 # Import test.C macro's shared library.
 gSystem.Load('./tag_metric_C.so')
@@ -102,8 +103,8 @@ def Plot(root_filenames):
     cl_discrim_hist = TH1D('cl_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
 
     b_efficiency_hist = TH1D('b_efficiency_hist', 'Tag efficiency at mv2c20 cut', 100, -1, 1)
-    l_rejection_hist = TH1D('b_rejection_hist', 'Tag rejection at mv2c20 cut', 100, -1, 1)
-    cl_rejection_hist = TH1D('cl_rejection_hist', 'Tag rejection at mv2c20 cut', 100, -1, 1)
+    l_efficiency_hist = TH1D('l_efficiency_hist', 'Tag efficiency at mv2c20 cut', 100, -1, 1)
+    cl_efficiency_hist = TH1D('cl_efficiency_hist', 'Tag efficiency at mv2c20 cut', 100, -1, 1)
 
 
     # REMEMBER when using TBrowser to set y-axis to a log scale.
@@ -129,8 +130,13 @@ def Plot(root_filenames):
 
     # Divide for our efficiency hists.
     b_efficiency_hist.Divide(b_discrim_hist,total_discrim_hist,1,1,'B')
-    l_rejection_hist.Divide(l_discrim_hist,total_discrim_hist,1,1,'B')
-    cl_rejection_hist.Divide(cl_discrim_hist,total_discrim_hist_cl_merged,1,1,'B')
+    l_efficiency_hist.Divide(l_discrim_hist,total_discrim_hist,1,1,'B')
+    cl_efficiency_hist.Divide(cl_discrim_hist,total_discrim_hist_cl_merged,1,1,'B')
+
+    # Clone for rejection hists.
+    l_rejection_hist = l_efficiency_hist.Clone('l_rejection_hist')
+    cl_rejection_hist = cl_efficiency_hist.Clone('cl_rejection_hist')
+
 
     # l_rejection and cl_rejection need inverting.
     invert(l_rejection_hist)
@@ -139,8 +145,9 @@ def Plot(root_filenames):
     # ROC graphs
     l_roc_curve = plotFreqs(b_efficiency_hist, l_rejection_hist)
     cl_roc_curve = plotFreqs(b_efficiency_hist, cl_rejection_hist)
-    l_roc_curve.SetName('l_roc_curve')
-    cl_roc_curve.SetName('cl_roc_curve')
+
+    l_roc_curve.SaveAs('l_roc.root')
+    cl_roc_curve.SaveAs('cl_roc.root')
 
 
     # Write and close.
@@ -164,8 +171,8 @@ def invert(hist):
 
 def plotFreqs(hist1,hist2):
     # Initialise plot arrays.
-    xplot = []
-    yplot = []
+    xplot = array.array('f')
+    yplot = array.array('f')
 
     nbins1 = hist1.GetNbinsX()
     nbins2 = hist2.GetNbinsX()
@@ -175,7 +182,10 @@ def plotFreqs(hist1,hist2):
         xplot.append(hist1.GetBinContent(bin_no))
         yplot.append(hist2.GetBinContent(bin_no))
 
-    graph = TGraph(xplot, yplot)
+    xinput = array.array('f', tuple(xplot))
+    yinput = array.array('f', tuple(yplot))
+
+    graph = TGraph(len(xinput), xinput, yinput)
     return graph
 
 
