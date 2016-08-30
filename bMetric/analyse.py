@@ -81,7 +81,7 @@ def Plot(root_filenames):
     mychain.Draw("jet_pt>>+light_hist", light_filter)
 
     # Divide to get efficiency hists.
-    b_efficiency_hist.Divide(bottom_hist, total_hist,1,'B')
+    b_efficiency_hist.Divide(bottom_hist, total_hist,1,1,'B')
     c_efficiency_hist.Divide(charm_hist, total_hist,1,1,'B')
     l_efficiency_hist.Divide(light_hist, total_hist,1,1,'B')
 
