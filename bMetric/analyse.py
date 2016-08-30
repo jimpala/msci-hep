@@ -14,7 +14,7 @@ from ROOT import tag_metric
 def GetFilenames(directory):
     root_files_in_directory = [directory + f for f in os.listdir(directory)
                                if fnmatch.fnmatch(f, "*.root") and "proc" not in f
-                               and "Output" not in f and "base" not in f]
+                               and "group" in f]
     return root_files_in_directory
 
 
@@ -60,17 +60,30 @@ def Plot(root_filenames):
     write_file = TFile("Output.root", "UPDATE")
 
     # Note that jet pt cuts off below 20MeV
-    truth_hist = TH1D('truth_hist', 'B jets (TRUTH)', 2000, 20000, 50000)
-    tagged_hist = TH1D('tagged_hist', 'B jets (TAGGED)', 2000, 20000, 50000)
-    metric_hist = TH1D('metric_hist', 'B jets (TRUTH) / B jets (TAGGED)', 2000, 20000, 50000)
+    total_hist = TH1D('total_hist', 'All jets (mv2c20 > 0)', 2000, 20000, 50000)
+    bottom_hist = TH1D('bottom_hist', 'B jets (mv2c20 > 0)', 2000, 20000, 50000)
+    charm_hist = TH1D('charm_hist', 'C jets (mv2c20 > 0)', 2000, 20000, 50000)
+    light_hist = TH1D('light_hist', 'L jets (mv2c20 > 0)', 2000, 20000, 50000)
+    b_efficiency_hist = TH1D('b_efficiency_hist', 'B-tag efficiency (mv2c20 > 0)', 2000, 20000, 50000)
+    c_efficiency_hist = TH1D('c_efficiency_hist', 'C-tag efficiency (mv2c20 > 0)', 2000, 20000, 50000)
+    l_efficiency_hist = TH1D('l_efficiency_hist', 'L-tag efficiency (mv2c20 > 0)', 2000, 20000, 50000)
 
-    truth_filter = "jet_truthflav == 5"
-    tagged_filter = "jet_mv2c20 > 0"
+    mv2c20_cut = "jet_mv2c20 > 0 "
+    total_filter = mv2c20_cut
+    bottom_filter = mv2c20_cut + " && jet_truthflav == 5"
+    charm_filter = mv2c20_cut + " && jet_truthflav == 4"
+    light_filter = mv2c20_cut + " && jet_truthflav == 0"
 
-    mychain.Draw("jet_pt>>+truth_hist", truth_filter)
-    mychain.Draw("jet_pt>>+tagged_hist", tagged_filter)
+    # '+' in front of the histogram name appends to existing hist.
+    mychain.Draw("jet_pt>>+total_hist", total_filter)
+    mychain.Draw("jet_pt>>+bottom_hist", bottom_filter)
+    mychain.Draw("jet_pt>>+charm_hist", charm_filter)
+    mychain.Draw("jet_pt>>+light_hist", light_filter)
 
-    metric_hist.Divide(truth_hist,tagged_hist,1,1,'B')
+    # Divide to get efficiency hists.
+    b_efficiency_hist.Divide(total_hist,bottom_hist,1,1,'B')
+    c_efficiency_hist.Divide(total_hist,charm_hist,1,1,'B')
+    l_efficiency_hist.Divide(total_hist,light_hist,1,1,'B')
 
     write_file.Write()
     write_file.Close()
