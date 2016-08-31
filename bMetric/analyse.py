@@ -95,16 +95,10 @@ def Plot(root_filenames):
     # ----------------
     write_file2 = TFile("Output2.root", "UPDATE")
 
-    total_discrim_hist = TH1D('total_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
-    total_discrim_hist_cl_merged = TH1D('total_discrim_hist_cl_merged', 'mv2c20 discriminant variable', 100, -1, 1)
     b_discrim_hist = TH1D('b_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
     c_discrim_hist = TH1D('c_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
     l_discrim_hist = TH1D('l_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
     cl_discrim_hist = TH1D('cl_discrim_hist', 'mv2c20 discriminant variable', 100, -1, 1)
-
-    b_efficiency_hist = TH1D('b_efficiency_hist', 'Tag efficiency at mv2c20 cut', 100, -1, 1)
-    l_efficiency_hist = TH1D('l_efficiency_hist', 'Tag efficiency at mv2c20 cut', 100, -1, 1)
-    cl_efficiency_hist = TH1D('cl_efficiency_hist', 'Tag efficiency at mv2c20 cut', 100, -1, 1)
 
 
     # REMEMBER when using TBrowser to set y-axis to a log scale.
@@ -122,72 +116,54 @@ def Plot(root_filenames):
     cl_discrim_hist.Add(c_discrim_hist, l_discrim_hist)
     normalise(cl_discrim_hist)
 
-    # Get the total distn by adding up constituent parts.
-    total_discrim_hist.Add(l_discrim_hist, c_discrim_hist)
-    total_discrim_hist.Add(b_discrim_hist)
+    ### EFFICIENCY/REJECTION ###
 
-    total_discrim_hist_cl_merged.Add(cl_discrim_hist, b_discrim_hist)
+    # Soft check that histograms are binned the same.
+    assert(b_discrim_hist.GetNbinsX() == l_discrim_hist.GetNbinsX() ==
+    cl_discrim_hist.GetNbinsX() )
 
-    # Divide for our efficiency hists.
-    b_efficiency_hist.Divide(b_discrim_hist,total_discrim_hist,1,1,'B')
-    l_efficiency_hist.Divide(l_discrim_hist,total_discrim_hist,1,1,'B')
-    cl_efficiency_hist.Divide(cl_discrim_hist,total_discrim_hist_cl_merged,1,1,'B')
+    # Initialise iteration parameters.
+    end_bin = b_discrim_hist.GetNbinsX()
+    b_eff_plot = []
+    l_rej_plot = []
+    cl_rej_plot = []
 
-    # Clone for rejection hists.
-    l_rejection_hist = l_efficiency_hist.Clone('l_rejection_hist')
-    cl_rejection_hist = cl_efficiency_hist.Clone('cl_rejection_hist')
+    # Iterate through integrals between discrim variable cut and 1.
+    for this_bin in range(1, end_bin):
+
+        # Integrate between current bin and end bin.
+        b_int = b_discrim_hist.Integral(this_bin, end_bin)
+        l_int = l_discrim_hist.Integral(this_bin, end_bin)
+        cl_int = cl_discrim_hist.Integral(this_bin, end_bin)
+
+        # Append to plot arrays. l and cl are rejection plots,
+        # so need to be inverse.
+        b_eff_plot.append(b_int)
+        l_rej_plot.append(1/l_int)
+        cl_rej_plot.append(1/cl_int)
 
 
-    # l_rejection and cl_rejection need inverting.
-    invert(l_rejection_hist)
-    invert(cl_rejection_hist)
+    # Plot the ROC curves with these arrays.
+    b_eff_input = array.array('f', tuple(b_eff_plot))
+    l_eff_input = array.array('f', tuple(l_eff_plot))
+    cl_eff_input = array.array('f', tuple(cl_eff_plot))
 
-    # ROC graphs
-    l_roc_curve = plotFreqs(b_efficiency_hist, l_rejection_hist)
-    cl_roc_curve = plotFreqs(b_efficiency_hist, cl_rejection_hist)
+    l_roc_curve = TGraph(len(b_eff_input), b_eff_input, l_eff_input)
+    cl_roc_curve = TGraph(len(b_eff_input), b_eff_input, cl_eff_input)
 
     l_roc_curve.SaveAs('l_roc.root')
     cl_roc_curve.SaveAs('cl_roc.root')
-
 
     # Write and close.
     write_file2.Write()
     write_file2.Close()
 
 
-
-
+## HIST NORMALISING HELPER ##
 def normalise(hist):
     integral = hist.Integral()
     norm_factor = 1 / integral
     hist.Scale(norm_factor)
-
-def invert(hist):
-    nbins = hist.GetNbinsX()
-
-    for bin_no in range(1, nbins + 1):
-        reciprocal = 1 / hist.GetBinContent(bin_no)
-        hist.SetBinContent(bin_no, reciprocal)
-
-def plotFreqs(hist1,hist2):
-    # Initialise plot arrays.
-    xplot = array.array('f')
-    yplot = array.array('f')
-
-    nbins1 = hist1.GetNbinsX()
-    nbins2 = hist2.GetNbinsX()
-    assert(nbins1 == nbins2)
-
-    for bin_no in range(1, nbins1 + 1):
-        xplot.append(hist1.GetBinContent(bin_no))
-        yplot.append(hist2.GetBinContent(bin_no))
-
-    xinput = array.array('f', tuple(xplot))
-    yinput = array.array('f', tuple(yplot))
-
-    graph = TGraph(len(xinput), xinput, yinput)
-    return graph
-
 
 
 
