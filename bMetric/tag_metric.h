@@ -548,6 +548,8 @@ public :
    double truthflav;
    double sv0_sig3d;
    double mv2c20;
+   double mv2c10;
+   double mv2c00;
 
 };
 

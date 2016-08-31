@@ -9,10 +9,9 @@ void tag_metric::Loop()
 {
 	//if (fChain == 0) return;
 
-	string tester = "Gets to here...";
 
 
-
+	
 
 	first_pass = true;
 
@@ -33,15 +32,18 @@ void tag_metric::Loop()
 
 	// Blank output tree.
 	outputtree = new TNtuple("outputtree","Jet Level Tree",
-	"jet_pt:jet_truthflav:jet_mv2c20");
+	"jet_pt:jet_truthflav:jet_mv2c20:jet_mv2c10:jet_mv2c00");
 
 	
+
 	// Turn off all branches; switch on those wanted.
 	fChain->SetBranchStatus("*",0);
 
 	fChain->SetBranchStatus("jet_pt",1);
 	fChain->SetBranchStatus("jet_truthflav",1);
 	fChain->SetBranchStatus("jet_mv2c20",1);
+	fChain->SetBranchStatus("jet_mv2c10",1);
+	fChain->SetBranchStatus("jet_mv2c00",1);
 
 
 
@@ -64,12 +66,20 @@ void tag_metric::Loop()
 
 			// Dereference the arrays (* binding) THEN index.
 
+
+
 			pt = (*jet_pt)[i];
 			truthflav = (*jet_truthflav)[i];
 			mv2c20 = (*jet_mv2c20)[i];
+			mv2c10 = (*jet_mv2c10)[i];
+			mv2c00 = (*jet_mv2c00)[i];
+
+
 
 			// Fill da tree.
-			outputtree->Fill(pt,truthflav,mv2c20);
+			outputtree->Fill(pt,truthflav,mv2c20,mv2c10,mv2c00);
+
+
 
 			i++;
 		}   	
