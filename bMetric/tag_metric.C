@@ -32,7 +32,9 @@ void tag_metric::Loop()
 
 	// Blank output tree.
 	outputtree = new TNtuple("outputtree","Jet Level Tree",
-	"jet_pt:jet_truthflav:jet_mv2c20:jet_mv2c10:jet_mv2c00");
+	"jet_pt:jet_truthflav:jet_mv2c20:jet_mv2c10:jet_mv2c00:"
+	"jet_sv0_sig3d:jet_sv1_sig3d:jet_ip3d_llr:jet_jf_llr:"
+	"jet_jfcombnn_llr:jet_sv1ip3d:jet_ip2d_llr");
 
 	
 
@@ -44,6 +46,14 @@ void tag_metric::Loop()
 	fChain->SetBranchStatus("jet_mv2c20",1);
 	fChain->SetBranchStatus("jet_mv2c10",1);
 	fChain->SetBranchStatus("jet_mv2c00",1);
+	fChain->SetBranchStatus("jet_sv0_sig3d",1);
+	fChain->SetBranchStatus("jet_sv1_sig3d",1);
+	fChain->SetBranchStatus("jet_ip3d_llr",1);
+	fChain->SetBranchStatus("jet_jf_llr",1);
+	fChain->SetBranchStatus("jet_jfcombnn_llr",1);
+	fChain->SetBranchStatus("jet_sv1ip3d",1);
+	fChain->SetBranchStatus("jet_ip2d_llr",1);
+	
 
 
 
@@ -73,11 +83,22 @@ void tag_metric::Loop()
 			mv2c20 = (*jet_mv2c20)[i];
 			mv2c10 = (*jet_mv2c10)[i];
 			mv2c00 = (*jet_mv2c00)[i];
+			sv0_sig3d = (*jet_sv0_sig3d)[i];
+			mv2c20 = (*jet_mv2c20)[i];
+			mv2c10 = (*jet_mv2c10)[i];
+			mv2c00 = (*jet_mv2c00)[i];
+			ip3d_llr = (*jet_ip3d_llr)[i];
+			sv1_sig3d = (*jet_sv1_sig3d)[i];
+			jf_llr = (*jet_jf_llr)[i];
+			jfcombnn_llr = (*jet_jfcombnn_llr)[i];
+			sv1ip3d = (*jet_sv1ip3d)[i];
+			ip2d_llr = (*jet_ip2d_llr)[i];
 
 
 
 			// Fill da tree.
-			outputtree->Fill(pt,truthflav,mv2c20,mv2c10,mv2c00);
+			outputtree->Fill(pt,truthflav,mv2c20,mv2c10,mv2c00,
+				sv0_sig3d,sv1_sig3d,ip3d_llr,jf_llr,jfcombnn_llr,sv1ip3d,ip2d_llr);
 
 
 

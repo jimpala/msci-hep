@@ -546,10 +546,17 @@ public :
    // Tree params of interest
    double pt;
    double truthflav;
-   double sv0_sig3d;
+   
    double mv2c20;
    double mv2c10;
    double mv2c00;
+   double ip3d_llr;
+   double sv0_sig3d;
+   double sv1_sig3d;
+   double jf_llr;
+   double jfcombnn_llr;
+   double sv1ip3d;
+   double ip2d_llr;
 
 };
 
