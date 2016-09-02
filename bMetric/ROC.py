@@ -93,7 +93,7 @@ def createROC(chain, discrim_var, discrim_nbins, discrim_lo_bound, discrim_hi_bo
     c_rej_plot = []
 
     # Iterate through integrals between discrim variable cut and 1.
-    for this_bin in range(1, end_bin):
+    for this_bin in range(0, end_bin + 1):
 
         # Integrate between current bin and end bin.
         b_int = b_discrim_hist.Integral(this_bin, end_bin)
