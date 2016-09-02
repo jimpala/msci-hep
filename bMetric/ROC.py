@@ -151,9 +151,9 @@ def main():
     # ROC creations.
     createROC(mychain, 'jet_mv2c20', 400, -1, 1)
     createROC(mychain, 'jet_sv0_sig3d', 500, -20, 110)
-    createROC(mychain, 'jet_sv1_sig3d', 500, 0, 540)
-    createROC(mychain, 'jet_ip3d_llr', 400, -16, 42)
-    createROC(mychain, 'jet_ip3d_llr', 400, -18, 32)
+    createROC(mychain, 'jet_sv1_sig3d', 500, 0, 200)
+    createROC(mychain, 'jet_ip2d_llr', 400, -10, 30)
+    createROC(mychain, 'jet_ip3d_llr', 400, -12, 42)
     createROC(mychain, 'jet_jf_llr', 400, -10, 8)
     createROC(mychain, 'jet_jfcombnn_llr', 400, -7.5, 7)
     createROC(mychain, 'jet_sv1ip3d', 400, -16, 50)
