@@ -91,6 +91,7 @@ def createROC(chain, discrim_var, discrim_nbins, discrim_lo_bound, discrim_hi_bo
     b_eff_plot = []
     l_rej_plot = []
     c_rej_plot = []
+    rejected = 0
 
     # Iterate through integrals between discrim variable cut and 1.
     for this_bin in range(0, end_bin + 1):
@@ -104,10 +105,17 @@ def createROC(chain, discrim_var, discrim_nbins, discrim_lo_bound, discrim_hi_bo
         # Append to plot arrays. l and cl are rejection plots,
         # so need to be inverse.
 
-        if l_int > 0 and c_int > 0:
+        
+
+        if l_int > 0 and c_int > 0 and b_int < 0.99:
             b_eff_plot.append(b_int)
             l_rej_plot.append(1/l_int)
             c_rej_plot.append(1/c_int)
+
+        else:
+            rejected += 1
+
+    print "{} rejected:{}".format(discrim_var, rejected)
 
 
     # Plot the ROC curves with these arrays.
@@ -117,6 +125,8 @@ def createROC(chain, discrim_var, discrim_nbins, discrim_lo_bound, discrim_hi_bo
 
     l_curve = TGraph(len(b_eff_input), b_eff_input, l_rej_input)
     c_curve = TGraph(len(b_eff_input), b_eff_input, c_rej_input)
+    print "{} accepted:{}".format(discrim_var, len(b_eff_input))
+    print "{} total:{}".format(discrim_var, len(b_eff_input) + rejected)
 
     l_curve.SaveAs('lROC_{}.root'.format(discrim_var))
     c_curve.SaveAs('cROC_{}.root'.format(discrim_var))
@@ -149,14 +159,14 @@ def main():
 
 
     # ROC creations.
-    createROC(mychain, 'jet_mv2c20', 400, -1, 1)
-    createROC(mychain, 'jet_sv0_sig3d', 500, -20, 110)
-    createROC(mychain, 'jet_sv1_sig3d', 500, 0, 200)
-    createROC(mychain, 'jet_ip2d_llr', 400, -10, 30)
-    createROC(mychain, 'jet_ip3d_llr', 400, -12, 42)
-    createROC(mychain, 'jet_jf_llr', 400, -10, 8)
-    createROC(mychain, 'jet_jfcombnn_llr', 400, -7.5, 7)
-    createROC(mychain, 'jet_sv1ip3d', 400, -16, 50)
+    createROC(mychain, 'jet_mv2c20', 10000, -1, 1)
+    createROC(mychain, 'jet_sv0_sig3d', 10000, -101, 50)
+    createROC(mychain, 'jet_sv1_sig3d', 10000, -101, 50)
+    createROC(mychain, 'jet_ip2d_llr', 10000, -102, 20)
+    createROC(mychain, 'jet_ip3d_llr', 10000, -102, 30)
+    createROC(mychain, 'jet_jf_llr', 10000, -100, 10)
+    createROC(mychain, 'jet_jfcombnn_llr', 10000, -24, 7)
+    createROC(mychain, 'jet_sv1ip3d', 10000, -12, 20)
 
     # Immediately terminate unless in jim_directory mode.
     if mode == jim_directory:
