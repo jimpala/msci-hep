@@ -95,6 +95,13 @@ int main(int argc, char * argv[]) {
     if(jetnum==3) mycut = "sub_leading_pt > 0.03 && sub_sub_leading_pt > 0.03  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
   }
 
+/*
+PSEUDOCODE
+- Split training and test sets 80/20 for both signal & background.
+This may require using the TCut before PrepareTrainingAndTestTree,
+using GetNEntries or something.
+*/
+
 // Tell the factory how to use the training and testing events
   factory->PrepareTrainingAndTestTree( mycut, "SplitMode=random:!V" );
 
