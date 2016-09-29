@@ -61,8 +61,8 @@ void createDatasetGeneral(TString tagPoint, int channel=0,int combinations=2, bo
   reader->AddVariable("delta_phi", &delta_phi);
   reader->AddVariable("delta_r", &delta_r);
   reader->AddVariable("mlj", &mlj);
-//  reader->AddVariable("minl1j", &minl2j);
-//  reader->AddVariable("minl2j", &minl2j);
+  reader->AddVariable("minl1j", &minl2j);
+  reader->AddVariable("minl2j", &minl2j);
 //  reader->AddVariable("train_met", &train_met);
 //  std::string dir    = "../../scripts/tmvaExamples/train/weights_GOOD/";
   std::string dir    = "/unix/atlasvhbb/abell/tmvaTraining/train/weights/";
