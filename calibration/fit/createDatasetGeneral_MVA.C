@@ -65,7 +65,7 @@ void createDatasetGeneral(TString tagPoint, int channel=0,int combinations=2, bo
 //  reader->AddVariable("minl2j", &minl2j);
 //  reader->AddVariable("train_met", &train_met);
 //  std::string dir    = "../../scripts/tmvaExamples/train/weights_GOOD/";
-  std::string dir    = "/unix/atlasvhbb/abell/mc15data7/tmvaTraining/train/weights/";
+  std::string dir    = "/unix/atlasvhbb/abell/tmvaTraining/train/weights/";
   std::string prefix = "tmvaTest";
   std::string suffix = "Overtrain_reference";
   if(channel<=1){
