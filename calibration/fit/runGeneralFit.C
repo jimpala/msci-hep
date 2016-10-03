@@ -23,17 +23,17 @@ void runGeneralFit(int channel=0,
 
   gSystem->Load("libRooFit");
 //  gROOT->ProcessLine(".L createDatasetGeneral.C+");
-  gROOT->ProcessLine(".L createDatasetGeneral_MVA.C+");
+  gROOT->ProcessLine(".L createDatasetGeneral_MVA.C++");
   cout << "Hello" << endl;
 //  gROOT->ProcessLine(".L DataObject.cxx+");
-  gROOT->ProcessLine(".L RhhBinnedPdf.cc+");
-  gROOT->ProcessLine(".L RhhBinnedPdfSymmetricMatrix.cc+");
-  gROOT->ProcessLine(".L RhhBinnedPdfInCategories.cc+");
-  gROOT->ProcessLine(".L RhhBinnedPdfInPtCategories.cc+");
+  gROOT->ProcessLine(".L RhhBinnedPdf.cc++");
+  gROOT->ProcessLine(".L RhhBinnedPdfSymmetricMatrix.cc++");
+  gROOT->ProcessLine(".L RhhBinnedPdfInCategories.cc++");
+  gROOT->ProcessLine(".L RhhBinnedPdfInPtCategories.cc++");
 //  gROOT->ProcessLine(".L CombinatorialTTbarPDF.cxx+");
 //  gROOT->ProcessLine(".L buildUpMultiSampleModel.C+g");
-  gROOT->ProcessLine(".L buildUpMultiSampleModel_MVA.C+g");
-  gROOT->ProcessLine(".L doGeneralFit.C+g");
+  gROOT->ProcessLine(".L buildUpMultiSampleModel_MVA.C++g");
+  gROOT->ProcessLine(".L doGeneralFit.C++g");
 
 
 

@@ -78,9 +78,9 @@ void createDatasetGeneral(TString tagPoint, int channel=0,int combinations=2, bo
 //  reader->BookMVA("BDT_lowpt", dir + prefix + "_lowpt_BDT_Advanced.weights.xml");
 
   reader->BookMVA("BDT_even", dir + prefix + "_even_BDT_" + suffix + ".weights.xml"); //Trained on even events -> apply to odd!!!
-  reader->BookMVA("BDT_lowpt_even", dir + prefix + "_lowpt_even_BDT_" + suffix + ".weights.xml"); //Trained on even events -> apply to odd!!!
+//  reader->BookMVA("BDT_lowpt_even", dir + prefix + "_lowpt_even_BDT_" + suffix + ".weights.xml"); //Trained on even events -> apply to odd!!!
   reader->BookMVA("BDT_odd", dir + prefix + "_odd_BDT_" + suffix + ".weights.xml"); //Trained on off events -> apply to even!!!
-  reader->BookMVA("BDT_lowpt_odd", dir + prefix + "_lowpt_odd_BDT_" + suffix + ".weights.xml"); //Trained on odd events -> apply to even!!!
+//  reader->BookMVA("BDT_lowpt_odd", dir + prefix + "_lowpt_odd_BDT_" + suffix + ".weights.xml"); //Trained on odd events -> apply to even!!!
 
 /*
   reader->BookMVA("BDT_even", dir + prefix + "_even_BDT_Overtrain_reference.weights.xml"); //Trained on even events -> apply to odd!!!
@@ -288,7 +288,7 @@ void createDatasetGeneral(TString tagPoint, int channel=0,int combinations=2, bo
     cout << " sample is: " << sample << " type is: " << type << endl;
 
     TString directory;
-    directory = (tracks) ? "/unix/atlasvhbb/abell/mc15data7/PGS_tracks/outputGeneral_fit_" : "/unix/atlasvhbb/abell/mc15data7/PGS/outputGeneral_fit_";
+    directory = (tracks) ? "/unix/atlasvhbb/abell/mc15data7/PGS_tracks/outputGeneral_fit_" : "/unix/atlasvhbb/abell/tmvaTraining/PGS/outputGeneral_fit_";
 
 //    directory = (tracks) ? "./../../PGS_tracks/outputGeneral_fit_" : "/unix/atlas4/abell/FirstxAOD/abell/ttbarPDFCalibration/mc15data5/PGS/outputGeneral_fit_";
 
@@ -313,7 +313,7 @@ void createDatasetGeneral(TString tagPoint, int channel=0,int combinations=2, bo
     if (data)
     {
 //      directory = (tracks) ? "./../../PGS_tracks/outputGeneral_fit_data_rescaling.root/tree_" : "/unix/atlas4/abell/FirstxAOD/abell/ttbarPDFCalibration/mc15data5/PGS/outputGeneral_fit_data_rescaling.root/tree_";
-      directory = (tracks) ? "/unix/atlasvhbb/abell/mc15data7/PGS_tracks/outputGeneral_fit_data_rescaling.root/tree_" : "/unix/atlasvhbb/abell/mc15data7/PGS/outputGeneral_fit_data_rescaling.root/tree_";
+      directory = (tracks) ? "/unix/atlasvhbb/abell/mc15data7/PGS_tracks/outputGeneral_fit_data_rescaling.root/tree_" : "/unix/atlasvhbb/abell/tmvaTraining/PGS/outputGeneral_fit_data_rescaling.root/tree_";
 
       directory+=type;
     }
