@@ -1,0 +1,121 @@
+Low pt 1
+Jetnum 2
+--- Factory                  : You are running ROOT Version: 5.34/36, Apr 5, 2016
+--- Factory                  : 
+--- Factory                  : _/_/_/_/_/ _|      _|  _|      _|    _|_|   
+--- Factory                  :    _/      _|_|  _|_|  _|      _|  _|    _| 
+--- Factory                  :   _/       _|  _|  _|  _|      _|  _|_|_|_| 
+--- Factory                  :  _/        _|      _|    _|  _|    _|    _| 
+--- Factory                  : _/         _|      _|      _|      _|    _| 
+--- Factory                  : 
+--- Factory                  : ___________TMVA Version 4.2.0, Sep 19, 2013
+--- Factory                  : 
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- Factory                  : Add Tree tree_55 of type Signal with 343061 events
+--- Factory                  : Add Tree tree_55 of type Signal with 343061 events
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Factory                  : Add Tree tree_51 of type Background with 269142 events
+--- Factory                  : Add Tree tree_51 of type Background with 269142 events
+--- Factory                  : Add Tree tree_11 of type Background with 1125965 events
+--- Factory                  : Add Tree tree_11 of type Background with 1125965 events
+--- DataSetInfo              : Class index : 0  name : Signal
+--- DataSetInfo              : Class index : 1  name : Background
+--- Factory                  : Booking method: [1mBDT_ABbase[0m
+--- DataSetFactory           : Splitmode is: "RANDOM" the mixmode is: "SAMEASSPLITMODE"
+--- DataSetFactory           : Create training and testing trees -- looping over class "Signal" ...
+--- DataSetFactory           : Weight expression for class 'Signal': "weight"
+--- DataSetFactory           : Create training and testing trees -- looping over class "Background" ...
+--- DataSetFactory           : Weight expression for class 'Background': "weight"
+--- DataSetFactory           : Number of events in input trees (after possible flattening of arrays):
+--- DataSetFactory           :     Signal          -- number of events       : 343061  / sum of weights: 9072.44
+--- DataSetFactory           :     Background      -- number of events       : 1395107  / sum of weights: 185272
+--- DataSetFactory           :     Signal     tree -- total number of entries: 343061
+--- DataSetFactory           :     Background tree -- total number of entries: 1395107
+--- DataSetFactory           : Preselection: (will NOT affect number of requested training and testing events)
+--- DataSetFactory           :     Signal     requirement: "sub_leading_pt < 0.03  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))"
+--- DataSetFactory           :     Signal          -- number of events passed: 46642  / sum of weights: 1196.87
+--- DataSetFactory           :     Signal          -- efficiency             : 0.131924
+--- DataSetFactory           :     Background requirement: "sub_leading_pt < 0.03  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))"
+--- DataSetFactory           :     Background      -- number of events passed: 112981  / sum of weights: 2550.16
+--- DataSetFactory           :     Background      -- efficiency             : 0.0137644
+--- DataSetFactory           :  you have opted for interpreting the requested number of training/testing events
+--- DataSetFactory           :  to be the number of events AFTER your preselection cuts
+--- DataSetFactory           :  you have opted for interpreting the requested number of training/testing events
+--- DataSetFactory           :  to be the number of events AFTER your preselection cuts
+--- DataSetFactory           : No weight renormalisation applied: use original global and event weights
+--- DataSetFactory           : Create internal training tree
+--- DataSetFactory           : Create internal testing tree
+--- DataSetInfo              : Correlation matrix (Signal):
+--- DataSetInfo              : ---------------------------------------------------------------------------------------------
+--- DataSetInfo              :                 imbalance leading_pt sub_leading_pt delta_phi delta_r     mlj  minl1j  minl2j
+--- DataSetInfo              :      imbalance:    +1.000     +0.888         -0.257    -0.031  -0.054  +0.240  +0.009  -0.168
+--- DataSetInfo              :     leading_pt:    +0.888     +1.000         -0.022    +0.013  -0.030  +0.233  -0.029  -0.211
+--- DataSetInfo              : sub_leading_pt:    -0.257     -0.022         +1.000    +0.046  +0.025  +0.038  -0.031  -0.009
+--- DataSetInfo              :      delta_phi:    -0.031     +0.013         +0.046    +1.000  +0.481  -0.176  -0.399  -0.236
+--- DataSetInfo              :        delta_r:    -0.054     -0.030         +0.025    +0.481  +1.000  -0.062  -0.172  -0.061
+--- DataSetInfo              :            mlj:    +0.240     +0.233         +0.038    -0.176  -0.062  +1.000  +0.438  +0.283
+--- DataSetInfo              :         minl1j:    +0.009     -0.029         -0.031    -0.399  -0.172  +0.438  +1.000  -0.080
+--- DataSetInfo              :         minl2j:    -0.168     -0.211         -0.009    -0.236  -0.061  +0.283  -0.080  +1.000
+--- DataSetInfo              : ---------------------------------------------------------------------------------------------
+--- DataSetInfo              : Correlation matrix (Background):
+--- DataSetInfo              : ---------------------------------------------------------------------------------------------
+--- DataSetInfo              :                 imbalance leading_pt sub_leading_pt delta_phi delta_r     mlj  minl1j  minl2j
+--- DataSetInfo              :      imbalance:    +1.000     +0.825         -0.207    +0.023  +0.013  +0.360  +0.081  -0.072
+--- DataSetInfo              :     leading_pt:    +0.825     +1.000         +0.017    +0.005  +0.009  +0.491  +0.104  -0.027
+--- DataSetInfo              : sub_leading_pt:    -0.207     +0.017         +1.000    +0.003  -0.025  +0.047  +0.020  -0.008
+--- DataSetInfo              :      delta_phi:    +0.023     +0.005         +0.003    +1.000  +0.481  -0.116  -0.359  -0.220
+--- DataSetInfo              :        delta_r:    +0.013     +0.009         -0.025    +0.481  +1.000  +0.036  -0.141  -0.081
+--- DataSetInfo              :            mlj:    +0.360     +0.491         +0.047    -0.116  +0.036  +1.000  +0.468  +0.339
+--- DataSetInfo              :         minl1j:    +0.081     +0.104         +0.020    -0.359  -0.141  +0.468  +1.000  -0.019
+--- DataSetInfo              :         minl2j:    -0.072     -0.027         -0.008    -0.220  -0.081  +0.339  -0.019  +1.000
+--- DataSetInfo              : ---------------------------------------------------------------------------------------------
+--- DataSetFactory           :  
+--- Factory                  : Booking method: [1mBDT_GBMbase[0m
+[1;31m--- <WARNING> BDT_GBMbase              : the option *InverseBoostNegWeights* does not exist for BoostType=Grad --> change to *IgnoreNegWeightsInTraining*[0m
+--- Factory                  : 
+--- Factory                  : current transformation string: 'I'
+--- Factory                  : Create Transformation "I" with events from all classes.
+--- Id                       : Transformation, Variable selection : 
+--- Id                       : Input : variable 'imbalance' (index=0).   <---> Output : variable 'imbalance' (index=0).
+--- Id                       : Input : variable 'leading_pt' (index=1).   <---> Output : variable 'leading_pt' (index=1).
+--- Id                       : Input : variable 'sub_leading_pt' (index=2).   <---> Output : variable 'sub_leading_pt' (index=2).
+--- Id                       : Input : variable 'delta_phi' (index=3).   <---> Output : variable 'delta_phi' (index=3).
+--- Id                       : Input : variable 'delta_r' (index=4).   <---> Output : variable 'delta_r' (index=4).
+--- Id                       : Input : variable 'mlj' (index=5).   <---> Output : variable 'mlj' (index=5).
+--- Id                       : Input : variable 'minl1j' (index=6).   <---> Output : variable 'minl1j' (index=6).
+--- Id                       : Input : variable 'minl2j' (index=7).   <---> Output : variable 'minl2j' (index=7).
+--- Id                       : Preparing the Identity transformation...
+--- TFHandler_Factory        : -----------------------------------------------------------------------------------------
+--- TFHandler_Factory        :       Variable              Mean              RMS      [        Min              Max ]
+--- TFHandler_Factory        : -----------------------------------------------------------------------------------------
+--- TFHandler_Factory        :      imbalance:         0.44299         0.19071   [       0.0014233         0.96483 ]
+--- TFHandler_Factory        :     leading_pt:        0.077696        0.048253   [        0.030001          1.4016 ]
+--- TFHandler_Factory        : sub_leading_pt:        0.024748       0.0028385   [        0.020000        0.030000 ]
+--- TFHandler_Factory        :      delta_phi:          1.4871         0.90638   [      0.00010329          3.1416 ]
+--- TFHandler_Factory        :        delta_r:          2.6574          1.4515   [         0.37028          7.9083 ]
+--- TFHandler_Factory        :            mlj:        0.093950        0.039883   [        0.016065          1.3042 ]
+--- TFHandler_Factory        :         minl1j:          1.9443         0.74020   [         0.39199          5.2944 ]
+--- TFHandler_Factory        :         minl2j:          1.7668         0.74097   [         0.38015          5.1536 ]
+--- TFHandler_Factory        : -----------------------------------------------------------------------------------------
+--- TFHandler_Factory        : Plot event variables for Id
+--- TFHandler_Factory        : Create scatter and profile plots in target-file directory: 
+--- TFHandler_Factory        : TMVA_2jet_lowpt_even.root:/InputVariables_Id/CorrelationPlots
+--- TFHandler_Factory        :  
+--- TFHandler_Factory        : Ranking input variables (method unspecific)...
+--- IdTransformation         : Ranking result (top variable is best ranked)
+--- IdTransformation         : ---------------------------------------
+--- IdTransformation         : Rank : Variable       : Separation
+--- IdTransformation         : ---------------------------------------
+--- IdTransformation         :    1 : mlj            : 8.736e-02
+--- IdTransformation         :    2 : sub_leading_pt : 3.888e-02
+--- IdTransformation         :    3 : minl1j         : 2.728e-02
+--- IdTransformation         :    4 : leading_pt     : 1.704e-02
+--- IdTransformation         :    5 : imbalance      : 1.358e-02
+--- IdTransformation         :    6 : minl2j         : 1.317e-02
+--- IdTransformation         :    7 : delta_r        : 1.182e-02
+--- IdTransformation         :    8 : delta_phi      : 4.547e-03
+--- IdTransformation         : ---------------------------------------
+--- Factory                  :  
+--- Factory                  : Train all methods for Classification ...
+--- Factory                  : Train method: BDT_ABbase for Classification
+--- BDT_ABbase               : Begin training

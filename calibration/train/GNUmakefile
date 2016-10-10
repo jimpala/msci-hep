@@ -1,5 +1,5 @@
 PROGNAME      = tmvaTrain
-SOURCEFILES   = tmvaTrain.cc
+SOURCEFILES   = tmvaTrainLocal.cc
 INCLFILES     = Event.h
 INCLDIR       = ../inc
 INCLUDES      = $(INCLDIR)/$(INCLFILES)
