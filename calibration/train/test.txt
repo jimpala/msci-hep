@@ -1,0 +1,692 @@
+Low pt 0
+Jetnum 2
+--- Factory                  : You are running ROOT Version: 5.34/36, Apr 5, 2016
+--- Factory                  : 
+--- Factory                  : _/_/_/_/_/ _|      _|  _|      _|    _|_|   
+--- Factory                  :    _/      _|_|  _|_|  _|      _|  _|    _| 
+--- Factory                  :   _/       _|  _|  _|  _|      _|  _|_|_|_| 
+--- Factory                  :  _/        _|      _|    _|  _|    _|    _| 
+--- Factory                  : _/         _|      _|      _|      _|    _| 
+--- Factory                  : 
+--- Factory                  : ___________TMVA Version 4.2.0, Sep 19, 2013
+--- Factory                  : 
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- Factory                  : Add Tree tree_55 of type Signal with 343061 events
+--- Factory                  : Add Tree tree_55 of type Signal with 343061 events
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Factory                  : Add Tree tree_51 of type Background with 269142 events
+--- Factory                  : Add Tree tree_51 of type Background with 269142 events
+--- Factory                  : Add Tree tree_11 of type Background with 1125965 events
+--- Factory                  : Add Tree tree_11 of type Background with 1125965 events
+--- DataSetInfo              : Class index : 0  name : Signal
+--- DataSetInfo              : Class index : 1  name : Background
+--- Factory                  : Booking method: [1mBDT_ABbase[0m
+--- DataSetFactory           : Splitmode is: "RANDOM" the mixmode is: "SAMEASSPLITMODE"
+--- DataSetFactory           : Create training and testing trees -- looping over class "Signal" ...
+--- DataSetFactory           : Weight expression for class 'Signal': "weight"
+--- DataSetFactory           : Create training and testing trees -- looping over class "Background" ...
+--- DataSetFactory           : Weight expression for class 'Background': "weight"
+--- DataSetFactory           : Number of events in input trees (after possible flattening of arrays):
+--- DataSetFactory           :     Signal          -- number of events       : 343061  / sum of weights: 9072.44
+--- DataSetFactory           :     Background      -- number of events       : 1395107  / sum of weights: 185272
+--- DataSetFactory           :     Signal     tree -- total number of entries: 343061
+--- DataSetFactory           :     Background tree -- total number of entries: 1395107
+--- DataSetFactory           : Preselection: (will NOT affect number of requested training and testing events)
+--- DataSetFactory           :     Signal     requirement: "sub_leading_pt > 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))"
+--- DataSetFactory           :     Signal          -- number of events passed: 189696  / sum of weights: 4981.87
+--- DataSetFactory           :     Signal          -- efficiency             : 0.549121
+--- DataSetFactory           :     Background requirement: "sub_leading_pt > 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))"
+--- DataSetFactory           :     Background      -- number of events passed: 102308  / sum of weights: 2639.47
+--- DataSetFactory           :     Background      -- efficiency             : 0.0142465
+--- DataSetFactory           :  you have opted for interpreting the requested number of training/testing events
+--- DataSetFactory           :  to be the number of events AFTER your preselection cuts
+--- DataSetFactory           :  you have opted for interpreting the requested number of training/testing events
+--- DataSetFactory           :  to be the number of events AFTER your preselection cuts
+--- DataSetFactory           : No weight renormalisation applied: use original global and event weights
+--- DataSetFactory           : Create internal training tree
+--- DataSetFactory           : Create internal testing tree
+--- DataSetInfo              : Correlation matrix (Signal):
+--- DataSetInfo              : ---------------------------------------------------------------------------------------------
+--- DataSetInfo              :                 imbalance leading_pt sub_leading_pt delta_phi delta_r     mlj  minl1j  minl2j
+--- DataSetInfo              :      imbalance:    +1.000     +0.436         -0.349    -0.064  -0.025  +0.043  +0.009  -0.081
+--- DataSetInfo              :     leading_pt:    +0.436     +1.000         +0.642    +0.364  +0.147  +0.141  -0.399  -0.336
+--- DataSetInfo              : sub_leading_pt:    -0.349     +0.642         +1.000    +0.422  +0.167  +0.120  -0.409  -0.272
+--- DataSetInfo              :      delta_phi:    -0.064     +0.364         +0.422    +1.000  +0.477  -0.130  -0.546  -0.402
+--- DataSetInfo              :        delta_r:    -0.025     +0.147         +0.167    +0.477  +1.000  -0.045  -0.220  -0.163
+--- DataSetInfo              :            mlj:    +0.043     +0.141         +0.120    -0.130  -0.045  +1.000  +0.363  +0.368
+--- DataSetInfo              :         minl1j:    +0.009     -0.399         -0.409    -0.546  -0.220  +0.363  +1.000  +0.237
+--- DataSetInfo              :         minl2j:    -0.081     -0.336         -0.272    -0.402  -0.163  +0.368  +0.237  +1.000
+--- DataSetInfo              : ---------------------------------------------------------------------------------------------
+--- DataSetInfo              : Correlation matrix (Background):
+--- DataSetInfo              : ---------------------------------------------------------------------------------------------
+--- DataSetInfo              :                 imbalance leading_pt sub_leading_pt delta_phi delta_r     mlj  minl1j  minl2j
+--- DataSetInfo              :      imbalance:    +1.000     +0.571         -0.178    -0.008  -0.019  +0.263  +0.043  -0.013
+--- DataSetInfo              :     leading_pt:    +0.571     +1.000         +0.585    +0.140  +0.059  +0.613  -0.020  -0.037
+--- DataSetInfo              : sub_leading_pt:    -0.178     +0.585         +1.000    +0.197  +0.091  +0.433  -0.068  -0.052
+--- DataSetInfo              :      delta_phi:    -0.008     +0.140         +0.197    +1.000  +0.506  -0.092  -0.486  -0.267
+--- DataSetInfo              :        delta_r:    -0.019     +0.059         +0.091    +0.506  +1.000  +0.024  -0.200  -0.080
+--- DataSetInfo              :            mlj:    +0.263     +0.613         +0.433    -0.092  +0.024  +1.000  +0.387  +0.274
+--- DataSetInfo              :         minl1j:    +0.043     -0.020         -0.068    -0.486  -0.200  +0.387  +1.000  +0.075
+--- DataSetInfo              :         minl2j:    -0.013     -0.037         -0.052    -0.267  -0.080  +0.274  +0.075  +1.000
+--- DataSetInfo              : ---------------------------------------------------------------------------------------------
+--- DataSetFactory           :  
+--- Factory                  : Booking method: [1mBDT_GBMbase[0m
+[1;31m--- <WARNING> BDT_GBMbase              : the option *InverseBoostNegWeights* does not exist for BoostType=Grad --> change to *IgnoreNegWeightsInTraining*[0m
+--- Factory                  : 
+--- Factory                  : current transformation string: 'I'
+--- Factory                  : Create Transformation "I" with events from all classes.
+--- Id                       : Transformation, Variable selection : 
+--- Id                       : Input : variable 'imbalance' (index=0).   <---> Output : variable 'imbalance' (index=0).
+--- Id                       : Input : variable 'leading_pt' (index=1).   <---> Output : variable 'leading_pt' (index=1).
+--- Id                       : Input : variable 'sub_leading_pt' (index=2).   <---> Output : variable 'sub_leading_pt' (index=2).
+--- Id                       : Input : variable 'delta_phi' (index=3).   <---> Output : variable 'delta_phi' (index=3).
+--- Id                       : Input : variable 'delta_r' (index=4).   <---> Output : variable 'delta_r' (index=4).
+--- Id                       : Input : variable 'mlj' (index=5).   <---> Output : variable 'mlj' (index=5).
+--- Id                       : Input : variable 'minl1j' (index=6).   <---> Output : variable 'minl1j' (index=6).
+--- Id                       : Input : variable 'minl2j' (index=7).   <---> Output : variable 'minl2j' (index=7).
+--- Id                       : Preparing the Identity transformation...
+--- TFHandler_Factory        : -----------------------------------------------------------------------------------------
+--- TFHandler_Factory        :       Variable              Mean              RMS      [        Min              Max ]
+--- TFHandler_Factory        : -----------------------------------------------------------------------------------------
+--- TFHandler_Factory        :      imbalance:         0.24630         0.17488   [      1.2072e-06         0.94561 ]
+--- TFHandler_Factory        :     leading_pt:        0.099657        0.058899   [        0.030155          1.4470 ]
+--- TFHandler_Factory        : sub_leading_pt:        0.057361        0.031060   [        0.030000          1.0659 ]
+--- TFHandler_Factory        :      delta_phi:          1.8901         0.87381   [      2.5034e-05          3.1416 ]
+--- TFHandler_Factory        :        delta_r:          2.8557          1.2292   [         0.38583          7.4527 ]
+--- TFHandler_Factory        :            mlj:         0.10252        0.048824   [        0.017186          1.1266 ]
+--- TFHandler_Factory        :         minl1j:          1.6939         0.68247   [         0.38916          5.0546 ]
+--- TFHandler_Factory        :         minl2j:          1.5789         0.67903   [         0.38652          5.4498 ]
+--- TFHandler_Factory        : -----------------------------------------------------------------------------------------
+--- TFHandler_Factory        : Plot event variables for Id
+--- TFHandler_Factory        : Create scatter and profile plots in target-file directory: 
+--- TFHandler_Factory        : TMVA_2jet_even.root:/InputVariables_Id/CorrelationPlots
+--- TFHandler_Factory        :  
+--- TFHandler_Factory        : Ranking input variables (method unspecific)...
+--- IdTransformation         : Ranking result (top variable is best ranked)
+--- IdTransformation         : ---------------------------------------
+--- IdTransformation         : Rank : Variable       : Separation
+--- IdTransformation         : ---------------------------------------
+--- IdTransformation         :    1 : mlj            : 1.610e-01
+--- IdTransformation         :    2 : minl1j         : 6.233e-02
+--- IdTransformation         :    3 : sub_leading_pt : 3.395e-02
+--- IdTransformation         :    4 : leading_pt     : 2.910e-02
+--- IdTransformation         :    5 : minl2j         : 2.552e-02
+--- IdTransformation         :    6 : delta_phi      : 2.491e-02
+--- IdTransformation         :    7 : imbalance      : 2.411e-02
+--- IdTransformation         :    8 : delta_r        : 1.735e-02
+--- IdTransformation         : ---------------------------------------
+--- Factory                  :  
+--- Factory                  : Train all methods for Classification ...
+--- Factory                  : Train method: BDT_ABbase for Classification
+--- BDT_ABbase               : Begin training
+--- BDT_ABbase               :  found and suggest the following possible pre-selection cuts 
+--- BDT_ABbase               : as option DoPreselection was not used, these cuts however will not be performed, but the training will see the full sample
+--- BDT_ABbase               : Events with weight == 0 are going to be simply ignored 
+--- BDT_ABbase               : <InitEventSample> For classification trees, 
+--- BDT_ABbase               :  the effective number of backgrounds is scaled to match 
+--- BDT_ABbase               :  the signal. Othersise the first boosting step would do 'just that'!
+--- BDT_ABbase               : re-normlise events such that Sig and Bkg have respective sum of weights = 1
+--- BDT_ABbase               :   sig->sig*24.2297ev. bkg->bkg*43.1227ev.
+--- BDT_ABbase               : #events: (reweighted) sig: 60453.5 bkg: 60453.5
+--- BDT_ABbase               : #events: (unweighted) sig: 86029 bkg: 34878
+--- BDT_ABbase               : Training 200 Decision Trees ... patience please
+--- BinaryTree               : The minimal node size MinNodeSize=5 fMinNodeSize=5% is translated to an actual number of events = 6045.35 for the training sample size of 120907
+--- BinaryTree               : Note: This number will be taken as absolute minimum in the node, 
+--- BinaryTree               :       in terms of 'weighted events' and unweighted ones !! 
+--- BDT_ABbase               : <Train> elapsed time: [1;31m27 sec[0m                              
+--- BDT_ABbase               : <Train> average number of nodes (w/o pruning) : 10
+--- BDT_ABbase               : End of training                                              
+--- BDT_ABbase               : Elapsed time for training with 145864 events: [1;31m28 sec[0m         
+--- BDT_ABbase               : Create MVA output for classification on training sample
+--- BDT_ABbase               : Evaluation of BDT_ABbase on training sample (145864 events)
+--- BDT_ABbase               : Elapsed time for evaluation of 145864 events: [1;31m4.34 sec[0m       
+--- BDT_ABbase               : Creating weight file in xml format: [0;36mweights/tmvaTest_2jet_even_BDT_ABbase.weights.xml[0m
+--- BDT_ABbase               : Creating standalone response class: [0;36mweights/tmvaTest_2jet_even_BDT_ABbase.class.C[0m
+--- BDT_ABbase               : TMVA_2jet_even.root:/Method_BDT/BDT_ABbase
+--- Factory                  : Training finished
+--- Factory                  : Train method: BDT_GBMbase for Classification
+--- BDT_GBMbase              : Begin training
+--- BDT_GBMbase              :  found and suggest the following possible pre-selection cuts 
+--- BDT_GBMbase              : as option DoPreselection was not used, these cuts however will not be performed, but the training will see the full sample
+--- BDT_GBMbase              : Events with weight == 0 are going to be simply ignored 
+--- BDT_GBMbase              : <InitEventSample> For classification trees, 
+--- BDT_GBMbase              :  the effective number of backgrounds is scaled to match 
+--- BDT_GBMbase              :  the signal. Othersise the first boosting step would do 'just that'!
+--- BDT_GBMbase              : re-normlise events such that Sig and Bkg have respective sum of weights = 1
+--- BDT_GBMbase              :   sig->sig*24.2297ev. bkg->bkg*43.1227ev.
+--- BDT_GBMbase              : #events: (reweighted) sig: 60453.5 bkg: 60453.5
+--- BDT_GBMbase              : #events: (unweighted) sig: 86029 bkg: 34878
+--- BDT_GBMbase              : Training 200 Decision Trees ... patience please
+--- BinaryTree               : The minimal node size MinNodeSize=5 fMinNodeSize=5% is translated to an actual number of events = 6045.35 for the training sample size of 120907
+--- BinaryTree               : Note: This number will be taken as absolute minimum in the node, 
+--- BinaryTree               :       in terms of 'weighted events' and unweighted ones !! 
+--- BDT_GBMbase              : <Train> elapsed time: [1;31m37 sec[0m                              
+--- BDT_GBMbase              : <Train> average number of nodes (w/o pruning) : 11
+--- BDT_GBMbase              : End of training                                              
+--- BDT_GBMbase              : Elapsed time for training with 145864 events: [1;31m37.9 sec[0m         
+--- BDT_GBMbase              : Create MVA output for classification on training sample
+--- BDT_GBMbase              : Evaluation of BDT_GBMbase on training sample (145864 events)
+--- BDT_GBMbase              : Elapsed time for evaluation of 145864 events: [1;31m4.57 sec[0m       
+--- BDT_GBMbase              : Creating weight file in xml format: [0;36mweights/tmvaTest_2jet_even_BDT_GBMbase.weights.xml[0m
+--- BDT_GBMbase              : Creating standalone response class: [0;36mweights/tmvaTest_2jet_even_BDT_GBMbase.class.C[0m
+--- BDT_GBMbase              : TMVA_2jet_even.root:/Method_BDT/BDT_GBMbase
+--- Factory                  : Training finished
+--- Factory                  : 
+--- Factory                  : Ranking input variables (method specific)...
+--- BDT_ABbase               : Ranking result (top variable is best ranked)
+--- BDT_ABbase               : ------------------------------------------------
+--- BDT_ABbase               : Rank : Variable       : Variable Importance
+--- BDT_ABbase               : ------------------------------------------------
+--- BDT_ABbase               :    1 : mlj            : 8.530e-01
+--- BDT_ABbase               :    2 : sub_leading_pt : 7.579e-02
+--- BDT_ABbase               :    3 : minl1j         : 2.607e-02
+--- BDT_ABbase               :    4 : minl2j         : 1.824e-02
+--- BDT_ABbase               :    5 : leading_pt     : 9.417e-03
+--- BDT_ABbase               :    6 : delta_phi      : 7.469e-03
+--- BDT_ABbase               :    7 : delta_r        : 5.753e-03
+--- BDT_ABbase               :    8 : imbalance      : 4.298e-03
+--- BDT_ABbase               : ------------------------------------------------
+--- BDT_GBMbase              : Ranking result (top variable is best ranked)
+--- BDT_GBMbase              : ------------------------------------------------
+--- BDT_GBMbase              : Rank : Variable       : Variable Importance
+--- BDT_GBMbase              : ------------------------------------------------
+--- BDT_GBMbase              :    1 : mlj            : 5.670e-01
+--- BDT_GBMbase              :    2 : minl2j         : 1.044e-01
+--- BDT_GBMbase              :    3 : minl1j         : 9.391e-02
+--- BDT_GBMbase              :    4 : sub_leading_pt : 7.256e-02
+--- BDT_GBMbase              :    5 : delta_r        : 4.612e-02
+--- BDT_GBMbase              :    6 : leading_pt     : 4.405e-02
+--- BDT_GBMbase              :    7 : delta_phi      : 3.951e-02
+--- BDT_GBMbase              :    8 : imbalance      : 3.249e-02
+--- BDT_GBMbase              : ------------------------------------------------
+--- Factory                  : 
+--- Factory                  : === Destroy and recreate all methods via weight files for testing ===
+--- Factory                  : 
+--- MethodBase               : Reading weight file: [0;36mweights/tmvaTest_2jet_even_BDT_ABbase.weights.xml[0m
+--- BDT_ABbase               : Read method "BDT_ABbase" of type "BDT"
+--- BDT_ABbase               : MVA method was trained with TMVA Version: 4.2.0
+--- BDT_ABbase               : MVA method was trained with ROOT Version: 5.34/36
+--- MethodBase               : Reading weight file: [0;36mweights/tmvaTest_2jet_even_BDT_GBMbase.weights.xml[0m
+--- BDT_GBMbase              : Read method "BDT_GBMbase" of type "BDT"
+--- BDT_GBMbase              : MVA method was trained with TMVA Version: 4.2.0
+--- BDT_GBMbase              : MVA method was trained with ROOT Version: 5.34/36
+--- Factory                  : Test all methods...
+--- Factory                  : Test method: BDT_ABbase for Classification performance
+--- BDT_ABbase               : Evaluation of BDT_ABbase on testing sample (146140 events)
+--- BDT_ABbase               : Elapsed time for evaluation of 146140 events: [1;31m3.75 sec[0m       
+--- Factory                  : Test method: BDT_GBMbase for Classification performance
+--- BDT_GBMbase              : Evaluation of BDT_GBMbase on testing sample (146140 events)
+--- BDT_GBMbase              : Elapsed time for evaluation of 146140 events: [1;31m3.99 sec[0m       
+--- Factory                  : Evaluate all methods...
+--- Factory                  : Evaluate classifier: BDT_ABbase
+--- BDT_ABbase               : Loop over test events and fill histograms with classifier response...
+--- Factory                  : Write evaluation histograms to file
+--- TFHandler_BDT_ABbase     : Plot event variables for BDT_ABbase
+--- TFHandler_BDT_ABbase     : -----------------------------------------------------------------------------------------
+--- TFHandler_BDT_ABbase     :       Variable              Mean              RMS      [        Min              Max ]
+--- TFHandler_BDT_ABbase     : -----------------------------------------------------------------------------------------
+--- TFHandler_BDT_ABbase     :      imbalance:         0.24505         0.17319   [      4.0402e-06         0.92465 ]
+--- TFHandler_BDT_ABbase     :     leading_pt:        0.098829        0.057717   [        0.030100          1.6317 ]
+--- TFHandler_BDT_ABbase     : sub_leading_pt:        0.057116        0.029678   [        0.030000         0.96989 ]
+--- TFHandler_BDT_ABbase     :      delta_phi:          1.9020         0.86730   [      0.00014079          3.1416 ]
+--- TFHandler_BDT_ABbase     :        delta_r:          2.8653          1.2276   [         0.39366          7.3245 ]
+--- TFHandler_BDT_ABbase     :            mlj:         0.10249        0.048249   [        0.018704          1.2924 ]
+--- TFHandler_BDT_ABbase     :         minl1j:          1.6951         0.68255   [         0.39121          5.5110 ]
+--- TFHandler_BDT_ABbase     :         minl2j:          1.5820         0.67536   [         0.39054          5.1801 ]
+--- TFHandler_BDT_ABbase     : -----------------------------------------------------------------------------------------
+--- TFHandler_BDT_ABbase     : Create scatter and profile plots in target-file directory: 
+--- TFHandler_BDT_ABbase     : TMVA_2jet_even.root:/Method_BDT/BDT_ABbase/CorrelationPlots
+--- Factory                  : Evaluate classifier: BDT_GBMbase
+--- BDT_GBMbase              : Loop over test events and fill histograms with classifier response...
+--- Factory                  : Write evaluation histograms to file
+--- TFHandler_BDT_GBMbase    : Plot event variables for BDT_GBMbase
+--- TFHandler_BDT_GBMbase    : -----------------------------------------------------------------------------------------
+--- TFHandler_BDT_GBMbase    :       Variable              Mean              RMS      [        Min              Max ]
+--- TFHandler_BDT_GBMbase    : -----------------------------------------------------------------------------------------
+--- TFHandler_BDT_GBMbase    :      imbalance:         0.24505         0.17319   [      4.0402e-06         0.92465 ]
+--- TFHandler_BDT_GBMbase    :     leading_pt:        0.098829        0.057717   [        0.030100          1.6317 ]
+--- TFHandler_BDT_GBMbase    : sub_leading_pt:        0.057116        0.029678   [        0.030000         0.96989 ]
+--- TFHandler_BDT_GBMbase    :      delta_phi:          1.9020         0.86730   [      0.00014079          3.1416 ]
+--- TFHandler_BDT_GBMbase    :        delta_r:          2.8653          1.2276   [         0.39366          7.3245 ]
+--- TFHandler_BDT_GBMbase    :            mlj:         0.10249        0.048249   [        0.018704          1.2924 ]
+--- TFHandler_BDT_GBMbase    :         minl1j:          1.6951         0.68255   [         0.39121          5.5110 ]
+--- TFHandler_BDT_GBMbase    :         minl2j:          1.5820         0.67536   [         0.39054          5.1801 ]
+--- TFHandler_BDT_GBMbase    : -----------------------------------------------------------------------------------------
+--- TFHandler_BDT_GBMbase    : Create scatter and profile plots in target-file directory: 
+--- TFHandler_BDT_GBMbase    : TMVA_2jet_even.root:/Method_BDT/BDT_GBMbase/CorrelationPlots
+--- Factory                  : 
+--- Factory                  : Inter-MVA correlation matrix (signal):
+--- Factory                  : -----------------------------------
+--- Factory                  :              BDT_ABbase BDT_GBMbase
+--- Factory                  :  BDT_ABbase:     +1.000      +0.947
+--- Factory                  : BDT_GBMbase:     +0.947      +1.000
+--- Factory                  : -----------------------------------
+--- Factory                  : 
+--- Factory                  : Inter-MVA correlation matrix (background):
+--- Factory                  : -----------------------------------
+--- Factory                  :              BDT_ABbase BDT_GBMbase
+--- Factory                  :  BDT_ABbase:     +1.000      +0.980
+--- Factory                  : BDT_GBMbase:     +0.980      +1.000
+--- Factory                  : -----------------------------------
+--- Factory                  : 
+--- Factory                  : Correlations between input variables and MVA response (signal):
+--- Factory                  : -----------------------------------
+--- Factory                  :                 BDT_ABbase BDT_GBMbase
+--- Factory                  :      imbalance:     -0.217      -0.235
+--- Factory                  :     leading_pt:     +0.403      +0.421
+--- Factory                  : sub_leading_pt:     +0.620      +0.637
+--- Factory                  :      delta_phi:     +0.374      +0.436
+--- Factory                  :        delta_r:     +0.139      +0.174
+--- Factory                  :            mlj:     -0.133      -0.129
+--- Factory                  :         minl1j:     -0.390      -0.425
+--- Factory                  :         minl2j:     -0.279      -0.315
+--- Factory                  : -----------------------------------
+--- Factory                  : 
+--- Factory                  : Correlations between input variables and MVA response (background):
+--- Factory                  : -----------------------------------
+--- Factory                  :                 BDT_ABbase BDT_GBMbase
+--- Factory                  :      imbalance:     -0.228      -0.223
+--- Factory                  :     leading_pt:     -0.320      -0.271
+--- Factory                  : sub_leading_pt:     -0.130      -0.072
+--- Factory                  :      delta_phi:     +0.161      +0.203
+--- Factory                  :        delta_r:     +0.004      +0.028
+--- Factory                  :            mlj:     -0.699      -0.665
+--- Factory                  :         minl1j:     -0.388      -0.413
+--- Factory                  :         minl2j:     -0.217      -0.248
+--- Factory                  : -----------------------------------
+--- Factory                  : 
+--- Factory                  : The following "overlap" matrices contain the fraction of events for which 
+--- Factory                  : the MVAs 'i' and 'j' have returned conform answers about "signal-likeness"
+--- Factory                  : An event is signal-like, if its MVA output exceeds the following value:
+--- Factory                  : -------------------------
+--- Factory                  :      Method:   Cut value:
+--- Factory                  : -------------------------
+--- Factory                  :  BDT_ABbase:      +0.074
+--- Factory                  : BDT_GBMbase:      +0.103
+--- Factory                  : -------------------------
+--- Factory                  : which correspond to the working point: eff(signal) = 1 - eff(background)
+--- Factory                  : 
+--- Factory                  : Inter-MVA overlap matrix (signal):
+--- Factory                  : -----------------------------------
+--- Factory                  :              BDT_ABbase BDT_GBMbase
+--- Factory                  :  BDT_ABbase:     +1.000      +0.931
+--- Factory                  : BDT_GBMbase:     +0.931      +1.000
+--- Factory                  : -----------------------------------
+--- Factory                  : 
+--- Factory                  : Inter-MVA overlap matrix (background):
+--- Factory                  : -----------------------------------
+--- Factory                  :              BDT_ABbase BDT_GBMbase
+--- Factory                  :  BDT_ABbase:     +1.000      +0.940
+--- Factory                  : BDT_GBMbase:     +0.940      +1.000
+--- Factory                  : -----------------------------------
+--- Factory                  : 
+--- Factory                  : Evaluation results ranked by best signal efficiency and purity (area)
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : MVA              Signal efficiency at bkg eff.(error):       | Sepa-    Signifi- 
+--- Factory                  : Method:          @B=0.01    @B=0.10    @B=0.30    ROC-integ. | ration:  cance:   
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : BDT_ABbase     : 0.061(04)  0.350(09)  0.677(09)    0.773    | 0.250    0.781
+--- Factory                  : BDT_GBMbase    : 0.072(05)  0.341(09)  0.677(09)    0.769    | 0.246    0.780
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : 
+--- Factory                  : Testing efficiency compared to training efficiency (overtraining check)
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : MVA              Signal efficiency: from test sample (from training sample) 
+--- Factory                  : Method:          @B=0.01             @B=0.10            @B=0.30   
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : BDT_ABbase     : 0.061 (0.074)       0.350 (0.374)      0.677 (0.706)
+--- Factory                  : BDT_GBMbase    : 0.072 (0.075)       0.341 (0.348)      0.677 (0.684)
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : 
+--- Dataset:Default          : Created tree 'TestTree' with 146140 events
+--- Dataset:Default          : Created tree 'TrainTree' with 145864 events
+--- Factory                  :   
+--- Factory                  : [1mThank you for using TMVA![0m
+--- Factory                  : [1mFor citation information, please visit: http://tmva.sf.net/citeTMVA.html[0m
+==> wrote root file TMVA.root
+==> TMVAnalysis is done!
+--- Factory                  : You are running ROOT Version: 5.34/36, Apr 5, 2016
+--- Factory                  : 
+--- Factory                  : _/_/_/_/_/ _|      _|  _|      _|    _|_|   
+--- Factory                  :    _/      _|_|  _|_|  _|      _|  _|    _| 
+--- Factory                  :   _/       _|  _|  _|  _|      _|  _|_|_|_| 
+--- Factory                  :  _/        _|      _|    _|  _|    _|    _| 
+--- Factory                  : _/         _|      _|      _|      _|    _| 
+--- Factory                  : 
+--- Factory                  : ___________TMVA Version 4.2.0, Sep 19, 2013
+--- Factory                  : 
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- Factory                  : Add Tree tree_55 of type Signal with 343061 events
+--- Factory                  : Add Tree tree_55 of type Signal with 343061 events
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Factory                  : Add Tree tree_51 of type Background with 269142 events
+--- Factory                  : Add Tree tree_51 of type Background with 269142 events
+--- Factory                  : Add Tree tree_11 of type Background with 1125965 events
+--- Factory                  : Add Tree tree_11 of type Background with 1125965 events
+--- DataSetInfo              : Class index : 0  name : Signal
+--- DataSetInfo              : Class index : 1  name : Background
+--- Factory                  : Booking method: [1mBDT_ABbase[0m
+--- DataSetFactory           : Splitmode is: "RANDOM" the mixmode is: "SAMEASSPLITMODE"
+--- DataSetFactory           : Create training and testing trees -- looping over class "Signal" ...
+--- DataSetFactory           : Weight expression for class 'Signal': "weight"
+--- DataSetFactory           : Create training and testing trees -- looping over class "Background" ...
+--- DataSetFactory           : Weight expression for class 'Background': "weight"
+--- DataSetFactory           : Number of events in input trees (after possible flattening of arrays):
+--- DataSetFactory           :     Signal          -- number of events       : 343061  / sum of weights: 9072.24
+--- DataSetFactory           :     Background      -- number of events       : 1395107  / sum of weights: 185267
+--- DataSetFactory           :     Signal     tree -- total number of entries: 343061
+--- DataSetFactory           :     Background tree -- total number of entries: 1395107
+--- DataSetFactory           : Preselection: (will NOT affect number of requested training and testing events)
+--- DataSetFactory           :     Signal     requirement: "sub_leading_pt > 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))"
+--- DataSetFactory           :     Signal          -- number of events passed: 189696  / sum of weights: 4981.85
+--- DataSetFactory           :     Signal          -- efficiency             : 0.549131
+--- DataSetFactory           :     Background requirement: "sub_leading_pt > 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))"
+--- DataSetFactory           :     Background      -- number of events passed: 102308  / sum of weights: 2639.47
+--- DataSetFactory           :     Background      -- efficiency             : 0.0142469
+--- DataSetFactory           :  you have opted for interpreting the requested number of training/testing events
+--- DataSetFactory           :  to be the number of events AFTER your preselection cuts
+--- DataSetFactory           :  you have opted for interpreting the requested number of training/testing events
+--- DataSetFactory           :  to be the number of events AFTER your preselection cuts
+--- DataSetFactory           : No weight renormalisation applied: use original global and event weights
+--- DataSetFactory           : Create internal training tree
+--- DataSetFactory           : Create internal testing tree
+--- DataSetInfo              : Correlation matrix (Signal):
+--- DataSetInfo              : ---------------------------------------------------------------------------------------------
+--- DataSetInfo              :                 imbalance leading_pt sub_leading_pt delta_phi delta_r     mlj  minl1j  minl2j
+--- DataSetInfo              :      imbalance:    +1.000     +0.441         -0.354    -0.054  -0.019  +0.045  +0.009  -0.090
+--- DataSetInfo              :     leading_pt:    +0.441     +1.000         +0.631    +0.367  +0.151  +0.145  -0.397  -0.342
+--- DataSetInfo              : sub_leading_pt:    -0.354     +0.631         +1.000    +0.421  +0.167  +0.121  -0.408  -0.273
+--- DataSetInfo              :      delta_phi:    -0.054     +0.367         +0.421    +1.000  +0.486  -0.137  -0.548  -0.395
+--- DataSetInfo              :        delta_r:    -0.019     +0.151         +0.167    +0.486  +1.000  -0.048  -0.227  -0.159
+--- DataSetInfo              :            mlj:    +0.045     +0.145         +0.121    -0.137  -0.048  +1.000  +0.364  +0.362
+--- DataSetInfo              :         minl1j:    +0.009     -0.397         -0.408    -0.548  -0.227  +0.364  +1.000  +0.232
+--- DataSetInfo              :         minl2j:    -0.090     -0.342         -0.273    -0.395  -0.159  +0.362  +0.232  +1.000
+--- DataSetInfo              : ---------------------------------------------------------------------------------------------
+--- DataSetInfo              : Correlation matrix (Background):
+--- DataSetInfo              : ---------------------------------------------------------------------------------------------
+--- DataSetInfo              :                 imbalance leading_pt sub_leading_pt delta_phi delta_r     mlj  minl1j  minl2j
+--- DataSetInfo              :      imbalance:    +1.000     +0.575         -0.189    +0.005  +0.009  +0.256  +0.028  -0.025
+--- DataSetInfo              :     leading_pt:    +0.575     +1.000         +0.537    +0.122  +0.038  +0.618  -0.018  -0.024
+--- DataSetInfo              : sub_leading_pt:    -0.189     +0.537         +1.000    +0.180  +0.059  +0.422  -0.065  -0.039
+--- DataSetInfo              :      delta_phi:    +0.005     +0.122         +0.180    +1.000  +0.494  -0.079  -0.432  -0.270
+--- DataSetInfo              :        delta_r:    +0.009     +0.038         +0.059    +0.494  +1.000  +0.002  -0.166  -0.112
+--- DataSetInfo              :            mlj:    +0.256     +0.618         +0.422    -0.079  +0.002  +1.000  +0.396  +0.302
+--- DataSetInfo              :         minl1j:    +0.028     -0.018         -0.065    -0.432  -0.166  +0.396  +1.000  +0.080
+--- DataSetInfo              :         minl2j:    -0.025     -0.024         -0.039    -0.270  -0.112  +0.302  +0.080  +1.000
+--- DataSetInfo              : ---------------------------------------------------------------------------------------------
+--- DataSetFactory           :  
+--- Factory                  : Booking method: [1mBDT_GBMbase[0m
+[1;31m--- <WARNING> BDT_GBMbase              : the option *InverseBoostNegWeights* does not exist for BoostType=Grad --> change to *IgnoreNegWeightsInTraining*[0m
+--- Factory                  : 
+--- Factory                  : current transformation string: 'I'
+--- Factory                  : Create Transformation "I" with events from all classes.
+--- Id                       : Transformation, Variable selection : 
+--- Id                       : Input : variable 'imbalance' (index=0).   <---> Output : variable 'imbalance' (index=0).
+--- Id                       : Input : variable 'leading_pt' (index=1).   <---> Output : variable 'leading_pt' (index=1).
+--- Id                       : Input : variable 'sub_leading_pt' (index=2).   <---> Output : variable 'sub_leading_pt' (index=2).
+--- Id                       : Input : variable 'delta_phi' (index=3).   <---> Output : variable 'delta_phi' (index=3).
+--- Id                       : Input : variable 'delta_r' (index=4).   <---> Output : variable 'delta_r' (index=4).
+--- Id                       : Input : variable 'mlj' (index=5).   <---> Output : variable 'mlj' (index=5).
+--- Id                       : Input : variable 'minl1j' (index=6).   <---> Output : variable 'minl1j' (index=6).
+--- Id                       : Input : variable 'minl2j' (index=7).   <---> Output : variable 'minl2j' (index=7).
+--- Id                       : Preparing the Identity transformation...
+--- TFHandler_Factory        : -----------------------------------------------------------------------------------------
+--- TFHandler_Factory        :       Variable              Mean              RMS      [        Min              Max ]
+--- TFHandler_Factory        : -----------------------------------------------------------------------------------------
+--- TFHandler_Factory        :      imbalance:         0.24505         0.17319   [      4.0402e-06         0.92465 ]
+--- TFHandler_Factory        :     leading_pt:        0.098829        0.057717   [        0.030100          1.6317 ]
+--- TFHandler_Factory        : sub_leading_pt:        0.057116        0.029678   [        0.030000         0.96989 ]
+--- TFHandler_Factory        :      delta_phi:          1.9020         0.86730   [      0.00014079          3.1416 ]
+--- TFHandler_Factory        :        delta_r:          2.8653          1.2276   [         0.39366          7.3245 ]
+--- TFHandler_Factory        :            mlj:         0.10249        0.048249   [        0.018704          1.2924 ]
+--- TFHandler_Factory        :         minl1j:          1.6951         0.68255   [         0.39121          5.5110 ]
+--- TFHandler_Factory        :         minl2j:          1.5820         0.67536   [         0.39054          5.1801 ]
+--- TFHandler_Factory        : -----------------------------------------------------------------------------------------
+--- TFHandler_Factory        : Plot event variables for Id
+--- TFHandler_Factory        : Create scatter and profile plots in target-file directory: 
+--- TFHandler_Factory        : TMVA_2jet_odd.root:/InputVariables_Id/CorrelationPlots
+--- TFHandler_Factory        :  
+--- TFHandler_Factory        : Ranking input variables (method unspecific)...
+--- IdTransformation         : Ranking result (top variable is best ranked)
+--- IdTransformation         : ---------------------------------------
+--- IdTransformation         : Rank : Variable       : Separation
+--- IdTransformation         : ---------------------------------------
+--- IdTransformation         :    1 : mlj            : 1.561e-01
+--- IdTransformation         :    2 : minl1j         : 6.059e-02
+--- IdTransformation         :    3 : sub_leading_pt : 3.398e-02
+--- IdTransformation         :    4 : leading_pt     : 2.659e-02
+--- IdTransformation         :    5 : minl2j         : 2.634e-02
+--- IdTransformation         :    6 : imbalance      : 2.021e-02
+--- IdTransformation         :    7 : delta_phi      : 1.914e-02
+--- IdTransformation         :    8 : delta_r        : 1.686e-02
+--- IdTransformation         : ---------------------------------------
+--- Factory                  :  
+--- Factory                  : Train all methods for Classification ...
+--- Factory                  : Train method: BDT_ABbase for Classification
+--- BDT_ABbase               : Begin training
+--- BDT_ABbase               :  found and suggest the following possible pre-selection cuts 
+--- BDT_ABbase               : as option DoPreselection was not used, these cuts however will not be performed, but the training will see the full sample
+--- BDT_ABbase               : Events with weight == 0 are going to be simply ignored 
+--- BDT_ABbase               : <InitEventSample> For classification trees, 
+--- BDT_ABbase               :  the effective number of backgrounds is scaled to match 
+--- BDT_ABbase               :  the signal. Othersise the first boosting step would do 'just that'!
+--- BDT_ABbase               : re-normlise events such that Sig and Bkg have respective sum of weights = 1
+--- BDT_ABbase               :   sig->sig*24.2081ev. bkg->bkg*43.0342ev.
+--- BDT_ABbase               : #events: (reweighted) sig: 60745 bkg: 60745
+--- BDT_ABbase               : #events: (unweighted) sig: 86553 bkg: 34937
+--- BDT_ABbase               : Training 200 Decision Trees ... patience please
+--- BinaryTree               : The minimal node size MinNodeSize=5 fMinNodeSize=5% is translated to an actual number of events = 6074.5 for the training sample size of 121490
+--- BinaryTree               : Note: This number will be taken as absolute minimum in the node, 
+--- BinaryTree               :       in terms of 'weighted events' and unweighted ones !! 
+--- BDT_ABbase               : <Train> elapsed time: [1;31m26.5 sec[0m                              
+--- BDT_ABbase               : <Train> average number of nodes (w/o pruning) : 10
+--- BDT_ABbase               : End of training                                              
+--- BDT_ABbase               : Elapsed time for training with 146140 events: [1;31m27.3 sec[0m         
+--- BDT_ABbase               : Create MVA output for classification on training sample
+--- BDT_ABbase               : Evaluation of BDT_ABbase on training sample (146140 events)
+--- BDT_ABbase               : Elapsed time for evaluation of 146140 events: [1;31m4.38 sec[0m       
+--- BDT_ABbase               : Creating weight file in xml format: [0;36mweights/tmvaTest_2jet_odd_BDT_ABbase.weights.xml[0m
+--- BDT_ABbase               : Creating standalone response class: [0;36mweights/tmvaTest_2jet_odd_BDT_ABbase.class.C[0m
+--- BDT_ABbase               : TMVA_2jet_odd.root:/Method_BDT/BDT_ABbase
+--- Factory                  : Training finished
+--- Factory                  : Train method: BDT_GBMbase for Classification
+--- BDT_GBMbase              : Begin training
+--- BDT_GBMbase              :  found and suggest the following possible pre-selection cuts 
+--- BDT_GBMbase              : as option DoPreselection was not used, these cuts however will not be performed, but the training will see the full sample
+--- BDT_GBMbase              : Events with weight == 0 are going to be simply ignored 
+--- BDT_GBMbase              : <InitEventSample> For classification trees, 
+--- BDT_GBMbase              :  the effective number of backgrounds is scaled to match 
+--- BDT_GBMbase              :  the signal. Othersise the first boosting step would do 'just that'!
+--- BDT_GBMbase              : re-normlise events such that Sig and Bkg have respective sum of weights = 1
+--- BDT_GBMbase              :   sig->sig*24.2081ev. bkg->bkg*43.0342ev.
+--- BDT_GBMbase              : #events: (reweighted) sig: 60745 bkg: 60745
+--- BDT_GBMbase              : #events: (unweighted) sig: 86553 bkg: 34937
+--- BDT_GBMbase              : Training 200 Decision Trees ... patience please
+--- BinaryTree               : The minimal node size MinNodeSize=5 fMinNodeSize=5% is translated to an actual number of events = 6074.5 for the training sample size of 121490
+--- BinaryTree               : Note: This number will be taken as absolute minimum in the node, 
+--- BinaryTree               :       in terms of 'weighted events' and unweighted ones !! 
+--- BDT_GBMbase              : <Train> elapsed time: [1;31m35.8 sec[0m                              
+--- BDT_GBMbase              : <Train> average number of nodes (w/o pruning) : 10
+--- BDT_GBMbase              : End of training                                              
+--- BDT_GBMbase              : Elapsed time for training with 146140 events: [1;31m36.7 sec[0m         
+--- BDT_GBMbase              : Create MVA output for classification on training sample
+--- BDT_GBMbase              : Evaluation of BDT_GBMbase on training sample (146140 events)
+--- BDT_GBMbase              : Elapsed time for evaluation of 146140 events: [1;31m4.43 sec[0m       
+--- BDT_GBMbase              : Creating weight file in xml format: [0;36mweights/tmvaTest_2jet_odd_BDT_GBMbase.weights.xml[0m
+--- BDT_GBMbase              : Creating standalone response class: [0;36mweights/tmvaTest_2jet_odd_BDT_GBMbase.class.C[0m
+--- BDT_GBMbase              : TMVA_2jet_odd.root:/Method_BDT/BDT_GBMbase
+--- Factory                  : Training finished
+--- Factory                  : 
+--- Factory                  : Ranking input variables (method specific)...
+--- BDT_ABbase               : Ranking result (top variable is best ranked)
+--- BDT_ABbase               : ------------------------------------------------
+--- BDT_ABbase               : Rank : Variable       : Variable Importance
+--- BDT_ABbase               : ------------------------------------------------
+--- BDT_ABbase               :    1 : mlj            : 8.378e-01
+--- BDT_ABbase               :    2 : sub_leading_pt : 8.416e-02
+--- BDT_ABbase               :    3 : minl1j         : 1.779e-02
+--- BDT_ABbase               :    4 : delta_phi      : 1.544e-02
+--- BDT_ABbase               :    5 : minl2j         : 1.435e-02
+--- BDT_ABbase               :    6 : leading_pt     : 1.210e-02
+--- BDT_ABbase               :    7 : imbalance      : 1.153e-02
+--- BDT_ABbase               :    8 : delta_r        : 6.889e-03
+--- BDT_ABbase               : ------------------------------------------------
+--- BDT_GBMbase              : Ranking result (top variable is best ranked)
+--- BDT_GBMbase              : ------------------------------------------------
+--- BDT_GBMbase              : Rank : Variable       : Variable Importance
+--- BDT_GBMbase              : ------------------------------------------------
+--- BDT_GBMbase              :    1 : mlj            : 4.919e-01
+--- BDT_GBMbase              :    2 : leading_pt     : 2.260e-01
+--- BDT_GBMbase              :    3 : sub_leading_pt : 9.640e-02
+--- BDT_GBMbase              :    4 : minl1j         : 6.476e-02
+--- BDT_GBMbase              :    5 : minl2j         : 5.141e-02
+--- BDT_GBMbase              :    6 : delta_phi      : 3.025e-02
+--- BDT_GBMbase              :    7 : delta_r        : 2.490e-02
+--- BDT_GBMbase              :    8 : imbalance      : 1.439e-02
+--- BDT_GBMbase              : ------------------------------------------------
+--- Factory                  : 
+--- Factory                  : === Destroy and recreate all methods via weight files for testing ===
+--- Factory                  : 
+--- MethodBase               : Reading weight file: [0;36mweights/tmvaTest_2jet_odd_BDT_ABbase.weights.xml[0m
+--- BDT_ABbase               : Read method "BDT_ABbase" of type "BDT"
+--- BDT_ABbase               : MVA method was trained with TMVA Version: 4.2.0
+--- BDT_ABbase               : MVA method was trained with ROOT Version: 5.34/36
+--- MethodBase               : Reading weight file: [0;36mweights/tmvaTest_2jet_odd_BDT_GBMbase.weights.xml[0m
+--- BDT_GBMbase              : Read method "BDT_GBMbase" of type "BDT"
+--- BDT_GBMbase              : MVA method was trained with TMVA Version: 4.2.0
+--- BDT_GBMbase              : MVA method was trained with ROOT Version: 5.34/36
+--- Factory                  : Test all methods...
+--- Factory                  : Test method: BDT_ABbase for Classification performance
+--- BDT_ABbase               : Evaluation of BDT_ABbase on testing sample (145864 events)
+--- BDT_ABbase               : Elapsed time for evaluation of 145864 events: [1;31m3.69 sec[0m       
+--- Factory                  : Test method: BDT_GBMbase for Classification performance
+--- BDT_GBMbase              : Evaluation of BDT_GBMbase on testing sample (145864 events)
+--- BDT_GBMbase              : Elapsed time for evaluation of 145864 events: [1;31m3.89 sec[0m       
+--- Factory                  : Evaluate all methods...
+--- Factory                  : Evaluate classifier: BDT_ABbase
+--- BDT_ABbase               : Loop over test events and fill histograms with classifier response...
+--- Factory                  : Write evaluation histograms to file
+--- TFHandler_BDT_ABbase     : Plot event variables for BDT_ABbase
+--- TFHandler_BDT_ABbase     : -----------------------------------------------------------------------------------------
+--- TFHandler_BDT_ABbase     :       Variable              Mean              RMS      [        Min              Max ]
+--- TFHandler_BDT_ABbase     : -----------------------------------------------------------------------------------------
+--- TFHandler_BDT_ABbase     :      imbalance:         0.24630         0.17488   [      1.2072e-06         0.94561 ]
+--- TFHandler_BDT_ABbase     :     leading_pt:        0.099657        0.058899   [        0.030155          1.4470 ]
+--- TFHandler_BDT_ABbase     : sub_leading_pt:        0.057361        0.031060   [        0.030000          1.0659 ]
+--- TFHandler_BDT_ABbase     :      delta_phi:          1.8901         0.87381   [      2.5034e-05          3.1416 ]
+--- TFHandler_BDT_ABbase     :        delta_r:          2.8557          1.2292   [         0.38583          7.4527 ]
+--- TFHandler_BDT_ABbase     :            mlj:         0.10252        0.048824   [        0.017186          1.1266 ]
+--- TFHandler_BDT_ABbase     :         minl1j:          1.6939         0.68247   [         0.38916          5.0546 ]
+--- TFHandler_BDT_ABbase     :         minl2j:          1.5789         0.67903   [         0.38652          5.4498 ]
+--- TFHandler_BDT_ABbase     : -----------------------------------------------------------------------------------------
+--- TFHandler_BDT_ABbase     : Create scatter and profile plots in target-file directory: 
+--- TFHandler_BDT_ABbase     : TMVA_2jet_odd.root:/Method_BDT/BDT_ABbase/CorrelationPlots
+--- Factory                  : Evaluate classifier: BDT_GBMbase
+--- BDT_GBMbase              : Loop over test events and fill histograms with classifier response...
+--- Factory                  : Write evaluation histograms to file
+--- TFHandler_BDT_GBMbase    : Plot event variables for BDT_GBMbase
+--- TFHandler_BDT_GBMbase    : -----------------------------------------------------------------------------------------
+--- TFHandler_BDT_GBMbase    :       Variable              Mean              RMS      [        Min              Max ]
+--- TFHandler_BDT_GBMbase    : -----------------------------------------------------------------------------------------
+--- TFHandler_BDT_GBMbase    :      imbalance:         0.24630         0.17488   [      1.2072e-06         0.94561 ]
+--- TFHandler_BDT_GBMbase    :     leading_pt:        0.099657        0.058899   [        0.030155          1.4470 ]
+--- TFHandler_BDT_GBMbase    : sub_leading_pt:        0.057361        0.031060   [        0.030000          1.0659 ]
+--- TFHandler_BDT_GBMbase    :      delta_phi:          1.8901         0.87381   [      2.5034e-05          3.1416 ]
+--- TFHandler_BDT_GBMbase    :        delta_r:          2.8557          1.2292   [         0.38583          7.4527 ]
+--- TFHandler_BDT_GBMbase    :            mlj:         0.10252        0.048824   [        0.017186          1.1266 ]
+--- TFHandler_BDT_GBMbase    :         minl1j:          1.6939         0.68247   [         0.38916          5.0546 ]
+--- TFHandler_BDT_GBMbase    :         minl2j:          1.5789         0.67903   [         0.38652          5.4498 ]
+--- TFHandler_BDT_GBMbase    : -----------------------------------------------------------------------------------------
+--- TFHandler_BDT_GBMbase    : Create scatter and profile plots in target-file directory: 
+--- TFHandler_BDT_GBMbase    : TMVA_2jet_odd.root:/Method_BDT/BDT_GBMbase/CorrelationPlots
+--- Factory                  : 
+--- Factory                  : Inter-MVA correlation matrix (signal):
+--- Factory                  : -----------------------------------
+--- Factory                  :              BDT_ABbase BDT_GBMbase
+--- Factory                  :  BDT_ABbase:     +1.000      +0.936
+--- Factory                  : BDT_GBMbase:     +0.936      +1.000
+--- Factory                  : -----------------------------------
+--- Factory                  : 
+--- Factory                  : Inter-MVA correlation matrix (background):
+--- Factory                  : -----------------------------------
+--- Factory                  :              BDT_ABbase BDT_GBMbase
+--- Factory                  :  BDT_ABbase:     +1.000      +0.979
+--- Factory                  : BDT_GBMbase:     +0.979      +1.000
+--- Factory                  : -----------------------------------
+--- Factory                  : 
+--- Factory                  : Correlations between input variables and MVA response (signal):
+--- Factory                  : -----------------------------------
+--- Factory                  :                 BDT_ABbase BDT_GBMbase
+--- Factory                  :      imbalance:     -0.204      -0.238
+--- Factory                  :     leading_pt:     +0.422      +0.431
+--- Factory                  : sub_leading_pt:     +0.621      +0.646
+--- Factory                  :      delta_phi:     +0.365      +0.446
+--- Factory                  :        delta_r:     +0.140      +0.173
+--- Factory                  :            mlj:     -0.178      -0.189
+--- Factory                  :         minl1j:     -0.412      -0.455
+--- Factory                  :         minl2j:     -0.317      -0.334
+--- Factory                  : -----------------------------------
+--- Factory                  : 
+--- Factory                  : Correlations between input variables and MVA response (background):
+--- Factory                  : -----------------------------------
+--- Factory                  :                 BDT_ABbase BDT_GBMbase
+--- Factory                  :      imbalance:     -0.222      -0.235
+--- Factory                  :     leading_pt:     -0.306      -0.285
+--- Factory                  : sub_leading_pt:     -0.114      -0.080
+--- Factory                  :      delta_phi:     +0.170      +0.208
+--- Factory                  :        delta_r:     +0.012      +0.025
+--- Factory                  :            mlj:     -0.714      -0.701
+--- Factory                  :         minl1j:     -0.409      -0.432
+--- Factory                  :         minl2j:     -0.239      -0.260
+--- Factory                  : -----------------------------------
+--- Factory                  : 
+--- Factory                  : The following "overlap" matrices contain the fraction of events for which 
+--- Factory                  : the MVAs 'i' and 'j' have returned conform answers about "signal-likeness"
+--- Factory                  : An event is signal-like, if its MVA output exceeds the following value:
+--- Factory                  : -------------------------
+--- Factory                  :      Method:   Cut value:
+--- Factory                  : -------------------------
+--- Factory                  :  BDT_ABbase:      +0.068
+--- Factory                  : BDT_GBMbase:      +0.080
+--- Factory                  : -------------------------
+--- Factory                  : which correspond to the working point: eff(signal) = 1 - eff(background)
+--- Factory                  : 
+--- Factory                  : Inter-MVA overlap matrix (signal):
+--- Factory                  : -----------------------------------
+--- Factory                  :              BDT_ABbase BDT_GBMbase
+--- Factory                  :  BDT_ABbase:     +1.000      +0.915
+--- Factory                  : BDT_GBMbase:     +0.915      +1.000
+--- Factory                  : -----------------------------------
+--- Factory                  : 
+--- Factory                  : Inter-MVA overlap matrix (background):
+--- Factory                  : -----------------------------------
+--- Factory                  :              BDT_ABbase BDT_GBMbase
+--- Factory                  :  BDT_ABbase:     +1.000      +0.925
+--- Factory                  : BDT_GBMbase:     +0.925      +1.000
+--- Factory                  : -----------------------------------
+--- Factory                  : 
+--- Factory                  : Evaluation results ranked by best signal efficiency and purity (area)
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : MVA              Signal efficiency at bkg eff.(error):       | Sepa-    Signifi- 
+--- Factory                  : Method:          @B=0.01    @B=0.10    @B=0.30    ROC-integ. | ration:  cance:   
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : BDT_ABbase     : 0.061(04)  0.344(09)  0.683(09)    0.771    | 0.251    0.784
+--- Factory                  : BDT_GBMbase    : 0.066(04)  0.333(09)  0.667(09)    0.764    | 0.236    0.766
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : 
+--- Factory                  : Testing efficiency compared to training efficiency (overtraining check)
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : MVA              Signal efficiency: from test sample (from training sample) 
+--- Factory                  : Method:          @B=0.01             @B=0.10            @B=0.30   
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : BDT_ABbase     : 0.061 (0.080)       0.344 (0.380)      0.683 (0.703)
+--- Factory                  : BDT_GBMbase    : 0.066 (0.068)       0.333 (0.343)      0.667 (0.681)
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : 
+--- Dataset:Default          : Created tree 'TestTree' with 145864 events
+--- Dataset:Default          : Created tree 'TrainTree' with 146140 events
+--- Factory                  :   
+--- Factory                  : [1mThank you for using TMVA![0m
+--- Factory                  : [1mFor citation information, please visit: http://tmva.sf.net/citeTMVA.html[0m
+==> wrote root file TMVA.root
+==> TMVAnalysis is done!

@@ -11,3 +11,6 @@ demat-tut/
 # Keep PyCharm away.
 .idea
 *.pyc
+
+*.xml
+*.class.C
