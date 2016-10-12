@@ -6,14 +6,17 @@
 #include <TChain.h>
 #include <TString.h>
 #include <TMVA/Factory.h>
+#include <string>
+
 
 
 /*
-Take FOUR arguments.
-0: jetnum
-1: lowpt
-2: ntrees
-3: ncuts
+Take FIVE arguments.
+1: jetnum
+2: lowpt
+3: kIndex
+4: ntrees
+5: ncuts
 */
 int main(int argc, char * argv[]) {  
 
@@ -36,8 +39,8 @@ int main(int argc, char * argv[]) {
   TString output_file_met = (useMET) ? "_MET" : "";
   TString trackstr = (tracks) ? "_tracks" : "";
 
-  TString ntrees_id = argv[3];
-  TString ncuts_id = argv[4];
+  TString ntrees_id = argv[4];
+  TString ncuts_id = argv[5];
 
   TFile* outputFile = TFile::Open( "TMVA"+output_file+output_file_pt+output_file_met+trackstr+ntrees_id+"trees"+ncuts_id+"cuts"+".root", "RECREATE" );
   TMVA::Factory* factory = new TMVA::Factory("tmvaTest"+output_file+output_file_pt+output_file_met+trackstr, outputFile, "");
@@ -69,15 +72,15 @@ int main(int argc, char * argv[]) {
   */
   for(int r=0;r<signalFiles.size();r++){
     int entriesToGet = 30000;
-    if(tracks) sig->Add(("/unix/atlas3/abell/tmvaTraining/PGS_tracks/outputGeneral_fit_top"+signalFiles.at(r)+"_rescaling.root").c_str());
+    if(tracks) sig->Add(("/unix/atlasvhbb/abell/tmvaTraining/PGS/PGS_tracks/outputGeneral_fit_top"+signalFiles.at(r)+"_rescaling.root").c_str());
     else sig->Add(("/unix/atlasvhbb/abell/tmvaTraining/PGS/outputGeneral_fit_top"+signalFiles.at(r)+"_rescaling.root").c_str());
 //      sig->Add(("/unix/atlasvhbb/abell/mc15data7/PGS/outputGeneral_fit_top"+signalFiles.at(r)+"_rescaling.root").c_str(), entriesToGet);
 //      std::cout << sig->GetEntries() <<std::endl;
   }
 //    TFile* inputFileSignal = new TFile("/unix/atlasvhbb/abell/mc15data7/PGS/outputGeneral_fit_top_all_rescaling.root");
   TFile* inputFile; // = new TFile("/unix/atlasvhbb/abell/mc15data7/PGS/outputGeneral_fit_all_rescaling.root");
-  if(tracks) inputFile = TFile::Open("/unix/atlas3/abell/tmvaTraining/PGS_tracks/outputGeneral_fit_all_rescaling.root");
-  else inputFile = TFile::Open("/unix/atlasvhbb/abell/tmvaTraining/PGS/outputGeneral_fit_all_rescaling.root");
+  if(tracks) inputFile = TFile::Open("/unix/atlasvhbb/abell/tmvaTraining/PGS/PGS_tracks/outputGeneral_fit_all_rescaling.root");
+  else inputFile = TFile::Open("/unix/atlasvhbb/abell/tmvaTraining/PGS/PGS/outputGeneral_fit_all_rescaling.root");
 
 // get the TTree objects from the input files
 
@@ -93,16 +96,13 @@ int main(int argc, char * argv[]) {
 
 //  factory->AddSpectator("weight", 'F');
 
-  TCut mycut_train = "";
-  TCut mycut_test = "";
+  TCut cutstring_train = "";
+  TCut cutstring_test = "";
 
-  factory->AddTree(sig, "Signal", sigWeight, mycut_train, "train");
-  factory->AddTree(sig, "Signal", sigWeight, mycut_test, "test");
+  factory->AddSignalTree(sig);
 
-  factory->AddTree(bkg_A, "Background", bkgWeight, mycut_train, "train");
-  factory->AddTree(bkg_A, "Background", bkgWeight, mycut_test, "test");
-  factory->AddTree(bkg_B, "Background", bkgWeight, mycut_train, "train");
-  factory->AddTree(bkg_B, "Background", bkgWeight, mycut_test, "test");
+  factory->AddBackgroundTree(bkg_A);
+  factory->AddBackgroundTree(bkg_B);
 
 // Define the input variables that shall be used for the MVA training
 // (the variables used in the expression must exist in the original TTree).
@@ -123,40 +123,53 @@ int main(int argc, char * argv[]) {
   factory->AddVariable("minl1j", 'F');
   factory->AddVariable("minl2j", 'F');
 
+  factory->AddVariable("kIndex", 'F');
+
 //  factory->AddVariable("train_met", 'F');
 
-  TCut mycut = "";
-  TCut lowpT = (tracks) ? "0.02" : "0.02";
+
+  std::string cutstring;
 
   if(tracks){
     if(lowpt){
-mycut = "sub_leading_pt < 0.02  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
-if(jetnum==3) mycut = "sub_leading_pt < 0.02 || sub_sub_leading_pt < 0.02 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+cutstring = "sub_leading_pt < 0.02  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+if(jetnum==3) cutstring = "sub_leading_pt < 0.02 || sub_sub_leading_pt < 0.02 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
     }
     else {
-mycut = "sub_leading_pt > 0.02 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
-if(jetnum==3) mycut = "sub_leading_pt > 0.02 && sub_sub_leading_pt > 0.02  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+cutstring = "sub_leading_pt > 0.02 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+if(jetnum==3) cutstring = "sub_leading_pt > 0.02 && sub_sub_leading_pt > 0.02  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
     }
   }else{
     if(lowpt){
-mycut = "sub_leading_pt < 0.03  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
-if(jetnum==3) mycut = "sub_leading_pt < 0.03 || sub_sub_leading_pt < 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+cutstring = "sub_leading_pt < 0.03  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+if(jetnum==3) cutstring = "sub_leading_pt < 0.03 || sub_sub_leading_pt < 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
     }
     else {
-mycut = "sub_leading_pt > 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
-if(jetnum==3) mycut = "sub_leading_pt > 0.03 && sub_sub_leading_pt > 0.03  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+cutstring = "sub_leading_pt > 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+if(jetnum==3) cutstring = "sub_leading_pt > 0.03 && sub_sub_leading_pt > 0.03  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
     }
   }
 
+  std::string kcondition = " && kIndex == 6";
+  
+  cutstring.append(kcondition);
+  
+  
+  TCut mycut = cutstring.c_str();
+  TCut nocut = "";
+
 
 // Tell the factory how to use the training and testing events
-  factory->PrepareTrainingAndTestTree( mycut, "NormMode=None:!V" );
+  factory->PrepareTrainingAndTestTree(nocut, "NormMode=None:!V" );
+
+  
 
 // Book MVA methods (see TMVA manual).
-  TString ntrees = argv[3];
-  TString ncuts = argv[4];
+  TString ntrees = *argv[4];
+  TString ncuts = *argv[5];
   TString method_name = "BDTntrees" + ntrees + "nCuts" + ncuts;
-  factory->BookMethod(TMVA::Types::kBDT, method_name ,"IgnoreNegWeightsInTraining:!H:!V:NTrees="+ntrees+":MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.10:SeparationType=GiniIndex:nCuts="+ncuts+":PruneMethod=NoPruning");
+  std::cout << "breakpt" << std::endl;
+  factory->BookMethod(TMVA::Types::kBDT, method_name ,"IgnoreNegWeightsInTraining:!H:!V:NTrees=100:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.10:SeparationType=GiniIndex:nCuts=100:PruneMethod=NoPruning");
 
 // Train, test and evaluate all methods
 
@@ -170,8 +183,6 @@ if(jetnum==3) mycut = "sub_leading_pt > 0.03 && sub_sub_leading_pt > 0.03  && (l
   std::cout << "==> wrote root file TMVA.root" << std::endl;
   std::cout << "==> TMVAnalysis is done!" << std::endl; 
 
-  delete factory;
-
-  return 0;
+  exit(0);
 
 }

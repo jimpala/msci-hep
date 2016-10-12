@@ -15,14 +15,11 @@ void kFolder::Loop()
 /*
 Fold(k_val)
 PARAMS: k_val - order of kFold.
+Distributes NTuple entrys with a k-index value randomised between
+1 and k_val such that the NTuple is ready for k-folding.
 */
 void kFolder::Fold(int k_val) {
 
-	cout << "brkpt0" << endl;
-
-
-
-	cout << "brkpt1" << endl;
 
 	// Create randomised vector of kIndex values
 	int nentries = fChain->GetEntriesFast();
@@ -35,7 +32,6 @@ void kFolder::Fold(int k_val) {
 	}
 	std::random_shuffle(k_assign.begin(), k_assign.end());
 
-	cout << "brkpt2" <<endl;
 
 	// Initialise new kIndex branch to append.
 	int k;
