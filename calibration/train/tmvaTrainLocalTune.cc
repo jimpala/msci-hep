@@ -26,6 +26,7 @@ int main(int argc, char * argv[]) {
 
   bool lowpt = ( std::atoi(argv[2]) == 1 );
 
+
 //  bool tracks = false;
   bool tracks = false;
   bool useMET = false;
@@ -96,8 +97,13 @@ int main(int argc, char * argv[]) {
 
 //  factory->AddSpectator("weight", 'F');
 
-  TCut mycut_train = "";
-  TCut mycut_test = "";
+  std::string cutstring_train = "kIndex == ";
+  std::string cutstring_test = "kIndex != ";
+  cutstring_train.append(argv[3]);
+  cutstring_test.append(argv[3]);
+
+  TCut mycut_train = cutstring_train.c_str();
+  TCut mycut_test = cutstring_test.c_str();
 
     factory->AddTree(sig, "Signal", sigWeight, mycut_train, "train");
     factory->AddTree(sig, "Signal", sigWeight, mycut_test, "test");
@@ -127,52 +133,45 @@ int main(int argc, char * argv[]) {
   factory->AddVariable("minl1j", 'F');
   factory->AddVariable("minl2j", 'F');
 
-  factory->AddVariable("kIndex", 'I');
 
 //  factory->AddVariable("train_met", 'F');
 
 
-  std::string cutstring;
-  std::string mycut = "";
+  std::string cutstring = "";
 
     if(tracks){
       if(lowpt){
-  mycut = "sub_leading_pt < 0.02  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
-  if(jetnum==3) mycut = "sub_leading_pt < 0.02 || sub_sub_leading_pt < 0.02 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+  cutstring = "sub_leading_pt < 0.02  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+  if(jetnum==3) cutstring = "sub_leading_pt < 0.02 || sub_sub_leading_pt < 0.02 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
       }
       else {
-  mycut = "sub_leading_pt > 0.02 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
-  if(jetnum==3) mycut = "sub_leading_pt > 0.02 && sub_sub_leading_pt > 0.02  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+  cutstring = "sub_leading_pt > 0.02 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+  if(jetnum==3) cutstring = "sub_leading_pt > 0.02 && sub_sub_leading_pt > 0.02  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
       }
     }else{
       if(lowpt){
-  mycut = "sub_leading_pt < 0.03  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
-  if(jetnum==3) mycut = "sub_leading_pt < 0.03 || sub_sub_leading_pt < 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+  cutstring = "sub_leading_pt < 0.03  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+  if(jetnum==3) cutstring = "sub_leading_pt < 0.03 || sub_sub_leading_pt < 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
       }
       else {
-  mycut = "sub_leading_pt > 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
-  if(jetnum==3) mycut = "sub_leading_pt > 0.03 && sub_sub_leading_pt > 0.03  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+  cutstring = "sub_leading_pt > 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
+  if(jetnum==3) cutstring = "sub_leading_pt > 0.03 && sub_sub_leading_pt > 0.03  && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))";
       }
     }
-
-  std::string kcondition = " && kIndex == 6";
   
-  cutstring.append(kcondition);
-  
-  TCut mycut_native = mycut.c_str();
-
+  TCut mycut = cutstring.c_str();
 
 
 // Tell the factory how to use the training and testing events
-  factory->PrepareTrainingAndTestTree(mycut_native, "NormMode=None:!V" );
+  factory->PrepareTrainingAndTestTree(mycut, "NormMode=None:!V" );
 
   
 
 // Book MVA methods (see TMVA manual).
-  TString ntrees = *argv[4];
-  TString ncuts = *argv[5];
+  TString ntrees = argv[4];
+  TString ncuts = argv[5];
   TString method_name = "BDTntrees" + ntrees + "nCuts" + ncuts;
-  factory->BookMethod(TMVA::Types::kBDT, method_name ,"IgnoreNegWeightsInTraining:!H:!V:NTrees=100:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.10:SeparationType=GiniIndex:nCuts=100:PruneMethod=NoPruning");
+  factory->BookMethod(TMVA::Types::kBDT, method_name ,"IgnoreNegWeightsInTraining:!H:!V:NTrees="+ntrees+":MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.10:SeparationType=GiniIndex:nCuts="+ncuts+":PruneMethod=NoPruning");
 
 // Train, test and evaluate all methods
 
