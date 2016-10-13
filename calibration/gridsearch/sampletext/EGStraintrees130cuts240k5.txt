@@ -1,0 +1,410 @@
+Low pt 0
+Jetnum 0
+--- Factory                  : You are running ROOT Version: 5.34/36, Apr 5, 2016
+--- Factory                  : 
+--- Factory                  : _/_/_/_/_/ _|      _|  _|      _|    _|_|   
+--- Factory                  :    _/      _|_|  _|_|  _|      _|  _|    _| 
+--- Factory                  :   _/       _|  _|  _|  _|      _|  _|_|_|_| 
+--- Factory                  :  _/        _|      _|    _|  _|    _|    _| 
+--- Factory                  : _/         _|      _|      _|      _|    _| 
+--- Factory                  : 
+--- Factory                  : ___________TMVA Version 4.2.0, Sep 19, 2013
+--- Factory                  : 
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- Factory                  : Add Tree tree_55 of type Signal with 343061 events
+--- Factory                  : Add Tree tree_55 of type Signal with 343061 events
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Factory                  : Add Tree tree_51 of type Background with 269142 events
+--- Factory                  : Add Tree tree_51 of type Background with 269142 events
+--- Factory                  : Add Tree tree_11 of type Background with 1125965 events
+--- Factory                  : Add Tree tree_11 of type Background with 1125965 events
+--- DataSetInfo              : Class index : 0  name : Signal
+--- DataSetInfo              : Class index : 1  name : Background
+--- Factory                  : Booking method: [1mBDTntrees130nCuts240 [0m
+--- DataSetFactory           : Splitmode is: "RANDOM" the mixmode is: "SAMEASSPLITMODE"
+--- DataSetFactory           : Create training and testing trees -- looping over class "Signal" ...
+--- DataSetFactory           : Weight expression for class 'Signal': "weight"
+--- DataSetFactory           : Create training and testing trees -- looping over class "Background" ...
+--- DataSetFactory           : Weight expression for class 'Background': "weight"
+--- DataSetFactory           : Number of events in input trees (after possible flattening of arrays):
+--- DataSetFactory           :     Signal          -- number of events       : 343061  / sum of weights: 9072.27
+--- DataSetFactory           :     Background      -- number of events       : 1395107  / sum of weights: 185268
+--- DataSetFactory           :     Signal     tree -- total number of entries: 343061
+--- DataSetFactory           :     Background tree -- total number of entries: 1395107
+--- DataSetFactory           : Preselection: (will NOT affect number of requested training and testing events)
+--- DataSetFactory           :     Signal     requirement: "sub_leading_pt > 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))"
+--- DataSetFactory           :     Signal          -- number of events passed: 189696  / sum of weights: 4981.88
+--- DataSetFactory           :     Signal          -- efficiency             : 0.549133
+--- DataSetFactory           :     Background requirement: "sub_leading_pt > 0.03 && (leptontype==0 || (etmiss>60e3 && (mll<80e3 || mll>100e3) && mll>50e3))"
+--- DataSetFactory           :     Background      -- number of events passed: 102308  / sum of weights: 2639.48
+--- DataSetFactory           :     Background      -- efficiency             : 0.0142468
+--- DataSetFactory           :  you have opted for interpreting the requested number of training/testing events
+--- DataSetFactory           :  to be the number of events AFTER your preselection cuts
+--- DataSetFactory           :  you have opted for interpreting the requested number of training/testing events
+--- DataSetFactory           :  to be the number of events AFTER your preselection cuts
+--- DataSetFactory           : No weight renormalisation applied: use original global and event weights
+--- DataSetFactory           : Create internal training tree
+--- DataSetFactory           : Create internal testing tree
+--- DataSetInfo              : Correlation matrix (Signal):
+--- DataSetInfo              : -----------------------------------------------------------------------------------------------------
+--- DataSetInfo              :                 imbalance leading_pt sub_leading_pt delta_phi delta_r     mlj  etmiss  minl1j  minl2j
+--- DataSetInfo              :      imbalance:    +1.000     +0.446         -0.348    -0.060  -0.016  +0.047  +0.275  +0.020  -0.080
+--- DataSetInfo              :     leading_pt:    +0.446     +1.000         +0.633    +0.361  +0.154  +0.148  +0.291  -0.390  -0.335
+--- DataSetInfo              : sub_leading_pt:    -0.348     +0.633         +1.000    +0.422  +0.168  +0.123  +0.023  -0.411  -0.273
+--- DataSetInfo              :      delta_phi:    -0.060     +0.361         +0.422    +1.000  +0.487  -0.138  -0.040  -0.551  -0.400
+--- DataSetInfo              :        delta_r:    -0.016     +0.154         +0.168    +0.487  +1.000  -0.039  -0.032  -0.228  -0.164
+--- DataSetInfo              :            mlj:    +0.047     +0.148         +0.123    -0.138  -0.039  +1.000  -0.146  +0.363  +0.365
+--- DataSetInfo              :         etmiss:    +0.275     +0.291         +0.023    -0.040  -0.032  -0.146  +1.000  -0.271  -0.130
+--- DataSetInfo              :         minl1j:    +0.020     -0.390         -0.411    -0.551  -0.228  +0.363  -0.271  +1.000  +0.239
+--- DataSetInfo              :         minl2j:    -0.080     -0.335         -0.273    -0.400  -0.164  +0.365  -0.130  +0.239  +1.000
+--- DataSetInfo              : -----------------------------------------------------------------------------------------------------
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (0, 6) = -9.82875e+07[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (1, 6) = -2.11113e+07[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (2, 6) = -2.98875e+06[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (3, 6) = -2.13547e+09[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (4, 6) = -4.7646e+09[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (5, 6) = -1.91896e+07[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (6, 0) = -9.82875e+07[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (6, 1) = -2.11113e+07[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (6, 2) = -2.98875e+06[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (6, 3) = -2.13547e+09[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (6, 4) = -4.7646e+09[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (6, 5) = -1.91896e+07[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (6, 7) = -1.45014e+09[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (6, 8) = -1.38258e+09[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (7, 6) = -1.45014e+09[0m
+[1;31m--- <WARNING> DataSetFactory           : <GetCorrelationMatrix> Zero variances for variables (8, 6) = -1.38258e+09[0m
+--- DataSetInfo              : Correlation matrix (Background):
+--- DataSetInfo              : -----------------------------------------------------------------------------------------------------
+--- DataSetInfo              :                 imbalance leading_pt sub_leading_pt delta_phi delta_r     mlj  etmiss  minl1j  minl2j
+--- DataSetInfo              :      imbalance:    +1.000     +0.579         -0.181    +0.012  -0.005  +0.311  +0.000  +0.035  -0.004
+--- DataSetInfo              :     leading_pt:    +0.579     +1.000         +0.490    +0.104  +0.020  +0.702  +0.000  -0.004  +0.002
+--- DataSetInfo              : sub_leading_pt:    -0.181     +0.490         +1.000    +0.176  +0.052  +0.416  +0.000  -0.076  -0.007
+--- DataSetInfo              :      delta_phi:    +0.012     +0.104         +0.176    +1.000  +0.435  -0.085  +0.000  -0.483  -0.274
+--- DataSetInfo              :        delta_r:    -0.005     +0.020         +0.052    +0.435  +1.000  -0.016  +0.000  -0.142  -0.100
+--- DataSetInfo              :            mlj:    +0.311     +0.702         +0.416    -0.085  -0.016  +1.000  +0.000  +0.373  +0.284
+--- DataSetInfo              :         etmiss:    +0.000     +0.000         +0.000    +0.000  +0.000  +0.000  +1.000  +0.000  +0.000
+--- DataSetInfo              :         minl1j:    +0.035     -0.004         -0.076    -0.483  -0.142  +0.373  +0.000  +1.000  +0.104
+--- DataSetInfo              :         minl2j:    -0.004     +0.002         -0.007    -0.274  -0.100  +0.284  +0.000  +0.104  +1.000
+--- DataSetInfo              : -----------------------------------------------------------------------------------------------------
+--- DataSetFactory           :  
+--- Factory                  : 
+--- Factory                  : current transformation string: 'I'
+--- Factory                  : Create Transformation "I" with events from all classes.
+--- Id                       : Transformation, Variable selection : 
+--- Id                       : Input : variable 'imbalance' (index=0).   <---> Output : variable 'imbalance' (index=0).
+--- Id                       : Input : variable 'leading_pt' (index=1).   <---> Output : variable 'leading_pt' (index=1).
+--- Id                       : Input : variable 'sub_leading_pt' (index=2).   <---> Output : variable 'sub_leading_pt' (index=2).
+--- Id                       : Input : variable 'delta_phi' (index=3).   <---> Output : variable 'delta_phi' (index=3).
+--- Id                       : Input : variable 'delta_r' (index=4).   <---> Output : variable 'delta_r' (index=4).
+--- Id                       : Input : variable 'mlj' (index=5).   <---> Output : variable 'mlj' (index=5).
+--- Id                       : Input : variable 'etmiss' (index=6).   <---> Output : variable 'etmiss' (index=6).
+--- Id                       : Input : variable 'minl1j' (index=7).   <---> Output : variable 'minl1j' (index=7).
+--- Id                       : Input : variable 'minl2j' (index=8).   <---> Output : variable 'minl2j' (index=8).
+--- Id                       : Preparing the Identity transformation...
+--- TFHandler_Factory        : -----------------------------------------------------------------------------------------
+--- TFHandler_Factory        :       Variable              Mean              RMS      [        Min              Max ]
+--- TFHandler_Factory        : -----------------------------------------------------------------------------------------
+--- TFHandler_Factory        :      imbalance:         0.24538         0.17598   [      3.4108e-05         0.91283 ]
+--- TFHandler_Factory        :     leading_pt:         0.10118        0.065140   [        0.030204         0.92972 ]
+--- TFHandler_Factory        : sub_leading_pt:        0.057842        0.030832   [        0.030000         0.61117 ]
+--- TFHandler_Factory        :      delta_phi:          1.8964         0.87298   [      0.00011754          3.1415 ]
+--- TFHandler_Factory        :        delta_r:          2.8808          1.2379   [         0.40147          6.7833 ]
+--- TFHandler_Factory        :            mlj:         0.10404        0.056473   [        0.021436          1.2198 ]
+--- TFHandler_Factory        :         etmiss:          74935.          7069.5   [          436.30      3.0184e+06 ]
+--- TFHandler_Factory        :         minl1j:          1.6974         0.68336   [         0.39121          5.5110 ]
+--- TFHandler_Factory        :         minl2j:          1.5771         0.67136   [         0.39347          4.9337 ]
+--- TFHandler_Factory        : -----------------------------------------------------------------------------------------
+--- TFHandler_Factory        : Plot event variables for Id
+--- TFHandler_Factory        : Create scatter and profile plots in target-file directory: 
+--- TFHandler_Factory        : TMVA_3jet130trees240 cuts5k.root:/InputVariables_Id/CorrelationPlots
+--- TFHandler_Factory        :  
+--- TFHandler_Factory        : Ranking input variables (method unspecific)...
+--- IdTransformation         : Ranking result (top variable is best ranked)
+--- IdTransformation         : ---------------------------------------
+--- IdTransformation         : Rank : Variable       : Separation
+--- IdTransformation         : ---------------------------------------
+--- IdTransformation         :    1 : mlj            : 1.626e-01
+--- IdTransformation         :    2 : minl1j         : 6.220e-02
+--- IdTransformation         :    3 : leading_pt     : 3.751e-02
+--- IdTransformation         :    4 : sub_leading_pt : 3.627e-02
+--- IdTransformation         :    5 : minl2j         : 3.158e-02
+--- IdTransformation         :    6 : imbalance      : 2.871e-02
+--- IdTransformation         :    7 : delta_r        : 2.828e-02
+--- IdTransformation         :    8 : delta_phi      : 2.653e-02
+--- IdTransformation         :    9 : etmiss         : 8.523e-03
+--- IdTransformation         : ---------------------------------------
+--- Factory                  :  
+--- Factory                  : Train all methods for Classification ...
+--- Factory                  : Train method: BDTntrees130nCuts240  for Classification
+--- BDTntrees130nCuts240     : Begin training
+--- BDTntrees130nCuts240     :  found and suggest the following possible pre-selection cuts 
+--- BDTntrees130nCuts240     : as option DoPreselection was not used, these cuts however will not be performed, but the training will see the full sample
+--- BDTntrees130nCuts240     :  found cut: Bkg if var 5 > 0.255589
+--- BDTntrees130nCuts240     : Events with weight == 0 are going to be simply ignored 
+--- BDTntrees130nCuts240     : <InitEventSample> For classification trees, 
+--- BDTntrees130nCuts240     :  the effective number of backgrounds is scaled to match 
+--- BDTntrees130nCuts240     :  the signal. Othersise the first boosting step would do 'just that'!
+--- BDTntrees130nCuts240     : re-normlise events such that Sig and Bkg have respective sum of weights = 1
+--- BDTntrees130nCuts240     :   sig->sig*23.9791ev. bkg->bkg*43.5718ev.
+--- BDTntrees130nCuts240     : #events: (reweighted) sig: 12068.5 bkg: 12068.5
+--- BDTntrees130nCuts240     : #events: (unweighted) sig: 17219 bkg: 6918
+--- BDTntrees130nCuts240     : Training 130 Decision Trees ... patience please
+--- BinaryTree               : The minimal node size MinNodeSize=5 fMinNodeSize=5% is translated to an actual number of events = 1206.85 for the training sample size of 24137
+--- BinaryTree               : Note: This number will be taken as absolute minimum in the node, 
+--- BinaryTree               :       in terms of 'weighted events' and unweighted ones !! 
+--- BDTntrees130nCuts240     : <Train> elapsed time: [1;31m5.13 sec[0m                              
+--- BDTntrees130nCuts240     : <Train> average number of nodes (w/o pruning) : 9
+--- BDTntrees130nCuts240     : End of training                                              
+--- BDTntrees130nCuts240     : Elapsed time for training with 29020 events: [1;31m5.27 sec[0m         
+--- BDTntrees130nCuts240     : Create MVA output for classification on training sample
+--- BDTntrees130nCuts240     : Evaluation of BDTntrees130nCuts240  on training sample (29020 events)
+--- BDTntrees130nCuts240     : Elapsed time for evaluation of 29020 events: [1;31m0.472 sec[0m       
+--- BDTntrees130nCuts240     : Creating weight file in xml format: [0;36mweights/tmvaTest_3jet_BDTntrees130nCuts240 .weights.xml[0m
+--- BDTntrees130nCuts240     : Creating standalone response class: [0;36mweights/tmvaTest_3jet_BDTntrees130nCuts240 .class.C[0m
+--- BDTntrees130nCuts240     : Write monitoring histograms to file: TMVA_3jet130trees240 cuts5k.root:/Method_BDT/BDTntrees130nCuts240 
+--- Factory                  : Training finished
+--- Factory                  : 
+--- Factory                  : Ranking input variables (method specific)...
+--- BDTntrees130nCuts240     : Ranking result (top variable is best ranked)
+--- BDTntrees130nCuts240     : ------------------------------------------------
+--- BDTntrees130nCuts240     : Rank : Variable       : Variable Importance
+--- BDTntrees130nCuts240     : ------------------------------------------------
+--- BDTntrees130nCuts240     :    1 : mlj            : 8.010e-01
+--- BDTntrees130nCuts240     :    2 : sub_leading_pt : 8.708e-02
+--- BDTntrees130nCuts240     :    3 : minl1j         : 2.937e-02
+--- BDTntrees130nCuts240     :    4 : etmiss         : 2.357e-02
+--- BDTntrees130nCuts240     :    5 : minl2j         : 2.019e-02
+--- BDTntrees130nCuts240     :    6 : leading_pt     : 1.181e-02
+--- BDTntrees130nCuts240     :    7 : delta_r        : 1.081e-02
+--- BDTntrees130nCuts240     :    8 : delta_phi      : 8.853e-03
+--- BDTntrees130nCuts240     :    9 : imbalance      : 7.285e-03
+--- BDTntrees130nCuts240     : ------------------------------------------------
+--- Factory                  : 
+--- Factory                  : === Destroy and recreate all methods via weight files for testing ===
+--- Factory                  : 
+--- MethodBase               : Reading weight file: [0;36mweights/tmvaTest_3jet_BDTntrees130nCuts240 .weights.xml[0m
+--- BDTntrees130nCuts240     : Read method "BDTntrees130nCuts240 " of type "BDT"
+--- BDTntrees130nCuts240     : MVA method was trained with TMVA Version: 4.2.0
+--- BDTntrees130nCuts240     : MVA method was trained with ROOT Version: 5.34/36
+--- Factory                  : Test all methods...
+--- Factory                  : Test method: BDTntrees130nCuts240  for Classification performance
+--- BDTntrees130nCuts240     : Evaluation of BDTntrees130nCuts240  on testing sample (262984 events)
+--- BDTntrees130nCuts240     : Elapsed time for evaluation of 262984 events: [1;31m4.2 sec[0m       
+--- Factory                  : Evaluate all methods...
+--- Factory                  : Evaluate classifier: BDTntrees130nCuts240 
+--- BDTntrees130nCuts240     : Loop over test events and fill histograms with classifier response...
+--- Factory                  : Write evaluation histograms to file
+--- TFHandler_BDTntrees130...: Plot event variables for BDTntrees130nCuts240 
+--- TFHandler_BDTntrees130...: -----------------------------------------------------------------------------------------
+--- TFHandler_BDTntrees130...:       Variable              Mean              RMS      [        Min              Max ]
+--- TFHandler_BDTntrees130...: -----------------------------------------------------------------------------------------
+--- TFHandler_BDTntrees130...:      imbalance:         0.24571         0.17382   [      1.2072e-06         0.94561 ]
+--- TFHandler_BDTntrees130...:     leading_pt:        0.099027        0.057497   [        0.030100          1.6317 ]
+--- TFHandler_BDTntrees130...: sub_leading_pt:        0.057171        0.030324   [        0.030000          1.0659 ]
+--- TFHandler_BDTntrees130...:      delta_phi:          1.8960         0.87031   [      2.5034e-05          3.1416 ]
+--- TFHandler_BDTntrees130...:        delta_r:          2.8582          1.2273   [         0.38583          7.4527 ]
+--- TFHandler_BDTntrees130...:            mlj:         0.10233        0.047569   [        0.017186          1.2924 ]
+--- TFHandler_BDTntrees130...:         etmiss:          76524.      1.4103e+05   [          106.08      6.0303e+07 ]
+--- TFHandler_BDTntrees130...:         minl1j:          1.6942         0.68241   [         0.38916          5.0650 ]
+--- TFHandler_BDTntrees130...:         minl2j:          1.5808         0.67784   [         0.38652          5.4498 ]
+--- TFHandler_BDTntrees130...: -----------------------------------------------------------------------------------------
+--- TFHandler_BDTntrees130...: Create scatter and profile plots in target-file directory: 
+--- TFHandler_BDTntrees130...: TMVA_3jet130trees240 cuts5k.root:/Method_BDT/BDTntrees130nCuts240 /CorrelationPlots
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 5)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 8)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 5)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 8)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 5)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 8)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 5)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 8)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 5)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 8)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (5, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (5, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (5, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (5, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (5, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (5, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (5, 8)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (5, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 5)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 8)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 5)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 5)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 8)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 5)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 8)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (0, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 5)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 8)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (1, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 5)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 8)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (2, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 5)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 8)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (3, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (4, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (5, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (5, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (5, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (5, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (5, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 5)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 8)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (6, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (8, 9)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 0)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 1)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 2)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 3)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 4)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 6)[0m
+[1;31m--- <WARNING> Tools                    : <GetCorrelationMatrix> zero variances for variables (9, 8)[0m
+--- Factory                  : Correlations between input variables and MVA response (signal):
+--- Factory                  : --------------------------------------------
+--- Factory                  :                 BDTntrees130nCuts240 
+--- Factory                  :      imbalance:                +0.000
+--- Factory                  :     leading_pt:                +0.000
+--- Factory                  : sub_leading_pt:                +0.000
+--- Factory                  :      delta_phi:                +0.000
+--- Factory                  :        delta_r:                +0.000
+--- Factory                  :            mlj:                +0.000
+--- Factory                  :         etmiss:                +0.013
+--- Factory                  :         minl1j:                +0.000
+--- Factory                  :         minl2j:                +0.000
+--- Factory                  : --------------------------------------------
+--- Factory                  : 
+--- Factory                  : Correlations between input variables and MVA response (background):
+--- Factory                  : --------------------------------------------
+--- Factory                  :                 BDTntrees130nCuts240 
+--- Factory                  :      imbalance:                +0.000
+--- Factory                  :     leading_pt:                +0.000
+--- Factory                  : sub_leading_pt:                +0.000
+--- Factory                  :      delta_phi:                +0.000
+--- Factory                  :        delta_r:                +0.000
+--- Factory                  :            mlj:                +0.000
+--- Factory                  :         etmiss:                -0.112
+--- Factory                  :         minl1j:                +0.000
+--- Factory                  :         minl2j:                +0.000
+--- Factory                  : --------------------------------------------
+--- Factory                  : 
+--- Factory                  : The following "overlap" matrices contain the fraction of events for which 
+--- Factory                  : the MVAs 'i' and 'j' have returned conform answers about "signal-likeness"
+--- Factory                  : An event is signal-like, if its MVA output exceeds the following value:
+--- Factory                  : ---------------------------------------------
+--- Factory                  :                Method:             Cut value:
+--- Factory                  : ---------------------------------------------
+--- Factory                  : BDTntrees130nCuts240 :                +0.079
+--- Factory                  : ---------------------------------------------
+--- Factory                  : which correspond to the working point: eff(signal) = 1 - eff(background)
+--- Factory                  : 
+--- Factory                  : Evaluation results ranked by best signal efficiency and purity (area)
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : MVA              Signal efficiency at bkg eff.(error):       | Sepa-    Signifi- 
+--- Factory                  : Method:          @B=0.01    @B=0.10    @B=0.30    ROC-integ. | ration:  cance:   
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : BDTntrees130nCuts240 : 0.056(03)  0.343(07)  0.685(06)    0.772    | 0.249    0.787
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : 
+--- Factory                  : Testing efficiency compared to training efficiency (overtraining check)
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : MVA              Signal efficiency: from test sample (from training sample) 
+--- Factory                  : Method:          @B=0.01             @B=0.10            @B=0.30   
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : BDTntrees130nCuts240 : 0.056 (0.077)       0.343 (0.428)      0.685 (0.732)
+--- Factory                  : --------------------------------------------------------------------------------
+--- Factory                  : 
+--- Dataset:Default          : Created tree 'TestTree' with 262984 events
+--- Dataset:Default          : Created tree 'TrainTree' with 29020 events
+--- Factory                  :   
+--- Factory                  : [1mThank you for using TMVA![0m
+--- Factory                  : [1mFor citation information, please visit: http://tmva.sf.net/citeTMVA.html[0m
+==> wrote root file TMVA.root
+==> TMVAnalysis is done!

@@ -9,7 +9,7 @@ def main():
 	current_env = os.environ.copy()
 
 	# qsub submission string.
-	submission= 'qsub -q short -V submission.sh'
+	submission= 'qsub -e /dev/null -o /dev/null -q short -V submission.sh'
 
 	# BDT hyperparameter space.
 	ntrees = np.arange(100,120,10)
@@ -18,6 +18,13 @@ def main():
 	# Constants.
 	# (blank)
 	maxdepth = 4
+
+	# kFold setting.
+	# NOTE: This is done remotely at the moment via
+	# running the 'kFolder' root macro on each of
+	# TTrees with the specified k value.
+	k = 10
+	current_env['KFOLD'] = str(k)
 
 
 	print repr(submission)
