@@ -5,8 +5,6 @@
 *.root
 
 # Columbia and Demat exercise files.
-columbia-tut/exercises/
-demat-tut/
 
 # Keep PyCharm away.
 .idea
@@ -14,3 +12,6 @@ demat-tut/
 
 *.xml
 *.class.C
+*ipynb_checkpoints*
+
+calibration/gridsearch/*.txt
