@@ -1,0 +1,4 @@
+Sensitivity calculation: mva
+  -> Contribution (2tag2jet_150ptv_SR, mva, trafoD): DLLR = 1.41214 +/- 0.0433589 - stat = 1.45334 +/- 0.0479301 - norm = 1.44204 +/- 0.0483056 - syst = 1.38179 +/- 0.0504119
+  -> Contribution (2tag3jet_150ptv_SR, mva, trafoD): DLLR = 0.847911 +/- 0.0234498 - stat = 0.857173 +/- 0.0243484 - norm = 0.851095 +/- 0.0245223 - syst = 0.801865 +/- 0.0260278
+  -> Combination: DLLR = 1.64715 +/- 0.0390836 - stat = 1.68729 +/- 0.0430976 - norm = 1.67447 +/- 0.0434275 - syst = 1.5976 +/- 0.045517
