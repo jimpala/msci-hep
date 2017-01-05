@@ -239,6 +239,7 @@ void MVATree_VHbb::SetBranches()
     TString xmlFile_2jet_WZ_sherpa221_truthall = xmlFile+"/data/CxAODReader_VHbb/TMVAClassification_1lep2jet_WZ_Sherpa221_TruthAll_0of2_BDT_AdaBoost_v6.weights.xml";
     TString xmlFile_2jet_WZ_sherpa221_systTTbar = xmlFile+"/data/CxAODReader_VHbb/TMVAClassification_1lep2jet_WZ_Sherpa221_0of2_SystTTbar_BDT_AdaBoost_v6.weights.xml";
     TString xmlFile_2jet_WZ_sherpa221 = xmlFile+"/data/CxAODReader_VHbb/TMVAClassification_1lep2jet_WZ_Sherpa221_0of2_BDT_AdaBoost_v6.weights.xml";
+    TString xmlFile_3jet_sherpa221_truthall_mBBcut_systTTbar = xmlFile+"/data/CxAODReader_VHbb/TMVAClassification_1lep3jet_Sherpa221_TruthAll_mBBCut_0of2_SystTTbar_BDT_AdaBoost_v6.weights.xml";
     TString xmlFile_3jet_sherpa221_truthall_systTTbar = xmlFile+"/data/CxAODReader_VHbb/TMVAClassification_1lep3jet_Sherpa221_TruthAll_0of2_SystTTbar_BDT_AdaBoost_v6.weights.xml";
     TString xmlFile_3jet_sherpa221_truthall_mBBcut = xmlFile+"/data/CxAODReader_VHbb/TMVAClassification_1lep3jet_Sherpa221_TruthAll_mBBCut_0of2_BDT_AdaBoost_v6.weights.xml";
     TString xmlFile_3jet_sherpa221_mBBcut_systTTbar = xmlFile+"/data/CxAODReader_VHbb/TMVAClassification_1lep3jet_Sherpa221_mBBCut_0of2_SystTTbar_BDT_AdaBoost_v6.weights.xml";
@@ -262,6 +263,7 @@ void MVATree_VHbb::SetBranches()
     m_reader.BookReader("1lep_2jet_sherpa221_mBBcut", xmlFile_2jet_sherpa221_mBBcut);
     m_reader.BookReader("1lep_2jet_sherpa221_truthall", xmlFile_2jet_sherpa221_truthall);
     m_reader.BookReader("1lep_2jet_sherpa221_systTTbar", xmlFile_2jet_sherpa221_systTTbar);
+    m_reader.BookReader("1lep_2jet_sherpa221", xmlFile_2jet_sherpa221);
     m_reader.BookReader("1lep_2jet_WZ_sherpa221_truthall_mBBcut_systTTbar", xmlFile_2jet_WZ_sherpa221_truthall_mBBcut_systTTbar);
     m_reader.BookReader("1lep_2jet_WZ_sherpa221_truthall_systTTbar", xmlFile_2jet_WZ_sherpa221_truthall_systTTbar);
     m_reader.BookReader("1lep_2jet_WZ_sherpa221_truthall_mBBcut", xmlFile_2jet_WZ_sherpa221_truthall_mBBcut);
@@ -269,6 +271,7 @@ void MVATree_VHbb::SetBranches()
     m_reader.BookReader("1lep_2jet_WZ_sherpa221_mBBcut", xmlFile_2jet_WZ_sherpa221_mBBcut);
     m_reader.BookReader("1lep_2jet_WZ_sherpa221_truthall", xmlFile_2jet_WZ_sherpa221_truthall);
     m_reader.BookReader("1lep_2jet_WZ_sherpa221_systTTbar", xmlFile_2jet_WZ_sherpa221_systTTbar);
+    m_reader.BookReader("1lep_2jet_WZ_sherpa221", xmlFile_2jet_WZ_sherpa221);
     m_reader.BookReader("1lep_3jet_sherpa221_truthall_mBBcut_systTTbar", xmlFile_3jet_sherpa221_truthall_mBBcut_systTTbar);
     m_reader.BookReader("1lep_3jet_sherpa221_truthall_systTTbar", xmlFile_3jet_sherpa221_truthall_systTTbar);
     m_reader.BookReader("1lep_3jet_sherpa221_truthall_mBBcut", xmlFile_3jet_sherpa221_truthall_mBBcut);
@@ -276,6 +279,7 @@ void MVATree_VHbb::SetBranches()
     m_reader.BookReader("1lep_3jet_sherpa221_mBBcut", xmlFile_3jet_sherpa221_mBBcut);
     m_reader.BookReader("1lep_3jet_sherpa221_truthall", xmlFile_3jet_sherpa221_truthall);
     m_reader.BookReader("1lep_3jet_sherpa221_systTTbar", xmlFile_3jet_sherpa221_systTTbar);
+    m_reader.BookReader("1lep_3jet_sherpa221", xmlFile_3jet_sherpa221);
     m_reader.BookReader("1lep_3jet_WZ_sherpa221_truthall_mBBcut_systTTbar", xmlFile_3jet_WZ_sherpa221_truthall_mBBcut_systTTbar);
     m_reader.BookReader("1lep_3jet_WZ_sherpa221_truthall_systTTbar", xmlFile_3jet_WZ_sherpa221_truthall_systTTbar);
     m_reader.BookReader("1lep_3jet_WZ_sherpa221_truthall_mBBcut", xmlFile_3jet_WZ_sherpa221_truthall_mBBcut);
@@ -283,6 +287,7 @@ void MVATree_VHbb::SetBranches()
     m_reader.BookReader("1lep_3jet_WZ_sherpa221_mBBcut", xmlFile_3jet_WZ_sherpa221_mBBcut);
     m_reader.BookReader("1lep_3jet_WZ_sherpa221_truthall", xmlFile_3jet_WZ_sherpa221_truthall);
     m_reader.BookReader("1lep_3jet_WZ_sherpa221_systTTbar", xmlFile_3jet_WZ_sherpa221_systTTbar);
+    m_reader.BookReader("1lep_3jet_WZ_sherpa221", xmlFile_3jet_WZ_sherpa221);
 
 
   }
