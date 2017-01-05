@@ -20,13 +20,13 @@ AnalysisReader_VHbb1Lep::~AnalysisReader_VHbb1Lep ()
 EL::StatusCode AnalysisReader_VHbb1Lep::initializeSelection ()
 {
 
-   AnalysisReader_VHbb::initializeSelection ();
+  AnalysisReader_VHbb::initializeSelection ();
 
-    m_eventSelection = new VHbb1lepEvtSelection();
-    //m_fillFunction   = std::bind(&AnalysisReader_VHbb1Lep::fill_1Lep, this);
-    m_fillFunction   = std::bind(&AnalysisReader_VHbb1Lep::run_1Lep_analysis, this);
-    if(m_model == Model::HVT) ((VHbb1lepEvtSelection*)m_eventSelection)->SetModel("HVT");
-    ((VHbb1lepEvtSelection*)m_eventSelection)->SetAnalysisType("m_analysisType");
+  m_eventSelection = new VHbb1lepEvtSelection();
+  //m_fillFunction   = std::bind(&AnalysisReader_VHbb1Lep::fill_1Lep, this);
+  m_fillFunction   = std::bind(&AnalysisReader_VHbb1Lep::run_1Lep_analysis, this);
+  if(m_model == Model::HVT) ((VHbb1lepEvtSelection*)m_eventSelection)->SetModel("HVT");
+  ((VHbb1lepEvtSelection*)m_eventSelection)->SetAnalysisType("m_analysisType");
 
   return EL::StatusCode::SUCCESS;
 }
@@ -71,6 +71,7 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
   // plotting options
   bool doInputPlots                  = true;
   bool doBasicPlots                  = false;
+  bool doLeptonPlots                  = false;
   bool doExtendedPlots               = false;
   bool doTLVPlots                    = false;
   bool doPreTagPlots                 = false;
@@ -110,7 +111,7 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
   //                     EVENT INITIALISATION                //
   //*********************************************************//
 
-   // initialize eventFlag - all cuts are initialized to false by default
+  // initialize eventFlag - all cuts are initialized to false by default
   unsigned long eventFlagResolved = 0;
   unsigned long eventFlagMerged   = 0;
 
@@ -153,6 +154,7 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
   std::vector<const xAOD::TauJet*> taus     = selectionResult.taus;
   std::vector<const xAOD::Jet*> selectedJets;
   std::vector<const xAOD::Jet*> associatedTrackJets;
+  std::vector<const xAOD::Jet*> taggedTrackJets;
   //std::vector<const xAOD::Jet*> unassociatedTrackJets;
 
   //HVT anakysis performed Mu-FatJet OR due to muon in jet four momentum correction
@@ -166,6 +168,7 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
   int nSignalJet  = signalJets.size();
   int nForwardJet = forwardJets.size();
   int nJet        = nSignalJet + nForwardJet;
+  int nTrackJet   = trackJets.size();
   int nFatJet     = fatJets.size();
   setevent_nJets(signalJets, forwardJets);
 
@@ -203,7 +206,12 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
   else{
     compute_btagging();
   }
+
+  int nTrackTag=0;
   compute_fatjetTags(trackJets, fatJets, &associatedTrackJets/*, &unassociatedTrackJets*/);
+//  std::cout << "Here0" << std::endl;
+  compute_trackjetTags(trackJets, taggedTrackJets, nTrackTag/*, &unassociatedTrackJets*/);
+//  std::cout << "Here1" << std::endl;
 
   if(m_debug) std::cout << " >>>>> Calculated B-Jet Information " << std::endl;
   if(fatJets.size() >= 1 && m_debug) std::cout << " >>>>> Calculated nAddTags : " << Props::nAddBTags.get(fatJets.at(0)) << std::endl;
@@ -274,7 +282,7 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
 
   if(m_debug) std::cout << " >>>>> FatJet mBB rescaling complete" << std::endl;
 
-   // **Definition** : met
+  // **Definition** : met
   TLorentzVector metVec, metVecJetCorr, metVecJetRW, metVecFJCorr, metVecFJRW;
   if (met) {
     metVec.SetPtEtaPhiM(met->met(), 0, met->phi(), 0);
@@ -423,30 +431,30 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
   if(m_doQCD && el && nSigEl==1){
     double etcone = Props::topoetcone20.get(el);
     double ptcone = Props::ptvarcone20.get(el);
-     double d0sigbl = Props::d0sigBL.get(el);
-     bool mediumid =  Props::isMediumLH.get(el);
-     bool tightid =  Props::isTightLH.get(el);
-     m_FakeFactor_el->set_parameters(WVecT.Pt()/1000.,lepVec.Pt()/1000.,fabs(lepVec.Eta()),fabs(lepVec.DeltaPhi(metVec)),metVec.Pt()/1000.,etcone/1000.,d0sigbl,mediumid,tightid);
-     //double fake_factor = m_FakeFactor_el->get_fakefactor(m_currentVar);    
-     if(m_currentVar=="MJ_Mu_METstr")ff_weight = m_FakeFactor_el->get_weight("Nominal");
-     else ff_weight = m_FakeFactor_el->get_weight(m_currentVar);
+    double d0sigbl = Props::d0sigBL.get(el);
+    bool mediumid =  Props::isMediumLH.get(el);
+    bool tightid =  Props::isTightLH.get(el);
+    m_FakeFactor_el->set_parameters(WVecT.Pt()/1000.,lepVec.Pt()/1000.,fabs(lepVec.Eta()),fabs(lepVec.DeltaPhi(metVec)),metVec.Pt()/1000.,etcone/1000.,d0sigbl,mediumid,tightid);
+    //double fake_factor = m_FakeFactor_el->get_fakefactor(m_currentVar);    
+    if(m_currentVar=="MJ_Mu_METstr")ff_weight = m_FakeFactor_el->get_weight("Nominal");
+    else ff_weight = m_FakeFactor_el->get_weight(m_currentVar);
 
      
-     if(!((ptcone/lepVec.Pt())<0.06))return EL::StatusCode::SUCCESS;
+    if(!((ptcone/lepVec.Pt())<0.06))return EL::StatusCode::SUCCESS;
 
 
-     if(!noweightQCD){
-       m_weight *= ff_weight;
-       if(m_isMC)m_weight *= -1;
-     }
-     else {
-       if(!tightid)return EL::StatusCode::SUCCESS;
-       if((etcone/lepVec.Pt())<0.06)return EL::StatusCode::SUCCESS;
-     }
-     //if(m_weight!=0&&WVecT.Pt()/1000. > 150&&m_currentVar=="Nominal")std::cout<<"----------------"<<std::endl;     
-     //if(m_weight!=0&&WVecT.Pt()/1000. > 150)std::cout<<m_currentVar<<" "<<WVecT.Pt()/1000.<<" "<<lepVec.Pt()/1000.<<" "<<fabs(lepVec.Eta())<<" "<<fabs(lepVec.DeltaPhi(metVec))<<"       "<<metVec.Pt()/1000.<<"         "<<etcone/1000.<<" "<<d0sigbl<<" "<<mediumid<<" "<<tightid<<" "<<ff_weight<<std::endl;
-     //std::cout<<"El: "<<"current "<< m_currentVar<<" weight "<<ff_weight<<std::endl;
-     //if(m_weight!=0&&WVecT.Pt()/1000. > 150)std::cout<<m_currentVar<<" El  "<<WVecT.Pt()/1000.<<" "<<lepVec.Pt()/1000.<<" "<<fabs(lepVec.Eta())<<" "<<fabs(lepVec.DeltaPhi(metVec))<<"       "<<metVec.Pt()/1000.<<"         "<<etcone/1000.<<" "<<d0sigbl<<" "<<mediumid<<" "<<tightid<<" "<<ff_weight<<std::endl; 
+    if(!noweightQCD){
+      m_weight *= ff_weight;
+      if(m_isMC)m_weight *= -1;
+    }
+    else {
+      if(!tightid)return EL::StatusCode::SUCCESS;
+      if((etcone/lepVec.Pt())<0.06)return EL::StatusCode::SUCCESS;
+    }
+    //if(m_weight!=0&&WVecT.Pt()/1000. > 150&&m_currentVar=="Nominal")std::cout<<"----------------"<<std::endl;     
+    //if(m_weight!=0&&WVecT.Pt()/1000. > 150)std::cout<<m_currentVar<<" "<<WVecT.Pt()/1000.<<" "<<lepVec.Pt()/1000.<<" "<<fabs(lepVec.Eta())<<" "<<fabs(lepVec.DeltaPhi(metVec))<<"       "<<metVec.Pt()/1000.<<"         "<<etcone/1000.<<" "<<d0sigbl<<" "<<mediumid<<" "<<tightid<<" "<<ff_weight<<std::endl;
+    //std::cout<<"El: "<<"current "<< m_currentVar<<" weight "<<ff_weight<<std::endl;
+    //if(m_weight!=0&&WVecT.Pt()/1000. > 150)std::cout<<m_currentVar<<" El  "<<WVecT.Pt()/1000.<<" "<<lepVec.Pt()/1000.<<" "<<fabs(lepVec.Eta())<<" "<<fabs(lepVec.DeltaPhi(metVec))<<"       "<<metVec.Pt()/1000.<<"         "<<etcone/1000.<<" "<<d0sigbl<<" "<<mediumid<<" "<<tightid<<" "<<ff_weight<<std::endl; 
   }
   if(m_doQCD && mu && nSigMu==1){
     double ptcone = Props::ptvarcone30.get(mu);
@@ -468,7 +476,7 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
     }
     // if(m_weight!=0&&WVecT.Pt()/1000. > 150)std::cout<<m_currentVar<<" Mu  "<<WVecT.Pt()/1000.<<" "<<lepVec.Pt()/1000.<<" "<<fabs(lepVec.Eta())<<" "<<fabs(lepVec.DeltaPhi(metVec))<<"       "<<metVec.Pt()/1000.<<"         "<<ptcone/1000.<<" "<<d0sigbl<<" "<<mediumid<<" "<<tightid<<" "<<ff_weight<<std::endl;
 
-      //if(elQCDonly)m_weight=0;
+    //if(elQCDonly)m_weight=0;
     if(elQCDonly)return EL::StatusCode::SUCCESS;
   }
   if(m_debug) std::cout << " >>>>> Applied WEights" << std::endl;
@@ -570,7 +578,7 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
   updateFlag(eventFlagResolved, OneLeptonResolvedCuts::mbbCorr);
 
   // pTV
-  updateFlag(eventFlagResolved, OneLeptonResolvedCuts::pTV, WVecT.Pt()/1.e3 > 150);
+  updateFlag(eventFlagResolved, OneLeptonResolvedCuts::pTV, WVecT.Pt()/1.e3 > 0);
 
 
   // dRBB cut in Cut-based
@@ -666,6 +674,8 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
 
   // leptons
   m_histNameSvc->set_pTV(WVecT.Pt());
+//  m_histNameSvc->set_mBB(HVecJetCorr.M());
+  m_histNameSvc->set_DSID(m_mcChannel);
 
   // here the difference is made between merged and resolved in histnames
   if ( isResolved ) {
@@ -707,7 +717,7 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
     m_histNameSvc->set_nTag(Props::nBTags.get(fatJets.at(0)));
     m_histNameSvc->set_nFatJet(nFatJet);
     m_histNameSvc->set_nBTagTrackJetUnmatched(
-        Props::nAddBTags.get(fatJets.at(0)));
+      Props::nAddBTags.get(fatJets.at(0)));
   } // end of if ( isMerged )
 
   m_histNameSvc->set_eventFlavour(m_physicsMeta.b1Flav, m_physicsMeta.b2Flav);
@@ -717,7 +727,8 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
     //if ( passAllCutsUpTo(eventFlagResolved, OneLeptonResolvedCuts::pTV, { OneLeptonResolvedCuts::mbbCorr } ) ) { // all signal cuts; ignore mbb
     if ( passAllCutsUpTo(eventFlagResolved, OneLeptonResolvedCuts::pTV) ) { 
       //if (passSpecificCuts(eventFlagResolved, { OneLeptonResolvedCuts::mbbCorr })) m_histNameSvc->set_description("SR");
-       m_histNameSvc->set_description("SR");
+      m_histNameSvc->set_description("SRWbb");
+      if( (calculateMtop(lepVec, metVec, j1VecSel, j2VecSel) > 225e3) && ( HVecJetCorr.M() < 75e3) ) m_histNameSvc->set_description("WbbCR");
       // else if( m_model == Model::SM) m_histNameSvc->set_description("mBBcr");
       // else if( m_model == Model::HVT ){
       // 	std::string CR_Name ç∂= (HVecJetCorr.M() < mbbResolvedLowEdge) ? "lowmBBcr" : "highmBBcr";
@@ -752,9 +763,9 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
 
   // Check if event in blinded region
   bool isBlindingRegion = (isResolved && passAllCutsUpTo(eventFlagResolved, OneLeptonResolvedCuts::pTV, {} ) && (m_histNameSvc->get_nTag() == 1))
-                       || (isResolved && passAllCutsUpTo(eventFlagResolved, OneLeptonResolvedCuts::pTV, {} ) && (m_histNameSvc->get_nTag() == 2))
-                       || (isMerged   && passAllCutsUpTo(eventFlagMerged,   OneLeptonMergedCuts::pTV,   {} ) && (m_histNameSvc->get_nTag() == 1))
-                       || (isMerged   && passAllCutsUpTo(eventFlagMerged,   OneLeptonMergedCuts::pTV,   {} ) && (m_histNameSvc->get_nTag() == 2));
+    || (isResolved && passAllCutsUpTo(eventFlagResolved, OneLeptonResolvedCuts::pTV, {} ) && (m_histNameSvc->get_nTag() == 2))
+    || (isMerged   && passAllCutsUpTo(eventFlagMerged,   OneLeptonMergedCuts::pTV,   {} ) && (m_histNameSvc->get_nTag() == 1))
+    || (isMerged   && passAllCutsUpTo(eventFlagMerged,   OneLeptonMergedCuts::pTV,   {} ) && (m_histNameSvc->get_nTag() == 2));
 
   m_doBlinding = isBlindingRegion && ((m_isMC && doBlindingMC) || (!m_isMC && doBlindingData));
 
@@ -773,22 +784,22 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
 
   if (m_isMC && isResolved && ((m_csCorrections.size() != 0) || (m_csVariations.size() != 0))){
     // Check quantities (truth, reco, missing, ...) --> not well defined yet
-      double cs_dr       = fabs(j1VecCorr.DeltaR(j2VecCorr));
-      double cs_dphi     = fabs(j1VecCorr.DeltaPhi(j2VecCorr));
-      double cs_vpt      = WVecT.Pt();
-      double cs_mbb      = HVecJetCorr.M();
-      double cs_truthPt  = WVecT.Pt(); // dummy - to change
-      double cs_ptb1     = j1VecCorr.Pt();
-      double cs_ptb2     = j2VecCorr.Pt();
-      double cs_met      = metVec.Pt();
-      double cs_njet     = m_physicsMeta.nJets;
-      double cs_ntag     = tagcatExcl;
-      double cs_avgTopPt = WVecT.Pt(); // dummy - to change
-      float nnlo_ttbarPt = 0;
-      float nnlo_topPt = 0;
-      applyCS(cs_vpt, cs_mbb, cs_truthPt, cs_dphi, cs_dr, cs_ptb1, cs_ptb2, cs_met, cs_avgTopPt, cs_njet, cs_ntag);
-      truthVariablesNNLO(nnlo_ttbarPt,nnlo_topPt);
-      NNLORW(nnlo_ttbarPt, nnlo_topPt);
+    double cs_dr       = fabs(j1VecCorr.DeltaR(j2VecCorr));
+    double cs_dphi     = fabs(j1VecCorr.DeltaPhi(j2VecCorr));
+    double cs_vpt      = WVecT.Pt();
+    double cs_mbb      = HVecJetCorr.M();
+    double cs_truthPt  = WVecT.Pt(); // dummy - to change
+    double cs_ptb1     = j1VecCorr.Pt();
+    double cs_ptb2     = j2VecCorr.Pt();
+    double cs_met      = metVec.Pt();
+    double cs_njet     = m_physicsMeta.nJets;
+    double cs_ntag     = tagcatExcl;
+    double cs_avgTopPt = WVecT.Pt(); // dummy - to change
+    float nnlo_ttbarPt = 0;
+    float nnlo_topPt = 0;
+    applyCS(cs_vpt, cs_mbb, cs_truthPt, cs_dphi, cs_dr, cs_ptb1, cs_ptb2, cs_met, cs_avgTopPt, cs_njet, cs_ntag);
+    truthVariablesNNLO(nnlo_ttbarPt,nnlo_topPt);
+    NNLORW(nnlo_ttbarPt, nnlo_topPt);
   }
 
   //*********************************************************//
@@ -801,6 +812,16 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
   float Mtop        = calculateMtop(lepVec, metVec, j1VecCorr, j2VecCorr);
   float dYWH        = calculatedYWH(lepVec, metVec, j1VecCorr, j2VecCorr);
 
+  float nnlo_ttbarPt = 0;
+  float nnlo_topPt = 0;
+  truthVariablesNNLO(nnlo_ttbarPt,nnlo_topPt);
+
+  float HT_all        = lepVec.Pt() + metVec.Pt() + j1VecCorr.Pt() + j2VecCorr.Pt();
+
+  if (nJet >= 3){
+    HT_all += j3VecCorr.Pt();
+  }
+
   // reset MVA tree variables
   m_tree->Reset();
   m_tree->SetVariation(m_currentVar);
@@ -810,9 +831,9 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
   m_tree->EventNumber = m_eventInfo->eventNumber();
   m_tree->nJ          = nJet;
   m_tree->dRBB        = j1VecCorr.DeltaR(j2VecCorr);
+  m_tree->mBB         = HVecJetCorr.M();   
   m_tree->dPhiBB      = j1VecCorr.DeltaPhi(j2VecCorr);
   m_tree->dEtaBB      = fabs(j1VecCorr.Eta() - j2VecCorr.Eta());
-  m_tree->mBB    = HVecJetCorr.M();   
   m_tree->mBB_corr    = HVecJetCorr.M(); 
   m_tree->pTB1        = j1VecCorr.Pt();  
   m_tree->pTB2        = j2VecCorr.Pt();
@@ -820,6 +841,19 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
   m_tree->mTW         = WVecT.M();  
   m_tree->Mtop        = Mtop;  
   m_tree->pTV         = WVecT.Pt();  
+
+  m_tree->j1Pt        = j1VecCorr.Pt() / 1e3;  
+  m_tree->j2Pt        = j2VecCorr.Pt() / 1e3;
+  m_tree->met         = metVec.Pt() / 1e3;
+  m_tree->WMt         = WVecT.M() / 1e3;  
+  m_tree->mtop        = Mtop / 1e3;  
+  m_tree->WPt         = WVecT.Pt() / 1e3;  
+  m_tree->jjM         = HVecJetCorr.M()/1e3;   
+  m_tree->jjdR        = j1VecCorr.DeltaR(j2VecCorr);
+  m_tree->WjjdPhi     = fabs(WVecT.DeltaPhi(HVecJet));
+  m_tree->ljmindPhi   = std::min(fabs(lepVec.DeltaPhi(j1VecCorr)), fabs(lepVec.DeltaPhi(j2VecCorr)));
+
+
   m_tree->dYWH        = dYWH;
   m_tree->pTL         = lepVec.Pt();
   m_tree->etaL        = lepVec.Eta();
@@ -862,14 +896,23 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
     else m_tree->pTJ3      = j3VecSel.Pt(); // should use corrected 3rd jet?
     if( bbjVecCorr.M()>1000e3)m_tree->mBBJ      = 1000e3;
     else m_tree->mBBJ      = bbjVecCorr.M();
+
+    if(j3VecSel.Pt()>300e3)m_tree->j3Pt      = 300; // should use corrected 3rd jet?
+    else m_tree->j3Pt      = j3VecSel.Pt() / 1e3; // should use corrected 3rd jet?
+    if( bbjVecCorr.M()>1000e3)m_tree->jjjM      = 1000;
+    else m_tree->jjjM      = bbjVecCorr.M() / 1e3;
+
   }
 
   std::vector<double> values{m_tree->dRBB, m_tree->mBB, m_tree->dPhiVBB, m_tree->dPhiLBmin, m_tree->pTV, m_tree->pTB1, m_tree->pTB2, m_tree->mTW, m_tree->Mtop, m_tree->dEtaWH, m_tree->MET};
   std::vector<float> bdt = m_mva->evaluateClassification(values);
 
-  m_tree->ReadMVA(); 
+  m_tree->ReadMVA();
 
-  //  std::cout<<"BDT"<<m_tree->BDT<<std::endl;
+
+  // std::cout << "njets " << nSelectedJet << std::endl;
+  // std::cout<<"BDT"<<m_tree->BDT<<std::endl;
+  //  std::cout<<"BDT_v2 in AnalysisReader_VHbb1Lep.cxx "<<m_tree->BDT_v2<<std::endl;
   // std::cout<<"BDT_WZ"<<m_tree->BDT_WZ<<std::endl;
  
   // fill MVA tree; makes sure nothing is overwritten later
@@ -905,9 +948,12 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
 
     // objects counts
     m_etree->SetBranchAndValue<int>("nJets",         nJet, -1);
+    m_etree->SetBranchAndValue<int>("nForwardJets",  nForwardJet, -1);
+    m_etree->SetBranchAndValue<int>("nTrackJets",    nTrackJet, -1);
     m_etree->SetBranchAndValue<int>("nFats",         nFatJet, -1);
     m_etree->SetBranchAndValue<int>("nTaus",         taus.size(), -1);
     m_etree->SetBranchAndValue<int>("nTags",         m_physicsMeta.nTags, -1);
+    m_etree->SetBranchAndValue<int>("nTrackTag",     nTrackTag, -1);
     m_etree->SetBranchAndValue<int>("nElectrons",    nSigEl, -1);
     m_etree->SetBranchAndValue<int>("nMuons",        nSigMu, -1);
 
@@ -924,45 +970,111 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
     m_etree->SetBranchAndValue<float>("lPhi",        lepVec.Phi(), -10.);
     m_etree->SetBranchAndValue<float>("lM",          lepVec.M()/1e3, -1.);
     m_etree->SetBranchAndValue<float>("WMt",         WVecT.M()/1e3, -1.);
+//    m_etree->SetBranchAndValue<float>("mTW",         WVecT.M()/1e3, -1.);
     m_etree->SetBranchAndValue<float>("WPt",         WVecT.Pt()/1e3, -1.);
+//    m_etree->SetBranchAndValue<float>("pTV",         WVecT.Pt()/1e3, -1.);
     m_etree->SetBranchAndValue<float>("WPhi",        WVecT.Phi(), -10);
     m_etree->SetBranchAndValue<float>("WM",          WVecT.M()/1e3, -1);
+//    m_etree->SetBranchAndValue<float>("MET",         metVec.Pt()/1e3, -1.);
     m_etree->SetBranchAndValue<float>("met",         metVec.Pt()/1e3, -1.);
-    float j1MV2c20 = -1.;
-    if (nSelectedJet > 0) j1MV2c20 = Props::MV2c20.get(selectedJets.at(0));
+    float j1MV2c10 = -1.;
+    if (nSelectedJet > 0) j1MV2c10 = Props::MV2c10.get(selectedJets.at(0));
     m_etree->SetBranchAndValue<float>("j1Pt",        j1VecCorr.Pt()/1e3, -1.);
+//    m_etree->SetBranchAndValue<float>("pTB1",        j1VecCorr.Pt()/1e3, -1.);
     m_etree->SetBranchAndValue<float>("j1Eta",       j1VecCorr.Eta(), -10.);
     m_etree->SetBranchAndValue<float>("j1Phi",       j1VecCorr.Phi(), -10.);
     m_etree->SetBranchAndValue<float>("j1M",         j1VecCorr.M()/1e3, -1.);
-    m_etree->SetBranchAndValue<float>("j1MV2c20",    j1MV2c20, -1.);
+    m_etree->SetBranchAndValue<float>("j1MV2c10",    j1MV2c10, -1.);
     m_etree->SetBranchAndValue<int>("j1Flav",        m_physicsMeta.b1Flav, -1);
-    float j2MV2c20 = -1.;
-    if (nSelectedJet > 1) j2MV2c20 = Props::MV2c20.get(selectedJets.at(1));
+    float j2MV2c10 = -1.;
+    if (nSelectedJet > 1) j2MV2c10 = Props::MV2c10.get(selectedJets.at(1));
     m_etree->SetBranchAndValue<float>("j2Pt",        j2VecCorr.Pt()/1e3, -1.);
+//    m_etree->SetBranchAndValue<float>("pTB2",        j2VecCorr.Pt()/1e3, -1.);
     m_etree->SetBranchAndValue<float>("j2Eta",       j2VecCorr.Eta(), -10.);
     m_etree->SetBranchAndValue<float>("j2Phi",       j2VecCorr.Phi(), -10.);
     m_etree->SetBranchAndValue<float>("j2M",         j2VecCorr.M()/1e3, -1.);
-    m_etree->SetBranchAndValue<float>("j2MV2c20",    j2MV2c20, -1.);
+    m_etree->SetBranchAndValue<float>("j2MV2c10",    j2MV2c10, -1.);
     m_etree->SetBranchAndValue<int>("j2Flav",        m_physicsMeta.b2Flav, -1);
     m_etree->SetBranchAndValue<float>("jjPt",        HVecJetCorr.Pt()/1e3, -1.);
     m_etree->SetBranchAndValue<float>("jjEta",       HVecJetCorr.Eta(), -10.);
     m_etree->SetBranchAndValue<float>("jjPhi",       HVecJetCorr.Phi(), -10.);
     m_etree->SetBranchAndValue<float>("jjM",         HVecJetCorr.M()/1e3, -1.);
+//    m_etree->SetBranchAndValue<float>("mBB",         HVecJetCorr.M()/1e3, -1.);
     m_etree->SetBranchAndValue<float>("jjdR",        j1VecCorr.DeltaR(j2VecCorr), -1.);
+//    m_etree->SetBranchAndValue<float>("dRBB",        j1VecCorr.DeltaR(j2VecCorr), -1.);
     m_etree->SetBranchAndValue<float>("jjdPhi",      j1VecCorr.DeltaPhi(j2VecCorr), -10.);
     m_etree->SetBranchAndValue<float>("jjdEta",      fabs(j1VecCorr.Eta() - j2VecCorr.Eta()), -1.);
     m_etree->SetBranchAndValue<float>("WjjdPhi",     fabs(WVecT.DeltaPhi(HVecJetCorr)), -1.);
     m_etree->SetBranchAndValue<float>("ljmindPhi",   std::min(fabs(lepVec.DeltaPhi(j1VecCorr)), fabs(lepVec.DeltaPhi(j2VecCorr))), -1.);
+//    m_etree->SetBranchAndValue<float>("dPhiVBB",     fabs(WVecT.DeltaPhi(HVecJetCorr)), -1.);
+//    m_etree->SetBranchAndValue<float>("dPhiLBmin",   std::min(fabs(lepVec.DeltaPhi(j1VecCorr)), fabs(lepVec.DeltaPhi(j2VecCorr))), -1.);
     m_etree->SetBranchAndValue<float>("WjjM",        VHVecJetCorr.M()/1e3, -1.);
+
+    m_etree->SetBranchAndValue<float>("mtop",        Mtop/1e3, -1.);
+//    m_etree->SetBranchAndValue<float>("Mtop",        Mtop/1e3, -1.);
+    m_etree->SetBranchAndValue<float>("dYWH",        dYWH, -1.);
 
     // 3-jet events
     if (nSelectedJet > 2){
       m_etree->SetBranchAndValue<float>("j3Pt",        j3VecCorr.Pt()/1e3, -1.);
+//      m_etree->SetBranchAndValue<float>("pTJ3",        j3VecCorr.Pt()/1e3, -1.);
       m_etree->SetBranchAndValue<float>("j3Eta",       j3VecCorr.Eta(), -10.);
       m_etree->SetBranchAndValue<float>("j3Phi",       j3VecCorr.Phi(), -10.);
       m_etree->SetBranchAndValue<float>("j3M",         j3VecCorr.M()/1e3, -1.);
       m_etree->SetBranchAndValue<float>("jjjM",        bbjVecCorr.M()/1e3, -1.);
+//      m_etree->SetBranchAndValue<float>("mBBJ",        bbjVecCorr.M()/1e3, -1.);
     }
+
+    if (nForwardJet >= 1){
+      m_etree->SetBranchAndValue<float>("jFor1Pt",        fwdjet1Vec.Pt()/1e3, -1.);
+      m_etree->SetBranchAndValue<float>("jFor1Eta",       fwdjet1Vec.Eta(), -10.);
+      m_etree->SetBranchAndValue<float>("jFor1Phi",       fwdjet1Vec.Phi(), -10.);
+      m_etree->SetBranchAndValue<float>("jFor1M",         fwdjet1Vec.M()/1e3, -1.);
+    }
+    if (nForwardJet >= 2){
+      m_etree->SetBranchAndValue<float>("jFor2Pt",        fwdjet2Vec.Pt()/1e3, -1.);
+      m_etree->SetBranchAndValue<float>("jFor2Eta",       fwdjet2Vec.Eta(), -10.);
+      m_etree->SetBranchAndValue<float>("jFor2Phi",       fwdjet2Vec.Phi(), -10.);
+      m_etree->SetBranchAndValue<float>("jFor2M",         fwdjet2Vec.M()/1e3, -1.);
+    }
+    if (nForwardJet >= 3){
+      m_etree->SetBranchAndValue<float>("jFor3Pt",        fwdjet3Vec.Pt()/1e3, -1.);
+      m_etree->SetBranchAndValue<float>("jFor3Eta",       fwdjet3Vec.Eta(), -10.);
+      m_etree->SetBranchAndValue<float>("jFor3Phi",       fwdjet3Vec.Phi(), -10.);
+      m_etree->SetBranchAndValue<float>("jFor3M",         fwdjet3Vec.M()/1e3, -1.);
+    }
+
+//    std::cout << "nTrackTag " << nTrackTag << std::endl;
+//    std::cout << "taggedTrackJets.size " << taggedTrackJets.size() << std::endl;
+
+    if (nTrackTag >= 1){
+//      std::cout << "Number 1" << std::endl;
+      TLorentzVector trackJetVec = taggedTrackJets.at(0)->p4();
+      m_etree->SetBranchAndValue<float>("jTrack1Pt",        trackJetVec.Pt()/1e3, -1.);
+      m_etree->SetBranchAndValue<float>("jTrack1Eta",       trackJetVec.Eta(), -10.);
+      m_etree->SetBranchAndValue<float>("jTrack1Phi",       trackJetVec.Phi(), -10.);
+      m_etree->SetBranchAndValue<float>("jTrack1M",         trackJetVec.M()/1e3, -1.);
+    }
+
+    if (nTrackTag >= 2){
+//      std::cout << "Number 2" << std::endl;
+      TLorentzVector trackJetVec = taggedTrackJets.at(1)->p4();
+      m_etree->SetBranchAndValue<float>("jTrack2Pt",        trackJetVec.Pt()/1e3, -1.);
+      m_etree->SetBranchAndValue<float>("jTrack2Eta",       trackJetVec.Eta(), -10.);
+      m_etree->SetBranchAndValue<float>("jTrack2Phi",       trackJetVec.Phi(), -10.);
+      m_etree->SetBranchAndValue<float>("jTrack2M",         trackJetVec.M()/1e3, -1.);
+    }
+
+    if (nTrackTag >= 3){
+//      std::cout << "Number 3" << std::endl;
+      TLorentzVector trackJetVec = taggedTrackJets.at(2)->p4();
+      m_etree->SetBranchAndValue<float>("jTrack2Pt",        trackJetVec.Pt()/1e3, -1.);
+      m_etree->SetBranchAndValue<float>("jTrack2Eta",       trackJetVec.Eta(), -10.);
+      m_etree->SetBranchAndValue<float>("jTrack2Phi",       trackJetVec.Phi(), -10.);
+      m_etree->SetBranchAndValue<float>("jTrack2M",         trackJetVec.M()/1e3, -1.);
+    }
+
+
 
     // fat jets
     if (nFatJet >= 1){
@@ -1001,10 +1113,10 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
 
     if (m_histNameSvc->get_isNominal()
         && (passAllCutsUpTo(eventFlagMerged, OneLeptonMergedCuts::pTV, { OneLeptonMergedCuts::pTV, OneLeptonMergedCuts::mbbCorr } )
-        || passAllCutsUpTo(eventFlagResolved, OneLeptonResolvedCuts::pTV, { OneLeptonResolvedCuts::pTV, OneLeptonResolvedCuts::mbbCorr } ))
+	    || passAllCutsUpTo(eventFlagResolved, OneLeptonResolvedCuts::pTV, { OneLeptonResolvedCuts::pTV, OneLeptonResolvedCuts::mbbCorr } ))
 //         && passSpecificCuts(eventFlagMerged, { OneLeptonMergedCuts::AtLeast1FatJet, OneLeptonMergedCuts::AtLeast2TrackJets } )
 //         && (Props::nBTags.get(fatJets.at(0)) >= 1)
-       ) {
+      ) {
       m_etree->Fill();
     }
   }
@@ -1016,10 +1128,6 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
   //test
   if(m_doQCD)m_histNameSvc->set_sample("multijet");
    
-
-  if(m_doQCD)m_histNameSvc->set_sample("multijet");
-   
-
   if(m_debug) std::cout << " >>>>> Histogram Formation" << std::endl;
 
   fill_1lepResolvedCutFlow(eventFlagResolved);
@@ -1039,402 +1147,469 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
 
   if (!m_doBlinding && (m_histNameSvc->get_description() != "")) {
 
-    if (doInputPlots) {
-      if(passSpecificCuts(eventFlagResolved, {OneLeptonResolvedCuts::dRBB,OneLeptonResolvedCuts::mTW_add})){
-	if (isResolved && doMbbRescaling) {
-	  // m_histSvc->BookFillHist("mVH", 600, 0, 6000,   VHVecJetRW.M() / 1e3, m_weight);
-	  m_histSvc->BookFillHist("mBB", 500, 0, 500,    HVecJetRW.M() / 1e3, m_weight);
-	  // Included Line // <<<---- SJ01 Revert Point
-	  if(isE)m_histSvc->BookFillHist("El_mBB", 500, 0, 500,    HVecJetRW.M() / 1e3, m_weight);
-	  if(isMu)m_histSvc->BookFillHist("Mu_mBB", 500, 0, 500,    HVecJetRW.M() / 1e3, m_weight);
-	  //               // <<<---- SJ01 Revert Point
+    for(int i=1;i<2;i++){
+      if(i==1) {
+	m_histNameSvc->set_description("SR");
+      }
+      if (doInputPlots) {
+	  
+	if(passSpecificCuts(eventFlagResolved, {OneLeptonResolvedCuts::dRBB,OneLeptonResolvedCuts::mTW_add})){
+	    
+	  for(int k=1;k<2;k++){
+	    if(k==0) {
+	      m_histNameSvc->set_pTV_split(true);
+	    }
+	    else{
+	      m_histNameSvc->set_pTV_split(false);
+	    }
+
+
+	    if (isResolved && doMbbRescaling) {
+	      // m_histSvc->BookFillHist("mVH", 600, 0, 6000,   VHVecJetRW.M() / 1e3, m_weight);
+	      m_histSvc->BookFillHist("mBB", 500, 0, 500,    HVecJetRW.M() / 1e3, m_weight);
+	      // Included Line // <<<---- SJ01 Revert Point
+	      if(isE&&doLeptonPlots)m_histSvc->BookFillHist("El_mBB", 500, 0, 500,    HVecJetRW.M() / 1e3, m_weight);
+	      if(isMu&&doLeptonPlots)m_histSvc->BookFillHist("Mu_mBB", 500, 0, 500,    HVecJetRW.M() / 1e3, m_weight);
+	      //               // <<<---- SJ01 Revert Point
+	    }
+	    if (isResolved && !doMbbRescaling) {
+	      //m_histSvc->BookFillHist("mVH", 600, 0, 6000,   VHVecJetCorr.M() / 1e3, m_weight);
+	      m_histSvc->BookFillHist("mBB", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	      // Included Line // <<<---- SJ01 Revert Point
+	      if(isE&&doLeptonPlots)m_histSvc->BookFillHist("El_mBB", 500, 0, 500,   HVecJetCorr.M() / 1e3, m_weight);
+	      if(isMu&&doLeptonPlots)m_histSvc->BookFillHist("Mu_mBB", 500, 0, 500,   HVecJetCorr.M() / 1e3, m_weight);
+	      //               // <<<---- SJ01 Revert Point
+	    }
+	    if (isMerged && doMbbRescaling) {
+	      //m_histSvc->BookFillHist("mVH", 600, 0, 6000,   VHVecFatRW.M() / 1e3, m_weight);
+	      m_histSvc->BookFillHist("mBB", 500, 0, 500,    fatJetRW.M() / 1e3, m_weight);
+	    }
+	    if (isMerged && !doMbbRescaling) {
+	      //m_histSvc->BookFillHist("mVH", 600, 0, 6000,   VHVecFatCorr.M() / 1e3, m_weight);
+	      m_histSvc->BookFillHist("mBB", 500, 0, 500,    fj1VecCorr.M() / 1e3, m_weight);
+	    }
+	  }
 	}
 	if (isResolved && !doMbbRescaling) {
-	  //m_histSvc->BookFillHist("mVH", 600, 0, 6000,   VHVecJetCorr.M() / 1e3, m_weight);
+	  m_histSvc->BookFillHist("mvaICHEP", 1000, -1, 1,    m_tree->BDT, m_weight);
+//	    m_histSvc->BookFillHist("mvav1", 1000, -1, 1,    m_tree->BDT_v1, m_weight);
+	  m_histSvc->BookFillHist("mva", 1000, -1, 1,    m_tree->BDT_v2, m_weight);
+/*
+	  m_histSvc->BookFillHist("mvav3Sherpa221", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221, m_weight);
+	  m_histSvc->BookFillHist("mvav3Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221_TruthAll, m_weight);
+	  m_histSvc->BookFillHist("mvav3Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221_TruthAll_SystTTbar, m_weight);
+
+	  m_histSvc->BookFillHist("mvav4Sherpa221", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221, m_weight);
+	  m_histSvc->BookFillHist("mvav4Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221_TruthAll, m_weight);
+	  m_histSvc->BookFillHist("mvav4Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221_TruthAll_SystTTbar, m_weight);
+
+	  m_histSvc->BookFillHist("mvav5Sherpa221", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221, m_weight);
+	  m_histSvc->BookFillHist("mvav5Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221_TruthAll, m_weight);
+	  m_histSvc->BookFillHist("mvav5Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221_TruthAll_SystTTbar, m_weight);
+
+//	  m_histSvc->BookFillHist("mvav6Sherpa221TruthAllmBB", 1000, -1, 1,    m_tree->BDT_v6_Sherpa221_TruthAll_mBB, m_weight);
+
+
+//	    m_histSvc->BookFillHist("mvav1_alt", 1000, -1, 1,    m_tree->BDT_v1_alt, m_weight);
+	  m_histSvc->BookFillHist("mvadiboson", 1000, -1, 1,    m_tree->BDT_WZ, m_weight);
+	  m_histSvc->BookFillHist("mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
+	  m_histSvc->BookFillHist("pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
+	  m_histSvc->BookFillHist("mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	  /*  
+	      for(int k=0;k<2;k++){
+	      if(k==0) {
+	      m_histNameSvc->set_pTV_split(true);
+	      }
+	      else{
+	      m_histNameSvc->set_pTV_split(false);
+	      }
+
+	      m_histSvc->BookFillHist("mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	      }
+	  */
+	  if(isE&&doLeptonPlots){
+//	    m_histSvc->BookFillHist("El_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
+//	      m_histSvc->BookFillHist("El_mvav1", 1000, -1, 1,     m_tree->BDT_v1, m_weight);
+	    m_histSvc->BookFillHist("El_mva", 1000, -1, 1,     m_tree->BDT_v2, m_weight);
+/*
+	    m_histSvc->BookFillHist("El_mvav3Sherpa221", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221, m_weight);
+	    m_histSvc->BookFillHist("El_mvav3Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221_TruthAll, m_weight);
+	    m_histSvc->BookFillHist("El_mvav3Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221_TruthAll_SystTTbar, m_weight);
+
+	    m_histSvc->BookFillHist("El_mvav4Sherpa221", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221, m_weight);
+	    m_histSvc->BookFillHist("El_mvav4Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221_TruthAll, m_weight);
+	    m_histSvc->BookFillHist("El_mvav4Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221_TruthAll_SystTTbar, m_weight);
+*/
+/*	    m_histSvc->BookFillHist("El_mvav5Sherpa221", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221, m_weight);
+	    m_histSvc->BookFillHist("El_mvav5Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221_TruthAll, m_weight);
+	    m_histSvc->BookFillHist("El_mvav5Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221_TruthAll_SystTTbar, m_weight);
+*/
+//	    m_histSvc->BookFillHist("El_mvav6Sherpa221TruthAllmBB", 1000, -1, 1,    m_tree->BDT_v6_Sherpa221_TruthAll_mBB, m_weight);
+//	      m_histSvc->BookFillHist("El_mvav1_alt", 1000, -1, 1,     m_tree->BDT_v1_alt, m_weight);
+	    m_histSvc->BookFillHist("El_mvadiboson", 1000, -1, 1,     m_tree->BDT_WZ, m_weight);
+	    m_histSvc->BookFillHist("El_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
+	    m_histSvc->BookFillHist("El_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
+	    m_histSvc->BookFillHist("El_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+/*
+  for(int k=0;k<2;k++){
+  if(k==0) {
+  m_histNameSvc->set_pTV_split(true);
+  }
+  else{
+  m_histNameSvc->set_pTV_split(false);
+  }
+  m_histSvc->BookFillHist("El_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+
+  }
+*/
+	  }	
+	  if(isMu&&doLeptonPlots){
+//	    m_histSvc->BookFillHist("Mu_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
+//	      m_histSvc->BookFillHist("Mu_mvav1", 1000, -1, 1,     m_tree->BDT_v1, m_weight);
+	    m_histSvc->BookFillHist("Mu_mva", 1000, -1, 1,     m_tree->BDT_v2, m_weight);
+/*
+	    m_histSvc->BookFillHist("Mu_mvav3Sherpa221", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvav3Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221_TruthAll, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvav3Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221_TruthAll_SystTTbar, m_weight);
+
+	    m_histSvc->BookFillHist("Mu_mvav4Sherpa221", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvav4Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221_TruthAll, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvav4Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221_TruthAll_SystTTbar, m_weight);
+*/
+	    m_histSvc->BookFillHist("Mu_mvav5Sherpa221", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvav5Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221_TruthAll, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvav5Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221_TruthAll_SystTTbar, m_weight);
+	 
+//	    m_histSvc->BookFillHist("Mu_mvav6Sherpa221TruthAllmBB", 1000, -1, 1,    m_tree->BDT_v6_Sherpa221_TruthAll_mBB, m_weight);
+//	      m_histSvc->BookFillHist("Mu_mvav1_alt", 1000, -1, 1,     m_tree->BDT_v1_alt, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvadiboson", 1000, -1, 1,     m_tree->BDT_WZ, m_weight);
+	    m_histSvc->BookFillHist("Mu_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
+	    m_histSvc->BookFillHist("Mu_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
+	    m_histSvc->BookFillHist("Mu_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+
+/*
+  for(int k=0;k<2;k++){
+  if(k==0) {
+  m_histNameSvc->set_pTV_split(true);
+  }
+  else{
+  m_histNameSvc->set_pTV_split(false);
+  }
+
+  m_histSvc->BookFillHist("Mu_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+  }
+*/
+	  }
+	}
+	if (isResolved && doMbbRescaling) {
+	  m_histSvc->BookFillHist("mvaICHEP", 1000, -1, 1,    m_tree->BDT, m_weight);
+//	    m_histSvc->BookFillHist("mvav1", 1000, -1, 1,    m_tree->BDT_v1, m_weight);
+	  m_histSvc->BookFillHist("mva", 1000, -1, 1,    m_tree->BDT_v2, m_weight);
+/*
+	  m_histSvc->BookFillHist("mvav3Sherpa221", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221, m_weight);
+	  m_histSvc->BookFillHist("mvav3Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221_TruthAll, m_weight);
+	  m_histSvc->BookFillHist("mvav3Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221_TruthAll_SystTTbar, m_weight);
+
+	  m_histSvc->BookFillHist("mvav4Sherpa221", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221, m_weight);
+	  m_histSvc->BookFillHist("mvav4Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221_TruthAll, m_weight);
+	  m_histSvc->BookFillHist("mvav4Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221_TruthAll_SystTTbar, m_weight);
+*/
+/*	  m_histSvc->BookFillHist("mvav5Sherpa221", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221, m_weight);
+	  m_histSvc->BookFillHist("mvav5Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221_TruthAll, m_weight);
+	  m_histSvc->BookFillHist("mvav5Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221_TruthAll_SystTTbar, m_weight);
+*/
+//	  m_histSvc->BookFillHist("mvav6Sherpa221TruthAllmBB", 1000, -1, 1,    m_tree->BDT_v6_Sherpa221_TruthAll_mBB, m_weight);
+
+//	    m_histSvc->BookFillHist("mvav1_alt", 1000, -1, 1,    m_tree->BDT_v1_alt, m_weight);
+	  m_histSvc->BookFillHist("mvadiboson", 1000, -1, 1,    m_tree->BDT_WZ, m_weight);
+	  m_histSvc->BookFillHist("mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
+	  m_histSvc->BookFillHist("pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
+	  m_histSvc->BookFillHist("mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+/*
+  for(int k=0;k<2;k++){
+  if(k==0) {
+  m_histNameSvc->set_pTV_split(true);
+  }
+  else{
+  m_histNameSvc->set_pTV_split(false);
+  }
+
+
+  m_histSvc->BookFillHist("mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+  }
+*/	  
+	  if(isE&&doLeptonPlots){
+//	    m_histSvc->BookFillHist("El_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
+//	      m_histSvc->BookFillHist("El_mvav1", 1000, -1, 1,     m_tree->BDT_v1, m_weight);
+	    m_histSvc->BookFillHist("El_mva", 1000, -1, 1,     m_tree->BDT_v2, m_weight);
+/*
+	    m_histSvc->BookFillHist("El_mvav3Sherpa221", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221, m_weight);
+	    m_histSvc->BookFillHist("El_mvav3Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221_TruthAll, m_weight);
+	    m_histSvc->BookFillHist("El_mvav3Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221_TruthAll_SystTTbar, m_weight);
+
+	    m_histSvc->BookFillHist("El_mvav4Sherpa221", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221, m_weight);
+	    m_histSvc->BookFillHist("El_mvav4Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221_TruthAll, m_weight);
+	    m_histSvc->BookFillHist("El_mvav4Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221_TruthAll_SystTTbar, m_weight);
+*/
+	    m_histSvc->BookFillHist("El_mvav5Sherpa221", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221, m_weight);
+	    m_histSvc->BookFillHist("El_mvav5Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221_TruthAll, m_weight);
+	    m_histSvc->BookFillHist("El_mvav5Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221_TruthAll_SystTTbar, m_weight);
+
+//	    m_histSvc->BookFillHist("El_mvav6Sherpa221TruthAllmBB", 1000, -1, 1,    m_tree->BDT_v6_Sherpa221_TruthAll_mBB, m_weight);
+
+//	      m_histSvc->BookFillHist("El_mvav1_alt", 1000, -1, 1,     m_tree->BDT_v1_alt, m_weight);
+	    m_histSvc->BookFillHist("El_mvadiboson", 1000, -1, 1,     m_tree->BDT_WZ, m_weight);
+	    m_histSvc->BookFillHist("El_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
+	    m_histSvc->BookFillHist("El_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
+	    m_histSvc->BookFillHist("El_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	  
+	    /*
+	      for(int k=0;k<2;k++){
+	      if(k==0) {
+	      m_histNameSvc->set_pTV_split(true);
+	      }
+	      else{
+	      m_histNameSvc->set_pTV_split(false);
+	      }
+	      m_histSvc->BookFillHist("El_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	      }
+	    */
+	  }
+	  if(isMu&&doLeptonPlots){
+//	    m_histSvc->BookFillHist("Mu_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
+//	      m_histSvc->BookFillHist("Mu_mvav1", 1000, -1, 1,     m_tree->BDT_v1, m_weight);
+	    m_histSvc->BookFillHist("Mu_mva", 1000, -1, 1,     m_tree->BDT_v2, m_weight);
+/*
+	    m_histSvc->BookFillHist("Mu_mvav3Sherpa221", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvav3Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221_TruthAll, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvav3Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v3_Sherpa221_TruthAll_SystTTbar, m_weight);
+
+	    m_histSvc->BookFillHist("Mu_mvav4Sherpa221", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvav4Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221_TruthAll, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvav4Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v4_Sherpa221_TruthAll_SystTTbar, m_weight);
+*/
+	    m_histSvc->BookFillHist("Mu_mvav5Sherpa221", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvav5Sherpa221TruthAll", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221_TruthAll, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvav5Sherpa221TruthAllSystTTbar", 1000, -1, 1,    m_tree->BDT_v5_Sherpa221_TruthAll_SystTTbar, m_weight);
+
+//	    m_histSvc->BookFillHist("Mu_mvav6Sherpa221TruthAllmBB", 1000, -1, 1,    m_tree->BDT_v6_Sherpa221_TruthAll_mBB, m_weight);
+//	      m_histSvc->BookFillHist("Mu_mvav1_alt", 1000, -1, 1,     m_tree->BDT_v1_alt, m_weight);
+	    m_histSvc->BookFillHist("Mu_mvadiboson", 1000, -1, 1,     m_tree->BDT_WZ, m_weight);
+	    m_histSvc->BookFillHist("Mu_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
+	    m_histSvc->BookFillHist("Mu_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
+	    m_histSvc->BookFillHist("Mu_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+
+/*	  
+	  for(int k=0;k<2;k++){
+	  if(k==0) {
+	  m_histNameSvc->set_pTV_split(true);
+	  }
+	  else{
+	  m_histNameSvc->set_pTV_split(false);
+	  }	
+	  m_histSvc->BookFillHist("Mu_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	      
+	  }
+*/
+	  }
+	}
+      }
+    
+      // if((m_eventInfo->eventNumber % 2 )==0){
+      //   m_histSvc->BookFillHist("even_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
+      // }
+      // else {
+      //   m_histSvc->BookFillHist("odd_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
+      // }
+
+      if (doBasicPlots) {
+	
+	// event quantities
+	m_histSvc->BookFillHist("MET",     100,  0,  1000, m_tree->MET / 1e3, m_weight); 
+
+	m_histSvc->BookFillHist("HT",     100,  0,  1000, HT_all / 1e3, m_weight); 
+	m_histSvc->BookFillHist("ttbarpt",     100,  0,  1000, nnlo_ttbarPt / 1e3, m_weight); 
+	m_histSvc->BookFillHist("toppt",     100,  0,  1000, nnlo_topPt / 1e3, m_weight); 
+
+	m_histSvc->BookFillHist("HT_MVA", 1000, -1, 1, 100,  0,  1000,m_tree->BDT, HT_all / 1e3, m_weight); 
+	m_histSvc->BookFillHist("ttbarPt_MVA", 1000, -1, 1, 1000,  0,  1000,m_tree->BDT, nnlo_ttbarPt / 1e3, m_weight); 
+	m_histSvc->BookFillHist("topPt_MVA", 1000, -1, 1, 100,  0,  1000,m_tree->BDT, nnlo_topPt / 1e3, m_weight); 
+	m_histSvc->BookFillHist("HT_pTV", 200, 0, 2000, 100,  0,  1000,m_tree->pTV / 1e3, HT_all / 1e3, m_weight); 
+
+	m_histSvc->BookFillHist("Mtop",     500,  0, 500, m_tree->Mtop / 1e3, m_weight);
+	m_histSvc->BookFillHist("dYWH",     100,  0, 6, m_tree->dYWH, m_weight);
+	m_histSvc->BookFillHist("dPhiLBmin", 100, 0., 6.,   std::min(fabs(lepVec.DeltaPhi(j1VecCorr)), fabs(lepVec.DeltaPhi(j2VecCorr))), m_weight);
+	m_histSvc->BookFillHist("dRBB",      100, 0., 6.,   j1VecCorr.DeltaR(j2VecCorr), m_weight);
+	m_histSvc->BookFillHist("dPhiVBB",   100, 0., 3.15, fabs(WVecT.DeltaPhi(HVecJetCorr)), m_weight);
+	if(nSelectedJet >= 3)m_histSvc->BookFillHist("mBBJ", 500, 0, 500, m_tree->mBBJ / 1e3, m_weight);
+	
+	
+	//B-Tagging Variables for AntiKt4EMtopo dR = 0.4
+	if (nSelectedJet >= 1){
+	  m_histSvc->BookFillHist("j1VecCorrPt",  600, 0, 3000,  m_tree->pTB1 / 1e3, m_weight);
+	  //m_histSvc->BookFillHist("MV2c10B1", 100, -1, 1, Props::MV2c10.get(selectedJets.at(0)), m_weight);
+	  //m_histSvc->BookFillHist("MV2c00B1", 100, -1, 1, Props::MV2c00.get(selectedJets.at(0)), m_weight);
+	  //m_histSvc->BookFillHist("MV2c100B1", 100, -1, 1, Props::MV2c100.get(selectedJets.at(0)), m_weight);
+	}
+	if (nSelectedJet >= 2){
+	  m_histSvc->BookFillHist("j2VecCorrPt",  600, 0, 3000,  m_tree->pTB2 / 1e3, m_weight);
+	  //m_histSvc->BookFillHist("MV2c10B2", 100, -1, 1, Props::MV2c10.get(selectedJets.at(1)), m_weight);
+	  //m_histSvc->BookFillHist("MV2c00B2", 100, -1, 1, Props::MV2c00.get(selectedJets.at(1)), m_weight);
+	  //m_histSvc->BookFillHist("MV2c100B2", 100, -1, 1, Props::MV2c100.get(selectedJets.at(1)), m_weight);
+	}
+	if (nSelectedJet >= 3){
+	  m_histSvc->BookFillHist("j3VecCorrPt",  600, 0, 3000,  m_tree->pTJ3 / 1e3, m_weight);
+	  //m_histSvc->BookFillHist("MV2c10B3", 100, -1, 1, Props::MV2c10.get(selectedJets.at(2)), m_weight);
+	  //m_histSvc->BookFillHist("MvV2c00B2", 100, -1, 1, Props::MV2c00.get(selectedJets.at(1)), m_weight);
+	  //m_histSvc->BookFillHist("MV2c100B2", 100, -1, 1, Props::MV2c100.get(selectedJets.at(1)), m_weight);
+	}
+	
+	//Lepton Vector quantities
+	//fill_TLV("lepVec",      lepVec      , m_weight, isE, isMu);
+	
+	//Jet quantities
+	if(isResolved && !doExtendedPlots ){
+	  //fill_TLV("j1VecCorr",   j1VecCorr   , m_weight, isE, isMu);
+	  //fill_TLV("j2VecCorr",   j2VecCorr   , m_weight, isE, isMu);
+	  //if (nSelectedJet >= 3) fill_TLV("j3VecCorr",   j3VecCorr   , m_weight, isE, isMu);
+	}else if(isMerged && !doExtendedPlots){
+	  //fill_TLV("HVecFatCorr",  fj1VecCorr  , m_weight, isE, isMu);
+	  //if(associatedTrackJets.size() >= 1) fill_TLV("TrkJet1", associatedTrackJets.at(0)->p4(), m_weight, isE, isMu);
+	  //if(associatedTrackJets.size() >= 2) fill_TLV("TrkJet2", associatedTrackJets.at(1)->p4(), m_weight, isE, isMu);
+	}
+	
+	if(isMerged){
+	  //1D histogram of MV2c00, MV2c10 & MV2c100 for each trackjet
+	  if(associatedTrackJets.size() >= 1) {
+	    m_histSvc->BookFillHist("TrkMV2c10B1", 100, -1, 1,  Props::MV2c10.get(associatedTrackJets.at(0)), m_weight);
+	    m_histSvc->BookFillHist("TrkMV2c00B1", 100, -1, 1,  Props::MV2c00.get(associatedTrackJets.at(0)), m_weight);
+	    m_histSvc->BookFillHist("TrkMV2c100B1", 100, -1, 1, Props::MV2c100.get(associatedTrackJets.at(0)), m_weight);
+	    //2D histogram of MV2c00, MV2c10 & MV2c100 for each trackjet
+	    m_histSvc->BookFillHist("TrkMV2c00B1-TrkMV2c100B1", 100, -1, 1, 100, -1, 1, Props::MV2c00.get(associatedTrackJets.at(0)), Props::MV2c100.get(associatedTrackJets.at(0)), m_weight);
+	  }
+	  if(associatedTrackJets.size() >= 2){
+	    m_histSvc->BookFillHist("TrkMV2c10B2", 100, -1, 1,  Props::MV2c10.get(associatedTrackJets.at(1)), m_weight);
+	    m_histSvc->BookFillHist("TrkMV2c00B2", 100, -1, 1,  Props::MV2c00.get(associatedTrackJets.at(1)), m_weight);
+	    m_histSvc->BookFillHist("TrkMV2c100B2", 100, -1, 1, Props::MV2c100.get(associatedTrackJets.at(1)), m_weight);
+	    //2D histogram of MV2c00, MV2c10 & MV2c100 for each trackjet
+	    m_histSvc->BookFillHist("TrkMV2c00B2-TrkMV2c100B2", 100, -1, 1, 100, -1, 1, Props::MV2c00.get(associatedTrackJets.at(1)), Props::MV2c100.get(associatedTrackJets.at(1)), m_weight);
+	  }
+	}
+	
+	// Included Line // <<<---- SJ01 Revert Point
+	if(isE&&doLeptonPlots){
+	  m_histSvc->BookFillHist("El_MET",     100,  0,  1000, m_tree->MET / 1e3, m_weight); 
+	  m_histSvc->BookFillHist("El_Mtop",     500,  0, 500, m_tree->Mtop / 1e3, m_weight);
+	  m_histSvc->BookFillHist("El_dYWH",     100,  0, 6, m_tree->dYWH, m_weight);
+	  m_histSvc->BookFillHist("El_dRBB",      100, 0., 6.,   j1VecCorr.DeltaR(j2VecCorr), m_weight);
+	  m_histSvc->BookFillHist("El_dPhiLBmin", 100, 0., 6.,   std::min(fabs(lepVec.DeltaPhi(j1VecCorr)), fabs(lepVec.DeltaPhi(j2VecCorr))), m_weight);
+	  m_histSvc->BookFillHist("El_dPhiVBB",   100, 0., 3.15, fabs(WVecT.DeltaPhi(HVecJetCorr)), m_weight);
+	  m_histSvc->BookFillHist("El_j1VecCorrPt",  600, 0, 3000,  m_tree->pTB1 / 1e3, m_weight);
+	  m_histSvc->BookFillHist("El_j2VecCorrPt",  600, 0, 3000,  m_tree->pTB2 / 1e3, m_weight);
+	  m_histSvc->BookFillHist("El_j3VecCorrPt",  600, 0, 3000,  m_tree->pTJ3 / 1e3, m_weight);
+	  if(nSelectedJet >= 3)m_histSvc->BookFillHist("El_mBBJ", 500, 0, 500, m_tree->mBBJ / 1e3, m_weight);
+	}
+	if(isMu&&doLeptonPlots){
+	  m_histSvc->BookFillHist("Mu_MET",     100,  0,  1000, m_tree->MET / 1e3, m_weight); 
+	  m_histSvc->BookFillHist("Mu_Mtop",     500,  0, 500, m_tree->Mtop / 1e3, m_weight);
+	  m_histSvc->BookFillHist("Mu_dYWH",     100,  0, 6, m_tree->dYWH, m_weight);
+	  m_histSvc->BookFillHist("Mu_dRBB",      100, 0., 6.,   j1VecCorr.DeltaR(j2VecCorr), m_weight);
+	  m_histSvc->BookFillHist("Mu_dPhiLBmin", 100, 0., 6.,   std::min(fabs(lepVec.DeltaPhi(j1VecCorr)), fabs(lepVec.DeltaPhi(j2VecCorr))), m_weight);
+	  m_histSvc->BookFillHist("Mu_dPhiVBB",   100, 0., 3.15, fabs(WVecT.DeltaPhi(HVecJetCorr)), m_weight);
+	  m_histSvc->BookFillHist("Mu_j1VecCorrPt",  600, 0, 3000,  m_tree->pTB1 / 1e3, m_weight);
+	  m_histSvc->BookFillHist("Mu_j2VecCorrPt",  600, 0, 3000,  m_tree->pTB2 / 1e3, m_weight);
+	  m_histSvc->BookFillHist("Mu_j3VecCorrPt",  600, 0, 3000,  m_tree->pTJ3 / 1e3, m_weight);
+
+	  if(nSelectedJet >= 3)m_histSvc->BookFillHist("Mu_mBBJ", 500, 0, 500, m_tree->mBBJ / 1e3, m_weight);
+	}
+	//               // <<<---- SJ01 Revert Point
+
+      }
+
+      if (doExtendedPlots) {
+
+	if(isE&&doLeptonPlots){
+	  m_histSvc->BookFillHist("El_ptvarcone20_pT", 100,  0,  0.5, Props::ptvarcone20.get(el)/lepVec.Pt(), m_weight);
+	  m_histSvc->BookFillHist("El_ptvarcone20", 100,  0,  5000, Props::ptvarcone20.get(el), m_weight);
+	  m_histSvc->BookFillHist("El_topoetcone20_pT", 100,  0,  0.5, Props::topoetcone20.get(el)/lepVec.Pt(), m_weight);
+	  m_histSvc->BookFillHist("El_topoetcone20", 100,  0,  5000, Props::topoetcone20.get(el), m_weight);
+	}
+	if(isMu&&doLeptonPlots){
+	  m_histSvc->BookFillHist("Mu_ptvarcone30_pT", 100,  0,  0.5, Props::ptvarcone30.get(mu)/lepVec.Pt(), m_weight);
+	  m_histSvc->BookFillHist("Mu_ptvarcone30", 100,  0,  5000, Props::ptvarcone30.get(mu), m_weight);
+	  m_histSvc->BookFillHist("Mu_topoetcone20_pT", 100,  0,  0.5, Props::topoetcone20.get(mu)/lepVec.Pt(), m_weight);
+	  m_histSvc->BookFillHist("Mu_topoetcone20", 100,  0,  5000, Props::topoetcone20.get(mu), m_weight);
+	}
+	fill_TLV("lepVec",      lepVec      , m_weight, isE, isMu);
+      }
+    
+
+      if(passPreTagResolved && doPreTagPlots){
+	m_histNameSvc->set_description("PreTag");
+	m_histNameSvc->set_nTag(-1);	
+    
+	if (isResolved && doMbbRescaling) {
+	  m_histSvc->BookFillHist("mBB", 500, 0, 500,    HVecJetRW.M() / 1e3, m_weight);
+	  if(isE&&doLeptonPlots){
+	    m_histSvc->BookFillHist("El_mBB", 500, 0, 500,    HVecJetRW.M() / 1e3, m_weight);
+	  }
+	  if(isMu&&doLeptonPlots){
+	    m_histSvc->BookFillHist("Mu_mBB", 500, 0, 500,    HVecJetRW.M() / 1e3, m_weight);
+	  }
+	}
+	if (isResolved && !doMbbRescaling) {
 	  m_histSvc->BookFillHist("mBB", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
-	  // Included Line // <<<---- SJ01 Revert Point
-	  if(isE)m_histSvc->BookFillHist("El_mBB", 500, 0, 500,   HVecJetCorr.M() / 1e3, m_weight);
-	  if(isMu)m_histSvc->BookFillHist("Mu_mBB", 500, 0, 500,   HVecJetCorr.M() / 1e3, m_weight);
-	  //               // <<<---- SJ01 Revert Point
+	  if(isE&&doLeptonPlots){
+	    m_histSvc->BookFillHist("El_mBB", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	  }
+	  if(isMu&&doLeptonPlots){
+	    m_histSvc->BookFillHist("Mu_mBB", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	  }
 	}
 	if (isMerged && doMbbRescaling) {
-	  //m_histSvc->BookFillHist("mVH", 600, 0, 6000,   VHVecFatRW.M() / 1e3, m_weight);
+	  m_histSvc->BookFillHist("mVH", 500, 0, 5000,   VHVecFatRW.M() / 1e3, m_weight);
 	  m_histSvc->BookFillHist("mBB", 500, 0, 500,    fatJetRW.M() / 1e3, m_weight);
 	}
 	if (isMerged && !doMbbRescaling) {
-	  //m_histSvc->BookFillHist("mVH", 600, 0, 6000,   VHVecFatCorr.M() / 1e3, m_weight);
+	  m_histSvc->BookFillHist("mVH", 500, 0, 5000,   VHVecFatCorr.M() / 1e3, m_weight);
 	  m_histSvc->BookFillHist("mBB", 500, 0, 500,    fj1VecCorr.M() / 1e3, m_weight);
 	}
-      }
-      if (isResolved && !doMbbRescaling) {
-	m_histSvc->BookFillHist("mva",  //Name of variable in output histogram
-				1000, // Number of bins
-				-1,  // xmin
-				1, // xmax
-				m_tree->BDT,  // Value to fill histogram
-				m_weight);   //Weight to fill histogram with
-	m_histSvc->BookFillHist("mva_v2v2", 1000, -1, 1,    m_tree->BDT_v2, m_weight);
-	m_histSvc->BookFillHist("mva_v3", 1000, -1, 1,    m_tree->BDT_v3, m_weight);
-	m_histSvc->BookFillHist("mvadiboson", 1000, -1, 1,    m_tree->BDT_WZ, m_weight);
+
+	m_histSvc->BookFillHist("MET",     100,  0,  1000, m_tree->MET / 1e3, m_weight); // replace
 	m_histSvc->BookFillHist("mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
 	m_histSvc->BookFillHist("pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
-	m_histSvc->BookFillHist("mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
-	if(isE){
-	  m_histSvc->BookFillHist("El_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
-	  m_histSvc->BookFillHist("El_mva_v3", 1000, -1, 1,     m_tree->BDT_v3, m_weight);
-	  m_histSvc->BookFillHist("El_mvadiboson", 1000, -1, 1,     m_tree->BDT_WZ, m_weight);
+	if (nSelectedJet >= 1) m_histSvc->BookFillHist("MV2c10B1", 100, -1, 1, Props::MV2c10.get(selectedJets.at(0)), m_weight);
+	if (nSelectedJet >= 2) m_histSvc->BookFillHist("MV2c10B2", 100, -1, 1, Props::MV2c10.get(selectedJets.at(1)), m_weight);
+	fill_TLV("lepVec",      lepVec      , m_weight, isE, isMu);
+
+	if(isResolved && !doExtendedPlots ){
+	  fill_TLV("j1VecSel",   j1VecSel   , m_weight, isE, isMu);
+	  fill_TLV("j2VecSel",   j2VecSel   , m_weight, isE, isMu);
+	}
+	if(isE&&doLeptonPlots){
+	  m_histSvc->BookFillHist("El_MET",     100,  0,  500, m_tree->MET / 1e3, m_weight); // replace
 	  m_histSvc->BookFillHist("El_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-	  m_histSvc->BookFillHist("El_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
-	  m_histSvc->BookFillHist("El_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
-	}	
-	if(isMu){
-	  m_histSvc->BookFillHist("Mu_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
-	  m_histSvc->BookFillHist("Mu_mva_v3", 1000, -1, 1,     m_tree->BDT_v3, m_weight);
-	  m_histSvc->BookFillHist("Mu_mvadiboson", 1000, -1, 1,     m_tree->BDT_WZ, m_weight);
+	  m_histSvc->BookFillHist("El_pTV",     200,  0,  500, m_tree->pTV / 1e3, m_weight);
+	  m_histSvc->BookFillHist("El_ptvarcone20_pT", 100,  0,  0.5, Props::ptvarcone20.get(el)/lepVec.Pt(), m_weight);
+	  m_histSvc->BookFillHist("El_ptvarcone20", 100,  0,  5000, Props::ptvarcone20.get(el), m_weight);
+	  m_histSvc->BookFillHist("El_topoetcone20_pT", 100,  0,  0.5, Props::topoetcone20.get(el)/lepVec.Pt(), m_weight);
+	  m_histSvc->BookFillHist("El_topoetcone20", 100,  0,  5000, Props::topoetcone20.get(el), m_weight);
+	}
+	if(isMu&&doLeptonPlots){
+	  m_histSvc->BookFillHist("Mu_MET",     100,  0,  500, m_tree->MET / 1e3, m_weight); // replace
 	  m_histSvc->BookFillHist("Mu_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-	  m_histSvc->BookFillHist("Mu_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
-	  m_histSvc->BookFillHist("Mu_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	  m_histSvc->BookFillHist("Mu_pTV",     200,  0,  500, m_tree->pTV / 1e3, m_weight);
+	  m_histSvc->BookFillHist("Mu_ptvarcone30_pT", 100,  0,  0.5, Props::ptvarcone30.get(mu)/lepVec.Pt(), m_weight);
+	  m_histSvc->BookFillHist("Mu_ptvarcone30", 100,  0,  5000, Props::ptvarcone30.get(mu), m_weight);
+	  m_histSvc->BookFillHist("Mu_topoetcone20_pT", 100,  0,  0.5, Props::topoetcone20.get(mu)/lepVec.Pt(), m_weight);
+	  m_histSvc->BookFillHist("Mu_topoetcone20", 100,  0,  5000, Props::topoetcone20.get(mu), m_weight);
 	}
-      }
-      if (isResolved && doMbbRescaling) {
-	m_histSvc->BookFillHist("mva", 1000, -1, 1,    m_tree->BDT, m_weight);
-	m_histSvc->BookFillHist("mva_v3", 1000, -1, 1,    m_tree->BDT_v3, m_weight);
-	m_histSvc->BookFillHist("mvadiboson", 1000, -1, 1,    m_tree->BDT_WZ, m_weight);
-	m_histSvc->BookFillHist("mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-	m_histSvc->BookFillHist("pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
-	m_histSvc->BookFillHist("mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
-	if(isE){
-	  m_histSvc->BookFillHist("El_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
-	  m_histSvc->BookFillHist("El_mva_v3", 1000, -1, 1,     m_tree->BDT_v3, m_weight);
-	  m_histSvc->BookFillHist("El_mvadiboson", 1000, -1, 1,     m_tree->BDT_WZ, m_weight);
-	  m_histSvc->BookFillHist("El_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-	  m_histSvc->BookFillHist("El_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
-	  m_histSvc->BookFillHist("El_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
-	}	
-	if(isMu){
-	  m_histSvc->BookFillHist("Mu_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
-	  m_histSvc->BookFillHist("Mu_mva_v3", 1000, -1, 1,     m_tree->BDT_v3, m_weight);
-	  m_histSvc->BookFillHist("Mu_mvadiboson", 1000, -1, 1,     m_tree->BDT_WZ, m_weight);
-	  m_histSvc->BookFillHist("Mu_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-	  m_histSvc->BookFillHist("Mu_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
-	  m_histSvc->BookFillHist("Mu_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
-	}
+	m_histNameSvc->set_nJet(-1);
+	m_histSvc->BookFillHist("nJet",     20,  0,  20, nJet, m_weight); // replace	
+	m_histSvc->BookFillHist("nSig",     20,  0,  20, nSignalJet, m_weight); // replace	
+	m_histSvc->BookFillHist("nFor",     20,  0,  20, nForwardJet, m_weight); // replace	
       }
     }
-
-
-    // if((m_eventInfo->eventNumber % 2 )==0){
-    //   m_histSvc->BookFillHist("even_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
-    // }
-    // else {
-    //   m_histSvc->BookFillHist("odd_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
-    // }
-
-    if (doBasicPlots) {
-
-      // event quantities
-      m_histSvc->BookFillHist("MET",     100,  0,  1000, m_tree->MET / 1e3, m_weight); 
-      m_histSvc->BookFillHist("Mtop",     500,  0, 500, m_tree->Mtop / 1e3, m_weight);
-      m_histSvc->BookFillHist("dYWH",     100,  0, 6, m_tree->dYWH, m_weight);
-      m_histSvc->BookFillHist("dPhiLBmin", 100, 0., 6.,   std::min(fabs(lepVec.DeltaPhi(j1VecCorr)), fabs(lepVec.DeltaPhi(j2VecCorr))), m_weight);
-      m_histSvc->BookFillHist("dRBB",      100, 0., 6.,   j1VecCorr.DeltaR(j2VecCorr), m_weight);
-      m_histSvc->BookFillHist("dPhiVBB",   100, 0., 3.15, fabs(WVecT.DeltaPhi(HVecJetCorr)), m_weight);
-      if(nSelectedJet >= 3)m_histSvc->BookFillHist("mBBJ", 500, 0, 500, m_tree->mBBJ / 1e3, m_weight);
-      
-
-      //B-Tagging Variables for AntiKt4EMtopo dR = 0.4
-      if (nSelectedJet >= 1){
-	m_histSvc->BookFillHist("j1VecCorrPt",  600, 0, 3000,  m_tree->pTB1 / 1e3, m_weight);
-	//m_histSvc->BookFillHist("MV2c10B1", 100, -1, 1, Props::MV2c10.get(selectedJets.at(0)), m_weight);
-	//m_histSvc->BookFillHist("MV2c00B1", 100, -1, 1, Props::MV2c00.get(selectedJets.at(0)), m_weight);
-	//m_histSvc->BookFillHist("MV2c100B1", 100, -1, 1, Props::MV2c100.get(selectedJets.at(0)), m_weight);
-      }
-      if (nSelectedJet >= 2){
-	m_histSvc->BookFillHist("j2VecCorrPt",  600, 0, 3000,  m_tree->pTB2 / 1e3, m_weight);
-	//m_histSvc->BookFillHist("MV2c10B2", 100, -1, 1, Props::MV2c10.get(selectedJets.at(1)), m_weight);
-	//m_histSvc->BookFillHist("MV2c00B2", 100, -1, 1, Props::MV2c00.get(selectedJets.at(1)), m_weight);
-	//m_histSvc->BookFillHist("MV2c100B2", 100, -1, 1, Props::MV2c100.get(selectedJets.at(1)), m_weight);
-      }
-      if (nSelectedJet >= 3){
-	m_histSvc->BookFillHist("j3VecCorrPt",  600, 0, 3000,  m_tree->pTJ3 / 1e3, m_weight);
-	//m_histSvc->BookFillHist("MV2c10B3", 100, -1, 1, Props::MV2c10.get(selectedJets.at(2)), m_weight);
-	//m_histSvc->BookFillHist("MV2c00B2", 100, -1, 1, Props::MV2c00.get(selectedJets.at(1)), m_weight);
-	//m_histSvc->BookFillHist("MV2c100B2", 100, -1, 1, Props::MV2c100.get(selectedJets.at(1)), m_weight);
-      }
-      
-      //Lepton Vector quantities
-      //fill_TLV("lepVec",      lepVec      , m_weight, isE, isMu);
-      
-      //Jet quantities
-      if(isResolved && !doExtendedPlots ){
-      	  //fill_TLV("j1VecCorr",   j1VecCorr   , m_weight, isE, isMu);
-      	  //fill_TLV("j2VecCorr",   j2VecCorr   , m_weight, isE, isMu);
-      	  //if (nSelectedJet >= 3) fill_TLV("j3VecCorr",   j3VecCorr   , m_weight, isE, isMu);
-      }else if(isMerged && !doExtendedPlots){
-      	//fill_TLV("HVecFatCorr",  fj1VecCorr  , m_weight, isE, isMu);
-      	//if(associatedTrackJets.size() >= 1) fill_TLV("TrkJet1", associatedTrackJets.at(0)->p4(), m_weight, isE, isMu);
-      	//if(associatedTrackJets.size() >= 2) fill_TLV("TrkJet2", associatedTrackJets.at(1)->p4(), m_weight, isE, isMu);
-      }
-
-      if(isMerged){
-	//1D histogram of MV2c00, MV2c10 & MV2c100 for each trackjet
-	if(associatedTrackJets.size() >= 1) {
-	  m_histSvc->BookFillHist("TrkMV2c10B1", 100, -1, 1,  Props::MV2c10.get(associatedTrackJets.at(0)), m_weight);
-	  m_histSvc->BookFillHist("TrkMV2c00B1", 100, -1, 1,  Props::MV2c00.get(associatedTrackJets.at(0)), m_weight);
-	  m_histSvc->BookFillHist("TrkMV2c100B1", 100, -1, 1, Props::MV2c100.get(associatedTrackJets.at(0)), m_weight);
-	  //2D histogram of MV2c00, MV2c10 & MV2c100 for each trackjet
-	  m_histSvc->BookFillHist("TrkMV2c00B1-TrkMV2c100B1", 100, -1, 1, 100, -1, 1, Props::MV2c00.get(associatedTrackJets.at(0)), Props::MV2c100.get(associatedTrackJets.at(0)), m_weight);
-	}
-	if(associatedTrackJets.size() >= 2){
-	  m_histSvc->BookFillHist("TrkMV2c10B2", 100, -1, 1,  Props::MV2c10.get(associatedTrackJets.at(1)), m_weight);
-	  m_histSvc->BookFillHist("TrkMV2c00B2", 100, -1, 1,  Props::MV2c00.get(associatedTrackJets.at(1)), m_weight);
-	  m_histSvc->BookFillHist("TrkMV2c100B2", 100, -1, 1, Props::MV2c100.get(associatedTrackJets.at(1)), m_weight);
-	  //2D histogram of MV2c00, MV2c10 & MV2c100 for each trackjet
-	  m_histSvc->BookFillHist("TrkMV2c00B2-TrkMV2c100B2", 100, -1, 1, 100, -1, 1, Props::MV2c00.get(associatedTrackJets.at(1)), Props::MV2c100.get(associatedTrackJets.at(1)), m_weight);
-	}
-      }
-
-      // Included Line // <<<---- SJ01 Revert Point
-      if(isE){
-	m_histSvc->BookFillHist("El_MET",     100,  0,  1000, m_tree->MET / 1e3, m_weight); 
-	m_histSvc->BookFillHist("El_Mtop",     500,  0, 500, m_tree->Mtop / 1e3, m_weight);
-	m_histSvc->BookFillHist("El_dYWH",     100,  0, 6, m_tree->dYWH, m_weight);
-        m_histSvc->BookFillHist("El_dRBB",      100, 0., 6.,   j1VecCorr.DeltaR(j2VecCorr), m_weight);
-	m_histSvc->BookFillHist("El_dPhiLBmin", 100, 0., 6.,   std::min(fabs(lepVec.DeltaPhi(j1VecCorr)), fabs(lepVec.DeltaPhi(j2VecCorr))), m_weight);
-	m_histSvc->BookFillHist("El_dPhiVBB",   100, 0., 3.15, fabs(WVecT.DeltaPhi(HVecJetCorr)), m_weight);
-	m_histSvc->BookFillHist("El_j1VecCorrPt",  600, 0, 3000,  m_tree->pTB1 / 1e3, m_weight);
-	m_histSvc->BookFillHist("El_j2VecCorrPt",  600, 0, 3000,  m_tree->pTB2 / 1e3, m_weight);
-	m_histSvc->BookFillHist("El_j3VecCorrPt",  600, 0, 3000,  m_tree->pTJ3 / 1e3, m_weight);
-	if(nSelectedJet >= 3)m_histSvc->BookFillHist("El_mBBJ", 500, 0, 500, m_tree->mBBJ / 1e3, m_weight);
-      }
-      if(isMu){
-	m_histSvc->BookFillHist("Mu_MET",     100,  0,  1000, m_tree->MET / 1e3, m_weight); 
-	m_histSvc->BookFillHist("Mu_Mtop",     500,  0, 500, m_tree->Mtop / 1e3, m_weight);
-	m_histSvc->BookFillHist("Mu_dYWH",     100,  0, 6, m_tree->dYWH, m_weight);
-        m_histSvc->BookFillHist("Mu_dRBB",      100, 0., 6.,   j1VecCorr.DeltaR(j2VecCorr), m_weight);
-	m_histSvc->BookFillHist("Mu_dPhiLBmin", 100, 0., 6.,   std::min(fabs(lepVec.DeltaPhi(j1VecCorr)), fabs(lepVec.DeltaPhi(j2VecCorr))), m_weight);
-	m_histSvc->BookFillHist("Mu_dPhiVBB",   100, 0., 3.15, fabs(WVecT.DeltaPhi(HVecJetCorr)), m_weight);
-	m_histSvc->BookFillHist("Mu_j1VecCorrPt",  600, 0, 3000,  m_tree->pTB1 / 1e3, m_weight);
-	m_histSvc->BookFillHist("Mu_j2VecCorrPt",  600, 0, 3000,  m_tree->pTB2 / 1e3, m_weight);
-	m_histSvc->BookFillHist("Mu_j3VecCorrPt",  600, 0, 3000,  m_tree->pTJ3 / 1e3, m_weight);
-
-	if(nSelectedJet >= 3)m_histSvc->BookFillHist("Mu_mBBJ", 500, 0, 500, m_tree->mBBJ / 1e3, m_weight);
-      }
-      //               // <<<---- SJ01 Revert Point
-
-    }
-
-    if (doExtendedPlots) {
-
-    if(isE){
-      m_histSvc->BookFillHist("El_ptvarcone20_pT", 100,  0,  0.5, Props::ptvarcone20.get(el)/lepVec.Pt(), m_weight);
-      m_histSvc->BookFillHist("El_ptvarcone20", 100,  0,  5000, Props::ptvarcone20.get(el), m_weight);
-      m_histSvc->BookFillHist("El_topoetcone20_pT", 100,  0,  0.5, Props::topoetcone20.get(el)/lepVec.Pt(), m_weight);
-      m_histSvc->BookFillHist("El_topoetcone20", 100,  0,  5000, Props::topoetcone20.get(el), m_weight);
-    }
-    if(isMu){
-      m_histSvc->BookFillHist("Mu_ptvarcone30_pT", 100,  0,  0.5, Props::ptvarcone30.get(mu)/lepVec.Pt(), m_weight);
-      m_histSvc->BookFillHist("Mu_ptvarcone30", 100,  0,  5000, Props::ptvarcone30.get(mu), m_weight);
-      m_histSvc->BookFillHist("Mu_topoetcone20_pT", 100,  0,  0.5, Props::topoetcone20.get(mu)/lepVec.Pt(), m_weight);
-      m_histSvc->BookFillHist("Mu_topoetcone20", 100,  0,  5000, Props::topoetcone20.get(mu), m_weight);
-    }
-    fill_TLV("lepVec",      lepVec      , m_weight, isE, isMu);
-    
-  //     //Plot the average number of  interactions per crossing for PU.
-  //     m_histSvc->BookFillHist("AverMu", 61, -0.5, 60.5, Props::averageInteractionsPerCrossing.get(m_eventInfo), m_weight);
-      
-  //     // W system
-       
-
-  //     // dijet system (Higgs)
-  //     if (isResolved) {
-  //        // jets
-  //       fill_TLV("j1VecCorr",   j1VecCorr   , m_weight, isE, isMu);
-  //       fill_TLV("j2VecCorr",   j2VecCorr   , m_weight, isE, isMu);
-  // 	if (nSelectedJet >= 1)fill_TLV("j3VecCorr",   j3VecCorr   , m_weight, isE, isMu);
-  //       fill_TLV("HVecJetCorr",  HVecJetCorr , m_weight, isE, isMu);
-  // 	if(isE)m_histSvc->BookFillHist("dPhiVBB_El",   100, 0., 3.15, fabs(WVecT.DeltaPhi(HVecJetCorr)), m_weight);
-  // 	if(isMu)m_histSvc->BookFillHist("dPhiVBB_Mu",   100, 0., 3.15, fabs(WVecT.DeltaPhi(HVecJetCorr)), m_weight);
-
-  //     }
-  //     // fat jet (Higgs)
-  //     if (isMerged) {
-  //       //fill_TLV("HVecFatCorr",  fj1VecCorr  , m_weight, isE, isMu);
-  //       m_histSvc->BookFillHist("dPhiVFatCorr", 100, 0., 3.15,   fabs(WVecT.DeltaPhi(fj1VecCorr)), m_weight);
-  //     }
-
-  //     // W system
-  //     fill_TLV("nuVec",       nuVec       , m_weight, isE, isMu);
-  //     fill_TLV("WVec",        WVec        , m_weight, isE, isMu);
-
-  //     // jets
-  //     // if (nSelectedJet >= 1) m_histSvc->BookFillHist("MV2c20B1", 100, -1, 1, Props::MV2c20.get(selectedJets.at(0)), m_weight);
-  //     // if (nSelectedJet >= 2) m_histSvc->BookFillHist("MV2c20B2", 100, -1, 1, Props::MV2c20.get(selectedJets.at(1)), m_weight);
-  //     // // Included Line // <<<---- SJ01 Revert Point
-  //     // if (nSelectedJet >= 1) m_histSvc->BookFillHist("MV2c10B1", 100, -1, 1, Props::MV2c10.get(selectedJets.at(0)), m_weight);
-  //     // if (nSelectedJet >= 2) m_histSvc->BookFillHist("MV2c10B2", 100, -1, 1, Props::MV2c10.get(selectedJets.at(1)), m_weight);
-  //     // if (nSelectedJet >= 3) m_histSvc->BookFillHist("MV2c10B3", 100, -1, 1, Props::MV2c10.get(selectedJets.at(2)), m_weight);
-
-  //     // if (nSelectedJet >= 1 && isE) m_histSvc->BookFillHist("MV2c20B1_El", 100, -1, 1, Props::MV2c20.get(selectedJets.at(0)), m_weight);
-  //     // if (nSelectedJet >= 2 && isE) m_histSvc->BookFillHist("MV2c20B2_El", 100, -1, 1, Props::MV2c20.get(selectedJets.at(1)), m_weight);
-  //     // if (nSelectedJet >= 1 && isE) m_histSvc->BookFillHist("MV2c10B1_El", 100, -1, 1, Props::MV2c10.get(selectedJets.at(0)), m_weight);
-  //     // if (nSelectedJet >= 2 && isE) m_histSvc->BookFillHist("MV2c10B2_El", 100, -1, 1, Props::MV2c10.get(selectedJets.at(1)), m_weight);
-  //     // if (nSelectedJet >= 3 && isE) m_histSvc->BookFillHist("MV2c10B3_El", 100, -1, 1, Props::MV2c10.get(selectedJets.at(2)), m_weight);
-
-  //     //   if (nSelectedJet >= 1 && isMu) m_histSvc->BookFillHist("MV2c20B1_Mu", 100, -1, 1, Props::MV2c20.get(selectedJets.at(0)), m_weight);
-  //     // if (nSelectedJet >= 2 && isMu) m_histSvc->BookFillHist("MV2c20B2_Mu", 100, -1, 1, Props::MV2c20.get(selectedJets.at(1)), m_weight);
-  //     // if (nSelectedJet >= 1 && isMu) m_histSvc->BookFillHist("MV2c10B1_Mu", 100, -1, 1, Props::MV2c10.get(selectedJets.at(0)), m_weight);
-  //     // if (nSelectedJet >= 2 && isMu) m_histSvc->BookFillHist("MV2c10B2_Mu", 100, -1, 1, Props::MV2c10.get(selectedJets.at(1)), m_weight);
-  //     // if (nSelectedJet >= 3 && isMu) m_histSvc->BookFillHist("MV2c10B3_Mu", 100, -1, 1, Props::MV2c10.get(selectedJets.at(2)), m_weight);
-  //     //               // <<<---- SJ01 Revert Point
-
-  //     // dijet system (Higgs)
-  //     m_histSvc->BookFillHist("dPhiBB",    100, 0., 3.15, fabs(j1VecCorr.DeltaPhi(j2VecCorr)), m_weight);
-  //     m_histSvc->BookFillHist("dEtaBB",    100, 0., 6.,   fabs(j1VecCorr.Eta() - j2VecCorr.Eta()), m_weight);
-  //     // Included Line // <<<---- SJ01 Revert Point
-  //     if(isE){
-  // 	m_histSvc->BookFillHist("El_ptvarcone20_pT", 100,  0,  0.5, Props::ptvarcone20.get(el)/lepVec.Pt(), m_weight);
-  // 	m_histSvc->BookFillHist("El_ptvarcone20", 100,  0,  5000, Props::ptvarcone20.get(el), m_weight);
-  // 	m_histSvc->BookFillHist("El_topoetcone20_pT", 100,  0,  0.5, Props::topoetcone20.get(el)/lepVec.Pt(), m_weight);
-  // 	m_histSvc->BookFillHist("El_topoetcone20", 100,  0,  5000, Props::topoetcone20.get(el), m_weight); 
-  // 	m_histSvc->BookFillHist("El_dPhiBB",    100, 0., 3.15, fabs(j1VecCorr.DeltaPhi(j2VecCorr)), m_weight);
-  // 	m_histSvc->BookFillHist("El_dEtaBB",    100, 0., 6.,   fabs(j1VecCorr.Eta() - j2VecCorr.Eta()), m_weight);
-  //     }
-  //     if(isMu){
-  // 	m_histSvc->BookFillHist("Mu_ptvarcone30_pT", 100,  0,  0.5, Props::ptvarcone30.get(mu)/lepVec.Pt(), m_weight);
-  // 	m_histSvc->BookFillHist("Mu_ptvarcone30", 100,  0,  5000, Props::ptvarcone30.get(mu), m_weight);
-  // 	m_histSvc->BookFillHist("Mu_topoetcone20_pT", 100,  0,  0.5, Props::topoetcone20.get(mu)/lepVec.Pt(), m_weight);
-  // 	m_histSvc->BookFillHist("Mu_topoetcone20", 100,  0,  5000, Props::topoetcone20.get(mu), m_weight);  
-  // 	m_histSvc->BookFillHist("Mu_dPhiBB",    100, 0., 3.15, fabs(j1VecCorr.DeltaPhi(j2VecCorr)), m_weight);
-  // 	m_histSvc->BookFillHist("Mu_dEtaBB",    100, 0., 6.,   fabs(j1VecCorr.Eta() - j2VecCorr.Eta()), m_weight);
-  //     }
-  //     //               // <<<---- SJ01 Revert Point
-
-  //     // fat jet (Higgs)
-  //     m_histSvc->BookFillHist("dPhiLFatCorr", 100, 0., 3.15, fabs(lepVec.DeltaPhi(fj1VecCorr)), m_weight);
-  //   }
-
-  //   if (doTLVPlots) {
-
-  //     fill_TLV("fwdjet1Vec", fwdjet1Vec, m_weight, isE, isMu);
-  //     fill_TLV("fwdjet2Vec", fwdjet2Vec, m_weight, isE, isMu);
-  //     fill_TLV("fwdjet3Vec", fwdjet3Vec, m_weight, isE, isMu);
-
-  //     fill_TLV("sigjet1Vec", sigjet1Vec, m_weight, isE, isMu);
-  //     fill_TLV("sigjet2Vec", sigjet2Vec, m_weight, isE, isMu);
-  //     fill_TLV("sigjet3Vec", sigjet3Vec, m_weight, isE, isMu);
-
-  //     fill_TLV("fatjet1Vec", fatjet1Vec, m_weight, isE, isMu);
-  //     fill_TLV("fatjet2Vec", fatjet2Vec, m_weight, isE, isMu);
-  //     fill_TLV("fatjet3Vec", fatjet3Vec, m_weight, isE, isMu);
-
-  //     fill_TLV("j1VecSel",    j1VecSel    , m_weight, isE, isMu);
-  //     fill_TLV("j2VecSel",    j2VecSel    , m_weight, isE, isMu);
-  //     fill_TLV("j3VecSel",    j3VecSel    , m_weight, isE, isMu);
-  //     fill_TLV("bbjVec",      bbjVec      , m_weight, isE, isMu);
-
-  //     // fill_TLV("j1VecCorr",   j1VecCorr   , m_weight, isE, isMu);
-  //     // fill_TLV("j2VecCorr",   j2VecCorr   , m_weight, isE, isMu);
-  //     fill_TLV("j3VecCorr",   j3VecCorr   , m_weight, isE, isMu);
-  //     fill_TLV("bbjVecCorr",  bbjVecCorr  , m_weight, isE, isMu);
-
-  //     // fill_TLV("fj1VecCorr",  fj1VecCorr  , m_weight, isE, isMu);
-  //     fill_TLV("fj2VecCorr",  fj2VecCorr  , m_weight, isE, isMu);
-  //     fill_TLV("fj3VecCorr",  fj3VecCorr  , m_weight, isE, isMu);
-
-  //     fill_TLV("metVec",      metVec      , m_weight, isE, isMu);
-  //     fill_TLV("metVecJetRW", metVecJetRW , m_weight, isE, isMu);
-  //     fill_TLV("metVecFJRW",  metVecFJRW  , m_weight, isE, isMu);
-
-  //     fill_TLV("j1VecRW",     j1VecRW     , m_weight, isE, isMu);
-  //     fill_TLV("j2VecRW",     j2VecRW     , m_weight, isE, isMu);
-  //     fill_TLV("fatJetRW",    fatJetRW    , m_weight, isE, isMu);
-
-  //     // fill_TLV("lepVec",      lepVec      , m_weight, isE, isMu);
-  //     fill_TLV("lepVecT",     lepVecT     , m_weight, isE, isMu);
-  //     fill_TLV("WVecT",       WVecT       , m_weight, isE, isMu);
-  //     // fill_TLV("nuVec",       nuVec       , m_weight, isE, isMu);
-
-  //     fill_TLV("HVecJet",      HVecJet     , m_weight, isE, isMu);
-  //     // fill_TLV("HVecJetCorr",  HVecJetCorr , m_weight, isE, isMu);
-  //     fill_TLV("HVecJetRW",    HVecJetRW   , m_weight, isE, isMu);
-
-  //     fill_TLV("VHVecJet",     VHVecJet     , m_weight, isE, isMu);
-  //     fill_TLV("VHVecJetCorr", VHVecJetCorr , m_weight, isE, isMu);
-  //     fill_TLV("VHVecJetRW",   VHVecJetRW   , m_weight, isE, isMu);
-  //     fill_TLV("VHVecFat",     VHVecFat     , m_weight, isE, isMu);
-  //     fill_TLV("VHVecFatCorr", VHVecFatCorr , m_weight, isE, isMu);
-  //     fill_TLV("VHVecFatRW",   VHVecFatRW   , m_weight, isE, isMu);
-
-  //   }
-
-    }
-
-  if(passPreTagResolved && doPreTagPlots){
-    m_histNameSvc->set_description("PreTag");
-    m_histNameSvc->set_nTag(-1);	
-    
-    if (isResolved && doMbbRescaling) {
-      m_histSvc->BookFillHist("mBB", 500, 0, 500,    HVecJetRW.M() / 1e3, m_weight);
-      if(isE){
-  	m_histSvc->BookFillHist("El_mBB", 500, 0, 500,    HVecJetRW.M() / 1e3, m_weight);
-      }
-      if(isMu){
-  	m_histSvc->BookFillHist("Mu_mBB", 500, 0, 500,    HVecJetRW.M() / 1e3, m_weight);
-      }
-    }
-    if (isResolved && !doMbbRescaling) {
-      m_histSvc->BookFillHist("mBB", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
-      if(isE){
-  	m_histSvc->BookFillHist("El_mBB", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
-      }
-      if(isMu){
-  	m_histSvc->BookFillHist("Mu_mBB", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
-      }
-    }
-    if (isMerged && doMbbRescaling) {
-      m_histSvc->BookFillHist("mVH", 500, 0, 5000,   VHVecFatRW.M() / 1e3, m_weight);
-      m_histSvc->BookFillHist("mBB", 500, 0, 500,    fatJetRW.M() / 1e3, m_weight);
-    }
-    if (isMerged && !doMbbRescaling) {
-      m_histSvc->BookFillHist("mVH", 500, 0, 5000,   VHVecFatCorr.M() / 1e3, m_weight);
-      m_histSvc->BookFillHist("mBB", 500, 0, 500,    fj1VecCorr.M() / 1e3, m_weight);
-    }
-
-    m_histSvc->BookFillHist("MET",     100,  0,  1000, m_tree->MET / 1e3, m_weight); // replace
-    m_histSvc->BookFillHist("mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-    m_histSvc->BookFillHist("pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
-    if (nSelectedJet >= 1) m_histSvc->BookFillHist("MV2c10B1", 100, -1, 1, Props::MV2c10.get(selectedJets.at(0)), m_weight);
-    if (nSelectedJet >= 2) m_histSvc->BookFillHist("MV2c10B2", 100, -1, 1, Props::MV2c10.get(selectedJets.at(1)), m_weight);
-    fill_TLV("lepVec",      lepVec      , m_weight, isE, isMu);
-
-    if(isResolved && !doExtendedPlots ){
-      fill_TLV("j1VecSel",   j1VecSel   , m_weight, isE, isMu);
-      fill_TLV("j2VecSel",   j2VecSel   , m_weight, isE, isMu);
-    }
-    if(isE){
-      m_histSvc->BookFillHist("El_MET",     100,  0,  500, m_tree->MET / 1e3, m_weight); // replace
-      m_histSvc->BookFillHist("El_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-      m_histSvc->BookFillHist("El_pTV",     200,  0,  500, m_tree->pTV / 1e3, m_weight);
-      m_histSvc->BookFillHist("El_ptvarcone20_pT", 100,  0,  0.5, Props::ptvarcone20.get(el)/lepVec.Pt(), m_weight);
-      m_histSvc->BookFillHist("El_ptvarcone20", 100,  0,  5000, Props::ptvarcone20.get(el), m_weight);
-      m_histSvc->BookFillHist("El_topoetcone20_pT", 100,  0,  0.5, Props::topoetcone20.get(el)/lepVec.Pt(), m_weight);
-      m_histSvc->BookFillHist("El_topoetcone20", 100,  0,  5000, Props::topoetcone20.get(el), m_weight);
-    }
-    if(isMu){
-      m_histSvc->BookFillHist("Mu_MET",     100,  0,  500, m_tree->MET / 1e3, m_weight); // replace
-      m_histSvc->BookFillHist("Mu_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-      m_histSvc->BookFillHist("Mu_pTV",     200,  0,  500, m_tree->pTV / 1e3, m_weight);
-      m_histSvc->BookFillHist("Mu_ptvarcone30_pT", 100,  0,  0.5, Props::ptvarcone30.get(mu)/lepVec.Pt(), m_weight);
-      m_histSvc->BookFillHist("Mu_ptvarcone30", 100,  0,  5000, Props::ptvarcone30.get(mu), m_weight);
-      m_histSvc->BookFillHist("Mu_topoetcone20_pT", 100,  0,  0.5, Props::topoetcone20.get(mu)/lepVec.Pt(), m_weight);
-      m_histSvc->BookFillHist("Mu_topoetcone20", 100,  0,  5000, Props::topoetcone20.get(mu), m_weight);
-    }
-    m_histNameSvc->set_nJet(-1);
-    m_histSvc->BookFillHist("nJet",     20,  0,  20, nJet, m_weight); // replace	
-    m_histSvc->BookFillHist("nSig",     20,  0,  20, nSignalJet, m_weight); // replace	
-    m_histSvc->BookFillHist("nFor",     20,  0,  20, nForwardJet, m_weight); // replace	
-  }
   }
   
   if(m_debug) std::cout << " >>>>> Formed Histogram Inputs" << std::endl;
@@ -1469,9 +1644,9 @@ std::vector<const xAOD::Jet*> AnalysisReader_VHbb1Lep::ApplyMuonFatJetOR(std::ve
       for(const xAOD::Muon * muon : Muons){
 	if(!muon) continue;
 	if(m_debug) std::cout << "    >> Muon # " << ++mcounter << std::endl;
-        TLorentzVector lepVec = muon->p4();
+	TLorentzVector lepVec = muon->p4();
 	if(m_debug) std::cout << "       Checking Muon-Fat Overlap "<< std::endl;
-        if ( ((*iter)->p4()).DeltaR(lepVec) < 1.2) {
+	if ( ((*iter)->p4()).DeltaR(lepVec) < 1.2) {
 	  if(m_debug) std::cout << "    >> Mu-FatJet OR " << std::endl;
 	  MuFatJetOverlap = true;
 	  break;
@@ -1593,21 +1768,21 @@ void AnalysisReader_VHbb1Lep::fillTTbarSystslep(int nTag, bool isCR, float mVH) 
   //Scale factor (weight)
   //Load the correct systematic
   for(std::string shapeComp : variations)
-    {
-      SetupCorrsAndSyst("SysTTbar_shape_mVH_"+shapeComp+channel, isCR);
-      weight = m_corrsAndSysts->Get_SystematicWeight(m_evtType, mVH, 0, 0, 0, 0, 0, 0, 0, 0, nTag, m_detailevtType, m_Systematic, CAS::Up, CAS::Any) - 1; //Subract 1 to account for relative ratio
-      float min = 0.1;
-      // cut rad in half
-      //    if ( shapeComp == "rHi_rLo" ) weight = 0.5 * (weight - 1) + 1;
-      if (weight < min) weight = min;
+  {
+    SetupCorrsAndSyst("SysTTbar_shape_mVH_"+shapeComp+channel, isCR);
+    weight = m_corrsAndSysts->Get_SystematicWeight(m_evtType, mVH, 0, 0, 0, 0, 0, 0, 0, 0, nTag, m_detailevtType, m_Systematic, CAS::Up, CAS::Any) - 1; //Subract 1 to account for relative ratio
+    float min = 0.1;
+    // cut rad in half
+    //    if ( shapeComp == "rHi_rLo" ) weight = 0.5 * (weight - 1) + 1;
+    if (weight < min) weight = min;
 
-      if ( shapeComp == "Pow_aMC" ) { m_weightSysts.push_back({ "MODEL_TTbar_aMcAtNlo__1up", weight }); }
-      else if (shapeComp == "Her_Pyt" ) { m_weightSysts.push_back({ "MODEL_TTbar_Herwig__1up", weight }); }
-      else if ( shapeComp == "rHi_rLo" ) {
-	m_weightSysts.push_back({ "MODEL_TTbar_rad__1up", (1+((weight-1)/(weight+1))) });
-	m_weightSysts.push_back({ "MODEL_TTbar_rad__1down", (1-((weight-1)/(weight+1))) });
-      }
+    if ( shapeComp == "Pow_aMC" ) { m_weightSysts.push_back({ "MODEL_TTbar_aMcAtNlo__1up", weight }); }
+    else if (shapeComp == "Her_Pyt" ) { m_weightSysts.push_back({ "MODEL_TTbar_Herwig__1up", weight }); }
+    else if ( shapeComp == "rHi_rLo" ) {
+      m_weightSysts.push_back({ "MODEL_TTbar_rad__1up", (1+((weight-1)/(weight+1))) });
+      m_weightSysts.push_back({ "MODEL_TTbar_rad__1down", (1-((weight-1)/(weight+1))) });
     }
+  }
 }// End of fillTTbarSystslep
 
 EL::StatusCode AnalysisReader_VHbb1Lep::fill_1lepResolvedCutFlow (unsigned long int eventFlag) {
@@ -1615,11 +1790,12 @@ EL::StatusCode AnalysisReader_VHbb1Lep::fill_1lepResolvedCutFlow (unsigned long 
   std::string dir = "CutFlow/Nominal/";
 
   static std::string cuts[24] = { "AllCxAOD", "Trigger", "LooseLeptons", "SignalLeptons", "AtLeast2Jets", 
-                                  "AtLeast2SigJets", "Pt45", "MET", "mTW", "Veto3bjet", "pTV",
-                                  "SR_0tag_2jet","SR_0tag_3jet", "SR_0tag_4pjet", "SR_1tag_2jet",
-                                  "SR_1tag_3jet", "SR_1tag_4pjet", "SR_2tag_2jet", "SR_2tag_3jet", 
-                                  "SR_2tag_4pjet", };
+				  "Pt45", "MET", "mTW", "Veto3bjet", "mbbCorr","pTV",
+				  "SR_0tag_2jet","SR_0tag_3jet", "SR_0tag_4pjet", "SR_1tag_2jet",
+				  "SR_1tag_3jet", "SR_1tag_4pjet", "SR_2tag_2jet", "SR_2tag_3jet", 
+				  "SR_2tag_4pjet", };
 
+  
   // Cuts to exclude from cutflow
   std::vector<unsigned int> excludeCuts = { } ; //OneLeptonResolvedCuts::tauVeto};
 
@@ -1657,9 +1833,9 @@ EL::StatusCode AnalysisReader_VHbb1Lep::fill_1lepMergedCutFlow (unsigned long in
   std::string dir = "CutFlow/Nominal/";
 
   static std::string cuts [12] = { "AllCxAOD", "Trigger", "Leptons", "MET", "AtLeast1FatJet",
-                                   "mbbCorr", "AtLeast2TrackJets", "pTV",
-                                   "SR_0tag_1pfat0pjets", "SR_1tag_1pfat0pjets",
-                                   "SR_2tag_1pfat0pjets", "SR_3ptag_1pfat0pjets", };
+				   "mbbCorr", "AtLeast2TrackJets", "pTV",
+				   "SR_0tag_1pfat0pjets", "SR_1tag_1pfat0pjets",
+				   "SR_2tag_1pfat0pjets", "SR_3ptag_1pfat0pjets", };
 
   // Cuts to exclude from cutflow
   std::vector<unsigned int> excludeCuts = { } ;

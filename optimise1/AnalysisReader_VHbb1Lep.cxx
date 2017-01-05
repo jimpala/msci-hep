@@ -830,6 +830,18 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
   m_tree->MtopFullMETShift = calculateMtop(lepVec, metVec, j1VecCorr, j2VecCorr);
   m_tree->dPhiLMET    = fabs(lepVec.DeltaPhi(metVec));
   
+  m_tree->j1Pt        = j1VecCorr.Pt() / 1e3;
+  m_tree->j2Pt        = j2VecCorr.Pt() / 1e3;
+  m_tree->met         = metVec.Pt() / 1e3;
+  m_tree->WMt         = WVecT.M() / 1e3;
+  m_tree->mtop        = Mtop / 1e3;
+  m_tree->WPt         = WVecT.Pt() / 1e3;
+  m_tree->jjM         = HVecJetCorr.M()/1e3;
+  m_tree->jjdR        = j1VecCorr.DeltaR(j2VecCorr);
+  m_tree->WjjdPhi     = fabs(WVecT.DeltaPhi(HVecJet));
+  m_tree->ljmindPhi   = std::min(fabs(lepVec.DeltaPhi(j1VecCorr)), fabs(lepVec.DeltaPhi(j2VecCorr)));
+
+
   m_tree->nTag        = tagcatExcl;
   m_tree->PUWeight    = puWeight;
   if(m_isMC)m_tree->MCWeight    = Props::MCEventWeight.get(m_eventInfo);
@@ -858,10 +870,14 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
   // m_tree->MV1cB2 not set
 
   if (nJet >= 3) {
-    if(j3VecSel.Pt()>300e3)m_tree->pTJ3      = 300e3; // should use corrected 3rd jet?
-    else m_tree->pTJ3      = j3VecSel.Pt(); // should use corrected 3rd jet?
+    if(j3VecSel.Pt()>300e3)m_tree->pTJ3      = 300e3;
+    else m_tree->pTJ3      = j3VecSel.Pt();
     if( bbjVecCorr.M()>1000e3)m_tree->mBBJ      = 1000e3;
     else m_tree->mBBJ      = bbjVecCorr.M();
+    if(j3VecSel.Pt()>300e3)m_tree->j3Pt      = 300;
+    else m_tree->j3Pt      = j3VecSel.Pt() / 1e3;
+    if( bbjVecCorr.M()>1000e3)m_tree->jjjM      = 1000;
+    else m_tree->jjjM      = bbjVecCorr.M() / 1e3;
   }
 
   std::vector<double> values{m_tree->dRBB, m_tree->mBB, m_tree->dPhiVBB, m_tree->dPhiLBmin, m_tree->pTV, m_tree->pTB1, m_tree->pTB2, m_tree->mTW, m_tree->Mtop, m_tree->dEtaWH, m_tree->MET};
@@ -1067,57 +1083,156 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
 	}
       }
       if (isResolved && !doMbbRescaling) {
-	m_histSvc->BookFillHist("mva",  //Name of variable in output histogram
+	m_histSvc->BookFillHist("Mu_mva",  //Name of variable in output histogram
 				1000, // Number of bins
 				-1,  // xmin
 				1, // xmax
 				m_tree->BDT,  // Value to fill histogram
 				m_weight);   //Weight to fill histogram with
-	m_histSvc->BookFillHist("mva_v2v2", 1000, -1, 1,    m_tree->BDT_v2, m_weight);
-	m_histSvc->BookFillHist("mva_v3", 1000, -1, 1,    m_tree->BDT_v3, m_weight);
-	m_histSvc->BookFillHist("mvadiboson", 1000, -1, 1,    m_tree->BDT_WZ, m_weight);
-	m_histSvc->BookFillHist("mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-	m_histSvc->BookFillHist("pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
-	m_histSvc->BookFillHist("mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+  m_histSvc->BookFillHist("mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
+  m_histSvc->BookFillHist("pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
+  m_histSvc->BookFillHist("mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+
+  m_histSvc->BookFillHist("mva_sherpa221_truthall_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_mBBcut_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221_truthall_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221_truthall_mBBcut", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_mBBcut, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_mBBcut_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221_mBBcut", 1000, -1, 1,    m_tree->BDT_sherpa221_mBBcut, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221_truthall", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221", 1000, -1, 1,    m_tree->BDT_sherpa221, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_truthall_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_mBBcut_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_truthall_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_truthall_mBBcut", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_mBBcut, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_mBBcut_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_mBBcut", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_mBBcut, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_truthall", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221, m_weight);
+
+
 	if(isE){
 	  m_histSvc->BookFillHist("El_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
-	  m_histSvc->BookFillHist("El_mva_v3", 1000, -1, 1,     m_tree->BDT_v3, m_weight);
-	  m_histSvc->BookFillHist("El_mvadiboson", 1000, -1, 1,     m_tree->BDT_WZ, m_weight);
-	  m_histSvc->BookFillHist("El_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-	  m_histSvc->BookFillHist("El_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
-	  m_histSvc->BookFillHist("El_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+    m_histSvc->BookFillHist("El_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
+    m_histSvc->BookFillHist("El_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
+    m_histSvc->BookFillHist("El_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	
+    m_histSvc->BookFillHist("El_mva_sherpa221_truthall_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221_truthall_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221_truthall_mBBcut", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_mBBcut, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221_mBBcut", 1000, -1, 1,    m_tree->BDT_sherpa221_mBBcut, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221_truthall", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221", 1000, -1, 1,    m_tree->BDT_sherpa221, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_truthall_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_truthall_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_truthall_mBBcut", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_mBBcut, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_mBBcut", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_mBBcut, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_truthall", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221, m_weight);
+	  
+
 	}	
 	if(isMu){
 	  m_histSvc->BookFillHist("Mu_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
-	  m_histSvc->BookFillHist("Mu_mva_v3", 1000, -1, 1,     m_tree->BDT_v3, m_weight);
-	  m_histSvc->BookFillHist("Mu_mvadiboson", 1000, -1, 1,     m_tree->BDT_WZ, m_weight);
-	  m_histSvc->BookFillHist("Mu_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-	  m_histSvc->BookFillHist("Mu_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
-	  m_histSvc->BookFillHist("Mu_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+    m_histSvc->BookFillHist("Mu_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
+    m_histSvc->BookFillHist("Mu_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
+    m_histSvc->BookFillHist("Mu_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	  
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_truthall_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_truthall_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_truthall_mBBcut", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_mBBcut, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_mBBcut", 1000, -1, 1,    m_tree->BDT_sherpa221_mBBcut, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_truthall", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221", 1000, -1, 1,    m_tree->BDT_sherpa221, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_truthall_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_truthall_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_truthall_mBBcut", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_mBBcut, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_mBBcut", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_mBBcut, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_truthall", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221, m_weight);
+	  
+
 	}
       }
       if (isResolved && doMbbRescaling) {
-	m_histSvc->BookFillHist("mva", 1000, -1, 1,    m_tree->BDT, m_weight);
-	m_histSvc->BookFillHist("mva_v3", 1000, -1, 1,    m_tree->BDT_v3, m_weight);
-	m_histSvc->BookFillHist("mvadiboson", 1000, -1, 1,    m_tree->BDT_WZ, m_weight);
-	m_histSvc->BookFillHist("mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-	m_histSvc->BookFillHist("pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
-	m_histSvc->BookFillHist("mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	m_histSvc->BookFillHist("Mu_mva", 1000, -1, 1,    m_tree->BDT, m_weight);
+  m_histSvc->BookFillHist("mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
+  m_histSvc->BookFillHist("pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
+  m_histSvc->BookFillHist("mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	
+  m_histSvc->BookFillHist("mva_sherpa221_truthall_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_mBBcut_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221_truthall_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221_truthall_mBBcut", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_mBBcut, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_mBBcut_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221_mBBcut", 1000, -1, 1,    m_tree->BDT_sherpa221_mBBcut, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221_truthall", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_sherpa221", 1000, -1, 1,    m_tree->BDT_sherpa221, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_truthall_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_mBBcut_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_truthall_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_truthall_mBBcut", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_mBBcut, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_mBBcut_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_mBBcut", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_mBBcut, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_truthall", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_systTTbar, m_weight);
+  m_histSvc->BookFillHist("mva_WZ_sherpa221", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221, m_weight);
+	
+
 	if(isE){
 	  m_histSvc->BookFillHist("El_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
-	  m_histSvc->BookFillHist("El_mva_v3", 1000, -1, 1,     m_tree->BDT_v3, m_weight);
-	  m_histSvc->BookFillHist("El_mvadiboson", 1000, -1, 1,     m_tree->BDT_WZ, m_weight);
-	  m_histSvc->BookFillHist("El_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-	  m_histSvc->BookFillHist("El_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
-	  m_histSvc->BookFillHist("El_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+    m_histSvc->BookFillHist("El_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
+    m_histSvc->BookFillHist("El_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
+    m_histSvc->BookFillHist("El_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	  
+    m_histSvc->BookFillHist("El_mva_sherpa221_truthall_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221_truthall_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221_truthall_mBBcut", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_mBBcut, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221_mBBcut", 1000, -1, 1,    m_tree->BDT_sherpa221_mBBcut, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221_truthall", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_sherpa221", 1000, -1, 1,    m_tree->BDT_sherpa221, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_truthall_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_truthall_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_truthall_mBBcut", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_mBBcut, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_mBBcut", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_mBBcut, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_truthall", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_systTTbar, m_weight);
+    m_histSvc->BookFillHist("El_mva_WZ_sherpa221", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221, m_weight);
+	  
 	}	
 	if(isMu){
 	  m_histSvc->BookFillHist("Mu_mva", 1000, -1, 1,     m_tree->BDT, m_weight);
-	  m_histSvc->BookFillHist("Mu_mva_v3", 1000, -1, 1,     m_tree->BDT_v3, m_weight);
-	  m_histSvc->BookFillHist("Mu_mvadiboson", 1000, -1, 1,     m_tree->BDT_WZ, m_weight);
-	  m_histSvc->BookFillHist("Mu_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
-	  m_histSvc->BookFillHist("Mu_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
-	  m_histSvc->BookFillHist("Mu_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+    m_histSvc->BookFillHist("Mu_mTW",     100,  0,  500, m_tree->mTW / 1e3, m_weight);
+    m_histSvc->BookFillHist("Mu_pTV",     200,  0, 2000, m_tree->pTV / 1e3, m_weight);
+    m_histSvc->BookFillHist("Mu_mBBMvacut", 500, 0, 500,    HVecJetCorr.M() / 1e3, m_weight);
+	  
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_truthall_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_truthall_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_truthall_mBBcut", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall_mBBcut, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_mBBcut", 1000, -1, 1,    m_tree->BDT_sherpa221_mBBcut, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_truthall", 1000, -1, 1,    m_tree->BDT_sherpa221_truthall, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221_systTTbar", 1000, -1, 1,    m_tree->BDT_sherpa221_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_sherpa221", 1000, -1, 1,    m_tree->BDT_sherpa221, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_truthall_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_truthall_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_truthall_mBBcut", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall_mBBcut, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_mBBcut_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_mBBcut_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_mBBcut", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_mBBcut, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_truthall", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_truthall, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221_systTTbar", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221_systTTbar, m_weight);
+    m_histSvc->BookFillHist("Mu_mva_WZ_sherpa221", 1000, -1, 1,    m_tree->BDT_WZ_sherpa221, m_weight);
+
 	}
       }
     }
