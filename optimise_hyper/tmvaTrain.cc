@@ -186,7 +186,7 @@ int main(int argc, char * argv[]) {
 
 //  factory->BookMethod(TMVA::Types::kBDT, "BDT_AdaBoost_v1","IgnoreNegWeightsInTraining:!H:!V:NTrees=200:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.15:SeparationType=GiniIndex:nCuts=100:MinNodeSize=0.1:PruneMethod=NoPruning");
 //  factory->BookMethod(TMVA::Types::kBDT, "BDT_AdaBoost_v2","IgnoreNegWeightsInTraining:!H:!V:NTrees=200:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.15:SeparationType=GiniIndex:nCuts=100:MinNodeSize="+min+":PruneMethod=NoPruning");
-  factory->BookMethod(TMVA::Types::kBDT, "BDT_AdaBoost_v6","IgnoreNegWeightsInTraining:!H:!V:NTrees="+ntrees+":MaxDepth="+maxdepth+":BoostType=AdaBoost:AdaBoostBeta=0.15:SeparationType=GiniIndex:nCuts=100::MinNodeSize=5%:PruneMethod=NoPruning");
+  factory->BookMethod(TMVA::Types::kBDT, "BDT_AdaBoost_v6","IgnoreNegWeightsInTraining:!H:!V:NTrees="+ntrees+":MaxDepth="+maxdepth+":BoostType=AdaBoost:AdaBoostBeta=0.15:SeparationType=GiniIndex:nCuts=100::MinNodeSize=1%:PruneMethod=NoPruning");
 
 /*
   factory->BookMethod( TMVA::Types::kBDT, "BDTD"+version,

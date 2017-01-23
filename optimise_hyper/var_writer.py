@@ -7,6 +7,6 @@ depth = np.arange(3,8,1)
 
 for t in trees:
 	for d in depth:
-		f.write('BDT_'+str(t)+'ntrees'+str(d)+'maxdepth'+'\n')
+		f.write('BDT_'+str(t)+'ntrees_'+str(d)+'maxdepth'+'\n')
 
 f.close()
