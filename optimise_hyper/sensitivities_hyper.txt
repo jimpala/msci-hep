@@ -1,0 +1,320 @@
+Sensitivity calculation: mva_100ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_100ntrees_3maxdepth, trafoD): DLLR = 1.58256 +/- 0.0486799 - stat = 1.64148 +/- 0.0551352 - norm = 1.63155 +/- 0.0554709 - syst = 1.57057 +/- 0.0576246
+  -> Contribution (2tag3jet_150ptv_SR, mva_100ntrees_3maxdepth, trafoD): DLLR = 0.964446 +/- 0.0280649 - stat = 0.979231 +/- 0.0295522 - norm = 0.973935 +/- 0.0297129 - syst = 0.924196 +/- 0.031312
+  -> Combination: DLLR = 1.85328 +/- 0.0440599 - stat = 1.91137 +/- 0.0497115 - norm = 1.90013 +/- 0.0500057 - syst = 1.82231 +/- 0.0521411
+Sensitivity calculation: mva_100ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_100ntrees_4maxdepth, trafoD): DLLR = 1.65935 +/- 0.0531362 - stat = 1.74068 +/- 0.0640923 - norm = 1.73137 +/- 0.0644368 - syst = 1.67739 +/- 0.0665106
+  -> Contribution (2tag3jet_150ptv_SR, mva_100ntrees_4maxdepth, trafoD): DLLR = 1.0034 +/- 0.0300694 - stat = 1.02088 +/- 0.0319058 - norm = 1.01579 +/- 0.032066 - syst = 0.966225 +/- 0.0337108
+  -> Combination: DLLR = 1.93914 +/- 0.048058 - stat = 2.01796 +/- 0.0575937 - norm = 2.00735 +/- 0.0578979 - syst = 1.93577 +/- 0.0600389
+Sensitivity calculation: mva_100ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_100ntrees_5maxdepth, trafoD): DLLR = 1.61389 +/- 0.0491244 - stat = 1.67588 +/- 0.0560463 - norm = 1.66612 +/- 0.0563746 - syst = 1.6063 +/- 0.0584738
+  -> Contribution (2tag3jet_150ptv_SR, mva_100ntrees_5maxdepth, trafoD): DLLR = 1.02613 +/- 0.0304336 - stat = 1.04441 +/- 0.0322347 - norm = 1.03946 +/- 0.0323882 - syst = 0.989891 +/- 0.0340099
+  -> Combination: DLLR = 1.91248 +/- 0.0445548 - stat = 1.97468 +/- 0.0505288 - norm = 1.96378 +/- 0.0508092 - syst = 1.88682 +/- 0.0528815
+Sensitivity calculation: mva_100ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_100ntrees_6maxdepth, trafoD): DLLR = 1.64146 +/- 0.0539194 - stat = 1.70728 +/- 0.0625797 - norm = 1.69771 +/- 0.0629323 - syst = 1.63086 +/- 0.0655121
+  -> Contribution (2tag3jet_150ptv_SR, mva_100ntrees_6maxdepth, trafoD): DLLR = 1.01614 +/- 0.0315877 - stat = 1.03443 +/- 0.0336827 - norm = 1.02941 +/- 0.0338469 - syst = 0.976579 +/- 0.0356781
+  -> Combination: DLLR = 1.93053 +/- 0.0487675 - stat = 1.99621 +/- 0.0562961 - norm = 1.98542 +/- 0.0566018 - syst = 1.90089 +/- 0.0591188
+Sensitivity calculation: mva_100ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_100ntrees_7maxdepth, trafoD): DLLR = 1.65017 +/- 0.05079 - stat = 1.71611 +/- 0.0581748 - norm = 1.70656 +/- 0.0585004 - syst = 1.64541 +/- 0.0606745
+  -> Contribution (2tag3jet_150ptv_SR, mva_100ntrees_7maxdepth, trafoD): DLLR = 1.03634 +/- 0.0326061 - stat = 1.0555 +/- 0.0348298 - norm = 1.05058 +/- 0.034993 - syst = 0.99656 +/- 0.0368896
+  -> Combination: DLLR = 1.94861 +/- 0.0463755 - stat = 2.01472 +/- 0.0528053 - norm = 2.00401 +/- 0.0530876 - syst = 1.92367 +/- 0.0553047
+Sensitivity calculation: mva_120ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_120ntrees_3maxdepth, trafoD): DLLR = 1.59184 +/- 0.0486356 - stat = 1.65261 +/- 0.0552852 - norm = 1.64174 +/- 0.0556514 - syst = 1.58305 +/- 0.0577146
+  -> Contribution (2tag3jet_150ptv_SR, mva_120ntrees_3maxdepth, trafoD): DLLR = 0.970116 +/- 0.0281396 - stat = 0.985067 +/- 0.0296018 - norm = 0.979757 +/- 0.0297622 - syst = 0.929847 +/- 0.0313597
+  -> Combination: DLLR = 1.86416 +/- 0.044037 - stat = 1.92392 +/- 0.0498489 - norm = 1.91187 +/- 0.0501633 - syst = 1.83594 +/- 0.0522379
+Sensitivity calculation: mva_120ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_120ntrees_4maxdepth, trafoD): DLLR = 1.67595 +/- 0.0537162 - stat = 1.76107 +/- 0.0652233 - norm = 1.75188 +/- 0.0655657 - syst = 1.70032 +/- 0.0675536
+  -> Contribution (2tag3jet_150ptv_SR, mva_120ntrees_4maxdepth, trafoD): DLLR = 1.0037 +/- 0.0300789 - stat = 1.02107 +/- 0.0319385 - norm = 1.01595 +/- 0.0320994 - syst = 0.965799 +/- 0.0337664
+  -> Combination: DLLR = 1.95351 +/- 0.0486062 - stat = 2.03567 +/- 0.0586551 - norm = 2.02515 +/- 0.0589599 - syst = 1.95547 +/- 0.0610608
+Sensitivity calculation: mva_120ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_120ntrees_5maxdepth, trafoD): DLLR = 1.63031 +/- 0.0500615 - stat = 1.69493 +/- 0.0574657 - norm = 1.68433 +/- 0.0578273 - syst = 1.62576 +/- 0.0599106
+  -> Contribution (2tag3jet_150ptv_SR, mva_120ntrees_5maxdepth, trafoD): DLLR = 1.03741 +/- 0.0311754 - stat = 1.05651 +/- 0.0331068 - norm = 1.05159 +/- 0.033262 - syst = 1.00091 +/- 0.034946
+  -> Combination: DLLR = 1.93239 +/- 0.0454309 - stat = 1.99725 +/- 0.0518165 - norm = 1.98565 +/- 0.0521191 - syst = 1.90917 +/- 0.0542071
+Sensitivity calculation: mva_120ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_120ntrees_6maxdepth, trafoD): DLLR = 1.65227 +/- 0.0536576 - stat = 1.71876 +/- 0.0621418 - norm = 1.70925 +/- 0.0624877 - syst = 1.64279 +/- 0.0650157
+  -> Contribution (2tag3jet_150ptv_SR, mva_120ntrees_6maxdepth, trafoD): DLLR = 1.03447 +/- 0.0327333 - stat = 1.05416 +/- 0.0350424 - norm = 1.04924 +/- 0.0352068 - syst = 0.995827 +/- 0.0370952
+  -> Combination: DLLR = 1.94939 +/- 0.0486836 - stat = 2.01628 +/- 0.0560509 - norm = 2.0056 +/- 0.0563496 - syst = 1.92105 +/- 0.0588297
+Sensitivity calculation: mva_120ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_120ntrees_7maxdepth, trafoD): DLLR = 1.66492 +/- 0.0510037 - stat = 1.73366 +/- 0.0587269 - norm = 1.7233 +/- 0.0590799 - syst = 1.66603 +/- 0.0611108
+  -> Contribution (2tag3jet_150ptv_SR, mva_120ntrees_7maxdepth, trafoD): DLLR = 1.05653 +/- 0.0335151 - stat = 1.07787 +/- 0.0360534 - norm = 1.07306 +/- 0.0362148 - syst = 1.02046 +/- 0.0380816
+  -> Combination: DLLR = 1.97186 +/- 0.0466587 - stat = 2.04142 +/- 0.053383 - norm = 2.03008 +/- 0.0536809 - syst = 1.95372 +/- 0.0557793
+Sensitivity calculation: mva_140ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_140ntrees_3maxdepth, trafoD): DLLR = 1.59458 +/- 0.0487172 - stat = 1.65519 +/- 0.0553685 - norm = 1.6452 +/- 0.0557047 - syst = 1.58599 +/- 0.0577842
+  -> Contribution (2tag3jet_150ptv_SR, mva_140ntrees_3maxdepth, trafoD): DLLR = 0.975511 +/- 0.028484 - stat = 0.9908 +/- 0.0299818 - norm = 0.985544 +/- 0.0301417 - syst = 0.935118 +/- 0.0317671
+  -> Combination: DLLR = 1.86931 +/- 0.0441358 - stat = 1.92907 +/- 0.0499408 - norm = 1.9178 +/- 0.0502343 - syst = 1.84114 +/- 0.0523259
+Sensitivity calculation: mva_140ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_140ntrees_4maxdepth, trafoD): DLLR = 1.68552 +/- 0.0552652 - stat = 1.77362 +/- 0.067683 - norm = 1.76354 +/- 0.0680699 - syst = 1.71183 +/- 0.0701258
+  -> Contribution (2tag3jet_150ptv_SR, mva_140ntrees_4maxdepth, trafoD): DLLR = 1.00812 +/- 0.030744 - stat = 1.02611 +/- 0.0327629 - norm = 1.02103 +/- 0.0329257 - syst = 0.970677 +/- 0.0346338
+  -> Combination: DLLR = 1.96399 +/- 0.0499855 - stat = 2.04905 +/- 0.060839 - norm = 2.03778 +/- 0.0611754 - syst = 1.96789 +/- 0.0633482
+Sensitivity calculation: mva_140ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_140ntrees_5maxdepth, trafoD): DLLR = 1.64095 +/- 0.0511853 - stat = 1.70753 +/- 0.059095 - norm = 1.69705 +/- 0.05946 - syst = 1.63721 +/- 0.0616334
+  -> Contribution (2tag3jet_150ptv_SR, mva_140ntrees_5maxdepth, trafoD): DLLR = 1.04495 +/- 0.0319168 - stat = 1.06484 +/- 0.0340508 - norm = 1.05995 +/- 0.0342079 - syst = 1.00858 +/- 0.0359501
+  -> Combination: DLLR = 1.94541 +/- 0.0464538 - stat = 2.01235 +/- 0.0532826 - norm = 2.00087 +/- 0.0535884 - syst = 1.92294 +/- 0.0557602
+Sensitivity calculation: mva_140ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_140ntrees_6maxdepth, trafoD): DLLR = 1.66179 +/- 0.0561845 - stat = 1.73302 +/- 0.0664564 - norm = 1.7226 +/- 0.0668583 - syst = 1.65672 +/- 0.069517
+  -> Contribution (2tag3jet_150ptv_SR, mva_140ntrees_6maxdepth, trafoD): DLLR = 1.04493 +/- 0.0334163 - stat = 1.06556 +/- 0.0359329 - norm = 1.06069 +/- 0.0360978 - syst = 1.00676 +/- 0.0380316
+  -> Combination: DLLR = 1.96302 +/- 0.0507804 - stat = 2.0344 +/- 0.059658 - norm = 2.02298 +/- 0.0599949 - syst = 1.93863 +/- 0.0626051
+Sensitivity calculation: mva_140ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_140ntrees_7maxdepth, trafoD): DLLR = 1.67553 +/- 0.0504516 - stat = 1.74738 +/- 0.058508 - norm = 1.73706 +/- 0.0588558 - syst = 1.68341 +/- 0.0607314
+  -> Contribution (2tag3jet_150ptv_SR, mva_140ntrees_7maxdepth, trafoD): DLLR = 1.07814 +/- 0.0355628 - stat = 1.10164 +/- 0.0385469 - norm = 1.0969 +/- 0.0387133 - syst = 1.04412 +/- 0.0406706
+  -> Combination: DLLR = 1.99243 +/- 0.0465873 - stat = 2.06566 +/- 0.0535927 - norm = 2.0544 +/- 0.0538864 - syst = 1.98092 +/- 0.0558852
+Sensitivity calculation: mva_160ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_160ntrees_3maxdepth, trafoD): DLLR = 1.5889 +/- 0.0481561 - stat = 1.64747 +/- 0.054375 - norm = 1.63658 +/- 0.054737 - syst = 1.57658 +/- 0.0568202
+  -> Contribution (2tag3jet_150ptv_SR, mva_160ntrees_3maxdepth, trafoD): DLLR = 0.99235 +/- 0.0299367 - stat = 1.00909 +/- 0.0317198 - norm = 1.00388 +/- 0.0318843 - syst = 0.95239 +/- 0.0336081
+  -> Combination: DLLR = 1.87333 +/- 0.0438151 - stat = 1.93195 +/- 0.0492394 - norm = 1.91994 +/- 0.0495474 - syst = 1.84191 +/- 0.0516463
+Sensitivity calculation: mva_160ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_160ntrees_4maxdepth, trafoD): DLLR = 1.64234 +/- 0.0554044 - stat = 1.71654 +/- 0.0665092 - norm = 1.70605 +/- 0.0669181 - syst = 1.64535 +/- 0.0693865
+  -> Contribution (2tag3jet_150ptv_SR, mva_160ntrees_4maxdepth, trafoD): DLLR = 1.01257 +/- 0.0308926 - stat = 1.03053 +/- 0.0328669 - norm = 1.02552 +/- 0.0330274 - syst = 0.973761 +/- 0.0347829
+  -> Combination: DLLR = 1.92939 +/- 0.0498702 - stat = 2.00212 +/- 0.0594788 - norm = 1.99055 +/- 0.0598245 - syst = 1.91191 +/- 0.0622852
+Sensitivity calculation: mva_160ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_160ntrees_5maxdepth, trafoD): DLLR = 1.66515 +/- 0.0529721 - stat = 1.73647 +/- 0.0619587 - norm = 1.72608 +/- 0.0623317 - syst = 1.66648 +/- 0.0645608
+  -> Contribution (2tag3jet_150ptv_SR, mva_160ntrees_5maxdepth, trafoD): DLLR = 1.05265 +/- 0.0323535 - stat = 1.07302 +/- 0.0345614 - norm = 1.06813 +/- 0.0347197 - syst = 1.01645 +/- 0.0364852
+  -> Combination: DLLR = 1.96997 +/- 0.047997 - stat = 2.04125 +/- 0.0557509 - norm = 2.02984 +/- 0.0560643 - syst = 1.95201 +/- 0.0582998
+Sensitivity calculation: mva_160ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_160ntrees_6maxdepth, trafoD): DLLR = 1.64407 +/- 0.0512339 - stat = 1.70814 +/- 0.0586267 - norm = 1.69747 +/- 0.0589953 - syst = 1.635 +/- 0.0612496
+  -> Contribution (2tag3jet_150ptv_SR, mva_160ntrees_6maxdepth, trafoD): DLLR = 1.06089 +/- 0.0343998 - stat = 1.08307 +/- 0.0371615 - norm = 1.07824 +/- 0.0373279 - syst = 1.02464 +/- 0.0392804
+  -> Combination: DLLR = 1.95664 +/- 0.0469161 - stat = 2.02257 +/- 0.0533619 - norm = 2.01097 +/- 0.0536698 - syst = 1.92954 +/- 0.0559348
+Sensitivity calculation: mva_160ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_160ntrees_7maxdepth, trafoD): DLLR = 1.6913 +/- 0.0520266 - stat = 1.7668 +/- 0.0610259 - norm = 1.75662 +/- 0.0613798 - syst = 1.7021 +/- 0.0633458
+  -> Contribution (2tag3jet_150ptv_SR, mva_160ntrees_7maxdepth, trafoD): DLLR = 1.07885 +/- 0.0355535 - stat = 1.10219 +/- 0.0385296 - norm = 1.09748 +/- 0.0386949 - syst = 1.04346 +/- 0.040698
+  -> Combination: DLLR = 2.0061 +/- 0.0478489 - stat = 2.08241 +/- 0.0556483 - norm = 2.07127 +/- 0.0559475 - syst = 1.99648 +/- 0.0580433
+Sensitivity calculation: mva_180ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_180ntrees_3maxdepth, trafoD): DLLR = 1.60489 +/- 0.0490118 - stat = 1.6671 +/- 0.0560107 - norm = 1.65626 +/- 0.0563773 - syst = 1.5978 +/- 0.0584399
+  -> Contribution (2tag3jet_150ptv_SR, mva_180ntrees_3maxdepth, trafoD): DLLR = 0.98901 +/- 0.0293776 - stat = 1.00528 +/- 0.0310624 - norm = 1.00008 +/- 0.0312239 - syst = 0.948947 +/- 0.0329064
+  -> Combination: DLLR = 1.88515 +/- 0.0444807 - stat = 1.94674 +/- 0.0505759 - norm = 1.93478 +/- 0.0508888 - syst = 1.85835 +/- 0.0529815
+Sensitivity calculation: mva_180ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_180ntrees_4maxdepth, trafoD): DLLR = 1.66523 +/- 0.0566268 - stat = 1.74352 +/- 0.0683296 - norm = 1.73309 +/- 0.0687412 - syst = 1.67349 +/- 0.0711893
+  -> Contribution (2tag3jet_150ptv_SR, mva_180ntrees_4maxdepth, trafoD): DLLR = 1.02462 +/- 0.0321432 - stat = 1.04367 +/- 0.0343895 - norm = 1.0387 +/- 0.0345543 - syst = 0.98587 +/- 0.0364058
+  -> Combination: DLLR = 1.95521 +/- 0.0510854 - stat = 2.03203 +/- 0.0612312 - norm = 2.02051 +/- 0.0615801 - syst = 1.94229 +/- 0.0640601
+Sensitivity calculation: mva_180ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_180ntrees_5maxdepth, trafoD): DLLR = 1.66415 +/- 0.0531656 - stat = 1.73551 +/- 0.0623312 - norm = 1.72511 +/- 0.062707 - syst = 1.66528 +/- 0.0649597
+  -> Contribution (2tag3jet_150ptv_SR, mva_180ntrees_5maxdepth, trafoD): DLLR = 1.06615 +/- 0.0332477 - stat = 1.0877 +/- 0.0356088 - norm = 1.08291 +/- 0.0357663 - syst = 1.03013 +/- 0.0375989
+  -> Combination: DLLR = 1.97638 +/- 0.0482256 - stat = 2.04819 +/- 0.0560988 - norm = 2.03683 +/- 0.0564116 - syst = 1.95815 +/- 0.0586785
+Sensitivity calculation: mva_180ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_180ntrees_6maxdepth, trafoD): DLLR = 1.64136 +/- 0.0503939 - stat = 1.70291 +/- 0.0571563 - norm = 1.69237 +/- 0.0575124 - syst = 1.62964 +/- 0.0597261
+  -> Contribution (2tag3jet_150ptv_SR, mva_180ntrees_6maxdepth, trafoD): DLLR = 1.06351 +/- 0.0343889 - stat = 1.08573 +/- 0.0371489 - norm = 1.08087 +/- 0.0373162 - syst = 1.02744 +/- 0.0392564
+  -> Combination: DLLR = 1.95579 +/- 0.0462418 - stat = 2.01959 +/- 0.0521682 - norm = 2.00808 +/- 0.0524672 - syst = 1.92649 +/- 0.0546891
+Sensitivity calculation: mva_180ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_180ntrees_7maxdepth, trafoD): DLLR = 1.67409 +/- 0.0515818 - stat = 1.74334 +/- 0.0595876 - norm = 1.73298 +/- 0.0599439 - syst = 1.67456 +/- 0.0620352
+  -> Contribution (2tag3jet_150ptv_SR, mva_180ntrees_7maxdepth, trafoD): DLLR = 1.07528 +/- 0.0349158 - stat = 1.0982 +/- 0.037799 - norm = 1.09343 +/- 0.037964 - syst = 1.0408 +/- 0.0398835
+  -> Combination: DLLR = 1.98968 +/- 0.047325 - stat = 2.06041 +/- 0.0542942 - norm = 2.0491 +/- 0.054594 - syst = 1.97165 +/- 0.0567384
+Sensitivity calculation: mva_200ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_200ntrees_3maxdepth, trafoD): DLLR = 1.61296 +/- 0.0482131 - stat = 1.67805 +/- 0.0552579 - norm = 1.6673 +/- 0.0556143 - syst = 1.61187 +/- 0.0575267
+  -> Contribution (2tag3jet_150ptv_SR, mva_200ntrees_3maxdepth, trafoD): DLLR = 0.9903 +/- 0.0292695 - stat = 1.00655 +/- 0.0309639 - norm = 1.00137 +/- 0.0311242 - syst = 0.950477 +/- 0.0327907
+  -> Combination: DLLR = 1.89271 +/- 0.0438483 - stat = 1.95678 +/- 0.0499919 - norm = 1.9449 +/- 0.0502975 - syst = 1.87124 +/- 0.0522774
+Sensitivity calculation: mva_200ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_200ntrees_4maxdepth, trafoD): DLLR = 1.6789 +/- 0.0595841 - stat = 1.76265 +/- 0.0734333 - norm = 1.7524 +/- 0.0738628 - syst = 1.69086 +/- 0.0765508
+  -> Contribution (2tag3jet_150ptv_SR, mva_200ntrees_4maxdepth, trafoD): DLLR = 1.02213 +/- 0.0310076 - stat = 1.04046 +/- 0.033 - norm = 1.03542 +/- 0.0331605 - syst = 0.984171 +/- 0.0348874
+  -> Combination: DLLR = 1.96556 +/- 0.0533873 - stat = 2.04682 +/- 0.0654251 - norm = 2.03543 +/- 0.0657911 - syst = 1.95643 +/- 0.068448
+Sensitivity calculation: mva_200ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_200ntrees_5maxdepth, trafoD): DLLR = 1.65732 +/- 0.0511937 - stat = 1.72579 +/- 0.0591961 - norm = 1.71547 +/- 0.0595522 - syst = 1.6578 +/- 0.061624
+  -> Contribution (2tag3jet_150ptv_SR, mva_200ntrees_5maxdepth, trafoD): DLLR = 1.06628 +/- 0.0326742 - stat = 1.08754 +/- 0.0349333 - norm = 1.0827 +/- 0.0350896 - syst = 1.03052 +/- 0.0368665
+  -> Combination: DLLR = 1.9707 +/- 0.0465413 - stat = 2.03988 +/- 0.0534324 - norm = 2.02857 +/- 0.0537303 - syst = 1.95199 +/- 0.0558382
+Sensitivity calculation: mva_200ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_200ntrees_6maxdepth, trafoD): DLLR = 1.64879 +/- 0.0524519 - stat = 1.713 +/- 0.0602729 - norm = 1.70248 +/- 0.0606454 - syst = 1.638 +/- 0.0630326
+  -> Contribution (2tag3jet_150ptv_SR, mva_200ntrees_6maxdepth, trafoD): DLLR = 1.06354 +/- 0.0339664 - stat = 1.08529 +/- 0.0365902 - norm = 1.08055 +/- 0.0367506 - syst = 1.02776 +/- 0.0386383
+  -> Combination: DLLR = 1.96204 +/- 0.0477684 - stat = 2.02787 +/- 0.0545505 - norm = 2.01644 +/- 0.0548595 - syst = 1.93374 +/- 0.0572057
+Sensitivity calculation: mva_200ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_200ntrees_7maxdepth, trafoD): DLLR = 1.69102 +/- 0.0512637 - stat = 1.76439 +/- 0.0596479 - norm = 1.75415 +/- 0.0599962 - syst = 1.69933 +/- 0.0619315
+  -> Contribution (2tag3jet_150ptv_SR, mva_200ntrees_7maxdepth, trafoD): DLLR = 1.08391 +/- 0.0351231 - stat = 1.10722 +/- 0.0379835 - norm = 1.10248 +/- 0.0381468 - syst = 1.04942 +/- 0.0400756
+  -> Combination: DLLR = 2.00858 +/- 0.0471373 - stat = 2.08303 +/- 0.0544083 - norm = 2.07183 +/- 0.0547023 - syst = 1.99725 +/- 0.0567451
+Sensitivity calculation: mva_220ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_220ntrees_3maxdepth, trafoD): DLLR = 1.6149 +/- 0.0484566 - stat = 1.67999 +/- 0.0555382 - norm = 1.66915 +/- 0.0558989 - syst = 1.61333 +/- 0.057833
+  -> Contribution (2tag3jet_150ptv_SR, mva_220ntrees_3maxdepth, trafoD): DLLR = 0.992642 +/- 0.0290954 - stat = 1.00881 +/- 0.0307423 - norm = 1.00364 +/- 0.0309007 - syst = 0.952331 +/- 0.0325655
+  -> Combination: DLLR = 1.89558 +/- 0.0440034 - stat = 1.95961 +/- 0.0501748 - norm = 1.94766 +/- 0.0504827 - syst = 1.87344 +/- 0.0524826
+Sensitivity calculation: mva_220ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_220ntrees_4maxdepth, trafoD): DLLR = 1.70601 +/- 0.0572332 - stat = 1.79931 +/- 0.0710831 - norm = 1.78926 +/- 0.0714825 - syst = 1.73671 +/- 0.0736457
+  -> Contribution (2tag3jet_150ptv_SR, mva_220ntrees_4maxdepth, trafoD): DLLR = 1.02046 +/- 0.0308873 - stat = 1.03862 +/- 0.0328611 - norm = 1.03361 +/- 0.0330203 - syst = 0.981965 +/- 0.034757
+  -> Combination: DLLR = 1.98792 +/- 0.0516127 - stat = 2.07756 +/- 0.0637172 - norm = 2.06635 +/- 0.0640628 - syst = 1.99509 +/- 0.0663509
+Sensitivity calculation: mva_220ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_220ntrees_5maxdepth, trafoD): DLLR = 1.67493 +/- 0.0525511 - stat = 1.74679 +/- 0.0612041 - norm = 1.73653 +/- 0.0615654 - syst = 1.67884 +/- 0.0636812
+  -> Contribution (2tag3jet_150ptv_SR, mva_220ntrees_5maxdepth, trafoD): DLLR = 1.07051 +/- 0.034072 - stat = 1.09249 +/- 0.0366136 - norm = 1.08766 +/- 0.036776 - syst = 1.03338 +/- 0.0387078
+  -> Combination: DLLR = 1.98781 +/- 0.0479309 - stat = 2.06029 +/- 0.055404 - norm = 2.04904 +/- 0.0557082 - syst = 1.97139 +/- 0.0579025
+Sensitivity calculation: mva_220ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_220ntrees_6maxdepth, trafoD): DLLR = 1.67453 +/- 0.0525506 - stat = 1.7441 +/- 0.0609273 - norm = 1.73383 +/- 0.0612882 - syst = 1.67292 +/- 0.0635194
+  -> Contribution (2tag3jet_150ptv_SR, mva_220ntrees_6maxdepth, trafoD): DLLR = 1.06596 +/- 0.0342064 - stat = 1.08767 +/- 0.0368252 - norm = 1.08288 +/- 0.036988 - syst = 1.02836 +/- 0.0389491
+  -> Combination: DLLR = 1.98502 +/- 0.0479857 - stat = 2.05546 +/- 0.0552486 - norm = 2.04421 +/- 0.0555526 - syst = 1.96372 +/- 0.0578296
+Sensitivity calculation: mva_220ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_220ntrees_7maxdepth, trafoD): DLLR = 1.69672 +/- 0.0507607 - stat = 1.76913 +/- 0.0585794 - norm = 1.75901 +/- 0.0589164 - syst = 1.70354 +/- 0.0608349
+  -> Contribution (2tag3jet_150ptv_SR, mva_220ntrees_7maxdepth, trafoD): DLLR = 1.09192 +/- 0.0356524 - stat = 1.1161 +/- 0.0386972 - norm = 1.11143 +/- 0.0388599 - syst = 1.05932 +/- 0.0407716
+  -> Combination: DLLR = 2.01771 +/- 0.0468434 - stat = 2.09177 +/- 0.0536743 - norm = 2.08072 +/- 0.0539593 - syst = 2.00604 +/- 0.0559681
+Sensitivity calculation: mva_240ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_240ntrees_3maxdepth, trafoD): DLLR = 1.63649 +/- 0.0495057 - stat = 1.70519 +/- 0.0571238 - norm = 1.69467 +/- 0.0574781 - syst = 1.63997 +/- 0.0593954
+  -> Contribution (2tag3jet_150ptv_SR, mva_240ntrees_3maxdepth, trafoD): DLLR = 0.995845 +/- 0.0295538 - stat = 1.01213 +/- 0.0312379 - norm = 1.00697 +/- 0.031398 - syst = 0.954181 +/- 0.0331349
+  -> Combination: DLLR = 1.91567 +/- 0.044995 - stat = 1.98294 +/- 0.0516451 - norm = 1.97127 +/- 0.0519509 - syst = 1.89736 +/- 0.0539748
+Sensitivity calculation: mva_240ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_240ntrees_4maxdepth, trafoD): DLLR = 1.70251 +/- 0.0566949 - stat = 1.79387 +/- 0.0701579 - norm = 1.78389 +/- 0.0705505 - syst = 1.73044 +/- 0.0727296
+  -> Contribution (2tag3jet_150ptv_SR, mva_240ntrees_4maxdepth, trafoD): DLLR = 1.02421 +/- 0.031437 - stat = 1.04273 +/- 0.0335111 - norm = 1.03772 +/- 0.0336728 - syst = 0.985035 +/- 0.0354739
+  -> Combination: DLLR = 1.98685 +/- 0.051213 - stat = 2.07491 +/- 0.0629497 - norm = 2.06376 +/- 0.0632897 - syst = 1.99116 +/- 0.0655975
+Sensitivity calculation: mva_240ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_240ntrees_5maxdepth, trafoD): DLLR = 1.6636 +/- 0.0506943 - stat = 1.73158 +/- 0.0582253 - norm = 1.72117 +/- 0.0585775 - syst = 1.66351 +/- 0.0606078
+  -> Contribution (2tag3jet_150ptv_SR, mva_240ntrees_5maxdepth, trafoD): DLLR = 1.07699 +/- 0.0346662 - stat = 1.09979 +/- 0.0374082 - norm = 1.09501 +/- 0.0375715 - syst = 1.04167 +/- 0.0394954
+  -> Combination: DLLR = 1.98178 +/- 0.0465386 - stat = 2.05132 +/- 0.0530842 - norm = 2.03997 +/- 0.0533797 - syst = 1.96274 +/- 0.05548
+Sensitivity calculation: mva_240ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_240ntrees_6maxdepth, trafoD): DLLR = 1.67312 +/- 0.0516225 - stat = 1.74025 +/- 0.0592015 - norm = 1.72981 +/- 0.0595589 - syst = 1.66768 +/- 0.0617777
+  -> Contribution (2tag3jet_150ptv_SR, mva_240ntrees_6maxdepth, trafoD): DLLR = 1.05523 +/- 0.033021 - stat = 1.07596 +/- 0.0354281 - norm = 1.07112 +/- 0.0355882 - syst = 1.0179 +/- 0.0374488
+  -> Combination: DLLR = 1.97809 +/- 0.047083 - stat = 2.04601 +/- 0.0536905 - norm = 2.03459 +/- 0.053992 - syst = 1.95379 +/- 0.0562248
+Sensitivity calculation: mva_240ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_240ntrees_7maxdepth, trafoD): DLLR = 1.68798 +/- 0.0517331 - stat = 1.75742 +/- 0.0596257 - norm = 1.74722 +/- 0.059974 - syst = 1.68635 +/- 0.0621385
+  -> Contribution (2tag3jet_150ptv_SR, mva_240ntrees_7maxdepth, trafoD): DLLR = 1.08902 +/- 0.0348589 - stat = 1.11268 +/- 0.037728 - norm = 1.10798 +/- 0.0378879 - syst = 1.05694 +/- 0.0397175
+  -> Combination: DLLR = 2.00879 +/- 0.0474012 - stat = 2.08004 +/- 0.0542697 - norm = 2.06891 +/- 0.0545618 - syst = 1.9902 +/- 0.0567195
+Sensitivity calculation: mva_260ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_260ntrees_3maxdepth, trafoD): DLLR = 1.63446 +/- 0.0492215 - stat = 1.70249 +/- 0.0567777 - norm = 1.69196 +/- 0.0571311 - syst = 1.63838 +/- 0.0589994
+  -> Contribution (2tag3jet_150ptv_SR, mva_260ntrees_3maxdepth, trafoD): DLLR = 0.999732 +/- 0.0298331 - stat = 1.01641 +/- 0.0316004 - norm = 1.01129 +/- 0.0317606 - syst = 0.959068 +/- 0.0334899
+  -> Combination: DLLR = 1.91597 +/- 0.0447822 - stat = 1.98282 +/- 0.0513713 - norm = 1.97115 +/- 0.0516754 - syst = 1.89845 +/- 0.0536544
+Sensitivity calculation: mva_260ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_260ntrees_4maxdepth, trafoD): DLLR = 1.69558 +/- 0.0550835 - stat = 1.78368 +/- 0.0674527 - norm = 1.77355 +/- 0.0678383 - syst = 1.72174 +/- 0.0698795
+  -> Contribution (2tag3jet_150ptv_SR, mva_260ntrees_4maxdepth, trafoD): DLLR = 1.03299 +/- 0.0320711 - stat = 1.05233 +/- 0.0342946 - norm = 1.04732 +/- 0.0344585 - syst = 0.993573 +/- 0.0363227
+  -> Combination: DLLR = 1.98547 +/- 0.0499128 - stat = 2.07097 +/- 0.0606528 - norm = 2.0597 +/- 0.0609849 - syst = 1.98786 +/- 0.0631888
+Sensitivity calculation: mva_260ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_260ntrees_5maxdepth, trafoD): DLLR = 1.67655 +/- 0.0520417 - stat = 1.7471 +/- 0.0601565 - norm = 1.73688 +/- 0.0605105 - syst = 1.67846 +/- 0.0626167
+  -> Contribution (2tag3jet_150ptv_SR, mva_260ntrees_5maxdepth, trafoD): DLLR = 1.07538 +/- 0.0346044 - stat = 1.09806 +/- 0.0373518 - norm = 1.09326 +/- 0.0375157 - syst = 1.04011 +/- 0.0394326
+  -> Combination: DLLR = 1.9918 +/- 0.0476227 - stat = 2.06351 +/- 0.0546731 - norm = 2.05231 +/- 0.0549717 - syst = 1.9746 +/- 0.0571349
+Sensitivity calculation: mva_260ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_260ntrees_6maxdepth, trafoD): DLLR = 1.66525 +/- 0.0522998 - stat = 1.73105 +/- 0.0599991 - norm = 1.72066 +/- 0.0603614 - syst = 1.65662 +/- 0.0626946
+  -> Contribution (2tag3jet_150ptv_SR, mva_260ntrees_6maxdepth, trafoD): DLLR = 1.0649 +/- 0.0338437 - stat = 1.08593 +/- 0.036304 - norm = 1.08104 +/- 0.0364681 - syst = 1.02533 +/- 0.0384497
+  -> Combination: DLLR = 1.97663 +/- 0.0476846 - stat = 2.04347 +/- 0.0543643 - norm = 2.03207 +/- 0.0546693 - syst = 1.94825 +/- 0.0570212
+Sensitivity calculation: mva_260ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_260ntrees_7maxdepth, trafoD): DLLR = 1.70494 +/- 0.0514241 - stat = 1.77858 +/- 0.0596951 - norm = 1.76858 +/- 0.0600325 - syst = 1.71185 +/- 0.0620221
+  -> Contribution (2tag3jet_150ptv_SR, mva_260ntrees_7maxdepth, trafoD): DLLR = 1.08706 +/- 0.0346064 - stat = 1.11005 +/- 0.0373597 - norm = 1.1053 +/- 0.0375202 - syst = 1.05341 +/- 0.0393685
+  -> Combination: DLLR = 2.02201 +/- 0.0471833 - stat = 2.09656 +/- 0.0543674 - norm = 2.08557 +/- 0.054654 - syst = 2.01 +/- 0.0567087
+Sensitivity calculation: mva_280ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_280ntrees_3maxdepth, trafoD): DLLR = 1.6451 +/- 0.0506894 - stat = 1.71657 +/- 0.0591244 - norm = 1.70619 +/- 0.0594841 - syst = 1.65148 +/- 0.0614545
+  -> Contribution (2tag3jet_150ptv_SR, mva_280ntrees_3maxdepth, trafoD): DLLR = 0.998158 +/- 0.0297465 - stat = 1.01474 +/- 0.0315077 - norm = 1.00963 +/- 0.0316671 - syst = 0.957673 +/- 0.0333852
+  -> Combination: DLLR = 1.92423 +/- 0.0460014 - stat = 1.99407 +/- 0.0533622 - norm = 1.98253 +/- 0.0536728 - syst = 1.90907 +/- 0.0557382
+Sensitivity calculation: mva_280ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_280ntrees_4maxdepth, trafoD): DLLR = 1.64795 +/- 0.0520508 - stat = 1.7178 +/- 0.0611089 - norm = 1.70733 +/- 0.0614838 - syst = 1.64969 +/- 0.063632
+  -> Contribution (2tag3jet_150ptv_SR, mva_280ntrees_4maxdepth, trafoD): DLLR = 1.03415 +/- 0.0319456 - stat = 1.05355 +/- 0.0341577 - norm = 1.0486 +/- 0.034319 - syst = 0.995837 +/- 0.0361373
+  -> Combination: DLLR = 1.94556 +/- 0.0472456 - stat = 2.01514 +/- 0.0550681 - norm = 2.00363 +/- 0.0553846 - syst = 1.92696 +/- 0.0575883
+Sensitivity calculation: mva_280ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_280ntrees_5maxdepth, trafoD): DLLR = 1.66733 +/- 0.0507997 - stat = 1.73563 +/- 0.0584509 - norm = 1.72517 +/- 0.0588052 - syst = 1.66843 +/- 0.0608051
+  -> Contribution (2tag3jet_150ptv_SR, mva_280ntrees_5maxdepth, trafoD): DLLR = 1.08182 +/- 0.0352657 - stat = 1.10518 +/- 0.0381996 - norm = 1.10043 +/- 0.0383644 - syst = 1.04722 +/- 0.0403138
+  -> Combination: DLLR = 1.98754 +/- 0.0467389 - stat = 2.05762 +/- 0.0534027 - norm = 2.04625 +/- 0.0536994 - syst = 1.96985 +/- 0.0557822
+Sensitivity calculation: mva_280ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_280ntrees_6maxdepth, trafoD): DLLR = 1.66222 +/- 0.0515843 - stat = 1.72664 +/- 0.0588592 - norm = 1.71632 +/- 0.0592131 - syst = 1.65202 +/- 0.0615178
+  -> Contribution (2tag3jet_150ptv_SR, mva_280ntrees_6maxdepth, trafoD): DLLR = 1.06727 +/- 0.0337549 - stat = 1.08855 +/- 0.0362586 - norm = 1.08383 +/- 0.0364167 - syst = 1.02951 +/- 0.0383382
+  -> Combination: DLLR = 1.97536 +/- 0.0470827 - stat = 2.04114 +/- 0.0534133 - norm = 2.02989 +/- 0.0537094 - syst = 1.94655 +/- 0.0560088
+Sensitivity calculation: mva_280ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_280ntrees_7maxdepth, trafoD): DLLR = 1.67932 +/- 0.0495614 - stat = 1.74467 +/- 0.0561781 - norm = 1.73448 +/- 0.0565082 - syst = 1.67517 +/- 0.058509
+  -> Contribution (2tag3jet_150ptv_SR, mva_280ntrees_7maxdepth, trafoD): DLLR = 1.11287 +/- 0.0353794 - stat = 1.13865 +/- 0.0383934 - norm = 1.13409 +/- 0.0385478 - syst = 1.08528 +/- 0.0402812
+  -> Combination: DLLR = 2.0146 +/- 0.0457027 - stat = 2.08336 +/- 0.0515128 - norm = 2.07233 +/- 0.0517869 - syst = 1.996 +/- 0.0537674
+Sensitivity calculation: mva_300ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_300ntrees_3maxdepth, trafoD): DLLR = 1.64502 +/- 0.0503036 - stat = 1.71565 +/- 0.0585347 - norm = 1.70511 +/- 0.0588963 - syst = 1.65085 +/- 0.0608324
+  -> Contribution (2tag3jet_150ptv_SR, mva_300ntrees_3maxdepth, trafoD): DLLR = 1.00196 +/- 0.0300769 - stat = 1.01875 +/- 0.0318757 - norm = 1.01366 +/- 0.0320361 - syst = 0.961017 +/- 0.0337908
+  -> Combination: DLLR = 1.92614 +/- 0.0457221 - stat = 1.99532 +/- 0.0528961 - norm = 1.98366 +/- 0.0532071 - syst = 1.9102 +/- 0.0552534
+Sensitivity calculation: mva_300ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_300ntrees_4maxdepth, trafoD): DLLR = 1.65628 +/- 0.053478 - stat = 1.72868 +/- 0.0633643 - norm = 1.71823 +/- 0.0637495 - syst = 1.65956 +/- 0.0660033
+  -> Contribution (2tag3jet_150ptv_SR, mva_300ntrees_4maxdepth, trafoD): DLLR = 1.03596 +/- 0.0314304 - stat = 1.05517 +/- 0.0334869 - norm = 1.05021 +/- 0.0336452 - syst = 0.999293 +/- 0.0353595
+  -> Combination: DLLR = 1.95358 +/- 0.048306 - stat = 2.02527 +/- 0.0568292 - norm = 2.01377 +/- 0.0571538 - syst = 1.9372 +/- 0.059413
+Sensitivity calculation: mva_300ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_300ntrees_5maxdepth, trafoD): DLLR = 1.68482 +/- 0.0527252 - stat = 1.75699 +/- 0.061448 - norm = 1.74669 +/- 0.0618102 - syst = 1.68732 +/- 0.0639852
+  -> Contribution (2tag3jet_150ptv_SR, mva_300ntrees_5maxdepth, trafoD): DLLR = 1.08761 +/- 0.0352405 - stat = 1.11119 +/- 0.0381542 - norm = 1.10652 +/- 0.0383151 - syst = 1.05344 +/- 0.040246
+  -> Combination: DLLR = 2.00537 +/- 0.0482446 - stat = 2.07888 +/- 0.0557942 - norm = 2.06769 +/- 0.0560963 - syst = 1.98917 +/- 0.0583107
+Sensitivity calculation: mva_300ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_300ntrees_6maxdepth, trafoD): DLLR = 1.66286 +/- 0.0516342 - stat = 1.72737 +/- 0.0588564 - norm = 1.71704 +/- 0.0592106 - syst = 1.65292 +/- 0.0615075
+  -> Contribution (2tag3jet_150ptv_SR, mva_300ntrees_6maxdepth, trafoD): DLLR = 1.06905 +/- 0.0331041 - stat = 1.09004 +/- 0.0354156 - norm = 1.0853 +/- 0.0355703 - syst = 1.03172 +/- 0.0374178
+  -> Combination: DLLR = 1.97686 +/- 0.0469775 - stat = 2.04255 +/- 0.053242 - norm = 2.03128 +/- 0.0535374 - syst = 1.94848 +/- 0.0558125
+Sensitivity calculation: mva_300ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_300ntrees_7maxdepth, trafoD): DLLR = 1.69681 +/- 0.0499759 - stat = 1.76692 +/- 0.057251 - norm = 1.75691 +/- 0.0575772 - syst = 1.70063 +/- 0.0594827
+  -> Contribution (2tag3jet_150ptv_SR, mva_300ntrees_7maxdepth, trafoD): DLLR = 1.11182 +/- 0.0351302 - stat = 1.13749 +/- 0.0381393 - norm = 1.13289 +/- 0.038294 - syst = 1.08494 +/- 0.0399863
+  -> Combination: DLLR = 2.02862 +/- 0.0460226 - stat = 2.1014 +/- 0.0523785 - norm = 2.09049 +/- 0.0526518 - syst = 2.01724 +/- 0.0545638
+Sensitivity calculation: mva_320ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_320ntrees_3maxdepth, trafoD): DLLR = 1.65239 +/- 0.0508404 - stat = 1.72503 +/- 0.0594915 - norm = 1.71474 +/- 0.0598485 - syst = 1.66119 +/- 0.0617779
+  -> Contribution (2tag3jet_150ptv_SR, mva_320ntrees_3maxdepth, trafoD): DLLR = 1.00537 +/- 0.0297941 - stat = 1.02247 +/- 0.031562 - norm = 1.01732 +/- 0.0317216 - syst = 0.966412 +/- 0.0333928
+  -> Combination: DLLR = 1.93421 +/- 0.0461112 - stat = 2.00529 +/- 0.0536477 - norm = 1.99381 +/- 0.0539565 - syst = 1.92185 +/- 0.0559769
+Sensitivity calculation: mva_320ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_320ntrees_4maxdepth, trafoD): DLLR = 1.64704 +/- 0.0518637 - stat = 1.71618 +/- 0.0606715 - norm = 1.70564 +/- 0.0610465 - syst = 1.64719 +/- 0.0632128
+  -> Contribution (2tag3jet_150ptv_SR, mva_320ntrees_4maxdepth, trafoD): DLLR = 1.04239 +/- 0.0326507 - stat = 1.06234 +/- 0.0349509 - norm = 1.0574 +/- 0.0351142 - syst = 1.00432 +/- 0.0369701
+  -> Combination: DLLR = 1.94918 +/- 0.0471748 - stat = 2.01838 +/- 0.0547694 - norm = 2.00681 +/- 0.055085 - syst = 1.92922 +/- 0.0573006
+Sensitivity calculation: mva_320ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_320ntrees_5maxdepth, trafoD): DLLR = 1.6742 +/- 0.0522319 - stat = 1.74448 +/- 0.060914 - norm = 1.73433 +/- 0.0612707 - syst = 1.67556 +/- 0.0634197
+  -> Contribution (2tag3jet_150ptv_SR, mva_320ntrees_5maxdepth, trafoD): DLLR = 1.08976 +/- 0.0354018 - stat = 1.11363 +/- 0.0383868 - norm = 1.10893 +/- 0.0385497 - syst = 1.05595 +/- 0.0404837
+  -> Combination: DLLR = 1.99763 +/- 0.0478461 - stat = 2.06964 +/- 0.055343 - norm = 2.05855 +/- 0.0556412 - syst = 1.98054 +/- 0.0578327
+Sensitivity calculation: mva_320ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_320ntrees_6maxdepth, trafoD): DLLR = 1.66366 +/- 0.0511349 - stat = 1.72909 +/- 0.058506 - norm = 1.71871 +/- 0.0588592 - syst = 1.65671 +/- 0.0610621
+  -> Contribution (2tag3jet_150ptv_SR, mva_320ntrees_6maxdepth, trafoD): DLLR = 1.06465 +/- 0.0327284 - stat = 1.08519 +/- 0.0349866 - norm = 1.08038 +/- 0.0351423 - syst = 1.02723 +/- 0.0369606
+  -> Combination: DLLR = 1.97516 +/- 0.0465434 - stat = 2.04142 +/- 0.0529299 - norm = 2.03007 +/- 0.0532257 - syst = 1.94933 +/- 0.0554304
+Sensitivity calculation: mva_320ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_320ntrees_7maxdepth, trafoD): DLLR = 1.69716 +/- 0.0498571 - stat = 1.76619 +/- 0.0567626 - norm = 1.75601 +/- 0.0570917 - syst = 1.69946 +/- 0.0589913
+  -> Contribution (2tag3jet_150ptv_SR, mva_320ntrees_7maxdepth, trafoD): DLLR = 1.10856 +/- 0.0348027 - stat = 1.13347 +/- 0.0376933 - norm = 1.1288 +/- 0.0378494 - syst = 1.08035 +/- 0.0395467
+  -> Combination: DLLR = 2.02713 +/- 0.0458757 - stat = 2.09861 +/- 0.0519284 - norm = 2.08752 +/- 0.0522043 - syst = 2.01378 +/- 0.0541158
+Sensitivity calculation: mva_340ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_340ntrees_3maxdepth, trafoD): DLLR = 1.66197 +/- 0.0517135 - stat = 1.73699 +/- 0.0608735 - norm = 1.72649 +/- 0.061244 - syst = 1.67279 +/- 0.06321
+  -> Contribution (2tag3jet_150ptv_SR, mva_340ntrees_3maxdepth, trafoD): DLLR = 1.0074 +/- 0.0300716 - stat = 1.02488 +/- 0.0319188 - norm = 1.0198 +/- 0.0320778 - syst = 0.969032 +/- 0.0337583
+  -> Combination: DLLR = 1.94345 +/- 0.0468903 - stat = 2.01681 +/- 0.0548796 - norm = 2.00518 +/- 0.0551978 - syst = 1.93319 +/- 0.0572533
+Sensitivity calculation: mva_340ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_340ntrees_4maxdepth, trafoD): DLLR = 1.65146 +/- 0.0519129 - stat = 1.72104 +/- 0.0607539 - norm = 1.71052 +/- 0.0611276 - syst = 1.65223 +/- 0.0632842
+  -> Contribution (2tag3jet_150ptv_SR, mva_340ntrees_4maxdepth, trafoD): DLLR = 1.04197 +/- 0.0321298 - stat = 1.0616 +/- 0.0343166 - norm = 1.05671 +/- 0.0344753 - syst = 1.0041 +/- 0.0362818
+  -> Combination: DLLR = 1.9527 +/- 0.0471332 - stat = 2.02212 +/- 0.0547567 - norm = 2.0106 +/- 0.0550705 - syst = 1.93341 +/- 0.0572691
+Sensitivity calculation: mva_340ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_340ntrees_5maxdepth, trafoD): DLLR = 1.67741 +/- 0.0509812 - stat = 1.74632 +/- 0.0586865 - norm = 1.736 +/- 0.0590357 - syst = 1.67808 +/- 0.0610732
+  -> Contribution (2tag3jet_150ptv_SR, mva_340ntrees_5maxdepth, trafoD): DLLR = 1.09157 +/- 0.0355282 - stat = 1.11554 +/- 0.0384998 - norm = 1.11085 +/- 0.0386622 - syst = 1.05734 +/- 0.040619
+  -> Combination: DLLR = 2.00131 +/- 0.046919 - stat = 2.07222 +/- 0.0536241 - norm = 2.06099 +/- 0.0539163 - syst = 1.98341 +/- 0.0560252
+Sensitivity calculation: mva_340ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_340ntrees_6maxdepth, trafoD): DLLR = 1.67551 +/- 0.0515886 - stat = 1.74252 +/- 0.059324 - norm = 1.73218 +/- 0.0596783 - syst = 1.66997 +/- 0.0619014
+  -> Contribution (2tag3jet_150ptv_SR, mva_340ntrees_6maxdepth, trafoD): DLLR = 1.08093 +/- 0.0341097 - stat = 1.10324 +/- 0.0366812 - norm = 1.09852 +/- 0.0368388 - syst = 1.04494 +/- 0.0387279
+  -> Combination: DLLR = 1.99393 +/- 0.0471293 - stat = 2.06241 +/- 0.0538266 - norm = 2.05114 +/- 0.0541222 - syst = 1.96995 +/- 0.056353
+Sensitivity calculation: mva_340ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_340ntrees_7maxdepth, trafoD): DLLR = 1.70038 +/- 0.0506534 - stat = 1.77112 +/- 0.0581695 - norm = 1.76093 +/- 0.0585063 - syst = 1.70401 +/- 0.0604605
+  -> Contribution (2tag3jet_150ptv_SR, mva_340ntrees_7maxdepth, trafoD): DLLR = 1.10268 +/- 0.0340012 - stat = 1.12614 +/- 0.0365649 - norm = 1.12156 +/- 0.0367143 - syst = 1.07185 +/- 0.038417
+  -> Combination: DLLR = 2.02662 +/- 0.0463512 - stat = 2.09882 +/- 0.0528627 - norm = 2.08776 +/- 0.0531428 - syst = 2.01308 +/- 0.0551142
+Sensitivity calculation: mva_360ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_360ntrees_3maxdepth, trafoD): DLLR = 1.65662 +/- 0.0507538 - stat = 1.729 +/- 0.0591739 - norm = 1.71864 +/- 0.0595308 - syst = 1.66506 +/- 0.0614462
+  -> Contribution (2tag3jet_150ptv_SR, mva_360ntrees_3maxdepth, trafoD): DLLR = 1.00861 +/- 0.0300913 - stat = 1.02613 +/- 0.031938 - norm = 1.021 +/- 0.0320983 - syst = 0.970497 +/- 0.0337687
+  -> Combination: DLLR = 1.93951 +/- 0.046089 - stat = 2.01057 +/- 0.0534339 - norm = 1.99904 +/- 0.0537421 - syst = 1.92725 +/- 0.0557439
+Sensitivity calculation: mva_360ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_360ntrees_4maxdepth, trafoD): DLLR = 1.65174 +/- 0.0510574 - stat = 1.7203 +/- 0.0593567 - norm = 1.70983 +/- 0.0597203 - syst = 1.6531 +/- 0.0617694
+  -> Contribution (2tag3jet_150ptv_SR, mva_360ntrees_4maxdepth, trafoD): DLLR = 1.04218 +/- 0.0327074 - stat = 1.06212 +/- 0.0350635 - norm = 1.05716 +/- 0.035228 - syst = 1.00331 +/- 0.0371187
+  -> Combination: DLLR = 1.95304 +/- 0.0465744 - stat = 2.02176 +/- 0.0537603 - norm = 2.01025 +/- 0.0540683 - syst = 1.93375 +/- 0.0562072
+Sensitivity calculation: mva_360ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_360ntrees_5maxdepth, trafoD): DLLR = 1.67664 +/- 0.0516024 - stat = 1.74621 +/- 0.0598301 - norm = 1.73595 +/- 0.0601837 - syst = 1.67769 +/- 0.0622735
+  -> Contribution (2tag3jet_150ptv_SR, mva_360ntrees_5maxdepth, trafoD): DLLR = 1.09173 +/- 0.0350476 - stat = 1.11574 +/- 0.0379668 - norm = 1.11104 +/- 0.0381274 - syst = 1.05905 +/- 0.0399993
+  -> Combination: DLLR = 2.00074 +/- 0.0472832 - stat = 2.07223 +/- 0.0544039 - norm = 2.06105 +/- 0.0546989 - syst = 1.984 +/- 0.0568233
+Sensitivity calculation: mva_360ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_360ntrees_6maxdepth, trafoD): DLLR = 1.68281 +/- 0.0525092 - stat = 1.7512 +/- 0.0605955 - norm = 1.741 +/- 0.0609505 - syst = 1.67811 +/- 0.0632348
+  -> Contribution (2tag3jet_150ptv_SR, mva_360ntrees_6maxdepth, trafoD): DLLR = 1.08314 +/- 0.0343864 - stat = 1.10585 +/- 0.0370613 - norm = 1.10111 +/- 0.037221 - syst = 1.0475 +/- 0.0391258
+  -> Combination: DLLR = 2.00126 +/- 0.0479157 - stat = 2.07114 +/- 0.0549236 - norm = 2.05998 +/- 0.0552211 - syst = 1.97821 +/- 0.0575038
+Sensitivity calculation: mva_360ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_360ntrees_7maxdepth, trafoD): DLLR = 1.70071 +/- 0.0494323 - stat = 1.76849 +/- 0.056011 - norm = 1.75831 +/- 0.0563353 - syst = 1.70011 +/- 0.058264
+  -> Contribution (2tag3jet_150ptv_SR, mva_360ntrees_7maxdepth, trafoD): DLLR = 1.11489 +/- 0.0354977 - stat = 1.13973 +/- 0.0384553 - norm = 1.13516 +/- 0.0386103 - syst = 1.08357 +/- 0.0404483
+  -> Combination: DLLR = 2.03357 +/- 0.0456929 - stat = 2.10394 +/- 0.0514836 - norm = 2.0929 +/- 0.0517551 - syst = 2.01606 +/- 0.0537277
+Sensitivity calculation: mva_380ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_380ntrees_3maxdepth, trafoD): DLLR = 1.67473 +/- 0.0525971 - stat = 1.75336 +/- 0.062531 - norm = 1.74298 +/- 0.0629034 - syst = 1.69045 +/- 0.0648579
+  -> Contribution (2tag3jet_150ptv_SR, mva_380ntrees_3maxdepth, trafoD): DLLR = 1.00744 +/- 0.0298354 - stat = 1.02454 +/- 0.0315839 - norm = 1.01941 +/- 0.0317429 - syst = 0.968272 +/- 0.0334193
+  -> Combination: DLLR = 1.95439 +/- 0.0476224 - stat = 2.03075 +/- 0.0562919 - norm = 2.0192 +/- 0.0566139 - syst = 1.94812 +/- 0.0586795
+Sensitivity calculation: mva_380ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_380ntrees_4maxdepth, trafoD): DLLR = 1.64007 +/- 0.0507071 - stat = 1.70569 +/- 0.0587782 - norm = 1.69503 +/- 0.0591479 - syst = 1.63728 +/- 0.0612338
+  -> Contribution (2tag3jet_150ptv_SR, mva_380ntrees_4maxdepth, trafoD): DLLR = 1.04064 +/- 0.0323863 - stat = 1.06037 +/- 0.0346621 - norm = 1.05542 +/- 0.0348247 - syst = 1.00276 +/- 0.0366534
+  -> Combination: DLLR = 1.94236 +/- 0.0461978 - stat = 2.00842 +/- 0.0531672 - norm = 1.99675 +/- 0.0534779 - syst = 1.91996 +/- 0.0556169
+Sensitivity calculation: mva_380ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_380ntrees_5maxdepth, trafoD): DLLR = 1.68337 +/- 0.0512761 - stat = 1.75287 +/- 0.0590841 - norm = 1.74265 +/- 0.0594307 - syst = 1.68478 +/- 0.061472
+  -> Contribution (2tag3jet_150ptv_SR, mva_380ntrees_5maxdepth, trafoD): DLLR = 1.09416 +/- 0.0352119 - stat = 1.11839 +/- 0.0381643 - norm = 1.11367 +/- 0.0383259 - syst = 1.06133 +/- 0.0402159
+  -> Combination: DLLR = 2.00771 +/- 0.0470808 - stat = 2.07926 +/- 0.0538735 - norm = 2.06811 +/- 0.054164 - syst = 1.99121 +/- 0.0562559
+Sensitivity calculation: mva_380ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_380ntrees_6maxdepth, trafoD): DLLR = 1.67419 +/- 0.0509348 - stat = 1.74009 +/- 0.0581271 - norm = 1.72981 +/- 0.0584728 - syst = 1.66892 +/- 0.060606
+  -> Contribution (2tag3jet_150ptv_SR, mva_380ntrees_6maxdepth, trafoD): DLLR = 1.08354 +/- 0.0344456 - stat = 1.10608 +/- 0.0371148 - norm = 1.10137 +/- 0.0372735 - syst = 1.04738 +/- 0.039195
+  -> Combination: DLLR = 1.99423 +/- 0.0466769 - stat = 2.06188 +/- 0.052942 - norm = 2.05067 +/- 0.0532313 - syst = 1.97036 +/- 0.0554012
+Sensitivity calculation: mva_380ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_380ntrees_7maxdepth, trafoD): DLLR = 1.70477 +/- 0.0497561 - stat = 1.77244 +/- 0.0563189 - norm = 1.76225 +/- 0.0566445 - syst = 1.70341 +/- 0.0586012
+  -> Contribution (2tag3jet_150ptv_SR, mva_380ntrees_7maxdepth, trafoD): DLLR = 1.11458 +/- 0.0349731 - stat = 1.13906 +/- 0.0377906 - norm = 1.13444 +/- 0.0379443 - syst = 1.08352 +/- 0.0397277
+  -> Combination: DLLR = 2.03679 +/- 0.0458322 - stat = 2.10689 +/- 0.0515962 - norm = 2.09583 +/- 0.0518686 - syst = 2.01882 +/- 0.0538472
+Sensitivity calculation: mva_400ntrees_3maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_400ntrees_3maxdepth, trafoD): DLLR = 1.67081 +/- 0.052504 - stat = 1.74892 +/- 0.0624684 - norm = 1.73867 +/- 0.0628369 - syst = 1.6867 +/- 0.0647729
+  -> Contribution (2tag3jet_150ptv_SR, mva_400ntrees_3maxdepth, trafoD): DLLR = 1.01307 +/- 0.0303796 - stat = 1.03055 +/- 0.0321966 - norm = 1.02546 +/- 0.0323564 - syst = 0.973619 +/- 0.0340791
+  -> Combination: DLLR = 1.95394 +/- 0.0475787 - stat = 2.02997 +/- 0.0562472 - norm = 2.01855 +/- 0.0565654 - syst = 1.94754 +/- 0.0586278
+Sensitivity calculation: mva_400ntrees_4maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_400ntrees_4maxdepth, trafoD): DLLR = 1.63805 +/- 0.0498257 - stat = 1.70207 +/- 0.0571891 - norm = 1.6915 +/- 0.0575462 - syst = 1.63339 +/- 0.0595936
+  -> Contribution (2tag3jet_150ptv_SR, mva_400ntrees_4maxdepth, trafoD): DLLR = 1.04043 +/- 0.0327851 - stat = 1.06032 +/- 0.0351595 - norm = 1.05541 +/- 0.0353232 - syst = 1.00206 +/- 0.0372038
+  -> Combination: DLLR = 1.94054 +/- 0.0455843 - stat = 2.00532 +/- 0.051979 - norm = 1.99376 +/- 0.0522804 - syst = 1.91627 +/- 0.0543945
+Sensitivity calculation: mva_400ntrees_5maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_400ntrees_5maxdepth, trafoD): DLLR = 1.67819 +/- 0.0506475 - stat = 1.74555 +/- 0.0579886 - norm = 1.73515 +/- 0.058336 - syst = 1.67767 +/- 0.0603347
+  -> Contribution (2tag3jet_150ptv_SR, mva_400ntrees_5maxdepth, trafoD): DLLR = 1.09609 +/- 0.0350299 - stat = 1.12007 +/- 0.0378789 - norm = 1.11537 +/- 0.0380386 - syst = 1.06313 +/- 0.0399078
+  -> Combination: DLLR = 2.00443 +/- 0.04653 - stat = 2.07401 +/- 0.0529188 - norm = 2.06272 +/- 0.0532084 - syst = 1.98616 +/- 0.0552594
+Sensitivity calculation: mva_400ntrees_6maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_400ntrees_6maxdepth, trafoD): DLLR = 1.68061 +/- 0.050156 - stat = 1.74713 +/- 0.0571814 - norm = 1.73686 +/- 0.0575194 - syst = 1.67824 +/- 0.0595284
+  -> Contribution (2tag3jet_150ptv_SR, mva_400ntrees_6maxdepth, trafoD): DLLR = 1.0893 +/- 0.035143 - stat = 1.1126 +/- 0.0380222 - norm = 1.10795 +/- 0.0381818 - syst = 1.05394 +/- 0.0401381
+  -> Combination: DLLR = 2.00275 +/- 0.0462253 - stat = 2.07131 +/- 0.0523778 - norm = 2.06015 +/- 0.0526615 - syst = 1.98174 +/- 0.0547451
+Sensitivity calculation: mva_400ntrees_7maxdepth
+  -> Contribution (2tag2jet_150ptv_SR, mva_400ntrees_7maxdepth, trafoD): DLLR = 1.70174 +/- 0.0492249 - stat = 1.7695 +/- 0.0557941 - norm = 1.75924 +/- 0.0561194 - syst = 1.70115 +/- 0.0580358
+  -> Contribution (2tag3jet_150ptv_SR, mva_400ntrees_7maxdepth, trafoD): DLLR = 1.11308 +/- 0.0350156 - stat = 1.13727 +/- 0.0378175 - norm = 1.1327 +/- 0.0379702 - syst = 1.08154 +/- 0.0397662
+  -> Combination: DLLR = 2.03343 +/- 0.045436 - stat = 2.10345 +/- 0.0511962 - norm = 2.09235 +/- 0.0514678 - syst = 2.01584 +/- 0.0534212

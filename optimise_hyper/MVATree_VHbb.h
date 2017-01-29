@@ -109,161 +109,161 @@ public:
   float mBB_corr;
   float BDT;
 
-  float BDT_100ntrees_3maxdepth
-  float BDT_100ntrees_4maxdepth
-  float BDT_100ntrees_5maxdepth
-  float BDT_100ntrees_6maxdepth
-  float BDT_100ntrees_7maxdepth
-  float BDT_110ntrees_3maxdepth
-  float BDT_110ntrees_4maxdepth
-  float BDT_110ntrees_5maxdepth
-  float BDT_110ntrees_6maxdepth
-  float BDT_110ntrees_7maxdepth
-  float BDT_120ntrees_3maxdepth
-  float BDT_120ntrees_4maxdepth
-  float BDT_120ntrees_5maxdepth
-  float BDT_120ntrees_6maxdepth
-  float BDT_120ntrees_7maxdepth
-  float BDT_130ntrees_3maxdepth
-  float BDT_130ntrees_4maxdepth
-  float BDT_130ntrees_5maxdepth
-  float BDT_130ntrees_6maxdepth
-  float BDT_130ntrees_7maxdepth
-  float BDT_140ntrees_3maxdepth
-  float BDT_140ntrees_4maxdepth
-  float BDT_140ntrees_5maxdepth
-  float BDT_140ntrees_6maxdepth
-  float BDT_140ntrees_7maxdepth
-  float BDT_150ntrees_3maxdepth
-  float BDT_150ntrees_4maxdepth
-  float BDT_150ntrees_5maxdepth
-  float BDT_150ntrees_6maxdepth
-  float BDT_150ntrees_7maxdepth
-  float BDT_160ntrees_3maxdepth
-  float BDT_160ntrees_4maxdepth
-  float BDT_160ntrees_5maxdepth
-  float BDT_160ntrees_6maxdepth
-  float BDT_160ntrees_7maxdepth
-  float BDT_170ntrees_3maxdepth
-  float BDT_170ntrees_4maxdepth
-  float BDT_170ntrees_5maxdepth
-  float BDT_170ntrees_6maxdepth
-  float BDT_170ntrees_7maxdepth
-  float BDT_180ntrees_3maxdepth
-  float BDT_180ntrees_4maxdepth
-  float BDT_180ntrees_5maxdepth
-  float BDT_180ntrees_6maxdepth
-  float BDT_180ntrees_7maxdepth
-  float BDT_190ntrees_3maxdepth
-  float BDT_190ntrees_4maxdepth
-  float BDT_190ntrees_5maxdepth
-  float BDT_190ntrees_6maxdepth
-  float BDT_190ntrees_7maxdepth
-  float BDT_200ntrees_3maxdepth
-  float BDT_200ntrees_4maxdepth
-  float BDT_200ntrees_5maxdepth
-  float BDT_200ntrees_6maxdepth
-  float BDT_200ntrees_7maxdepth
-  float BDT_210ntrees_3maxdepth
-  float BDT_210ntrees_4maxdepth
-  float BDT_210ntrees_5maxdepth
-  float BDT_210ntrees_6maxdepth
-  float BDT_210ntrees_7maxdepth
-  float BDT_220ntrees_3maxdepth
-  float BDT_220ntrees_4maxdepth
-  float BDT_220ntrees_5maxdepth
-  float BDT_220ntrees_6maxdepth
-  float BDT_220ntrees_7maxdepth
-  float BDT_230ntrees_3maxdepth
-  float BDT_230ntrees_4maxdepth
-  float BDT_230ntrees_5maxdepth
-  float BDT_230ntrees_6maxdepth
-  float BDT_230ntrees_7maxdepth
-  float BDT_240ntrees_3maxdepth
-  float BDT_240ntrees_4maxdepth
-  float BDT_240ntrees_5maxdepth
-  float BDT_240ntrees_6maxdepth
-  float BDT_240ntrees_7maxdepth
-  float BDT_250ntrees_3maxdepth
-  float BDT_250ntrees_4maxdepth
-  float BDT_250ntrees_5maxdepth
-  float BDT_250ntrees_6maxdepth
-  float BDT_250ntrees_7maxdepth
-  float BDT_260ntrees_3maxdepth
-  float BDT_260ntrees_4maxdepth
-  float BDT_260ntrees_5maxdepth
-  float BDT_260ntrees_6maxdepth
-  float BDT_260ntrees_7maxdepth
-  float BDT_270ntrees_3maxdepth
-  float BDT_270ntrees_4maxdepth
-  float BDT_270ntrees_5maxdepth
-  float BDT_270ntrees_6maxdepth
-  float BDT_270ntrees_7maxdepth
-  float BDT_280ntrees_3maxdepth
-  float BDT_280ntrees_4maxdepth
-  float BDT_280ntrees_5maxdepth
-  float BDT_280ntrees_6maxdepth
-  float BDT_280ntrees_7maxdepth
-  float BDT_290ntrees_3maxdepth
-  float BDT_290ntrees_4maxdepth
-  float BDT_290ntrees_5maxdepth
-  float BDT_290ntrees_6maxdepth
-  float BDT_290ntrees_7maxdepth
-  float BDT_300ntrees_3maxdepth
-  float BDT_300ntrees_4maxdepth
-  float BDT_300ntrees_5maxdepth
-  float BDT_300ntrees_6maxdepth
-  float BDT_300ntrees_7maxdepth
-  float BDT_310ntrees_3maxdepth
-  float BDT_310ntrees_4maxdepth
-  float BDT_310ntrees_5maxdepth
-  float BDT_310ntrees_6maxdepth
-  float BDT_310ntrees_7maxdepth
-  float BDT_320ntrees_3maxdepth
-  float BDT_320ntrees_4maxdepth
-  float BDT_320ntrees_5maxdepth
-  float BDT_320ntrees_6maxdepth
-  float BDT_320ntrees_7maxdepth
-  float BDT_330ntrees_3maxdepth
-  float BDT_330ntrees_4maxdepth
-  float BDT_330ntrees_5maxdepth
-  float BDT_330ntrees_6maxdepth
-  float BDT_330ntrees_7maxdepth
-  float BDT_340ntrees_3maxdepth
-  float BDT_340ntrees_4maxdepth
-  float BDT_340ntrees_5maxdepth
-  float BDT_340ntrees_6maxdepth
-  float BDT_340ntrees_7maxdepth
-  float BDT_350ntrees_3maxdepth
-  float BDT_350ntrees_4maxdepth
-  float BDT_350ntrees_5maxdepth
-  float BDT_350ntrees_6maxdepth
-  float BDT_350ntrees_7maxdepth
-  float BDT_360ntrees_3maxdepth
-  float BDT_360ntrees_4maxdepth
-  float BDT_360ntrees_5maxdepth
-  float BDT_360ntrees_6maxdepth
-  float BDT_360ntrees_7maxdepth
-  float BDT_370ntrees_3maxdepth
-  float BDT_370ntrees_4maxdepth
-  float BDT_370ntrees_5maxdepth
-  float BDT_370ntrees_6maxdepth
-  float BDT_370ntrees_7maxdepth
-  float BDT_380ntrees_3maxdepth
-  float BDT_380ntrees_4maxdepth
-  float BDT_380ntrees_5maxdepth
-  float BDT_380ntrees_6maxdepth
-  float BDT_380ntrees_7maxdepth
-  float BDT_390ntrees_3maxdepth
-  float BDT_390ntrees_4maxdepth
-  float BDT_390ntrees_5maxdepth
-  float BDT_390ntrees_6maxdepth
-  float BDT_390ntrees_7maxdepth
-  float BDT_400ntrees_3maxdepth
-  float BDT_400ntrees_4maxdepth
-  float BDT_400ntrees_5maxdepth
-  float BDT_400ntrees_6maxdepth
-  float BDT_400ntrees_7maxdepth
+  float BDT_100ntrees_3maxdepth;
+  float BDT_100ntrees_4maxdepth;
+  float BDT_100ntrees_5maxdepth;
+  float BDT_100ntrees_6maxdepth;
+  float BDT_100ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_120ntrees_3maxdepth;
+  float BDT_120ntrees_4maxdepth;
+  float BDT_120ntrees_5maxdepth;
+  float BDT_120ntrees_6maxdepth;
+  float BDT_120ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_140ntrees_3maxdepth;
+  float BDT_140ntrees_4maxdepth;
+  float BDT_140ntrees_5maxdepth;
+  float BDT_140ntrees_6maxdepth;
+  float BDT_140ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_160ntrees_3maxdepth;
+  float BDT_160ntrees_4maxdepth;
+  float BDT_160ntrees_5maxdepth;
+  float BDT_160ntrees_6maxdepth;
+  float BDT_160ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_180ntrees_3maxdepth;
+  float BDT_180ntrees_4maxdepth;
+  float BDT_180ntrees_5maxdepth;
+  float BDT_180ntrees_6maxdepth;
+  float BDT_180ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_200ntrees_3maxdepth;
+  float BDT_200ntrees_4maxdepth;
+  float BDT_200ntrees_5maxdepth;
+  float BDT_200ntrees_6maxdepth;
+  float BDT_200ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_220ntrees_3maxdepth;
+  float BDT_220ntrees_4maxdepth;
+  float BDT_220ntrees_5maxdepth;
+  float BDT_220ntrees_6maxdepth;
+  float BDT_220ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_240ntrees_3maxdepth;
+  float BDT_240ntrees_4maxdepth;
+  float BDT_240ntrees_5maxdepth;
+  float BDT_240ntrees_6maxdepth;
+  float BDT_240ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_260ntrees_3maxdepth;
+  float BDT_260ntrees_4maxdepth;
+  float BDT_260ntrees_5maxdepth;
+  float BDT_260ntrees_6maxdepth;
+  float BDT_260ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_280ntrees_3maxdepth;
+  float BDT_280ntrees_4maxdepth;
+  float BDT_280ntrees_5maxdepth;
+  float BDT_280ntrees_6maxdepth;
+  float BDT_280ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_300ntrees_3maxdepth;
+  float BDT_300ntrees_4maxdepth;
+  float BDT_300ntrees_5maxdepth;
+  float BDT_300ntrees_6maxdepth;
+  float BDT_300ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_320ntrees_3maxdepth;
+  float BDT_320ntrees_4maxdepth;
+  float BDT_320ntrees_5maxdepth;
+  float BDT_320ntrees_6maxdepth;
+  float BDT_320ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_340ntrees_3maxdepth;
+  float BDT_340ntrees_4maxdepth;
+  float BDT_340ntrees_5maxdepth;
+  float BDT_340ntrees_6maxdepth;
+  float BDT_340ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_360ntrees_3maxdepth;
+  float BDT_360ntrees_4maxdepth;
+  float BDT_360ntrees_5maxdepth;
+  float BDT_360ntrees_6maxdepth;
+  float BDT_360ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_380ntrees_3maxdepth;
+  float BDT_380ntrees_4maxdepth;
+  float BDT_380ntrees_5maxdepth;
+  float BDT_380ntrees_6maxdepth;
+  float BDT_380ntrees_7maxdepth;
+
+
+
+
+
+  float BDT_400ntrees_3maxdepth;
+  float BDT_400ntrees_4maxdepth;
+  float BDT_400ntrees_5maxdepth;
+  float BDT_400ntrees_6maxdepth;
+  float BDT_400ntrees_7maxdepth;
 
   float BDTCharles;
   float triggerSF;

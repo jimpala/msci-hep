@@ -666,6 +666,7 @@ EL::StatusCode AnalysisReader_VHbb1Lep::run_1Lep_analysis ()
 
   // leptons
   m_histNameSvc->set_pTV(WVecT.Pt());
+  m_histNameSvc->set_mBB(HVecJetCorr.M());
 
   // here the difference is made between merged and resolved in histnames
   if ( isResolved ) {
