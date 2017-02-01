@@ -64,7 +64,7 @@ void makePlots() {
   // Since your input file name might not follow the conventions above,
   // it can be overwritten using the line below
   // Note: specify the name WITHOUT ".root" at the end
-  config.setInputFile("hyperparam_out");
+  config.setInputFile("mBBcut_out");
 
   // If input histograms are stored in a subdirectory of the input file, specify below
   // config.setInputTDirectory("OneLepton");
@@ -75,7 +75,7 @@ void makePlots() {
   /// Output
 
   // path to output plots
-  config.setOutputPath("./plots_hyperparameters/");
+  config.setOutputPath("./plots_mBBcut/");
 
   // BDT transformations:
   // config.addBDTTransformation(""); // no transformation
@@ -172,28 +172,28 @@ void makePlots() {
   config.addSignalSample("ggZllH125", "ZH 125", kRed);
   config.addSignalSample("qqZvvH125", "ZH 125", kRed); 
   config.addSignalSample("ggZvvH125", "ZH 125", kRed); 
-  config.addSignalSample("WlvH125", "WH 125", kRed + 1);
+  config.addSignalSample("qqWlvH125", "WH 125", kRed + 1);
   config.addBackgroundSample("ttbar", "ttbar", kOrange);
   config.addBackgroundSample("stops", "s+t chan", kOrange - 1); // Two samples sharing the same title appear only once in the legend
   config.addBackgroundSample("stopt", "s+t chan", kOrange - 1);
   config.addBackgroundSample("stopWt", "Wt", kYellow - 7);
-  config.addBackgroundSample("Wbb", "W+bb", kGreen + 3);
-  config.addBackgroundSample("Wbc", "W+bb", kGreen + 3);
-  config.addBackgroundSample("Wbl", "W+bl", kGreen + 2);
-  config.addBackgroundSample("Wcl", "W+cl", kGreen - 6);
-  config.addBackgroundSample("Wcc", "W+cc", kGreen + 1);
-  config.addBackgroundSample("Wl", "W+l", kGreen - 9);
-  config.addBackgroundSample("Zbl", "Z+bl", kAzure + 1);
-  config.addBackgroundSample("Zbb", "Z+bb", kAzure + 2);
-  config.addBackgroundSample("Zbc", "Z+bc", kAzure + 2);
-  config.addBackgroundSample("Zcl", "Z+cl", kAzure - 8);
-  config.addBackgroundSample("Zcc", "Z+cc", kAzure - 4);
-  config.addBackgroundSample("Zl", "Z+l", kAzure - 9);
+  config.addBackgroundSample("Wv22bb", "W+bb", kGreen + 3);
+  config.addBackgroundSample("Wv22bc", "W+bb", kGreen + 3);
+  config.addBackgroundSample("Wv22bl", "W+bl", kGreen + 2);
+  config.addBackgroundSample("Wv22cl", "W+cl", kGreen - 6);
+  config.addBackgroundSample("Wv22cc", "W+cc", kGreen + 1);
+  config.addBackgroundSample("Wv22l", "W+l", kGreen - 9);
+  config.addBackgroundSample("Zv22bl", "Z+bl", kAzure + 1);
+  config.addBackgroundSample("Zv22bb", "Z+bb", kAzure + 2);
+  config.addBackgroundSample("Zv22bc", "Z+bc", kAzure + 2);
+  config.addBackgroundSample("Zv22cl", "Z+cl", kAzure - 8);
+  config.addBackgroundSample("Zv22cc", "Z+cc", kAzure - 4);
+  config.addBackgroundSample("Zv22l", "Z+l", kAzure - 9);
   //  config.addBackgroundSample("multijetEl", "multijet", kPink + 1);
   //  config.addBackgroundSample("multijetMu", "multijet", kPink + 1);
-  config.addBackgroundSample("WW", "WW", kGray + 3);
-  config.addBackgroundSample("WZ", "WZ", kGray);
-  config.addBackgroundSample("ZZ", "ZZ", kGray + 1);
+  config.addBackgroundSample("WW_improved", "WW", kGray + 3);
+  config.addBackgroundSample("WZ_improved", "WZ", kGray);
+  config.addBackgroundSample("ZZ_improved", "ZZ", kGray + 1);
  
   // One can assign scale factors per sample and per region by reading in from a text file.
   // To do so, create a text file myScaleFactors.txt with lines in the format:
@@ -256,7 +256,6 @@ void makePlots() {
   // Variables below of type BDTOutput will be plotted once per transformation
 
 
-  config.addVariable(Config::BDTOutput, "mva", "BDT signal", -1, 1, 40);
   config.addVariable(Config::BDTOutput, "mva_100ntrees_3maxdepth", "BDT signal", -1, 1, 40);
   config.addVariable(Config::BDTOutput, "mva_100ntrees_4maxdepth", "BDT signal", -1, 1, 40);
   config.addVariable(Config::BDTOutput, "mva_100ntrees_5maxdepth", "BDT signal", -1, 1, 40);
@@ -379,7 +378,7 @@ void makePlots() {
   // config.addRegion("0tag3jet_vpt0_120", "0 tags, 3 jets, p_{T}^{V} < 120 GeV", "0 tags");
   // config.addRegion("0tag2jet_vpt0_120", "0 tags, 2 jets, p_{T}^{V} < 120 GeV", "0 tags");
 
-  //  config.addRegion("2tag2jet_150ptv_SR", "2 LL tags, 3 jets, p_{T}^{V} < 120", "2 tags 3 jets low pTV");
+  //  config.addRegion("2tag2jet_150ptv_100_150mbb_SR", "2 LL tags, 3 jets, p_{T}^{V} < 120", "2 tags 3 jets low pTV");
   // config.addRegion("2mmtag3jet_vpt0_120", "2 MM tags, 3 jets, p_{T}^{V} < 120", "2 tags 3 jets low pTV");
   // config.addRegion("2tttag3jet_vpt0_120", "2 TT tags, 3 jets, p_{T}^{V} < 120", "2 tags 3 jets low pTV");
   
@@ -409,8 +408,18 @@ void makePlots() {
   config.addRegion("2tttag2jet_vpt0_120", "2tag2jet_vpt0_120", "2 tags, 2 jets, p_{T}^{V} < 120", "2 tags 2 jets low pTV");
   */
   // cut based regions  
-  config.addRegion(  "2tag2jet_150ptv_SR", "2tag2jet_150ptv_SR",   "2 tags, 2 jets, p_{T}^{V} >= 150 GeV", "2 tags, 2 jets");
-  config.addRegion(  "2tag3jet_150ptv_SR", "2tag3jet_150ptv_SR",   "2 tags, 3 jets, p_{T}^{V} >= 150 GeV", "2 tags, 3 jets");
+  config.addRegion(  "2tag2jet_150ptv_100_150mbb_SR", "2tag2jet_150ptv_100_150mbb_SR",
+     "2 tags, 2 jets, p_{T}^{V} >= 150 GeV, m_{bb} cut", "2 tags, 2 jets");
+  config.addRegion(  "2tag3jet_150ptv_100_150mbb_SR", "2tag3jet_150ptv_100_150mbb_SR",
+     "2 tags, 3 jets, p_{T}^{V} >= 150 GeV, m_{bb} cut", "2 tags, 3 jets");
+  //config.addRegion(  "2tag2jet_150ptv__0_100mbb_SR", "2tag2jet_150ptv__0_100mbb_SR",
+  //   "2 tags, 2 jets, p_{T}^{V} >= 150 GeV, m_{bb} lower cut", "2 tags, 2 jets");
+  //config.addRegion(  "2tag3jet_150ptv__0_100mbb_SR", "2tag3jet_150ptv__0_100mbb_SR",
+  //   "2 tags, 3 jets, p_{T}^{V} >= 150 GeV, m_{bb} lower cut", "2 tags, 3 jets");
+  //config.addRegion(  "2tag2jet_150ptv__150mbb_SR", "2tag2jet_150ptv__150mbb_SR",
+  //   "2 tags, 2 jets, p_{T}^{V} >= 150 GeV, m_{bb} higher cut", "2 tags, 2 jets");
+  //config.addRegion(  "2tag3jet_150ptv__150mbb_SR", "2tag3jet_150ptv__150mbb_SR",
+  //   "2 tags, 3 jets, p_{T}^{V} >= 150 GeV, m_{bb} higher cut", "2 tags, 3 jets");
   // config.addRegion(  "0tag2jet_vpt200",   "0 tags, 2 jets, p_{T}^{V} >= 200 GeV", "0 tags, 2 jets");
   // config.addRegion(  "1tag3jet_vpt200",   "1 tags, 3 jets, p_{T}^{V} >= 200 GeV", "1 tags, 3 jets");
   // config.addRegion(  "1tag2jet_vpt200",   "1 tags, 2 jets, p_{T}^{V} >= 200 GeV", "1 tags, 2 jets");
@@ -603,7 +612,7 @@ void makePlots() {
    //   config.addSensitivityPlot( "mva", "mva", "2tag3jet_vpt0_120", "trafo6");
    
    //   // you can combine the same plots in different ways
-   //   config.addSensitivityPlot( "mBB", "mBB", "2tag2jet_150ptv_SR", "");
+   //   config.addSensitivityPlot( "mBB", "mBB", "2tag2jet_150ptv_100_150mbb_SR", "");
    //   config.addSensitivityPlot( "mva 2t2j", "mva", "2tag2jet_vpt0_120", "trafo6");
    //   config.addSensitivityPlot( "mva 2t3j", "mva", "2tag3jet_vpt120", "trafo6");
    //   config.addSensitivityPlot( "mva 2t3j", "mva", "2tag3jet_vpt0_120", "trafo6");
@@ -650,172 +659,170 @@ void makePlots() {
 
 
 
-   config.addSensitivityPlot( "mva", "mva", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_100ntrees_3maxdepth", "mva_100ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_100ntrees_4maxdepth", "mva_100ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_100ntrees_5maxdepth", "mva_100ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_100ntrees_6maxdepth", "mva_100ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_100ntrees_7maxdepth", "mva_100ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_120ntrees_3maxdepth", "mva_120ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_120ntrees_4maxdepth", "mva_120ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_120ntrees_5maxdepth", "mva_120ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_120ntrees_6maxdepth", "mva_120ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_120ntrees_7maxdepth", "mva_120ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_140ntrees_3maxdepth", "mva_140ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_140ntrees_4maxdepth", "mva_140ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_140ntrees_5maxdepth", "mva_140ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_140ntrees_6maxdepth", "mva_140ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_140ntrees_7maxdepth", "mva_140ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_160ntrees_3maxdepth", "mva_160ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_160ntrees_4maxdepth", "mva_160ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_160ntrees_5maxdepth", "mva_160ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_160ntrees_6maxdepth", "mva_160ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_160ntrees_7maxdepth", "mva_160ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_180ntrees_3maxdepth", "mva_180ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_180ntrees_4maxdepth", "mva_180ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_180ntrees_5maxdepth", "mva_180ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_180ntrees_6maxdepth", "mva_180ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_180ntrees_7maxdepth", "mva_180ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_200ntrees_3maxdepth", "mva_200ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_200ntrees_4maxdepth", "mva_200ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_200ntrees_5maxdepth", "mva_200ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_200ntrees_6maxdepth", "mva_200ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_200ntrees_7maxdepth", "mva_200ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_220ntrees_3maxdepth", "mva_220ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_220ntrees_4maxdepth", "mva_220ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_220ntrees_5maxdepth", "mva_220ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_220ntrees_6maxdepth", "mva_220ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_220ntrees_7maxdepth", "mva_220ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_240ntrees_3maxdepth", "mva_240ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_240ntrees_4maxdepth", "mva_240ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_240ntrees_5maxdepth", "mva_240ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_240ntrees_6maxdepth", "mva_240ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_240ntrees_7maxdepth", "mva_240ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_260ntrees_3maxdepth", "mva_260ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_260ntrees_4maxdepth", "mva_260ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_260ntrees_5maxdepth", "mva_260ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_260ntrees_6maxdepth", "mva_260ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_260ntrees_7maxdepth", "mva_260ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_280ntrees_3maxdepth", "mva_280ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_280ntrees_4maxdepth", "mva_280ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_280ntrees_5maxdepth", "mva_280ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_280ntrees_6maxdepth", "mva_280ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_280ntrees_7maxdepth", "mva_280ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_300ntrees_3maxdepth", "mva_300ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_300ntrees_4maxdepth", "mva_300ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_300ntrees_5maxdepth", "mva_300ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_300ntrees_6maxdepth", "mva_300ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_300ntrees_7maxdepth", "mva_300ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_320ntrees_3maxdepth", "mva_320ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_320ntrees_4maxdepth", "mva_320ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_320ntrees_5maxdepth", "mva_320ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_320ntrees_6maxdepth", "mva_320ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_320ntrees_7maxdepth", "mva_320ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_340ntrees_3maxdepth", "mva_340ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_340ntrees_4maxdepth", "mva_340ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_340ntrees_5maxdepth", "mva_340ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_340ntrees_6maxdepth", "mva_340ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_340ntrees_7maxdepth", "mva_340ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_360ntrees_3maxdepth", "mva_360ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_360ntrees_4maxdepth", "mva_360ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_360ntrees_5maxdepth", "mva_360ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_360ntrees_6maxdepth", "mva_360ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_360ntrees_7maxdepth", "mva_360ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_380ntrees_3maxdepth", "mva_380ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_380ntrees_4maxdepth", "mva_380ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_380ntrees_5maxdepth", "mva_380ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_380ntrees_6maxdepth", "mva_380ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_380ntrees_7maxdepth", "mva_380ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_400ntrees_3maxdepth", "mva_400ntrees_3maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_400ntrees_4maxdepth", "mva_400ntrees_4maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_400ntrees_5maxdepth", "mva_400ntrees_5maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_400ntrees_6maxdepth", "mva_400ntrees_6maxdepth", "2tag2jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_400ntrees_7maxdepth", "mva_400ntrees_7maxdepth", "2tag2jet_150ptv_SR", "trafoD");
+   config.addSensitivityPlot( "mva_100ntrees_3maxdepth", "mva_100ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_100ntrees_4maxdepth", "mva_100ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_100ntrees_5maxdepth", "mva_100ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_100ntrees_6maxdepth", "mva_100ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_100ntrees_7maxdepth", "mva_100ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_120ntrees_3maxdepth", "mva_120ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_120ntrees_4maxdepth", "mva_120ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_120ntrees_5maxdepth", "mva_120ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_120ntrees_6maxdepth", "mva_120ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_120ntrees_7maxdepth", "mva_120ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_140ntrees_3maxdepth", "mva_140ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_140ntrees_4maxdepth", "mva_140ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_140ntrees_5maxdepth", "mva_140ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_140ntrees_6maxdepth", "mva_140ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_140ntrees_7maxdepth", "mva_140ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_160ntrees_3maxdepth", "mva_160ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_160ntrees_4maxdepth", "mva_160ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_160ntrees_5maxdepth", "mva_160ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_160ntrees_6maxdepth", "mva_160ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_160ntrees_7maxdepth", "mva_160ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_180ntrees_3maxdepth", "mva_180ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_180ntrees_4maxdepth", "mva_180ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_180ntrees_5maxdepth", "mva_180ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_180ntrees_6maxdepth", "mva_180ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_180ntrees_7maxdepth", "mva_180ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_200ntrees_3maxdepth", "mva_200ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_200ntrees_4maxdepth", "mva_200ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_200ntrees_5maxdepth", "mva_200ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_200ntrees_6maxdepth", "mva_200ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_200ntrees_7maxdepth", "mva_200ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_220ntrees_3maxdepth", "mva_220ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_220ntrees_4maxdepth", "mva_220ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_220ntrees_5maxdepth", "mva_220ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_220ntrees_6maxdepth", "mva_220ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_220ntrees_7maxdepth", "mva_220ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_240ntrees_3maxdepth", "mva_240ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_240ntrees_4maxdepth", "mva_240ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_240ntrees_5maxdepth", "mva_240ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_240ntrees_6maxdepth", "mva_240ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_240ntrees_7maxdepth", "mva_240ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_260ntrees_3maxdepth", "mva_260ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_260ntrees_4maxdepth", "mva_260ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_260ntrees_5maxdepth", "mva_260ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_260ntrees_6maxdepth", "mva_260ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_260ntrees_7maxdepth", "mva_260ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_280ntrees_3maxdepth", "mva_280ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_280ntrees_4maxdepth", "mva_280ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_280ntrees_5maxdepth", "mva_280ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_280ntrees_6maxdepth", "mva_280ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_280ntrees_7maxdepth", "mva_280ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_300ntrees_3maxdepth", "mva_300ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_300ntrees_4maxdepth", "mva_300ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_300ntrees_5maxdepth", "mva_300ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_300ntrees_6maxdepth", "mva_300ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_300ntrees_7maxdepth", "mva_300ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_320ntrees_3maxdepth", "mva_320ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_320ntrees_4maxdepth", "mva_320ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_320ntrees_5maxdepth", "mva_320ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_320ntrees_6maxdepth", "mva_320ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_320ntrees_7maxdepth", "mva_320ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_340ntrees_3maxdepth", "mva_340ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_340ntrees_4maxdepth", "mva_340ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_340ntrees_5maxdepth", "mva_340ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_340ntrees_6maxdepth", "mva_340ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_340ntrees_7maxdepth", "mva_340ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_360ntrees_3maxdepth", "mva_360ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_360ntrees_4maxdepth", "mva_360ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_360ntrees_5maxdepth", "mva_360ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_360ntrees_6maxdepth", "mva_360ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_360ntrees_7maxdepth", "mva_360ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_380ntrees_3maxdepth", "mva_380ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_380ntrees_4maxdepth", "mva_380ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_380ntrees_5maxdepth", "mva_380ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_380ntrees_6maxdepth", "mva_380ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_380ntrees_7maxdepth", "mva_380ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_400ntrees_3maxdepth", "mva_400ntrees_3maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_400ntrees_4maxdepth", "mva_400ntrees_4maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_400ntrees_5maxdepth", "mva_400ntrees_5maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_400ntrees_6maxdepth", "mva_400ntrees_6maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_400ntrees_7maxdepth", "mva_400ntrees_7maxdepth", "2tag2jet_150ptv_100_150mbb_SR", "trafoD");
 
 
 
 
-   config.addSensitivityPlot( "mva", "mva", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_100ntrees_3maxdepth", "mva_100ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_100ntrees_4maxdepth", "mva_100ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_100ntrees_5maxdepth", "mva_100ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_100ntrees_6maxdepth", "mva_100ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_100ntrees_7maxdepth", "mva_100ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_120ntrees_3maxdepth", "mva_120ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_120ntrees_4maxdepth", "mva_120ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_120ntrees_5maxdepth", "mva_120ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_120ntrees_6maxdepth", "mva_120ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_120ntrees_7maxdepth", "mva_120ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_140ntrees_3maxdepth", "mva_140ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_140ntrees_4maxdepth", "mva_140ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_140ntrees_5maxdepth", "mva_140ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_140ntrees_6maxdepth", "mva_140ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_140ntrees_7maxdepth", "mva_140ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_160ntrees_3maxdepth", "mva_160ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_160ntrees_4maxdepth", "mva_160ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_160ntrees_5maxdepth", "mva_160ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_160ntrees_6maxdepth", "mva_160ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_160ntrees_7maxdepth", "mva_160ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_180ntrees_3maxdepth", "mva_180ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_180ntrees_4maxdepth", "mva_180ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_180ntrees_5maxdepth", "mva_180ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_180ntrees_6maxdepth", "mva_180ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_180ntrees_7maxdepth", "mva_180ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_200ntrees_3maxdepth", "mva_200ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_200ntrees_4maxdepth", "mva_200ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_200ntrees_5maxdepth", "mva_200ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_200ntrees_6maxdepth", "mva_200ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_200ntrees_7maxdepth", "mva_200ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_220ntrees_3maxdepth", "mva_220ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_220ntrees_4maxdepth", "mva_220ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_220ntrees_5maxdepth", "mva_220ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_220ntrees_6maxdepth", "mva_220ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_220ntrees_7maxdepth", "mva_220ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_240ntrees_3maxdepth", "mva_240ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_240ntrees_4maxdepth", "mva_240ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_240ntrees_5maxdepth", "mva_240ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_240ntrees_6maxdepth", "mva_240ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_240ntrees_7maxdepth", "mva_240ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_260ntrees_3maxdepth", "mva_260ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_260ntrees_4maxdepth", "mva_260ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_260ntrees_5maxdepth", "mva_260ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_260ntrees_6maxdepth", "mva_260ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_260ntrees_7maxdepth", "mva_260ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_280ntrees_3maxdepth", "mva_280ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_280ntrees_4maxdepth", "mva_280ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_280ntrees_5maxdepth", "mva_280ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_280ntrees_6maxdepth", "mva_280ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_280ntrees_7maxdepth", "mva_280ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_300ntrees_3maxdepth", "mva_300ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_300ntrees_4maxdepth", "mva_300ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_300ntrees_5maxdepth", "mva_300ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_300ntrees_6maxdepth", "mva_300ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_300ntrees_7maxdepth", "mva_300ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_320ntrees_3maxdepth", "mva_320ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_320ntrees_4maxdepth", "mva_320ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_320ntrees_5maxdepth", "mva_320ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_320ntrees_6maxdepth", "mva_320ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_320ntrees_7maxdepth", "mva_320ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_340ntrees_3maxdepth", "mva_340ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_340ntrees_4maxdepth", "mva_340ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_340ntrees_5maxdepth", "mva_340ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_340ntrees_6maxdepth", "mva_340ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_340ntrees_7maxdepth", "mva_340ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_360ntrees_3maxdepth", "mva_360ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_360ntrees_4maxdepth", "mva_360ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_360ntrees_5maxdepth", "mva_360ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_360ntrees_6maxdepth", "mva_360ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_360ntrees_7maxdepth", "mva_360ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_380ntrees_3maxdepth", "mva_380ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_380ntrees_4maxdepth", "mva_380ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_380ntrees_5maxdepth", "mva_380ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_380ntrees_6maxdepth", "mva_380ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_380ntrees_7maxdepth", "mva_380ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_400ntrees_3maxdepth", "mva_400ntrees_3maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_400ntrees_4maxdepth", "mva_400ntrees_4maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_400ntrees_5maxdepth", "mva_400ntrees_5maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_400ntrees_6maxdepth", "mva_400ntrees_6maxdepth", "2tag3jet_150ptv_SR", "trafoD");
-   config.addSensitivityPlot( "mva_400ntrees_7maxdepth", "mva_400ntrees_7maxdepth", "2tag3jet_150ptv_SR", "trafoD");
+   config.addSensitivityPlot( "mva_100ntrees_3maxdepth", "mva_100ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_100ntrees_4maxdepth", "mva_100ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_100ntrees_5maxdepth", "mva_100ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_100ntrees_6maxdepth", "mva_100ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_100ntrees_7maxdepth", "mva_100ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_120ntrees_3maxdepth", "mva_120ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_120ntrees_4maxdepth", "mva_120ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_120ntrees_5maxdepth", "mva_120ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_120ntrees_6maxdepth", "mva_120ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_120ntrees_7maxdepth", "mva_120ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_140ntrees_3maxdepth", "mva_140ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_140ntrees_4maxdepth", "mva_140ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_140ntrees_5maxdepth", "mva_140ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_140ntrees_6maxdepth", "mva_140ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_140ntrees_7maxdepth", "mva_140ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_160ntrees_3maxdepth", "mva_160ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_160ntrees_4maxdepth", "mva_160ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_160ntrees_5maxdepth", "mva_160ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_160ntrees_6maxdepth", "mva_160ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_160ntrees_7maxdepth", "mva_160ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_180ntrees_3maxdepth", "mva_180ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_180ntrees_4maxdepth", "mva_180ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_180ntrees_5maxdepth", "mva_180ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_180ntrees_6maxdepth", "mva_180ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_180ntrees_7maxdepth", "mva_180ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_200ntrees_3maxdepth", "mva_200ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_200ntrees_4maxdepth", "mva_200ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_200ntrees_5maxdepth", "mva_200ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_200ntrees_6maxdepth", "mva_200ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_200ntrees_7maxdepth", "mva_200ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_220ntrees_3maxdepth", "mva_220ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_220ntrees_4maxdepth", "mva_220ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_220ntrees_5maxdepth", "mva_220ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_220ntrees_6maxdepth", "mva_220ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_220ntrees_7maxdepth", "mva_220ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_240ntrees_3maxdepth", "mva_240ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_240ntrees_4maxdepth", "mva_240ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_240ntrees_5maxdepth", "mva_240ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_240ntrees_6maxdepth", "mva_240ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_240ntrees_7maxdepth", "mva_240ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_260ntrees_3maxdepth", "mva_260ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_260ntrees_4maxdepth", "mva_260ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_260ntrees_5maxdepth", "mva_260ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_260ntrees_6maxdepth", "mva_260ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_260ntrees_7maxdepth", "mva_260ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_280ntrees_3maxdepth", "mva_280ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_280ntrees_4maxdepth", "mva_280ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_280ntrees_5maxdepth", "mva_280ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_280ntrees_6maxdepth", "mva_280ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_280ntrees_7maxdepth", "mva_280ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_300ntrees_3maxdepth", "mva_300ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_300ntrees_4maxdepth", "mva_300ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_300ntrees_5maxdepth", "mva_300ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_300ntrees_6maxdepth", "mva_300ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_300ntrees_7maxdepth", "mva_300ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_320ntrees_3maxdepth", "mva_320ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_320ntrees_4maxdepth", "mva_320ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_320ntrees_5maxdepth", "mva_320ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_320ntrees_6maxdepth", "mva_320ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_320ntrees_7maxdepth", "mva_320ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_340ntrees_3maxdepth", "mva_340ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_340ntrees_4maxdepth", "mva_340ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_340ntrees_5maxdepth", "mva_340ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_340ntrees_6maxdepth", "mva_340ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_340ntrees_7maxdepth", "mva_340ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_360ntrees_3maxdepth", "mva_360ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_360ntrees_4maxdepth", "mva_360ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_360ntrees_5maxdepth", "mva_360ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_360ntrees_6maxdepth", "mva_360ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_360ntrees_7maxdepth", "mva_360ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_380ntrees_3maxdepth", "mva_380ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_380ntrees_4maxdepth", "mva_380ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_380ntrees_5maxdepth", "mva_380ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_380ntrees_6maxdepth", "mva_380ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_380ntrees_7maxdepth", "mva_380ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_400ntrees_3maxdepth", "mva_400ntrees_3maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_400ntrees_4maxdepth", "mva_400ntrees_4maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_400ntrees_5maxdepth", "mva_400ntrees_5maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_400ntrees_6maxdepth", "mva_400ntrees_6maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
+   config.addSensitivityPlot( "mva_400ntrees_7maxdepth", "mva_400ntrees_7maxdepth", "2tag3jet_150ptv_100_150mbb_SR", "trafoD");
 
 
   ///////////////////////////
