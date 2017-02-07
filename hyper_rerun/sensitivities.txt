@@ -1,0 +1,480 @@
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training100ntrees_3maxdepth
+sensitivity_2jet 2.97449
+sensitivity_3jet 1.36315
+Combined sensitivity 3.27197
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training100ntrees_4maxdepth
+sensitivity_2jet 2.74174
+sensitivity_3jet 1.18122
+Combined sensitivity 2.98536
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training100ntrees_5maxdepth
+sensitivity_2jet 2.91356
+sensitivity_3jet 1.376
+Combined sensitivity 3.22214
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training100ntrees_6maxdepth
+sensitivity_2jet 2.84736
+sensitivity_3jet 1.26214
+Combined sensitivity 3.11456
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training100ntrees_7maxdepth
+sensitivity_2jet 2.75187
+sensitivity_3jet 1.28355
+Combined sensitivity 3.03649
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training120ntrees_3maxdepth
+sensitivity_2jet 2.77451
+sensitivity_3jet 1.02995
+Combined sensitivity 2.95951
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training120ntrees_4maxdepth
+sensitivity_2jet 2.77573
+sensitivity_3jet 1.1817
+Combined sensitivity 3.0168
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training120ntrees_5maxdepth
+sensitivity_2jet 2.84443
+sensitivity_3jet 1.35851
+Combined sensitivity 3.15219
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training120ntrees_6maxdepth
+sensitivity_2jet 2.8627
+sensitivity_3jet 1.20624
+Combined sensitivity 3.10646
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training120ntrees_7maxdepth
+sensitivity_2jet 2.77916
+sensitivity_3jet 1.27861
+Combined sensitivity 3.05918
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training140ntrees_3maxdepth
+sensitivity_2jet 2.83193
+sensitivity_3jet 1.00701
+Combined sensitivity 3.00565
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training140ntrees_4maxdepth
+sensitivity_2jet 2.79871
+sensitivity_3jet 1.23323
+Combined sensitivity 3.05837
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training140ntrees_5maxdepth
+sensitivity_2jet 2.85027
+sensitivity_3jet 1.32993
+Combined sensitivity 3.14527
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training140ntrees_6maxdepth
+sensitivity_2jet 2.84193
+sensitivity_3jet 1.2035
+Combined sensitivity 3.08625
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training140ntrees_7maxdepth
+sensitivity_2jet 2.80281
+sensitivity_3jet 1.24522
+Combined sensitivity 3.06697
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training160ntrees_3maxdepth
+sensitivity_2jet 2.84114
+sensitivity_3jet 1.00654
+Combined sensitivity 3.01416
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training160ntrees_4maxdepth
+sensitivity_2jet 2.78888
+sensitivity_3jet 1.25874
+Combined sensitivity 3.05978
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training160ntrees_5maxdepth
+sensitivity_2jet 2.83034
+sensitivity_3jet 1.31138
+Combined sensitivity 3.11938
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training160ntrees_6maxdepth
+sensitivity_2jet 2.77676
+sensitivity_3jet 1.15017
+Combined sensitivity 3.00554
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training160ntrees_7maxdepth
+sensitivity_2jet 2.76545
+sensitivity_3jet 1.22355
+Combined sensitivity 3.02404
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training180ntrees_3maxdepth
+sensitivity_2jet 2.86714
+sensitivity_3jet 1.01055
+Combined sensitivity 3.04002
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training180ntrees_4maxdepth
+sensitivity_2jet 2.83259
+sensitivity_3jet 1.228
+Combined sensitivity 3.08732
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training180ntrees_5maxdepth
+sensitivity_2jet 2.88606
+sensitivity_3jet 1.27057
+Combined sensitivity 3.15336
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training180ntrees_6maxdepth
+sensitivity_2jet 2.74671
+sensitivity_3jet 1.15182
+Combined sensitivity 2.97844
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training180ntrees_7maxdepth
+sensitivity_2jet 2.75282
+sensitivity_3jet 1.22413
+Combined sensitivity 3.01272
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training200ntrees_3maxdepth
+sensitivity_2jet 2.89272
+sensitivity_3jet 1.00567
+Combined sensitivity 3.06255
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training200ntrees_4maxdepth
+sensitivity_2jet 2.83868
+sensitivity_3jet 1.245
+Combined sensitivity 3.0997
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training200ntrees_5maxdepth
+sensitivity_2jet 2.87602
+sensitivity_3jet 1.28412
+Combined sensitivity 3.14967
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training200ntrees_6maxdepth
+sensitivity_2jet 2.76387
+sensitivity_3jet 1.1855
+Combined sensitivity 3.00739
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training200ntrees_7maxdepth
+sensitivity_2jet 2.80301
+sensitivity_3jet 1.22515
+Combined sensitivity 3.05906
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training220ntrees_3maxdepth
+sensitivity_2jet 2.87538
+sensitivity_3jet 1.01243
+Combined sensitivity 3.04841
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training220ntrees_4maxdepth
+sensitivity_2jet 2.83903
+sensitivity_3jet 1.2702
+Combined sensitivity 3.11023
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training220ntrees_5maxdepth
+sensitivity_2jet 2.88018
+sensitivity_3jet 1.27298
+Combined sensitivity 3.14896
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training220ntrees_6maxdepth
+sensitivity_2jet 2.76656
+sensitivity_3jet 1.16837
+Combined sensitivity 3.00316
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training220ntrees_7maxdepth
+sensitivity_2jet 2.78862
+sensitivity_3jet 1.22748
+Combined sensitivity 3.04682
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training240ntrees_3maxdepth
+sensitivity_2jet 2.87168
+sensitivity_3jet 1.01465
+Combined sensitivity 3.04566
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training240ntrees_4maxdepth
+sensitivity_2jet 2.81361
+sensitivity_3jet 1.25946
+Combined sensitivity 3.08263
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training240ntrees_5maxdepth
+sensitivity_2jet 2.8892
+sensitivity_3jet 1.28976
+Combined sensitivity 3.16401
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training240ntrees_6maxdepth
+sensitivity_2jet 2.81803
+sensitivity_3jet 1.16332
+Combined sensitivity 3.04871
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training240ntrees_7maxdepth
+sensitivity_2jet 2.76829
+sensitivity_3jet 1.18782
+Combined sensitivity 3.01237
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training260ntrees_3maxdepth
+sensitivity_2jet 2.82627
+sensitivity_3jet 1.0061
+Combined sensitivity 3
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training260ntrees_4maxdepth
+sensitivity_2jet 2.88842
+sensitivity_3jet 1.25504
+Combined sensitivity 3.1493
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training260ntrees_5maxdepth
+sensitivity_2jet 2.8368
+sensitivity_3jet 1.3119
+Combined sensitivity 3.12546
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training260ntrees_6maxdepth
+sensitivity_2jet 2.86967
+sensitivity_3jet 1.176
+Combined sensitivity 3.10129
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training260ntrees_7maxdepth
+sensitivity_2jet 2.82752
+sensitivity_3jet 1.14668
+Combined sensitivity 3.05119
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training280ntrees_3maxdepth
+sensitivity_2jet 2.83809
+sensitivity_3jet 0.98838
+Combined sensitivity 3.00527
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training280ntrees_4maxdepth
+sensitivity_2jet 2.85596
+sensitivity_3jet 1.23861
+Combined sensitivity 3.11298
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training280ntrees_5maxdepth
+sensitivity_2jet 2.87
+sensitivity_3jet 1.29083
+Combined sensitivity 3.14692
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training280ntrees_6maxdepth
+sensitivity_2jet 2.83639
+sensitivity_3jet 1.17734
+Combined sensitivity 3.07103
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training280ntrees_7maxdepth
+sensitivity_2jet 2.85724
+sensitivity_3jet 1.17995
+Combined sensitivity 3.09129
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training300ntrees_3maxdepth
+sensitivity_2jet 2.85321
+sensitivity_3jet 1.02222
+Combined sensitivity 3.0308
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training300ntrees_4maxdepth
+sensitivity_2jet 2.84021
+sensitivity_3jet 1.25788
+Combined sensitivity 3.1063
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training300ntrees_5maxdepth
+sensitivity_2jet 2.84173
+sensitivity_3jet 1.2884
+Combined sensitivity 3.12016
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training300ntrees_6maxdepth
+sensitivity_2jet 2.8628
+sensitivity_3jet 1.15113
+Combined sensitivity 3.08557
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training300ntrees_7maxdepth
+sensitivity_2jet 2.84312
+sensitivity_3jet 1.17038
+Combined sensitivity 3.07459
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training320ntrees_3maxdepth
+sensitivity_2jet 2.84317
+sensitivity_3jet 1.01082
+Combined sensitivity 3.01751
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training320ntrees_4maxdepth
+sensitivity_2jet 2.86947
+sensitivity_3jet 1.22863
+Combined sensitivity 3.12144
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training320ntrees_5maxdepth
+sensitivity_2jet 2.87905
+sensitivity_3jet 1.29227
+Combined sensitivity 3.15577
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training320ntrees_6maxdepth
+sensitivity_2jet 2.86252
+sensitivity_3jet 1.15562
+Combined sensitivity 3.08699
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training320ntrees_7maxdepth
+sensitivity_2jet 2.86505
+sensitivity_3jet 1.15792
+Combined sensitivity 3.09019
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training340ntrees_3maxdepth
+sensitivity_2jet 2.85818
+sensitivity_3jet 1.00323
+Combined sensitivity 3.02914
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training340ntrees_4maxdepth
+sensitivity_2jet 2.84174
+sensitivity_3jet 1.2222
+Combined sensitivity 3.09342
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training340ntrees_5maxdepth
+sensitivity_2jet 2.86343
+sensitivity_3jet 1.30007
+Combined sensitivity 3.14474
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training340ntrees_6maxdepth
+sensitivity_2jet 2.8883
+sensitivity_3jet 1.16597
+Combined sensitivity 3.11477
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training340ntrees_7maxdepth
+sensitivity_2jet 2.85934
+sensitivity_3jet 1.1578
+Combined sensitivity 3.08485
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training360ntrees_3maxdepth
+sensitivity_2jet 2.84696
+sensitivity_3jet 1.00424
+Combined sensitivity 3.01889
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training360ntrees_4maxdepth
+sensitivity_2jet 2.82609
+sensitivity_3jet 1.22556
+Combined sensitivity 3.08039
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training360ntrees_5maxdepth
+sensitivity_2jet 2.88226
+sensitivity_3jet 1.28412
+Combined sensitivity 3.15537
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training360ntrees_6maxdepth
+sensitivity_2jet 2.86593
+sensitivity_3jet 1.16036
+Combined sensitivity 3.09193
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training360ntrees_7maxdepth
+sensitivity_2jet 2.87643
+sensitivity_3jet 1.13876
+Combined sensitivity 3.09364
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training380ntrees_3maxdepth
+sensitivity_2jet 2.85133
+sensitivity_3jet 1.0118
+Combined sensitivity 3.02553
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training380ntrees_4maxdepth
+sensitivity_2jet 2.84514
+sensitivity_3jet 1.23869
+Combined sensitivity 3.10309
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training380ntrees_5maxdepth
+sensitivity_2jet 2.88017
+sensitivity_3jet 1.26998
+Combined sensitivity 3.14773
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training380ntrees_6maxdepth
+sensitivity_2jet 2.85572
+sensitivity_3jet 1.16918
+Combined sensitivity 3.0858
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training380ntrees_7maxdepth
+sensitivity_2jet 2.85018
+sensitivity_3jet 1.14281
+Combined sensitivity 3.07075
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training400ntrees_3maxdepth
+sensitivity_2jet 2.81107
+sensitivity_3jet 1.01828
+Combined sensitivity 2.98982
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training400ntrees_4maxdepth
+sensitivity_2jet 2.8745
+sensitivity_3jet 1.24342
+Combined sensitivity 3.13191
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training400ntrees_5maxdepth
+sensitivity_2jet 2.87624
+sensitivity_3jet 1.22929
+Combined sensitivity 3.12793
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training400ntrees_6maxdepth
+sensitivity_2jet 2.85907
+sensitivity_3jet 1.17443
+Combined sensitivity 3.09089
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
+<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
+MVA training400ntrees_7maxdepth
+sensitivity_2jet 2.85933
+sensitivity_3jet 1.12298
+Combined sensitivity 3.07195
+<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
