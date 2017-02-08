@@ -1,4 +1,3 @@
-import itertools
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -95,16 +94,16 @@ test_2jet = np.delete(test_2jet, 0, 1)
 test_3jet = np.delete(test_3jet, 0, 1)
 
 # Map event numbers to process type numbers.
-test_2jet_process_no = map(lambda a: df[df['EventNumber'] == a].reset_index(drop=True).get_value(0,'sample'),
-                           test_2jet_event_nos)
-test_3jet_process_no = map(lambda a: df[df['EventNumber'] == a].reset_index(drop=True).get_value(0,'sample'),
-                           test_3jet_event_nos)
+event_to_process_nos = pd.Series(df['sample'].as_matrix(), index=df['EventNumber'].as_matrix()).to_dict()
+
+test_2jet_process_nos = map(lambda a: event_to_process_nos[a],test_2jet_event_nos)
+test_3jet_process_nos = map(lambda a: event_to_process_nos[a],test_3jet_event_nos)
 
 # Map process types numbers to process type groups.
 # Note that this is a convoluted process and could be
 # simplified at a later date...
-test_2jet_processes = map(lambda a: reduced_sample_map[a], test_2jet_process_no)
-test_3jet_processes = map(lambda a: reduced_sample_map[a], test_3jet_process_no)
+test_2jet_processes = map(lambda a: reduced_sample_map[a], test_2jet_process_nos)
+test_3jet_processes = map(lambda a: reduced_sample_map[a], test_3jet_process_nos)
 
 
 
