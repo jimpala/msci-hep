@@ -52,7 +52,7 @@ branch_names = ["sample", "EventWeight", "EventNumber", "nJ", "nBJ", "mBB",
                 "mTW", "MET", "pTJ3", "mBBJ", "BDT"]
 
 # Read in NTuple data from pre-processed CSV file.
-df = pd.read_csv('/Volumes/HEPDRIVE/VHbb-data/CSV/VHbb_data_preselect.csv', index_col=0)
+df = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_preselect.csv', index_col=0)
 
 # Split into 2 jet and 3 jet trainings.
 df_2jet = df[df['nJ'] == 2]
@@ -102,8 +102,12 @@ test_3jet_process_nos = map(lambda a: event_to_process_nos[a],test_3jet_event_no
 # Map process types numbers to process type groups.
 # Note that this is a convoluted process and could be
 # simplified at a later date...
-test_2jet_processes = map(lambda a: reduced_sample_map[a], test_2jet_process_nos)
-test_3jet_processes = map(lambda a: reduced_sample_map[a], test_3jet_process_nos)
+test_2jet_processes = np.array(map(lambda a: reduced_sample_map[a], test_2jet_process_nos))
+test_3jet_processes = np.array(map(lambda a: reduced_sample_map[a], test_3jet_process_nos))
+
+#################
+#    INDICES    #
+#################
 
 
 
@@ -120,23 +124,23 @@ bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3),
 bdt.fit(train_2jet, train_2jet_class)
 
 # Get decision scores for test set.
-twoclass_output = bdt.decision_function(test_2jet)
+twoclass_output = np.array(bdt.decision_function(test_2jet))
 
 # Plot decision histogram.
 plot_range = (twoclass_output.min(), twoclass_output.max())
 plt.subplot(122)
 
-plot_colors = "br"
+plot_colors = "rbgym"
 plot_step = 0.02
-class_names = "BS"
+class_names = ['VH', 'V+jets', 'ttbar', 'stop', 'diboson']
 
-for i, n, c in zip(range(2), class_names, plot_colors):
-    plt.hist(twoclass_output[test_2jet_class == i],
+for n, c in zip(class_names, plot_colors):
+    plt.hist(twoclass_output[test_2jet_processes == n],
              bins=10,
              range=plot_range,
              facecolor=c,
-             label='Class %s' % n,
-             alpha=.5)
+             label='%s' % n,
+             stacked=True)
 x1, x2, y1, y2 = plt.axis()
 plt.axis((x1, x2, y1, y2 * 1.2))
 plt.legend(loc='upper right')
