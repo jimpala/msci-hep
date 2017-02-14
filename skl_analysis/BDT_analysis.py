@@ -89,7 +89,7 @@ classification_3jet = df_3jet['Class'].as_matrix()
 
 # Drop unneeded columns for the training.
 df_2jet_filtered = df_2jet.drop(['sample','EventWeight','nJ','nBJ', 'dEtaBB', 'dPhiBB',
-                                 'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL', 'Class'], axis=1)
+                                 'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL', 'Class', 'mBBJ', 'pTJ3'], axis=1)
 df_3jet_filtered = df_3jet.drop(['sample','EventWeight','nJ','nBJ', 'dEtaBB', 'dPhiBB',
                                  'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL', 'Class'], axis=1)
 
@@ -143,9 +143,11 @@ train_3jet_weights = np.array(map(lambda a: event_to_weight[a], train_3jet_event
 #################
 
 # Create BDT object.
-bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3),
+bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_split=0.05),
+                         learning_rate=0.15,
                          algorithm="SAMME",
-                         n_estimators=200)
+                         n_estimators=200
+                         )
 
 # Train BDT for 2 jet.
 bdt.fit(train_2jet, train_2jet_class, sample_weight=train_2jet_weights)
@@ -159,10 +161,13 @@ plt.subplot(122)
 
 plot_colors = 2*"r" + 12*"g" + "y" + 3*"b" + 3*"m"
 plot_step = 0.02
-class_names = sample_map.keys()
+class_names = ['qqZvvH125', 'qqWlvH125', 'Wbb', 'Wbc', 'Wcc', 'Wbl', 'Wcl', 'Wl',
+                         'Zbb', 'Zbc', 'Zcc', 'Zbl', 'Zcl', 'Zl', 'ttbar', 'stopt', 'stops',
+                         'stopWt', 'WW', 'ZZ', 'WZ']
 
 for n, c in zip(class_names, plot_colors):
-    plt.hist(twoclass_output[test_2jet_processes == n],
+    this_data = twoclass_output[test_2jet_processes == n]
+    plt.hist(this_data,
              bins=10,
              range=plot_range,
              facecolor=c,
