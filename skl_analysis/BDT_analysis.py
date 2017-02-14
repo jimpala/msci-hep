@@ -108,8 +108,10 @@ train_3jet, test_3jet, train_3jet_class, test_3jet_class = train_test_split(data
                                                                             test_size=0.25,
                                                                             random_state=42)
 
-# Preserve event numbers of test sets, then drop from training and test sets.
+# Preserve event numbers of train and test sets, then drop from training and test sets.
 
+train_2jet_event_nos = train_2jet[:, 0].astype(int)
+train_3jet_event_nos = train_3jet[:, 0].astype(int)
 test_2jet_event_nos = test_2jet[:, 0].astype(int)
 test_3jet_event_nos = test_3jet[:, 0].astype(int)
 
@@ -118,8 +120,9 @@ train_3jet = np.delete(train_3jet, 0, 1)
 test_2jet = np.delete(test_2jet, 0, 1)
 test_3jet = np.delete(test_3jet, 0, 1)
 
-# Map event numbers to process type numbers.
+# Map event numbers to process type numbers and event weights.
 event_to_process_nos = pd.Series(df['sample'].as_matrix(), index=df['EventNumber'].as_matrix()).to_dict()
+event_to_weight = pd.Series(df['EventWeight'].as_matrix(), index=df['EventNumber'].as_matrix()).to_dict()
 
 test_2jet_process_nos = map(lambda a: event_to_process_nos[a],test_2jet_event_nos)
 test_3jet_process_nos = map(lambda a: event_to_process_nos[a],test_3jet_event_nos)
@@ -129,6 +132,10 @@ test_3jet_process_nos = map(lambda a: event_to_process_nos[a],test_3jet_event_no
 # simplified at a later date...
 test_2jet_processes = np.array(map(lambda a: sample_map_invert[a], test_2jet_process_nos))
 test_3jet_processes = np.array(map(lambda a: sample_map_invert[a], test_3jet_process_nos))
+
+# Map event numbers to event weights.
+train_2jet_weights = np.array(map(lambda a: event_to_weight[a], train_2jet_event_nos))
+train_3jet_weights = np.array(map(lambda a: event_to_weight[a], train_3jet_event_nos))
 
 
 #################
@@ -141,7 +148,7 @@ bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3),
                          n_estimators=200)
 
 # Train BDT for 2 jet.
-bdt.fit(train_2jet, train_2jet_class)
+bdt.fit(train_2jet, train_2jet_class, sample_weight=train_2jet_weights)
 
 # Get decision scores for test set.
 twoclass_output = np.array(bdt.decision_function(test_2jet))
@@ -150,7 +157,7 @@ twoclass_output = np.array(bdt.decision_function(test_2jet))
 plot_range = (twoclass_output.min(), twoclass_output.max())
 plt.subplot(122)
 
-plot_colors = 2*"r" +  12*"g" + "y" + 3*"b" + 3*"m"
+plot_colors = 2*"r" + 12*"g" + "y" + 3*"b" + 3*"m"
 plot_step = 0.02
 class_names = sample_map.keys()
 
