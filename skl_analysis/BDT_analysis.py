@@ -6,6 +6,8 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 
+from scale_factors import SF_map_2jet
+
 sample_map = {
     'qqZvvH125': 1,
     'qqWlvH125': 2,
@@ -120,9 +122,8 @@ train_3jet = np.delete(train_3jet, 0, 1)
 test_2jet = np.delete(test_2jet, 0, 1)
 test_3jet = np.delete(test_3jet, 0, 1)
 
-# Map event numbers to process type numbers and event weights.
+# Map event numbers to process type numbers.
 event_to_process_nos = pd.Series(df['sample'].as_matrix(), index=df['EventNumber'].as_matrix()).to_dict()
-event_to_weight = pd.Series(df['EventWeight'].as_matrix(), index=df['EventNumber'].as_matrix()).to_dict()
 
 test_2jet_process_nos = map(lambda a: event_to_process_nos[a],test_2jet_event_nos)
 test_3jet_process_nos = map(lambda a: event_to_process_nos[a],test_3jet_event_nos)
@@ -133,9 +134,14 @@ test_3jet_process_nos = map(lambda a: event_to_process_nos[a],test_3jet_event_no
 test_2jet_processes = np.array(map(lambda a: sample_map_invert[a], test_2jet_process_nos))
 test_3jet_processes = np.array(map(lambda a: sample_map_invert[a], test_3jet_process_nos))
 
+# Get event to weight mapping.
+event_to_weight = pd.Series(df['EventWeight'].as_matrix(), index=df['EventNumber'].as_matrix()).to_dict()
+
 # Map event numbers to event weights.
 train_2jet_weights = np.array(map(lambda a: event_to_weight[a], train_2jet_event_nos))
 train_3jet_weights = np.array(map(lambda a: event_to_weight[a], train_3jet_event_nos))
+test_2jet_weights = np.array(map(lambda a: event_to_weight[a], test_2jet_event_nos))
+test_3jet_weights = np.array(map(lambda a: event_to_weight[a], test_3jet_event_nos))
 
 
 #################
@@ -162,13 +168,15 @@ plt.subplot(122)
 plot_colors = 2*"r" + 12*"g" + "y" + 3*"b" + 3*"m"
 plot_step = 0.02
 class_names = ['qqZvvH125', 'qqWlvH125', 'Wbb', 'Wbc', 'Wcc', 'Wbl', 'Wcl', 'Wl',
-                         'Zbb', 'Zbc', 'Zcc', 'Zbl', 'Zcl', 'Zl', 'ttbar', 'stopt', 'stops',
-                         'stopWt', 'WW', 'ZZ', 'WZ']
+               'Zbb', 'Zbc', 'Zcc', 'Zbl', 'Zcl', 'Zl', 'ttbar', 'stopt', 'stops',
+               'stopWt', 'WW', 'ZZ', 'WZ']
 
 for n, c in zip(class_names, plot_colors):
     this_data = twoclass_output[test_2jet_processes == n]
+    this_weights = test_2jet_weights[test_2jet_processes == n] * SF_map_2jet[n]
     plt.hist(this_data,
-             bins=10,
+             bins=15,
+             weights=this_weights,
              range=plot_range,
              facecolor=c,
              label='%s' % n,
