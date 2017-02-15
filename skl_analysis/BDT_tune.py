@@ -260,7 +260,7 @@ def hyperparam_scan(mva, param_grid, X, Y):
 plot_range = (output_2jet.min(), output_2jet.max())
 plt.subplot(122)
 
-plot_colors = 2*"r" + 12*"g" + "y" + 3*"b" + 3*"m"
+plot_colors = np.linspace(0., 1., 21)
 plot_step = 0.02
 class_names = ['qqZvvH125', 'qqWlvH125', 'Wbb', 'Wbc', 'Wcc', 'Wbl', 'Wcl', 'Wl',
                'Zbb', 'Zbc', 'Zcc', 'Zbl', 'Zcl', 'Zl', 'ttbar', 'stopt', 'stops',
@@ -273,7 +273,7 @@ for n, c in zip(class_names, plot_colors):
              bins=15,
              weights=this_weights,
              range=plot_range,
-             facecolor=c,
+             #facecolor=c,
              label='%s' % n,
              stacked=True)
 x1, x2, y1, y2 = plt.axis()
