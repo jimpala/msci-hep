@@ -226,7 +226,7 @@ bdt_k2_2jet.fit(X_k2_2jet, Y_k2_2jet, sample_weight=weights_k2_2jet)
 # K1 BDT tests on K2 data, and vice-versa.
 output_k1_2jet = np.array(bdt_k1_2jet.decision_function(X_k2_2jet))
 output_k2_2jet = np.array(bdt_k2_2jet.decision_function(X_k1_2jet))
-output_2jet = np.append(output_k1_2jet, output_k2_2jet)
+output_2jet = np.append(output_k2_2jet, output_k1_2jet) # IMPORTANT: order reversal.
 
 
 # In[ ]:
