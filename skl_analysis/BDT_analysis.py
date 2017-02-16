@@ -1,3 +1,5 @@
+
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -94,6 +96,7 @@ df_2jet_filtered = df_2jet.drop(['sample','EventWeight','nJ','nBJ', 'dEtaBB', 'd
                                  'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL', 'Class', 'mBBJ', 'pTJ3'], axis=1)
 df_3jet_filtered = df_3jet.drop(['sample','EventWeight','nJ','nBJ', 'dEtaBB', 'dPhiBB',
                                  'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL', 'Class'], axis=1)
+
 
 # Convert to ndarray. All elements will be recast as floats.
 dataset_2jet = df_2jet_filtered.as_matrix()

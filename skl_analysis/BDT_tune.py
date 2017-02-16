@@ -8,6 +8,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+plt.rcParams['figure.figsize'] = (10, 6)
 
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -90,8 +91,9 @@ branch_names = ["sample", "EventWeight", "EventNumber", "nJ", "nBJ", "mBB",
                 "mTW", "MET", "pTJ3", "mBBJ", "BDT"]
 
 
-# In[4]:
+# In[81]:
 
+# %load ~/dev/root_dev/skl_analysis/scale_factors.py
 SF_map_2jet = {
 	'Zl': 1.0,
 	'Zcl': 1.41,
@@ -114,7 +116,7 @@ SF_map_2jet = {
 	'ZZ': 1.13,
 	'WZ': 1.13,
 	'qqZvvH125': 0.20,
-	'qqWlvH125': 0.20
+	'qqWlvH125': 1.0
 }
 
 
@@ -156,6 +158,7 @@ X_k1_3jet, X_k2_3jet, Y_k1_3jet, Y_k2_3jet = train_test_split(dataset_3jet,
                                                                             random_state=42)
 
 # Preserve event numbers of train and test sets, then drop from training and test sets.
+
 X_k1_2jet_event_nos = X_k1_2jet[:, 0].astype(int)
 X_k1_3jet_event_nos = X_k1_3jet[:, 0].astype(int)
 X_k2_2jet_event_nos = X_k2_2jet[:, 0].astype(int)
@@ -223,7 +226,7 @@ bdt_k2_2jet.fit(X_k2_2jet, Y_k2_2jet, sample_weight=weights_k2_2jet)
 # K1 BDT tests on K2 data, and vice-versa.
 output_k1_2jet = np.array(bdt_k1_2jet.decision_function(X_k2_2jet))
 output_k2_2jet = np.array(bdt_k2_2jet.decision_function(X_k1_2jet))
-output_2jet = np.append(output_k2_2jet, output_k1_2jet) # IMPORTANT: Order reversal!
+output_2jet = np.append(output_k1_2jet, output_k2_2jet)
 
 
 # In[ ]:
@@ -254,40 +257,55 @@ def hyperparam_scan(mva, param_grid, X, Y):
 
 # ### 2 Jet Plot
 
-# In[21]:
+# In[82]:
 
 # Plot decision histogram.
 plot_range = (output_2jet.min(), output_2jet.max())
-plt.subplot(122)
 
-plot_colors = np.linspace(0., 1., 21)
+plot_colors = ['#CCCCCC', '#999999', '#333333', '#FFFF66', '#CC9900',
+               '#CC9900', '#FFCC00', '#99CCFF', '#6699CC', '#3399FF',
+               '#6699FF', '#0066CC', '#0066CC', '#99FF99', '#66CC66',
+               '#009900', '#00CC00', '#007700', '#006600', '#FF0000',
+               '#CC0000']
+
 plot_step = 0.02
-class_names = ['qqZvvH125', 'qqWlvH125', 'Wbb', 'Wbc', 'Wcc', 'Wbl', 'Wcl', 'Wl',
-               'Zbb', 'Zbc', 'Zcc', 'Zbl', 'Zcl', 'Zl', 'ttbar', 'stopt', 'stops',
-               'stopWt', 'WW', 'ZZ', 'WZ']
+class_names = ['WZ', 'ZZ', 'WW', 'stopWt', 'stops', 'stopt', 'ttbar',
+               'Zl', 'Zcl', 'Zbl', 'Zcc', 'Zbc', 'Zbb', 'Wl', 'Wcl',
+               'Wbl', 'Wcc', 'Wbc', 'Wbb', 'qqWlvH125', 'qqZvvH125']
 
+plot_data = []
+plot_weights = []
 for n, c in zip(class_names, plot_colors):
     this_data = output_2jet[X_2jet_processes == n]
     this_weights = weights_2jet[X_2jet_processes == n] * SF_map_2jet[n]
-    plt.hist(this_data,
-             bins=15,
-             weights=this_weights,
-             range=plot_range,
-             #facecolor=c,
-             label='%s' % n,
-             stacked=True)
+    plot_data.append(this_data)
+    plot_weights.append(this_weights)
+
+plt.hist(plot_data,
+         bins=15,
+         weights=plot_weights,
+         range=plot_range,
+         rwidth=1,
+         color=plot_colors,
+         label=class_names,
+         stacked=True,
+         edgecolor='None')
 x1, x2, y1, y2 = plt.axis()
 plt.axis((x1, x2, y1, y2 * 1.2))
-# plt.legend(loc='upper right')
+plt.legend(loc='upper right', ncol=2, prop={'size': 12})
 plt.ylabel('Samples')
 plt.xlabel('Score')
 plt.title('Decision Scores')
 
 plt.tight_layout()
 plt.subplots_adjust(wspace=0.35)
+
+plt.savefig('skl_analysis/replica_BDT_kFold_1502_v2.png')
+
 plt.show()
 
 
+# In[ ]:
 
 
 
