@@ -35,7 +35,7 @@ def trafoD(signal_dict, background_dict, initial_bins=200):
     N_b = reduce(lambda a, b: len(a) + len(b), background_data)
 
     # Create dict structure for new signal freqs.
-    # Essentially malloc procedure.
+    # Essentially a malloc procedure.
     trafo_signal_freqs = dict(zip(signal_types, [[0] * 100 for _ in range(len(signal_types))]))
     trafo_background_freqs = dict(zip(background_types, [[0] * 100 for _ in range(len(background_types))]))
 
