@@ -29,7 +29,7 @@ def trafoD(signal_dict, background_dict, initial_bins=200):
                             range=plot_range)[:2]
 
     # HACK! Make signal_hists into list of lists.
-    signal_hists = [signal_hists]
+    signal_hists = [np.array(signal_hists)]
 
     background_hists, background_bins = plt.hist(background_data,
                                 bins=initial_bins,
@@ -42,15 +42,42 @@ def trafoD(signal_dict, background_dict, initial_bins=200):
     #signal_hists = hist_count_separate([signal_hists])
     #background_hists = hist_count_separate(background_hists)
 
-    zs = 10
-    zb = 10
+    # Get total S/B events
+    N_s = sum(signal_hists[0])
+    N_b = reduce(lambda a, b: np.sum(a) + np.sum(b), background_hists)
     
     signal_freqs = dict(zip(signal_types, signal_hists)) # Must be array of arrays!
     background_freqs = dict(zip(background_types, background_hists))
-    
-    for bin in bin_mins:
-        for s in signal_freqs.keys():
-            pass
+
+    # Create dict structure for new signal freqs.
+    # Essentially malloc.
+    new_signal_freqs = dict(zip(signal_types, [[0] * 100 for _ in range(len(signal_types))]))
+    new_background_freqs = dict(zip(background_types, [[0] * 100 for _ in range(len(background_types))]))
+
+    zs = 10
+    zb = 10
+    z = 0 # Initialise z.
+    bin_i = 1 # Initialise new_bin.
+
+    for bin_min in bin_mins[::-1]:
+        sig_tot = 0
+        back_tot = 0
+        for s, hist in zip(signal_types, signal_hists):
+            this_count = len([a for a in hist if a >= bin_min and a < bin_min + bin_width])
+            new_signal_freqs[s][-bin_i] += this_count
+            sig_tot += this_count
+
+        for b, hist in zip(background_types, background_hists):
+            this_count = len([a for a in hist if a >= bin_min and a < bin_min + bin_width])
+            new_background_freqs[b][-bin_i] += this_count
+            back_tot += this_count
+
+        z += zs * sig_tot / N_s + zb * back_tot / N_b
+        print z
+
+        if z > 1:
+            z = 0
+            bin_i +=1
 
         
 
