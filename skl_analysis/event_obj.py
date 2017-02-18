@@ -2,9 +2,13 @@
 
 class Event:
 
-    # Static variables
+    # Static variables.
 
-    __process_general_map = {
+    processes = ['WZ', 'ZZ', 'WW', 'stopWt', 'stops', 'stopt', 'ttbar',
+               'Zl', 'Zcl', 'Zbl', 'Zcc', 'Zbc', 'Zbb', 'Wl', 'Wcl',
+               'Wbl', 'Wcc', 'Wbc', 'Wbb', 'qqWlvH125']
+
+    process_general_map = {
         'qqZvvH125': 'VH',
         'qqWlvH125': 'VH',
         'Wbb': 'V+jets',
@@ -28,7 +32,7 @@ class Event:
         'WZ': 'diboson'
     }
 
-    __scale_factor_map = {
+    scale_factor_map = {
         2: {
             'Zl': 1.0,
             'Zcl': 1.41,
@@ -52,10 +56,7 @@ class Event:
             'WZ': 1.13,
             'qqZvvH125': 0.20,
             'qqWlvH125': 1.0
-        },
-
-        3: {
-
+        }, 3: {
             'Zl': 1.0,
             'Zcl': 1.0,
             'Zcc': 1.1,
@@ -81,24 +82,45 @@ class Event:
         }
     }
 
+    process_color_map =   {'WW': '#333333',
+                             'WZ': '#CCCCCC',
+                             'Wbb': '#006600',
+                             'Wbc': '#007700',
+                             'Wbl': '#009900',
+                             'Wcc': '#00CC00',
+                             'Wcl': '#66CC66',
+                             'Wl': '#99FF99',
+                             'ZZ': '#999999',
+                             'Zbb': '#0066CC',
+                             'Zbc': '#0066CC',
+                             'Zbl': '#3399FF',
+                             'Zcc': '#6699FF',
+                             'Zcl': '#6699CC',
+                             'Zl': '#99CCFF',
+                             'qqWlvH125': '#FF0000',
+                             'stopWt': '#FFFF66',
+                             'stops': '#CC9900',
+                             'stopt': '#CC9900',
+                             'ttbar': '#FFCC00'}
 
+    #####################################################
+    #####################################################
 
     # Constructor
 
-    def __init__(self, process, n_jets, event_no, event_weight):
+    def __init__(self, process, n_jets, index, event_weight):
         self.process = process
-        self.process_general = Event.__process_general_map[process]
+        self.process_general = Event.process_general_map[process]
         self.classification = 1 if self.process_general == 'VH' else 0
         self.n_jets = n_jets
-        self.event_no = event_no
+        self.index = index
         self.event_weight = event_weight
-        self.scale_factor = Event.__scale_factor_map[self.n_jets][self.process]
+        self.scale_factor = Event.scale_factor_map[self.n_jets][self.process]
 
-        self.split = None
         self.decision_value = None
 
-    def splitting(self, index):
-        self.split = index
+    def set_decision_value(self, decision_value):
+        self.decision_value = decision_value
 
     def is_in_bin(self, low_edge, high_edge):
         if self.decision_value >= low_edge and self.decision_value < high_edge:

@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 from root_numpy import root2array
-
+from sklearn.model_selection import train_test_split
 
 sample_map = {
     'qqZvvH125': 1,
@@ -85,8 +85,31 @@ df_2jet_filtered = df_2jet.drop(['dEtaBB', 'dPhiBB',
 df_3jet_filtered = df_3jet.drop(['dEtaBB', 'dPhiBB',
                                  'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL'], axis=1)
 
-df_2jet_filtered.to_csv(path_or_buf='/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet.csv')
-df_3jet_filtered.to_csv(path_or_buf='/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet.csv')
+df = None
+
+for df, i in zip((df_2jet_filtered, df_3jet_filtered), ('2','3')):
+    df = df.reset_index(drop=True)
+
+    indices = np.array(df.index.values.tolist()).transpose()
+    classes = df['Class'].as_matrix()
+
+    # Get splitting event numbers.
+    indices_A, indices_B = train_test_split(indices,
+                                            classes,
+                                            test_size=0.5,
+                                            random_state=42)[:2]
+
+    indices_A = indices_A.transpose().tolist()[0]
+    indices_B = indices_B.transpose().tolist()[0]
+
+    df_A = df.ix[indices_A]
+    df_B = df.ix[indices_B]
+
+    pathA = '/Volumes/THUMB/VHbb-data/CSV/VHbb_data_{}jet_A.csv'.format(i)
+    pathB = '/Volumes/THUMB/VHbb-data/CSV/VHbb_data_{}jet_B.csv'.format(i)
+
+    df_A.to_csv(path_or_buf=pathA)
+    df_B.to_csv(path_or_buf=pathB)
 
 print "NTuple processed to CSV file."
 

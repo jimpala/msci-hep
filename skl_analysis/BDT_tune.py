@@ -265,7 +265,7 @@ plot_range = (output_2jet.min(), output_2jet.max())
 plot_colors = ['#CCCCCC', '#999999', '#333333', '#FFFF66', '#CC9900',
                '#CC9900', '#FFCC00', '#99CCFF', '#6699CC', '#3399FF',
                '#6699FF', '#0066CC', '#0066CC', '#99FF99', '#66CC66',
-               '#009900', '#00CC00', '#007700', '#006600', '#FF0000',]
+               '#009900', '#00CC00', '#007700', '#006600', '#FF0000']
 
 plot_step = 0.02
 class_names = ['WZ', 'ZZ', 'WW', 'stopWt', 'stops', 'stopt', 'ttbar',
