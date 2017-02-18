@@ -108,7 +108,7 @@ class Event:
 
     # Constructor
 
-    def __init__(self, process, n_jets, index, event_weight):
+    def __init__(self, process, n_jets, index, event_weight, decision_value=None):
         self.process = process
         self.process_general = Event.process_general_map[process]
         self.classification = 1 if self.process_general == 'VH' else 0
@@ -117,16 +117,16 @@ class Event:
         self.event_weight = event_weight
         self.scale_factor = Event.scale_factor_map[self.n_jets][self.process]
 
-        self.decision_value = None
+        self.decision_value = decision_value
 
     def set_decision_value(self, decision_value):
         self.decision_value = decision_value
 
     def is_in_bin(self, low_edge, high_edge):
         if self.decision_value >= low_edge and self.decision_value < high_edge:
-            return 1
+            return self.event_weight * self.scale_factor
         else:
-            return 0
+            pass
 
 
 
