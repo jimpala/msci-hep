@@ -37,15 +37,15 @@ branch_names = ["sample", "EventWeight", "EventNumber", "nJ", "nBJ", "mBB",
 
 # Read in NTuples.
 # Output S&B as pseudo 2D ndarrays (array of tuple rows).
-signal_direct = root2array("/Volumes/HEPDRIVE/VHbb-data/Direct_Signal.root",
+signal_direct = root2array("/Volumes/THUMB/VHbb-data/Direct_Signal.root",
                            treename="Nominal",
                            branches=branch_names)
 
-signal_truth = root2array("/Volumes/HEPDRIVE/VHbb-data/Truth_Signal.root",
+signal_truth = root2array("/Volumes/THUMB/VHbb-data/Truth_Signal.root",
                           treename="Nominal",
                           branches=branch_names)
 
-background = root2array("/Volumes/HEPDRIVE/VHbb-data/background_Normal.root",
+background = root2array("/Volumes/THUMB/VHbb-data/background_Normal.root",
                         treename="Nominal",
                         branches=branch_names)
 
@@ -67,13 +67,26 @@ background_df['Class'] = pd.Series(np.zeros(len(background_df)))
 df = pd.concat([signal_direct_df, background_df])
 
 # Map sample names to ints in sample_map.
-df['sample'] = df['sample'].map(lambda x: sample_map[x])
+#df['sample'] = df['sample'].map(lambda x: sample_map[x])
 
 
 # Cutflow.
 df = df[df['nBJ'] == 2]
-df = df[df['pTV'] > 150000]
 
-df.to_csv(path_or_buf='/Volumes/HEPDRIVE/VHbb-data/CSV/VHbb_data_preselect.csv')
+# Split into 2 jet and 3 jet trainings.
+df_2jet = df[df['nJ'] == 2]
+df_3jet = df[df['nJ'] == 3]
+
+
+# Drop unneeded columns for the training.
+df_2jet_filtered = df_2jet.drop(['dEtaBB', 'dPhiBB',
+                                 'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL',
+                                 'mBBJ', 'pTJ3'], axis=1)
+df_3jet_filtered = df_3jet.drop(['dEtaBB', 'dPhiBB',
+                                 'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL'], axis=1)
+
+df_2jet_filtered.to_csv(path_or_buf='/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet.csv')
+df_3jet_filtered.to_csv(path_or_buf='/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet.csv')
 
 print "NTuple processed to CSV file."
+
