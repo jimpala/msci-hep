@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import random
 
 from event_obj import *
+from sensitivity import trafoD
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 
@@ -85,18 +86,34 @@ bdt_B.fit(X_B, Y_B, sample_weight=w_B)
 print "BDT training completed."
 
 # Get scores of X_A for BDT_B and vice-versa.
-scores_A = bdt_B.decision_function(X_A)
-scores_B = bdt_A.decision_function(X_B)
+scores_A = bdt_B.decision_function(X_A).tolist()
+scores_B = bdt_A.decision_function(X_B).tolist()
+print "Non-normalised decision function scores processed."
 
-print "Decision function scores processed. Saving to Event objects."
+# Normalise decision scores between -1 and 1.
+max_score = max([a for a in scores_A + scores_B])
+min_score = min([a for a in scores_A + scores_B])
+score_range = max_score - min_score
+score_midpoint = min_score + score_range / 2
+# Translate and shrink.
+scores_A = map(lambda a: (a - score_midpoint) / (score_range / 2 + 0.001), scores_A)  # 1e-8 added for bounding.
+scores_B = map(lambda a: (a - score_midpoint) / (score_range / 2 + 0.001), scores_B)
+
+
+print "Updating event objects with decision scores..."
 
 # Process scores to Event objects.
 for e, s in zip(events_A,scores_A):
     e.set_decision_value(s)
 for e, s in zip(events_B,scores_B):
     e.set_decision_value(s)
-
 events = events_A + events_B
+print "Event objects updated."
+
+# Call TrafoD on Event list.
+print "Implementing TrafoD histogram bin transform."
+bins = trafoD(events)
+
 
 print "Plotting results..."
 
@@ -115,7 +132,7 @@ for c in class_names:
 
 # Plot.
 plt.hist(plot_data,
-         bins=15,
+         bins=bins,
          weights=plot_weights,
          range=plot_range,
          rwidth=1,

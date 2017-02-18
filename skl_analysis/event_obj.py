@@ -123,10 +123,10 @@ class Event:
         self.decision_value = decision_value
 
     def is_in_bin(self, low_edge, high_edge):
-        if self.decision_value >= low_edge and self.decision_value < high_edge:
+        if low_edge <= self.decision_value < high_edge:
             return self.event_weight * self.scale_factor
         else:
-            pass
+            return 0
 
 
 
