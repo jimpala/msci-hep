@@ -32,7 +32,7 @@ for df, njets, i in zip(dfs, (2, 3), range(2)):
     this_events = [Event(a, njets, b, c) for a, b, c in args_zipped]
     events += this_events
 
-    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class'], axis=1)  # Drop some cols.
+    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)  # Drop some cols.
 
     dfs[i] = df
 print "Event list populated."
@@ -97,7 +97,7 @@ min_score = min([a for a in scores_A + scores_B])
 score_range = max_score - min_score
 score_midpoint = min_score + score_range / 2
 # Translate and shrink.
-scores_A = map(lambda a: (a - score_midpoint) / (score_range / 2 + 0.001), scores_A)  # 1e-8 added for bounding.
+scores_A = map(lambda a: (a - score_midpoint) / (score_range / 2 + 0.001), scores_A)  # .001 added for bounding
 scores_B = map(lambda a: (a - score_midpoint) / (score_range / 2 + 0.001), scores_B)
 
 
@@ -112,13 +112,16 @@ events = events_A + events_B
 print "Event objects updated."
 
 # Call TrafoD on Event list.
-# OLD TIME: 46.17s
-# NEW TIME: 0.3562s
+# TIME: 0.3562s
 print "Implementing TrafoD histogram bin transform."
 bins = trafoD(events)
 
+# Calculate sensitivity.
+# TIME: 0.7216s
+t1 = time.time()
 sens = calc_sensitivity(events, bins)
-print "Sensitivity " + str(sens)
+t2 = time.time()
+t = t2 - t1
 
 print "Plotting results..."
 
