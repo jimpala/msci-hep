@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib.pyplot as plt
+import math
 from event_obj import *
 
 
@@ -46,6 +48,40 @@ def trafoD(event_list, initial_bins=200, z_s=10, z_b=10):
     return bins
 
 
+def calc_sensitivity(events, bins):
+    """Calculate sensitivity (note: turns matplotlib interactive off)."""
+
+    # Turn off interactive MPL.
+    plt.ioff()
+
+    # Initialise sensitivity.
+    sens = 0
+
+    # Get S/B stuff to plot.
+    events_sb = [[a.decision_value for a in events if a.classification == 1],
+                 [a.decision_value for a in events if a.classification == 0]]
+
+    weights_sb = [[a.event_weight * a.scale_factor for a in events if a.classification == 1],
+                  [a.event_weight * a.scale_factor for a in events if a.classification == 0]]
+
+    counts_sb = plt.hist(events_sb,
+                         bins=bins,
+                         weights=weights_sb)[0]
+
+    # Calculate sensitivity iteratively bin-by-bin.
+    # Initialise cumulative S/B counters.
+    n_s = 0
+    n_b = 0
+
+    # Reverse the counts before calculating.
+    for s, b in zip(counts_sb[0][::-1], counts_sb[1][::-1]):
+        n_s += s
+        n_b += b
+        sens += 2 * ((n_s + n_b) * math.log(1 + n_s / n_b) - n_s)
+
+    return math.sqrt(sens)
+
+
 def main():
 
     # Generate some random events.
@@ -59,8 +95,6 @@ def main():
     print trafoD(test_events)
 
 
-def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
-    return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
 if __name__ == '__main__':
     main()

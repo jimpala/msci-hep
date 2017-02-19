@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import random
 
 from event_obj import *
-from sensitivity import trafoD
+from sensitivity import trafoD, calc_sensitivity
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 
@@ -114,6 +114,8 @@ print "Event objects updated."
 print "Implementing TrafoD histogram bin transform."
 bins = trafoD(events)
 
+sens = calc_sensitivity(events, bins)
+print "Sensitivity " + str(sens)
 
 print "Plotting results..."
 
