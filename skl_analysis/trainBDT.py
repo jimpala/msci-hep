@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import random
+import time
 
 from event_obj import *
 from sensitivity import trafoD, calc_sensitivity
@@ -111,6 +112,8 @@ events = events_A + events_B
 print "Event objects updated."
 
 # Call TrafoD on Event list.
+# OLD TIME: 46.17s
+# NEW TIME: 0.3562s
 print "Implementing TrafoD histogram bin transform."
 bins = trafoD(events)
 

@@ -11,42 +11,69 @@ def trafoD(event_list, initial_bins=200, z_s=10, z_b=10):
     for e in event_list:
         assert e.decision_value
 
-    # Get S/B event lists.
-    signal_events = [a for a in event_list if a.classification == 1]
-    back_events = [a for a in event_list if a.classification == 0]
+    # Sort event list by BDT value, descending.
+    event_list = sorted(event_list, key=lambda a: a.decision_value)
 
     # Get total signal and background.
-    N_s = sum([a.scale_factor * a.event_weight for a in signal_events])
-    N_b = sum([a.scale_factor * a.event_weight for a in back_events])
+    N_tot = sum([a.post_fit_weight for a in event_list])
+    N_s = sum([a.post_fit_weight for a in event_list if a.classification == 1])
+    N_b = N_tot - N_s
 
     # Set up scan parameters.
-    scan_points = np.linspace(-1, 1, num=initial_bins).tolist()
-    interval = scan_points[1] - scan_points[0]
-    scan_points = scan_points[1:-1]
+    scan_points = np.linspace(-1, 1, num=initial_bins).tolist()[1:-1]
     scan_points = scan_points[::-1]
 
-    # Intialise z and bin list.
+    # Initialise z and bin list.
     z = 0
     bins = [1.0]
 
-    # USE A GENERATOR HERE TO SPEED UP.
-    for p in scan_points:
-        # Get S/B freqs for current bin in scan
-        sig_bin = sum([a.is_in_bin(p, p+interval) for a in signal_events])
-        back_bin = sum([a.is_in_bin(p, p+interval) for a in back_events])
+    print "TrafoD: Beginning loop."
 
-        # Update z for the current bin.
-        z += z_s * sig_bin / N_s + z_b * back_bin / N_b
-        print z
+    try:
+        # Iterate over bin low edges in scan.
+        for p in scan_points:
+            # Initialise freq count for this bin
+            sig_bin = 0
+            back_bin = 0
 
-        if z > 1:
-            bins.insert(0, p)
-            z = 0
+            # Current bin loop.
+            # Remember, events are in descending DV order.
+            while True:
+                # End algo if no events left - update z and then IndexError.
+                if not event_list:
+                    z += z_s * sig_bin / N_s + z_b * back_bin / N_b
+                    if z > 1:
+                        bins.insert(0, p)
+                    raise IndexError
 
-    # Close up the bins.
-    bins.insert(0, -1.0)
+                # Break if DV not in bin.
+                if event_list[-1].decision_value < p:
+                    break
 
-    return bins
+                # Pop the event.
+                this_event = event_list.pop()
+
+                # Add freq to S/B count.
+                if this_event.classification == 1:
+                    sig_bin += this_event.post_fit_weight
+                else:
+                    back_bin += this_event.post_fit_weight
+
+            # Update z for current bin.
+            z += z_s * sig_bin / N_s + z_b * back_bin / N_b
+
+            # Reset z and update bin
+            if z > 1:
+                bins.insert(0, p)
+                z = 0
+
+    except IndexError:
+        print "TrafoD: All events processed."
+
+    finally:
+        bins.insert(0,-1.0)
+        return bins
+
 
 
 def calc_sensitivity(events, bins):

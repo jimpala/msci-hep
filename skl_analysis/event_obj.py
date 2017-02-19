@@ -54,7 +54,7 @@ class Event:
             'WW': 1.13,
             'ZZ': 1.13,
             'WZ': 1.13,
-            'qqZvvH125': 0.20,
+            'qqZvvH125': 1.0,
             'qqWlvH125': 1.0
         }, 3: {
             'Zl': 1.0,
@@ -77,8 +77,8 @@ class Event:
             'WW': 1.12,
             'ZZ': 1.12,
             'WZ': 1.12,
-            'qqZvvH125': 0.21,
-            'qqWlvH125': 0.21
+            'qqZvvH125': 1.0,
+            'qqWlvH125': 1.0
         }
     }
 
@@ -116,6 +116,7 @@ class Event:
         self.index = index
         self.event_weight = event_weight
         self.scale_factor = Event.scale_factor_map[self.n_jets][self.process]
+        self.post_fit_weight = self.event_weight * self.scale_factor
 
         self.decision_value = decision_value
 
