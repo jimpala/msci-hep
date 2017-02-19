@@ -29,6 +29,7 @@ def trafoD(event_list, initial_bins=200, z_s=10, z_b=10):
     z = 0
     bins = [1.0]
 
+    # USE A GENERATOR HERE TO SPEED UP.
     for p in scan_points:
         # Get S/B freqs for current bin in scan
         sig_bin = sum([a.is_in_bin(p, p+interval) for a in signal_events])
@@ -75,9 +76,7 @@ def calc_sensitivity(events, bins):
 
     # Reverse the counts before calculating.
     for s, b in zip(counts_sb[0][::-1], counts_sb[1][::-1]):
-        n_s += s
-        n_b += b
-        sens += 2 * ((n_s + n_b) * math.log(1 + n_s / n_b) - n_s)
+        sens += 2 * ((s + b) * math.log(1 + s / b) - s)
 
     return math.sqrt(sens)
 
