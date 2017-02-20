@@ -4,7 +4,7 @@ import math
 from event_obj import *
 
 
-def trafoD(event_list, initial_bins=200, z_s=10, z_b=10):
+def trafoD(event_list, initial_bins=1000, z_s=10, z_b=10):
     """Output optimised histogram bin widths from a list of events"""
 
     # Check that all event decision values are populated
@@ -15,8 +15,8 @@ def trafoD(event_list, initial_bins=200, z_s=10, z_b=10):
     event_list = sorted(event_list, key=lambda a: a.decision_value)
 
     # Get total signal and background.
-    N_tot = sum([a.post_fit_weight for a in event_list])
-    N_s = sum([a.post_fit_weight for a in event_list if a.classification == 1])
+    N_tot = sum([a.event_weight for a in event_list])
+    N_s = sum([a.event_weight for a in event_list if a.classification == 1])
     N_b = N_tot - N_s
 
     # Set up scan parameters.
@@ -55,9 +55,9 @@ def trafoD(event_list, initial_bins=200, z_s=10, z_b=10):
 
                 # Add freq to S/B count.
                 if this_event.classification == 1:
-                    sig_bin += this_event.post_fit_weight
+                    sig_bin += this_event.event_weight
                 else:
-                    back_bin += this_event.post_fit_weight
+                    back_bin += this_event.event_weight
 
             # Update z for current bin.
             z += z_s * sig_bin / N_s + z_b * back_bin / N_b
@@ -163,8 +163,8 @@ def calc_sensitivity(events, bins):
     events_sb = [[a.decision_value for a in events if a.classification == 1],
                  [a.decision_value for a in events if a.classification == 0]]
 
-    weights_sb = [[a.event_weight * a.scale_factor for a in events if a.classification == 1],
-                  [a.event_weight * a.scale_factor for a in events if a.classification == 0]]
+    weights_sb = [[a.event_weight for a in events if a.classification == 1],
+                  [a.event_weight for a in events if a.classification == 0]]
 
     counts_sb = plt.hist(events_sb,
                          bins=bins,
@@ -173,7 +173,10 @@ def calc_sensitivity(events, bins):
     # Reverse the counts before calculating.
     # Zip up S counts with B counts per bin.
     for s, b in zip(counts_sb[0][::-1], counts_sb[1][::-1]):
-        sens += 2 * ((s + b) * math.log(1 + s / b) - s)
+        this_sens = 2 * ((s + b) * math.log(1 + s / b) - s)
+        if not math.isnan(this_sens):
+            sens += this_sens
+
 
     return math.sqrt(sens)
 
