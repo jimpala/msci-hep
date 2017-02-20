@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import random
 import time
+import sys
 
 from event_obj import *
 from sensitivity import trafoD, calc_sensitivity
@@ -118,14 +119,16 @@ bins = trafoD(events)
 
 # Calculate sensitivity.
 # TIME: 0.7216s
-t1 = time.time()
+# Sensitivity: 2.654
+# (TMVA Benchmark: 2.976)
 sens = calc_sensitivity(events, bins)
-t2 = time.time()
-t = t2 - t1
+print "Sensitivity calculation: {}".format(str(sens))
 
 print "Plotting results..."
 
 # Initialise plot stuff
+plt.ion()
+print plt.isinteractive()
 plot_range = (-1, 1)
 class_names = Event.processes
 plot_data = []
@@ -155,4 +158,5 @@ plt.ylabel('Samples')
 plt.xlabel('Score')
 plt.title('Decision Scores')
 
-plt.show()
+plt.savefig('fig.png')
+plt.show(block=True)

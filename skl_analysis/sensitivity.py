@@ -75,6 +75,80 @@ def trafoD(event_list, initial_bins=200, z_s=10, z_b=10):
         return bins
 
 
+def trafoD_tuples(y, y_pred, w, initial_bins=200, z_s=10, z_b=10):
+    """Output optimised histogram bin widths list of y, predicted y, and POSTFIT weights."""
+
+    ### TYPE CHECK
+    # for a in (y, y_pred, w):
+    #     if type(y) != list:
+    #         list(a)
+
+    # Zip them up for the list comp.
+    y_data = zip(y, y_pred, w)
+
+    # Sort by prediction value.
+    y_data = sorted(y_data, key=y[1])
+
+    # Get total signal and background.
+    N_tot = sum([a[1] * a[2] for a in y_data])
+    N_s = sum([a[1] * a[2] for a in y_data if a[0] == 1])
+    N_b = N_tot - N_s
+
+    # Set up scan parameters.
+    scan_points = np.linspace(-1, 1, num=initial_bins).tolist()[1:-1]
+    scan_points = scan_points[::-1]
+
+    # Initialise z and bin list.
+    z = 0
+    bins = [1.0]
+
+    print "TrafoD: Beginning loop."
+
+    try:
+        # Iterate over bin low edges in scan.
+        for p in scan_points:
+            # Initialise freq count for this bin
+            sig_bin = 0
+            back_bin = 0
+
+            # Current bin loop.
+            # Remember, events are in descending DV order.
+            while True:
+                # End algo if no events left - update z and then IndexError.
+                if not y_data:
+                    z += z_s * sig_bin / N_s + z_b * back_bin / N_b
+                    if z > 1:
+                        bins.insert(0, p)
+                    raise IndexError
+
+                # Break if DV not in bin.
+                if y_data[-1][1] < p:
+                    break
+
+                # Pop the event.
+                this_dv = y_data.pop()
+
+                # Add freq to S/B count.
+                if this_dv[0] == 1:
+                    sig_bin += this_dv[2]
+                else:
+                    back_bin += this_dv[2]
+
+            # Update z for current bin.
+            z += z_s * sig_bin / N_s + z_b * back_bin / N_b
+
+            # Reset z and update bin
+            if z > 1:
+                bins.insert(0, p)
+                z = 0
+
+    except IndexError:
+        print "TrafoD: All events processed."
+
+    finally:
+        bins.insert(0,-1.0)
+        return bins
+
 
 def calc_sensitivity(events, bins):
     """Calculate sensitivity (note: turns matplotlib interactive off)."""
@@ -96,12 +170,37 @@ def calc_sensitivity(events, bins):
                          bins=bins,
                          weights=weights_sb)[0]
 
-    # Calculate sensitivity iteratively bin-by-bin.
-    # Initialise cumulative S/B counters.
-    n_s = 0
-    n_b = 0
+    # Reverse the counts before calculating.
+    # Zip up S counts with B counts per bin.
+    for s, b in zip(counts_sb[0][::-1], counts_sb[1][::-1]):
+        sens += 2 * ((s + b) * math.log(1 + s / b) - s)
+
+    return math.sqrt(sens)
+
+
+def calc_sensitivity_tuples(y, y_pred, w, bins):
+    """Calculate sensitivity (note: turns matplotlib interactive off)."""
+
+    # Zip them up for the list comp.
+    y_data = zip(y, y_pred, w)
+
+    # Turn off interactive MPL.
+    plt.ioff()
+
+    # Initialise sensitivity.
+    sens = 0
+
+    # Get S/B stuff to plot.
+    events_sb = [[a[2] for a in y_data if a[0] == 1], [a[2] for a in y_data if a[0] == 0]]
+
+    weights_sb = [[a[2] for a in y_data if a[0] == 1], [a[2] for a in y_data if a[0] == 0]]
+
+    counts_sb = plt.hist(events_sb,
+                         bins=bins,
+                         weights=weights_sb)[0]
 
     # Reverse the counts before calculating.
+    # Zip up S counts with B counts per bin.
     for s, b in zip(counts_sb[0][::-1], counts_sb[1][::-1]):
         sens += 2 * ((s + b) * math.log(1 + s / b) - s)
 
