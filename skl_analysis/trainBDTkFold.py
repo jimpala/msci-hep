@@ -11,9 +11,6 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 from root_numpy import array2root
 
-# RANDOM STATE
-random.seed(42)
-
 # Read in 2 jet and 3 jet dataframes from csv.
 df_2jet_even = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
 df_3jet_even = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
@@ -27,7 +24,7 @@ print "CSV read-in completed."
 scores_dict = dict()
 
 # This for loop is for 2/3jet
-for j, njets in zip(range(2), (2,3)):
+for j, njets in zip(range(2), (2, 3)):
     # Select tuple of folds.
     dfs = df_list[j]
 
@@ -65,10 +62,10 @@ for j, njets in zip(range(2), (2,3)):
 
         # Set up BDTs and fit
         bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.01),
-                                   learning_rate=0.15,
-                                   algorithm="SAMME",
-                                   n_estimators=200
-                                   )
+                                 learning_rate=0.15,
+                                 algorithm="SAMME",
+                                 n_estimators=200
+                                 )
 
         bdt.fit(X, Y, sample_weight=w)
 
@@ -163,7 +160,8 @@ df_ntuple = df_ntuple.fillna(0)
 df_ntuple = df_ntuple.drop('Class', axis=1)
 
 # Convert to structured array
-ntuple_array = df_ntuple.as_matrix()
+ntuple_list = df_ntuple.as_matrix().tolist()
+ntuple_list = [tuple(a) for a in ntuple_list]
 
 name_type_ref = [('BDT', 'f4'),
                  ('EventNumber', 'i4'),
@@ -185,7 +183,7 @@ name_type_ref = [('BDT', 'f4'),
                  ('pTV', 'f4'),
                  ('sample', 'S15')]
 
-ntuple_array = np.array(ntuple_array, dtype=name_type_ref)
+ntuple_array = np.array(ntuple_list, dtype=name_type_ref)
 
 # Write to ROOT file.
 array2root(ntuple_array, '/Volumes/THUMB/VHbb-data/write/skl_BDT_results.root',
