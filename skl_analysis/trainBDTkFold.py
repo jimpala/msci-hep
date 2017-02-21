@@ -9,6 +9,7 @@ from event_obj import *
 from sensitivity import trafoD, calc_sensitivity
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.preprocessing import scale
 from root_numpy import array2root
 
 # Read in 2 jet and 3 jet dataframes from csv.
@@ -103,8 +104,10 @@ for j, njets in zip(range(2), (2, 3)):
 
     # Calculate sensitivity.
     # TIME: 0.7216s
-    # Sensitivity: 2.656
-    # (TMVA Benchmark: 2.976)
+    #
+    # 2 JET SENSITIVITY: 2.799
+    # 3 JET SENSITIVITY: 1.634
+    # TOTAL: 3.241
     sens = calc_sensitivity(events_list, bins)
     print "Sensitivity calculation: {}".format(str(sens))
 
@@ -142,7 +145,7 @@ for j, njets in zip(range(2), (2, 3)):
     plt.xlabel('Score')
     plt.title('Decision Scores')
 
-    # plt.savefig('fig.png')
+    plt.savefig('fig_{}jet.png'.format(njets))
     # plt.show(block=True)
 
     # Put scores in dict.
@@ -157,13 +160,13 @@ df_3jet['BDT'] = scores_dict['3_jet']
 
 df_ntuple = pd.concat([df_2jet, df_3jet], axis=0, ignore_index=True)
 df_ntuple = df_ntuple.fillna(0)
-df_ntuple = df_ntuple.drop('Class', axis=1)
 
 # Convert to structured array
 ntuple_list = df_ntuple.as_matrix().tolist()
 ntuple_list = [tuple(a) for a in ntuple_list]
 
 name_type_ref = [('BDT', 'f4'),
+                 ('Class', 'i4'),
                  ('EventNumber', 'i4'),
                  ('EventWeight', 'f4'),
                  ('MET', 'f4'),
