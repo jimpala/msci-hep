@@ -9,7 +9,7 @@ from event_obj import *
 from sensitivity import trafoD, calc_sensitivity
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.preprocessing import scale
+from sklearn import preprocessing
 from root_numpy import array2root
 
 # Read in 2 jet and 3 jet dataframes from csv.
