@@ -10,7 +10,7 @@ def sensitivity_score(y, y_pred, weights=None):
     assert weights
 
     # Get all args into 1D lists.
-    y = y.reshaope
+    y = y.reshape(1, -1)
 
     # Perform TrafoD on predictions to get optimal bins.
     bins = trafoD_tuples(y, y_pred, weights)
