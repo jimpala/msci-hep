@@ -78,20 +78,19 @@ def trafoD(event_list, initial_bins=1000, z_s=10, z_b=10):
 def trafoD_tuples(y, y_pred, w, initial_bins=200, z_s=10, z_b=10):
     """Output optimised histogram bin widths list of y, predicted y, and POSTFIT weights."""
 
-    ### TYPE CHECK
-    # for a in (y, y_pred, w):
-    #     if type(y) != list:
-    #         list(a)
+    y = y.tolist()[0]
+    y_pred = y_pred.tolist()
+    w = w.tolist()
 
     # Zip them up for the list comp.
     y_data = zip(y, y_pred, w)
 
     # Sort by prediction value.
-    y_data = sorted(y_data, key=y[1])
+    y_data = sorted(y_data, key=lambda a: a[1])
 
     # Get total signal and background.
-    N_tot = sum([a[1] * a[2] for a in y_data])
-    N_s = sum([a[1] * a[2] for a in y_data if a[0] == 1])
+    N_tot = sum([a[2] for a in y_data])
+    N_s = sum([a[2] for a in y_data if a[0] == 1])
     N_b = N_tot - N_s
 
     # Set up scan parameters.
@@ -157,7 +156,7 @@ def calc_sensitivity(events, bins):
     plt.ioff()
 
     # Initialise sensitivity.
-    sens = 0
+    sens_sq = 0
 
     # Get S/B stuff to plot.
     events_sb = [[a.decision_value for a in events if a.classification == 1],
@@ -175,14 +174,19 @@ def calc_sensitivity(events, bins):
     for s, b in zip(counts_sb[0][::-1], counts_sb[1][::-1]):
         this_sens = 2 * ((s + b) * math.log(1 + s / b) - s)
         if not math.isnan(this_sens):
-            sens += this_sens
+            sens_sq += this_sens
 
+    sens = math.sqrt(sens_sq)
 
-    return math.sqrt(sens)
+    return sens
 
 
 def calc_sensitivity_tuples(y, y_pred, w, bins):
     """Calculate sensitivity (note: turns matplotlib interactive off)."""
+
+    y = y.tolist()[0]
+    y_pred = y_pred.tolist()
+    w = w.tolist()
 
     # Zip them up for the list comp.
     y_data = zip(y, y_pred, w)
@@ -191,10 +195,10 @@ def calc_sensitivity_tuples(y, y_pred, w, bins):
     plt.ioff()
 
     # Initialise sensitivity.
-    sens = 0
+    sens_sq = 0
 
     # Get S/B stuff to plot.
-    events_sb = [[a[2] for a in y_data if a[0] == 1], [a[2] for a in y_data if a[0] == 0]]
+    events_sb = [[a[1] for a in y_data if a[0] == 1], [a[1] for a in y_data if a[0] == 0]]
 
     weights_sb = [[a[2] for a in y_data if a[0] == 1], [a[2] for a in y_data if a[0] == 0]]
 
@@ -205,9 +209,26 @@ def calc_sensitivity_tuples(y, y_pred, w, bins):
     # Reverse the counts before calculating.
     # Zip up S counts with B counts per bin.
     for s, b in zip(counts_sb[0][::-1], counts_sb[1][::-1]):
-        sens += 2 * ((s + b) * math.log(1 + s / b) - s)
+        sens_sq += 2 * ((s + b) * math.log(1 + s / b) - s)
 
-    return math.sqrt(sens)
+    sens = math.sqrt(sens_sq)
+
+    return sens
+
+
+def normalise_decision_scores(scores):
+
+    scores = scores.tolist()
+
+    # Normalise decision scores between -1 and 1.
+    max_score = max([a for a in scores])
+    min_score = min([a for a in scores])
+    score_range = max_score - min_score
+    score_midpoint = min_score + score_range / 2
+    # Translate and shrink.
+    norm_scores = map(lambda a: (a - score_midpoint) / (score_range / 2 + 0.000001), scores)  # .001 added for bounding
+
+    return np.array(norm_scores)
 
 
 def main():

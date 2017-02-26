@@ -10,7 +10,7 @@ from sensitivity import trafoD, calc_sensitivity
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import preprocessing
-from root_numpy import array2root
+#from root_numpy import array2root
 
 # Read in 2 jet and 3 jet dataframes from csv.
 df_2jet_even = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
@@ -146,7 +146,7 @@ for j, njets in zip(range(2), (2, 3)):
     plt.title('Decision Scores')
 
     plt.savefig('fig_{}jet.png'.format(njets))
-    # plt.show(block=True)
+    plt.show(block=True)
 
     # Put scores in dict.
     scores_dict['{}_jet'.format(str(njets))] = scores_even + scores_odd

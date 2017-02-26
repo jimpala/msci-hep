@@ -10,8 +10,8 @@ from sensitivity import trafoD, calc_sensitivity
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import GridSearchCV
-from sklearn import preprocessing
-from root_numpy import array2root
+from sklearn.metrics import make_scorer
+from sensitivity import trafoD_tuples, calc_sensitivity_tuples, normalise_decision_scores
 
 
 
@@ -38,10 +38,27 @@ def extractData(df, njets):
 
     return X, Y, w
 
-    # Set up BDTs and fit
 
+def sensitivity_score(y, y_pred, sample_weight=None):
+    """Gets sensitivity score metric from 1D numpy arras of y,
+    predicted y, and post-fit weights."""
 
+    # Weights must be populated.
+    assert sample_weight.any()
 
+    # Get all args into 1D lists.
+    y = y.reshape(1, -1)
+
+    # Normalise the prediction scores between -1 and 1.
+    y_pred = normalise_decision_scores(y_pred)
+
+    # Perform TrafoD on predictions to get optimal bins.
+    bins = trafoD_tuples(y, y_pred, sample_weight)
+
+    # Calculate sensitivity with set bins.
+    sens = calc_sensitivity_tuples(y, y_pred, sample_weight, bins)
+
+    return sens
 
 
 def main():
@@ -52,9 +69,15 @@ def main():
     df_3jet_odd = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
     print "CSV read-in complete."
 
+    df_2jet = pd.concat([df_2jet_even, df_2jet_odd], axis=0, ignore_index=True)
 
-    X_A, Y_A, w_A = extractData(df_2jet_even, 2)
-    X_B, Y_B, w_B = extractData(df_2jet_odd, 2)
+    # Shuffle the DF.
+    df_2jet = df_2jet.sample(frac=1, random_state=42)
+
+
+    X_A, Y_A, w_A = extractData(df_2jet, 2)
+
+    sens_scorer = make_scorer(sensitivity_score, greater_is_better=True, needs_threshold=True)
 
     bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.01),
                              learning_rate=0.15,
@@ -62,11 +85,13 @@ def main():
                              n_estimators=200
                              )
 
-    param_grid = {'n_estimators': [200, 300, 400],
-                  'base_estimator__max_depth': [2, 3, 4]}
+    param_grid = {'n_estimators': [200, 300],
+                  'base_estimator__max_depth': [2, 3]}
 
-    gs = GridSearchCV(bdt, param_grid, scoring='roc_auc',
-                      fit_params={'sample_weight': w_A}, cv=3)
+    fit_params = {'sample_weight': w_A}
+
+    gs = GridSearchCV(bdt, param_grid, scoring=sens_scorer,
+                      fit_params=fit_params, cv=2)
 
 
     print "Beginning GridSearch."
@@ -75,6 +100,8 @@ def main():
     t2 = time.time()
     t = t2 - t1
     print "GridSearch completed in {}".format(str(t))
+
+    print "END"
 
 
 if __name__ == "__main__":
