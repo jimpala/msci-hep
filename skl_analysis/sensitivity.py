@@ -101,8 +101,6 @@ def trafoD_tuples(y, y_pred, w, initial_bins=200, z_s=10, z_b=10):
     z = 0
     bins = [1.0]
 
-    print "TrafoD: Beginning loop."
-
     try:
         # Iterate over bin low edges in scan.
         for p in scan_points:
