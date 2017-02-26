@@ -127,7 +127,7 @@ def main():
 
     try:
         now = datetime.now().strftime('%d%m%y_%H%S')
-        pickle.dump(gs, open("gridsearch_{:d}jets_{:d}folds_{}.p.".format(njets, kfolds, now), 'wb'))
+        pickle.dump(gs, open("gridsearch_{:d}jets_{:d}folds_{}.p".format(njets, kfolds, now), 'wb'))
         print "GS pickle successfully dumped to file gridsearch_{:d}jets_{:d}folds_{}.p.".format(njets, kfolds, now)
     except IndexError:
         print "Terminal argument not entered. Backup dump and exit."
