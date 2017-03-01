@@ -129,5 +129,7 @@ class Event:
         else:
             return 0
 
-
+    def rescale_weights(self, scale):
+        self.event_weight = scale * self.event_weight
+        self.post_fit_weight = self.event_weight * self.scale_factor
 

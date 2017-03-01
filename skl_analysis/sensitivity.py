@@ -15,8 +15,8 @@ def trafoD(event_list, initial_bins=1000, z_s=10, z_b=10):
     event_list = sorted(event_list, key=lambda a: a.decision_value)
 
     # Get total signal and background.
-    N_tot = sum([a.event_weight for a in event_list])
-    N_s = sum([a.event_weight for a in event_list if a.classification == 1])
+    N_tot = sum([a.post_fit_weight for a in event_list])
+    N_s = sum([a.post_fit_weight for a in event_list if a.classification == 1])
     N_b = N_tot - N_s
 
     # Set up scan parameters.
@@ -55,9 +55,9 @@ def trafoD(event_list, initial_bins=1000, z_s=10, z_b=10):
 
                 # Add freq to S/B count.
                 if this_event.classification == 1:
-                    sig_bin += this_event.event_weight
+                    sig_bin += this_event.post_fit_weight
                 else:
-                    back_bin += this_event.event_weight
+                    back_bin += this_event.post_fit_weight
 
             # Update z for current bin.
             z += z_s * sig_bin / N_s + z_b * back_bin / N_b
@@ -160,8 +160,8 @@ def calc_sensitivity(events, bins):
     events_sb = [[a.decision_value for a in events if a.classification == 1],
                  [a.decision_value for a in events if a.classification == 0]]
 
-    weights_sb = [[a.event_weight for a in events if a.classification == 1],
-                  [a.event_weight for a in events if a.classification == 0]]
+    weights_sb = [[a.post_fit_weight for a in events if a.classification == 1],
+                  [a.post_fit_weight for a in events if a.classification == 0]]
 
     counts_sb = plt.hist(events_sb,
                          bins=bins,
