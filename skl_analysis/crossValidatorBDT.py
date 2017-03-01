@@ -34,16 +34,16 @@ def renormalise_weights(event_list):
 
     # Scale them up and recalculate post fit weights.
     for s in sig_events:
-        s.rescale_weights(sig_scale)
+        s.set_train_mode(sig_scale)
     for b in back_events:
-        b.rescale_weights(back_scale)
+        b.set_train_mode(back_scale)
 
     # Concatenate the arrays and return.
     scaled_event_list = sig_events + back_events
     return scaled_event_list
 
 
-def extract_data(df, njets, renormalised=True):
+def extract_data(df, njets, train_mode=True):
     df = df.reset_index(drop=True)  # Just to make sure.
 
     # Get the df attributes. Then drop.
@@ -57,7 +57,7 @@ def extract_data(df, njets, renormalised=True):
     this_events = [Event(a, njets, b, c) for a, b, c in args_zipped]
 
     # Optional renormalisation
-    if renormalised:
+    if train_mode:
         this_events = renormalise_weights(this_events)
 
     # Drop some cols.

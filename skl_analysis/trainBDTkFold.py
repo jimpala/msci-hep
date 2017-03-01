@@ -99,6 +99,10 @@ for j, njets in zip(range(2), (2, 3)):
         e.set_decision_value(s)
     print "Event objects updated."
 
+    # PUT EVENT OBJECTS IN TEST MODE.
+    for e in events_list:
+        e.set_test_mode()
+
     # Call TrafoD on Event list.
     # TIME: 0.3562s
     print "Implementing TrafoD histogram bin transform."
