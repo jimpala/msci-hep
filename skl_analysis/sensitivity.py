@@ -265,6 +265,50 @@ def calc_sensitivity(events, bins):
     return sens
 
 
+def calc_sensitivity_with_error(events, bins, bin_sums_w2_s, bin_sums_w2_b):
+    """Calculate sensitivity (note: turns matplotlib interactive off)."""
+
+    # Turn off interactive MPL.
+    plt.ioff()
+
+    # Initialise sensitivity and error.
+    sens_sq = 0
+    error = 0
+
+    # Get S/B stuff to plot.
+    events_sb = [[a.decision_value for a in events if a.classification == 1],
+                 [a.decision_value for a in events if a.classification == 0]]
+
+    weights_sb = [[a.post_fit_weight for a in events if a.classification == 1],
+                  [a.post_fit_weight for a in events if a.classification == 0]]
+
+    counts_sb = plt.hist(events_sb,
+                         bins=bins,
+                         weights=weights_sb)[0]
+
+    # Reverse the counts before calculating.
+    # Zip up S counts with B counts per bin.
+
+    s_stack = counts_sb[0][::-1]
+    b_stack = counts_sb[1][::-1]
+    ds_stack = bin_sums_w2_s[::-1]
+    db_stack = bin_sums_w2_b[::-1]
+
+    for s, b, ds, db in zip(s_stack, b_stack, ds_stack, db_stack):
+        this_sens = 2 * ((s + b) * math.log(1 + s / b) - s)
+        this_dsens_ds = 2 * math.log(1 + s/b)
+        this_dsens_db = 2 * (math.log(1 + s/b) - s/b)
+        this_error = (this_dsens_ds * ds) ** 2 + (this_dsens_db * db) ** 2
+        if not math.isnan(this_sens):
+            sens_sq += this_sens
+        if not math.isnan(this_error):
+            error += this_error
+
+    sens = math.sqrt(sens_sq)
+
+    return sens, error
+
+
 def calc_sensitivity_tuples(y, y_pred, w, bins):
     """Calculate sensitivity (note: turns matplotlib interactive off)."""
 
