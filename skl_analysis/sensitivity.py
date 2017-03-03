@@ -120,6 +120,8 @@ def trafoD_with_error(event_list, initial_bins=1000, z_s=10, z_b=10):
                     z += z_s * sig_bin / N_s + z_b * back_bin / N_b
                     if z > 1:
                         bins.insert(0, p)
+                        delta_bins_s.insert(0, sum_w2_s)
+                        delta_bins_b.insert(0, sum_w2_b)
                     raise IndexError
 
                 # Break if DV not in bin.
@@ -158,7 +160,7 @@ def trafoD_with_error(event_list, initial_bins=1000, z_s=10, z_b=10):
         bins.insert(0,-1.0)
         delta_bins_s.insert(0, sum_w2_s)
         delta_bins_b.insert(0, sum_w2_b)
-        return bins, [delta_bins_s, delta_bins_b]
+        return bins, delta_bins_s, delta_bins_b
 
 
 def trafoD_tuples(y, y_pred, w, initial_bins=200, z_s=10, z_b=10):
@@ -273,7 +275,7 @@ def calc_sensitivity_with_error(events, bins, bin_sums_w2_s, bin_sums_w2_b):
 
     # Initialise sensitivity and error.
     sens_sq = 0
-    error = 0
+    error_sq = 0
 
     # Get S/B stuff to plot.
     events_sb = [[a.decision_value for a in events if a.classification == 1],
@@ -287,8 +289,7 @@ def calc_sensitivity_with_error(events, bins, bin_sums_w2_s, bin_sums_w2_b):
                          weights=weights_sb)[0]
 
     # Reverse the counts before calculating.
-    # Zip up S counts with B counts per bin.
-
+    # Zip up S, B, DS and DB per bin.
     s_stack = counts_sb[0][::-1]
     b_stack = counts_sb[1][::-1]
     ds_stack = bin_sums_w2_s[::-1]
@@ -302,9 +303,11 @@ def calc_sensitivity_with_error(events, bins, bin_sums_w2_s, bin_sums_w2_b):
         if not math.isnan(this_sens):
             sens_sq += this_sens
         if not math.isnan(this_error):
-            error += this_error
+            error_sq += this_error
 
+    # Sqrt operations and error equation balancing.
     sens = math.sqrt(sens_sq)
+    error = math.sqrt(error_sq/sens_sq)
 
     return sens, error
 
