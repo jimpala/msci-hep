@@ -47,8 +47,6 @@ def fold_score(events_A, events_B, bdt_A, df_A, df_B):
     X_A = df_A.as_matrix()
     X_B = df_B.as_matrix()
 
-    print "Commencing BDT training..."
-
     bdt_A.fit(X_A, Y_A, sample_weight=w_A)
 
     # Get scores of X_A for BDT_B and vice-versa.
