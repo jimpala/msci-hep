@@ -7,7 +7,7 @@ import sys
 
 from event_obj import *
 from crossValidatorBDT import renormalise_weights
-from sensitivity import trafoD, calc_sensitivity
+from sensitivity import trafoD, calc_sensitivity, trafoD_with_error, calc_sensitivity_with_error
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import preprocessing
@@ -87,8 +87,8 @@ for j, njets in zip(range(2), (2, 3)):
     min_score = min([a for a in scores_odd + scores_even])
     score_range = max_score - min_score
     score_midpoint = min_score + score_range / 2
-    # Translate and shrink.
-    scores_odd = map(lambda a: (a - score_midpoint) / (score_range / 2 + 0.000001), scores_odd)  # .001 added for bounding
+    # Translate and shrink. .001 added for bounding
+    scores_odd = map(lambda a: (a - score_midpoint) / (score_range / 2 + 0.000001), scores_odd)
     scores_even = map(lambda a: (a - score_midpoint) / (score_range / 2 + 0.000001), scores_even)
 
 
@@ -104,18 +104,13 @@ for j, njets in zip(range(2), (2, 3)):
         e.set_test_mode()
 
     # Call TrafoD on Event list.
-    # TIME: 0.3562s
     print "Implementing TrafoD histogram bin transform."
-    bins = trafoD(events_list)
+    bins, delta_bins_s, delta_bins_b = trafoD_with_error(events_list)
 
     # Calculate sensitivity.
-    # TIME: 0.7216s
-    #
-    # 2 JET SENSITIVITY: 2.799
-    # 3 JET SENSITIVITY: 1.634
-    # TOTAL: 3.241
-    sens = calc_sensitivity(events_list, bins)
+    sens, error = calc_sensitivity_with_error(events_list, bins, delta_bins_s, delta_bins_b)
     print "Sensitivity calculation: {}".format(str(sens))
+    print "Error calculation: {}".format(str(error))
 
     print "Plotting results..."
 
