@@ -7,10 +7,10 @@ from trainSwapFold import *
 
 def main():
     # Read in 2 jet and 3 jet dataframes from csv.
-    df_2jet_k1 = pd.read_csv('/home/jpyne/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
-    df_3jet_k1 = pd.read_csv('/home/jpyne/VHbb-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
-    df_2jet_k2 = pd.read_csv('/home/jpyne/VHbb-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
-    df_3jet_k2 = pd.read_csv('/home/jpyne/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
+    df_2jet_k1 = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_even.csv', index_col=0)
+    df_3jet_k1 = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_even.csv', index_col=0)
+    df_2jet_k2 = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_odd.csv', index_col=0)
+    df_3jet_k2 = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_odd.csv', index_col=0)
 
     json_store = dict()
 
