@@ -1,21 +1,15 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import random
-import time
-import sys
 
 from event_obj import *
-from crossValidatorBDT import renormalise_weights
-from sensitivity import trafoD, calc_sensitivity, trafoD_with_error, calc_sensitivity_with_error
-from sklearn.ensemble import AdaBoostClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn import preprocessing
+from sensitivity import trafoD_with_error, calc_sensitivity_with_error
 
 
-def populate_events(df, njets):
+def populate_events(df, njets, train_weights=False):
+    """Returns a list of n-jet events corresponding to the entries in passed DF."""
 
-    # Get the df attributes. Then drop.
+    # Get the df attributes. Zip them up. Then enter them via a list iteration.
     processes = df['sample'].as_matrix().tolist()
     indices = df.index.values.tolist()
     event_weights = df['EventWeight'].as_matrix().tolist()
@@ -23,22 +17,58 @@ def populate_events(df, njets):
     args_zipped = zip(processes, indices, event_weights)
 
     events = [Event(a, njets, b, c) for a, b, c in args_zipped]
-    events = renormalise_weights(events)
+
+    if train_weights:
+        events = renormalise_train_weights(events)
 
     return events
 
 
-def ready_df_for_training(df):
-    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)  # Drop some cols.
+def renormalise_train_weights(event_list):
+    """Takes a list of events and sets their renormalised training weights."""
+
+    # Get S&B event lists.
+    sig_events = [a for a in event_list if a.classification == 1]
+    back_events = [a for a in event_list if a.classification == 0]
+
+    # Get S&B event weight sums and frequencies.
+    sig_weight_sum = sum([a.event_weight for a in sig_events])
+    back_weight_sum = sum([a.event_weight for a in back_events])
+    sig_freq = len(sig_events)
+    back_freq = len(back_events)
+
+    # Get renormalisation scale factors. freq = weight_sum * scale.
+    sig_scale = sig_freq / sig_weight_sum
+    back_scale = back_freq / back_weight_sum
+
+    # Scale them up and recalculate post fit weights.
+    for s in sig_events:
+        s.set_train_weight(sig_scale)
+    for b in back_events:
+        b.set_train_weight(back_scale)
+
+    # Concatenate the arrays and return.
+    scaled_event_list = sig_events + back_events
+    return scaled_event_list
+
+
+def ready_df_for_training(df, events):
+    """Returns df with non-training variables dropped and ordered by event list."""
+    # Drop unneeded cols.
+    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)
+
+    # Order by event list.
+    df = df.ix[[a.index for a in events]]
 
     return df
 
 
 def fold_score(events_A, events_B, bdt_A, df_A, df_B):
+    """Returns scored events_B for a BDT_A."""
 
-    # Get indices, weights and classes for each of these splits.
+    # Get indices, train weights and classes for each of these splits.
     # w and Y need to be numpy arrays to work with skl.
-    w_A = np.array([a.event_weight for a in events_A])
+    w_A = np.array([a.train_weight for a in events_A])
     Y_A = np.array([a.classification for a in events_A])
 
     # Index our X training sets by row; convert to ndarrays.
@@ -75,12 +105,7 @@ def normalise_scores(events):
 
 def trafo_sensitivity(events, error=True):
 
-    # PUT EVENT OBJECTS IN TEST MODE.
-    for e in events:
-        e.set_test_mode()
-
     # Call TrafoD on Event list.
-    print "Implementing TrafoD histogram bin transform."
     bins, delta_bins_s, delta_bins_b = trafoD_with_error(events)
 
     # Calculate sensitivity.
@@ -91,12 +116,7 @@ def trafo_sensitivity(events, error=True):
 
 def decision_plot(events):
 
-    # PUT EVENT OBJECTS IN TEST MODE.
-    for e in events:
-        e.set_test_mode()
-
     # Call TrafoD on Event list.
-    print "Implementing TrafoD histogram bin transform."
     bins, delta_bins_s, delta_bins_b = trafoD_with_error(events)
 
     # Initialise plot stuff

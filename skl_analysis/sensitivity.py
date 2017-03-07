@@ -28,8 +28,6 @@ def trafoD(event_list, initial_bins=1000, z_s=10, z_b=10):
     z = 0
     bins = [1.0]
 
-    print "TrafoD: Beginning loop."
-
     try:
         # Iterate over bin low edges in scan.
         for p in scan_points:
@@ -102,8 +100,6 @@ def trafoD_with_error(event_list, initial_bins=1000, z_s=10, z_b=10):
     sum_w2_b = 0
     delta_bins_s = list()
     delta_bins_b = list()
-
-    print "TrafoD: Beginning loop."
 
     try:
         # Iterate over bin low edges in scan.

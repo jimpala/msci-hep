@@ -1,49 +1,11 @@
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import random
-import time
-from datetime import datetime
-import sys
-import pickle
+
 
 from event_obj import *
-from sensitivity import trafoD, calc_sensitivity
-from sklearn.ensemble import AdaBoostClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import make_scorer
+from trainSwapFold import *
 from sensitivity import trafoD_tuples, calc_sensitivity_tuples, normalise_decision_scores
 
 
-def renormalise_weights(event_list):
-
-    # Get S&B event lists.
-    sig_events = [a for a in event_list if a.classification == 1]
-    back_events = [a for a in event_list if a.classification == 0]
-
-    # Get S&B event weight sums and frequencies.
-    sig_weight_sum = sum([a.event_weight for a in sig_events])
-    back_weight_sum = sum([a.event_weight for a in back_events])
-    sig_freq = len(sig_events)
-    back_freq = len(back_events)
-
-    # Get renormalisation scale factors. freq = weight_sum * scale.
-    sig_scale = sig_freq / sig_weight_sum
-    back_scale = back_freq / back_weight_sum
-
-    # Scale them up and recalculate post fit weights.
-    for s in sig_events:
-        s.set_train_mode(sig_scale)
-    for b in back_events:
-        b.set_train_mode(back_scale)
-
-    # Concatenate the arrays and return.
-    scaled_event_list = sig_events + back_events
-    return scaled_event_list
-
-
-def extract_data(df, njets, train_mode=True):
+def extract_data(df, njets):
     df = df.reset_index(drop=True)  # Just to make sure.
 
     # Get the df attributes. Then drop.
@@ -56,9 +18,8 @@ def extract_data(df, njets, train_mode=True):
     # Number of jets here is ambiguous.
     this_events = [Event(a, njets, b, c) for a, b, c in args_zipped]
 
-    # Optional renormalisation
-    if train_mode:
-        this_events = renormalise_weights(this_events)
+    # Set train weights.
+    this_events = renormalise_train_weights(this_events)
 
     # Drop some cols.
     df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)
@@ -67,11 +28,12 @@ def extract_data(df, njets, train_mode=True):
     # w and Y need to be numpy arrays to work with skl.
     w = np.array([a.event_weight for a in this_events])
     post_w = np.array([a.post_fit_weight for a in this_events])
+    train_w = np.array([a.train_weight for a in this_events])
     Y = np.array([a.classification for a in this_events])
     X = df.as_matrix()
 
 
-    return X, Y, w, post_w
+    return X, Y, w, post_w, train_w
 
 
 def sensitivity_score(y, y_pred, sample_weight=None):

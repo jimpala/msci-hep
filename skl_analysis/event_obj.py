@@ -120,8 +120,7 @@ class Event:
 
         self.decision_value = decision_value
 
-        self.pre_train_weight = None
-        self.train_mode = False
+        self.train_weight = None
 
     def set_decision_value(self, decision_value):
         self.decision_value = decision_value
@@ -132,13 +131,7 @@ class Event:
         else:
             return 0
 
-    def set_train_mode(self, scale):
+    def set_train_weight(self, scale):
         # Store pretrain weight and enter train mode
-        self.pre_train_weight = self.event_weight
-        self.event_weight = scale * self.event_weight
-        self.train_mode = True
-
-    def set_test_mode(self):
-        self.event_weight = self.pre_train_weight
-        self.train_mode = False
+        self.train_weight = self.event_weight * scale
 
