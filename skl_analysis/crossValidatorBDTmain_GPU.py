@@ -17,10 +17,10 @@ from crossValidatorBDT import sensitivity_score, extract_data
 def main():
     """This main takes one argv - the number of jets for the analysis."""
     # Read in 2 jet and 3 jet dataframes from csv.
-    df_2jet_even = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
-    df_3jet_even = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
-    df_2jet_odd = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
-    df_3jet_odd = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
+    df_2jet_even = pd.read_csv('/home/jpyne/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
+    df_3jet_even = pd.read_csv('/home/jpyne/VHbb-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
+    df_2jet_odd = pd.read_csv('/home/jpyne/VHbb-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
+    df_3jet_odd = pd.read_csv('/home/jpyne/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
     print "CSV read-in complete."
 
     dfs = list()
