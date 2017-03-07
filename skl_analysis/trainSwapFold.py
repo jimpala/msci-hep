@@ -7,8 +7,9 @@ from sensitivity import trafoD_with_error, calc_sensitivity_with_error
 
 
 def populate_events(df, njets):
+    """Returns a list of n-jet events corresponding to the entries in passed DF."""
 
-    # Get the df attributes. Then drop.
+    # Get the df attributes. Zip them up. Then enter them via a list iteration.
     processes = df['sample'].as_matrix().tolist()
     indices = df.index.values.tolist()
     event_weights = df['EventWeight'].as_matrix().tolist()
@@ -97,7 +98,6 @@ def normalise_scores(events):
 def trafo_sensitivity(events, error=True):
 
     # Call TrafoD on Event list.
-    print "Implementing TrafoD histogram bin transform."
     bins, delta_bins_s, delta_bins_b = trafoD_with_error(events)
 
     # Calculate sensitivity.
@@ -108,12 +108,7 @@ def trafo_sensitivity(events, error=True):
 
 def decision_plot(events):
 
-    # PUT EVENT OBJECTS IN TEST MODE.
-    for e in events:
-        e.set_test_mode()
-
     # Call TrafoD on Event list.
-    print "Implementing TrafoD histogram bin transform."
     bins, delta_bins_s, delta_bins_b = trafoD_with_error(events)
 
     # Initialise plot stuff

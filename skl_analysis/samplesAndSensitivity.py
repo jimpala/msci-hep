@@ -7,7 +7,6 @@ import sys
 import json
 
 from event_obj import *
-from crossValidatorBDT import renormalise_weights
 from sensitivity import trafoD, calc_sensitivity, trafoD_with_error, calc_sensitivity_with_error
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
