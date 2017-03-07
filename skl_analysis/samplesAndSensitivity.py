@@ -12,7 +12,6 @@ from sensitivity import trafoD, calc_sensitivity, trafoD_with_error, calc_sensit
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import preprocessing
-from root_numpy import array2root
 from trainSwapFold import *
 
 
