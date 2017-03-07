@@ -34,8 +34,8 @@ def main():
     print "Event list ready."
 
     # Ready the DFs for training and scoring.
-    df_2jet_k1 = ready_df_for_training(df_2jet_k1)
-    df_2jet_k2 = ready_df_for_training(df_2jet_k2)
+    df_2jet_k1 = ready_df_for_training(df_2jet_k1, events_k1)
+    df_2jet_k2 = ready_df_for_training(df_2jet_k2, events_k2)
 
     bdt_k1 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.01),
                                 learning_rate=0.15,

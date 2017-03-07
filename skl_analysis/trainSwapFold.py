@@ -6,7 +6,7 @@ from event_obj import *
 from sensitivity import trafoD_with_error, calc_sensitivity_with_error
 
 
-def populate_events(df, njets):
+def populate_events(df, njets, train_weights=False):
     """Returns a list of n-jet events corresponding to the entries in passed DF."""
 
     # Get the df attributes. Zip them up. Then enter them via a list iteration.
@@ -17,6 +17,9 @@ def populate_events(df, njets):
     args_zipped = zip(processes, indices, event_weights)
 
     events = [Event(a, njets, b, c) for a, b, c in args_zipped]
+
+    if train_weights:
+        events = renormalise_train_weights(events)
 
     return events
 
@@ -49,8 +52,13 @@ def renormalise_train_weights(event_list):
     return scaled_event_list
 
 
-def ready_df_for_training(df):
-    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)  # Drop some cols.
+def ready_df_for_training(df, events):
+    """Returns df with non-training variables dropped and ordered by event list."""
+    # Drop unneeded cols.
+    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)
+
+    # Order by event list.
+    df = df.ix[[a.index for a in events]]
 
     return df
 
