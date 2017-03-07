@@ -15,7 +15,6 @@ from root_numpy import array2root
 
 
 def populate_events(df, njets):
-    df = df.reset_index(drop=True)  # Just to make sure.
 
     # Get the df attributes. Then drop.
     processes = df['sample'].as_matrix().tolist()

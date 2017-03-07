@@ -32,7 +32,7 @@ def main():
     sample_fracs = np.arange(0.1, 1.05, 0.05)
     json_store['sample_fracs'] = sample_fracs
 
-    df_gen = (df.sample(frac=a) for a in sample_fracs)
+    df_gen = (df.sample(frac=a, random_state=42) for a in sample_fracs)
 
     print "Beginning generator loop for 2 jet."
 
@@ -51,6 +51,9 @@ def main():
             events_k1 = populate_events(this_df_k1, 2)
             events_k2 = populate_events(this_df_k2, 2)
 
+            this_df_k1 = this_df_k1.ix[[a.index for a in events_k1]]
+            this_df_k2 = this_df_k2.ix[[a.index for a in events_k2]]
+
             this_df_k1 = ready_df_for_training(this_df_k1)
             this_df_k2 = ready_df_for_training(this_df_k2)
 
@@ -58,19 +61,19 @@ def main():
             bdt_k1 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.01),
                                         learning_rate=0.15,
                                         algorithm="SAMME",
-                                        n_estimators=200
+                                        n_estimators=310
                                         )
 
             print "Training second fold of BDT..."
             bdt_k2 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.01),
                                         learning_rate=0.15,
                                         algorithm="SAMME",
-                                        n_estimators=200
+                                        n_estimators=310
                                         )
 
             print "Scoring folded events..."
-            events_k1 = fold_score(events_k1, events_k2, bdt_k1, this_df_k1, this_df_k2)
-            events_k2 = fold_score(events_k2, events_k1, bdt_k2, this_df_k2, this_df_k1)
+            events_k2 = fold_score(events_k1, events_k2, bdt_k1, this_df_k1, this_df_k2)
+            events_k1 = fold_score(events_k2, events_k1, bdt_k2, this_df_k2, this_df_k1)
             events = events_k1 + events_k2
 
             print "Processing sensitivity and error..."
@@ -78,7 +81,8 @@ def main():
             this_sens, this_error = trafo_sensitivity(events)
             sens_2jet.append(this_sens)
             err_2jet.append(this_error)
-            print "2 jet iteraation completed."
+            print "Sens: {:f}".format(this_sens)
+            print "2 jet iteration completed."
 
     except StopIteration:
         print "2 jet analysis fully completed."
@@ -93,7 +97,7 @@ def main():
     json_store['nsamples_3jet'] = len(df)
     sample_fracs = np.arange(0.1, 1.05, 0.05)
 
-    df_gen = (df.sample(frac=a) for a in sample_fracs)
+    df_gen = (df.sample(frac=a, random_state=42) for a in sample_fracs)
 
     print "Beginning generator loop for 3 jet."
 
@@ -106,11 +110,14 @@ def main():
             this_df = df_gen.next()
             this_df = this_df.reset_index(drop=True)
 
-            this_df_k1 = this_df.ix[:len(this_df) / 2]
-            this_df_k2 = this_df.ix[len(this_df) / 2:]
+            this_df_k1 = this_df.ix[:len(this_df)/2]
+            this_df_k2 = this_df.ix[len(this_df)/2:]
 
             events_k1 = populate_events(this_df_k1, 2)
             events_k2 = populate_events(this_df_k2, 2)
+
+            this_df_k1 = this_df_k1.ix[[a.index for a in events_k1]]
+            this_df_k2 = this_df_k2.ix[[a.index for a in events_k2]]
 
             this_df_k1 = ready_df_for_training(this_df_k1)
             this_df_k2 = ready_df_for_training(this_df_k2)
@@ -119,19 +126,19 @@ def main():
             bdt_k1 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.01),
                                         learning_rate=0.15,
                                         algorithm="SAMME",
-                                        n_estimators=310
+                                        n_estimators=200
                                         )
 
             print "Training second fold of BDT..."
             bdt_k2 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.01),
                                         learning_rate=0.15,
                                         algorithm="SAMME",
-                                        n_estimators=310
+                                        n_estimators=200
                                         )
 
             print "Scoring folded events..."
-            events_k1 = fold_score(events_k1, events_k2, bdt_k1, this_df_k1, this_df_k2)
-            events_k2 = fold_score(events_k2, events_k1, bdt_k2, this_df_k2, this_df_k1)
+            events_k2 = fold_score(events_k1, events_k2, bdt_k1, this_df_k1, this_df_k2)
+            events_k1 = fold_score(events_k2, events_k1, bdt_k2, this_df_k2, this_df_k1)
             events = events_k1 + events_k2
 
             print "Processing sensitivity and error..."
@@ -139,7 +146,8 @@ def main():
             this_sens, this_error = trafo_sensitivity(events)
             sens_3jet.append(this_sens)
             err_3jet.append(this_error)
-            print "3 jet iteraation completed."
+            print "Sens: {:f}".format(this_sens)
+            print "3 jet iteration completed."
 
     except StopIteration:
         print "3 jet analysis fully completed."
