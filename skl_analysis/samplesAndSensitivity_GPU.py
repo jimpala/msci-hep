@@ -18,7 +18,7 @@ def main():
     #######
     df = pd.concat([df_2jet_k1, df_2jet_k2], axis=0, ignore_index=True)
     json_store['nsamples_2jet'] = len(df)
-    sample_fracs = np.linspace(0.1, 1, 19)
+    sample_fracs = np.linspace(0.1, 1, 19).tolist()
     json_store['sample_fracs'] = sample_fracs
 
     df_gen = (df.sample(frac=a) for a in sample_fracs)
@@ -79,8 +79,8 @@ def main():
         print "2 jet analysis fully completed."
 
     finally:
-        json_store['sens_2jet'] = sens_2jet.tolist()
-        json_store['err_2jet'] = err_2jet.tolist()
+        json_store['sens_2jet'] = sens_2jet
+        json_store['err_2jet'] = err_2jet
 
     # 3 JET
     #######
@@ -145,8 +145,8 @@ def main():
         print "3 jet analysis fully completed."
 
     finally:
-        json_store['sens_3jet'] = sens_3jet.tolist()
-        json_store['err_3jet'] = err_3jet.tolist()
+        json_store['sens_3jet'] = sens_3jet
+        json_store['err_3jet'] = err_3jet
 
     # Dump JSON to file.
     with open('samplesVsSensitivity.json', 'w') as fp:
