@@ -45,7 +45,7 @@ def main():
     # Shuffle the DF.
     df = df.sample(frac=1, random_state=42)
 
-    X_A, Y_A, w_A, post_w_A = extract_data(df, njets)
+    X_A, Y_A, w_A, post_w_A, train_w_A = extract_data(df, njets)
 
     sens_scorer = make_scorer(sensitivity_score, greater_is_better=True, needs_threshold=True)
 
@@ -61,8 +61,8 @@ def main():
     test_grid = {'n_estimators': [100],
                   'base_estimator__max_depth': [2]}
 
-    # With our SKL hack, enter fit_params as tuples of pre and post fit weights.
-    fit_params = {'sample_weight': zip(w_A, post_w_A)}
+    # With our SKL hack, enter fit_params as tuples of train and post fit weights.
+    fit_params = {'sample_weight': zip(train_w_A, post_w_A)}
 
     gs = GridSearchCV(bdt, test_grid, scoring=sens_scorer,
                       fit_params=fit_params, cv=2)
