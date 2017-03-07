@@ -7,10 +7,10 @@ from trainSwapFold import *
 
 def main():
     # Read in 2 jet and 3 jet dataframes from csv.
-    df_2jet_k1 = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_even.csv', index_col=0)
-    df_3jet_k1 = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_even.csv', index_col=0)
-    df_2jet_k2 = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_odd.csv', index_col=0)
-    df_3jet_k2 = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_odd.csv', index_col=0)
+    df_2jet_k1 = pd.read_csv('/home/jpyne/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
+    df_3jet_k1 = pd.read_csv('/home/jpyne/VHbb-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
+    df_2jet_k2 = pd.read_csv('/home/jpyne/VHbb-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
+    df_3jet_k2 = pd.read_csv('/home/jpyne/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
 
     json_store = dict()
 
@@ -18,8 +18,8 @@ def main():
     #######
     df = pd.concat([df_2jet_k1, df_2jet_k2], axis=0, ignore_index=True)
     json_store['nsamples_2jet'] = len(df)
-    sample_fracs = np.linspace(0.1, 1, 19).tolist()
-    json_store['sample_fracs'] = sample_fracs
+    sample_fracs = np.linspace(0.1, 1, 19)
+    json_store['sample_fracs'] = sample_fracs.tolist()
 
     df_gen = (df.sample(frac=a) for a in sample_fracs)
 
@@ -34,11 +34,11 @@ def main():
             # Generate the next df with a sample fraction and reset the index.
             this_df = df_gen.next()
             this_df = this_df.reset_index(drop=True)
-            
+
             # Segregate the upper and lower half for the swap fold.
             this_df_k1 = this_df.ix[:len(this_df)/2]
             this_df_k2 = this_df.ix[len(this_df)/2:]
-            
+
             # Populate events lists and ready DFs for training.
             events_k1 = populate_events(this_df_k1, 2, train_weights=True)
             events_k2 = populate_events(this_df_k2, 2, train_weights=True)
@@ -59,7 +59,7 @@ def main():
                                         algorithm="SAMME",
                                         n_estimators=310
                                         )
-            
+
             # Get decision scores.
             print "Scoring folded events..."
             events_k2 = fold_score(events_k1, events_k2, bdt_k1, this_df_k1, this_df_k2)
@@ -86,6 +86,7 @@ def main():
     #######
     df = pd.concat([df_3jet_k1, df_3jet_k2], axis=0, ignore_index=True)
     json_store['nsamples_3jet'] = len(df)
+    sample_fracs = np.linspace(0.1, 1, 19)
 
     df_gen = (df.sample(frac=a) for a in sample_fracs)
 
@@ -106,8 +107,8 @@ def main():
             this_df_k2 = this_df.ix[len(this_df) / 2:]
 
             # Populate events lists and ready DFs for training.
-            events_k1 = populate_events(this_df_k1, 3)
-            events_k2 = populate_events(this_df_k2, 3)
+            events_k1 = populate_events(this_df_k1, 2, train_weights=True)
+            events_k2 = populate_events(this_df_k2, 2, train_weights=True)
 
             this_df_k1 = ready_df_for_training(this_df_k1, events_k1)
             this_df_k2 = ready_df_for_training(this_df_k2, events_k2)

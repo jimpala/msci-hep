@@ -55,8 +55,8 @@ def main():
                              n_estimators=200
                              )
 
-    param_grid = {'n_estimators': np.arange(100, 401, 10),
-                  'base_estimator__max_depth': [2, 3, 4]}
+    param_grid = {'n_estimators': np.arange(50, 700, 10),
+                  'base_estimator__max_depth': [2, 3, 4, 5]}
 
     test_grid = {'n_estimators': [300],
                   'base_estimator__max_depth': [3]}
@@ -64,8 +64,8 @@ def main():
     # With our SKL hack, enter fit_params as tuples of train and post fit weights.
     fit_params = {'sample_weight': zip(train_w_A, post_w_A)}
 
-    gs = GridSearchCV(bdt, test_grid, scoring=sens_scorer,
-                      fit_params=fit_params, cv=2)
+    gs = GridSearchCV(bdt, param_grid, scoring=sens_scorer,
+                      fit_params=fit_params, n_jobs=8, cv=2)
 
 
     print "Beginning GridSearch."

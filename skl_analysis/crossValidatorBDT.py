@@ -6,7 +6,6 @@ from sensitivity import trafoD_tuples, calc_sensitivity_tuples, normalise_decisi
 
 
 def extract_data(df, njets):
-    df = df.reset_index(drop=True)  # Just to make sure.
 
     # Get the df attributes. Then drop.
     processes = df['sample'].as_matrix().tolist()
@@ -23,6 +22,9 @@ def extract_data(df, njets):
 
     # Drop some cols.
     df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)
+
+    # Order by event list.
+    df = df.ix[[a.index for a in this_events]]
 
     # Get indices, weights and classes for each of these splits.
     # w and Y need to be numpy arrays to work with skl.

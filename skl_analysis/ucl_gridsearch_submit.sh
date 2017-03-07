@@ -6,12 +6,12 @@ cd /home/jpyne/msci-hep/skl_analysis
 
 # Iterate through gridsearch args.
 kfolds=2
-for (($kfolds; kfolds<=3; kfolds++))
+for (($kfolds; kfolds<=2; kfolds++))
 do
 	njets=2
 	for (($njets; njets<=3; njets++))
 	do
-		python crossValidatorBDT.py $njets $kfolds
+		python crossValidatorBDTmain_GPU.py $njets $kfolds
 	done
 done
 
