@@ -1,5 +1,8 @@
 from keras.models import Sequential
 from keras.layers import Dense
+from keras.optimizers import Adam, Adadelta
+from keras.utils import np_utils
+
 import numpy as np
 import pandas as pd
 import json
@@ -124,19 +127,21 @@ def main():
 
     X_A, Y_A, w_A = df_process(df_2jet_even, 2, train=True)
     X_B, Y_B, w_B = df_process(df_2jet_odd, 2, test=True)
+    Y_A = np_utils.to_categorical(Y_A,2)
+    Y_B = np_utils.to_categorical(Y_B,2)
     validation = (X_B, Y_B, w_B)
 
     # NN model
     model = Sequential()
     model.add(Dense(300, input_dim=11, init='uniform', activation='relu'))
     model.add(Dense(300, init='uniform', activation='relu'))
-    model.add(Dense(1, init='uniform', activation='softmax'))
+    model.add(Dense(2, init='uniform', activation='softmax'))
 
-    opt = Adam()
+    opt = Adadelta()
     model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     # Fit the model
-    hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=16, sample_weight=w_A,
+    hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=32, sample_weight=w_A,
                      validation_data=validation)
 
     # Get decision scores.
