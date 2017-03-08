@@ -133,8 +133,7 @@ def main():
 
     # NN model
     model = Sequential()
-    model.add(Dense(300, input_dim=11, init='uniform', activation='relu'))
-    model.add(Dense(300, init='uniform', activation='relu'))
+    model.add(Dense(300, input_dim=11, init='uniform', activation='sigmoid'))
     model.add(Dense(2, init='uniform', activation='softmax'))
 
     opt = Adadelta()
