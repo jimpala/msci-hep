@@ -135,6 +135,8 @@ def main():
     model.add(Dense(5, input_dim=11, init='uniform', activation='relu'))
     model.add(Dense(1, init='uniform', activation='sigmoid'))
 
+    model.compile(loss='binary_crossentropy', metrics=['accuracy'])
+
     # Fit the model
     hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=100,
                      validation_data=validation)
