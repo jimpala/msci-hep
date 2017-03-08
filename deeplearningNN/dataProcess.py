@@ -1,5 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense
+from keras.optimizers import Adam, SGD
 import numpy as np
 import pandas as pd
 import json
@@ -133,12 +134,14 @@ def main():
     # NN model
     model = Sequential()
     model.add(Dense(300, input_dim=11, init='uniform', activation='relu'))
-    model.add(Dense(1, init='uniform', activation='sigmoid'))
+    model.add(Dense(300, init='uniform', activation='relu'))
+    model.add(Dense(1, init='uniform', activation='softmax'))
 
-    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    opt = Adam()
+    model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     # Fit the model
-    hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=150, sample_weight=w_A,
+    hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=16, sample_weight=w_A,
                      validation_data=validation)
 
     # Get decision scores.
