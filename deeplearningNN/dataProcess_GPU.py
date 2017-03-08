@@ -1,5 +1,5 @@
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import Adam, Adadelta
 from keras.utils import np_utils
 
@@ -129,12 +129,31 @@ def main():
     X_B, Y_B, w_B = df_process(df_2jet_odd, 2, test=True)
     Y_A = np_utils.to_categorical(Y_A,2)
     Y_B = np_utils.to_categorical(Y_B,2)
+
     validation = (X_B, Y_B, w_B)
 
     # NN model
+    # model = Sequential()
+    # model.add(Dense(1000, input_dim=11, init='uniform', activation='sigmoid'))
+    # model.add(Dense(2, init='uniform', activation='softmax'))
+
     model = Sequential()
-    model.add(Dense(300, input_dim=11, init='uniform', activation='sigmoid'))
-    model.add(Dense(2, init='uniform', activation='softmax'))
+
+    model.add(Dense(512, input_shape=(11,)))
+
+    model.add(Activation('relu'))
+
+    model.add(Dropout(0.2))
+
+    model.add(Dense(512))
+
+    model.add(Activation('relu'))
+
+    model.add(Dropout(0.2))
+
+    model.add(Dense(10))
+
+    model.add(Activation('softmax'))
 
     opt = Adadelta()
     model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
