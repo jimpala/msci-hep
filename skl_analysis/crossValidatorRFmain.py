@@ -51,7 +51,7 @@ def main():
 
     rf = RandomForestClassifier(n_estimators=10, max_features=3, min_samples_split=2)
 
-    param_grid = {'n_estimators': np.arange(10, 101, 10),
+    param_grid = {'n_estimators': np.arange(10, 501, 10),
                   'max_features': [3, 4, 5]}
 
     test_grid = {'n_estimators': [10],
@@ -60,7 +60,7 @@ def main():
     # With our SKL hack, enter fit_params as tuples of train and post fit weights.
     fit_params = {'sample_weight': zip(train_w_A, post_w_A)}
 
-    gs = GridSearchCV(rf, param_grid, scoring=sens_scorer,
+    gs = GridSearchCV(rf, test_grid, scoring=sens_scorer,
                       fit_params=fit_params, cv=2)
 
 

@@ -159,7 +159,7 @@ def trafoD_with_error(event_list, initial_bins=1000, z_s=10, z_b=10):
         return bins, delta_bins_s, delta_bins_b
 
 
-def trafoD_tuples(y, y_pred, w, initial_bins=200, z_s=10, z_b=10):
+def trafoD_tuples(y, y_pred, w, initial_bins=200, z_s=15, z_b=15):
     """Output optimised histogram bin widths list of y, predicted y, and POSTFIT weights."""
 
     y = y.tolist()[0]
@@ -311,6 +311,10 @@ def calc_sensitivity_with_error(events, bins, bin_sums_w2_s, bin_sums_w2_b):
 def calc_sensitivity_tuples(y, y_pred, w, bins):
     """Calculate sensitivity (note: turns matplotlib interactive off)."""
 
+    # FAIL TEST IF TWO BINS. RETURN ZERO SENSITIVITY.
+    if len(bins) == 2:
+        return 0
+
     y = y.tolist()[0]
     y_pred = y_pred.tolist()
     w = w.tolist()
@@ -333,10 +337,20 @@ def calc_sensitivity_tuples(y, y_pred, w, bins):
                          bins=bins,
                          weights=weights_sb)[0]
 
+    # TEST MORE THAN TWO BINS.
+    for count in counts_sb:
+        assert count[0] >= 0
+        assert count[1] >= 0
+
     # Reverse the counts before calculating.
     # Zip up S counts with B counts per bin.
+    # If there's a negative log, return zero for that bin.
     for s, b in zip(counts_sb[0][::-1], counts_sb[1][::-1]):
-        sens_sq += 2 * ((s + b) * math.log(1 + s / b) - s)
+        try:
+            sens_sq += 2 * ((s + b) * math.log(1 + s / b) - s)
+        # If it can't evaluate, keep sensitivity zero for that bin.
+        except ValueError:
+            continue
 
     sens = math.sqrt(sens_sq)
 
