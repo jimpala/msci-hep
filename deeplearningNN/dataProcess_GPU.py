@@ -127,12 +127,10 @@ def main():
 
     X_A, Y_A, w_A = df_process(df_2jet_even, 2, train=True)
     X_B, Y_B, w_B = df_process(df_2jet_odd, 2, test=True)
-    X_A = X_A[:,0:4]
-    X_B = X_B[:,0:4]
     Y_A = np_utils.to_categorical(Y_A,2)
     Y_B = np_utils.to_categorical(Y_B,2)
 
-    validation = (X_B, Y_B, w_B)
+    validation = (X_B, Y_B)
 
     # NN model
     # model = Sequential()
@@ -143,13 +141,13 @@ def main():
 
     model.add(Dense(512, input_shape=(11,)))
 
-    model.add(Activation('sigmoid'))
+    model.add(Activation('relu'))
 
     model.add(Dropout(0.2))
 
     model.add(Dense(512))
 
-    model.add(Activation('sigmoid'))
+    model.add(Activation('relu'))
 
     model.add(Dropout(0.2))
 
