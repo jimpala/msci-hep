@@ -2,6 +2,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 import numpy as np
 import pandas as pd
+import json
 # fix random seed for reproducibility
 seed = 7
 np.random.seed(seed)
@@ -60,7 +61,7 @@ scale_factor_map = {
 def df_process(df, njets, train=False, test=False):
 
     # train and test can't both be true.
-    assert not train and test
+    assert not (train and test)
 
     # Reset index of df.
     df.reset_index(drop=True)
@@ -69,31 +70,40 @@ def df_process(df, njets, train=False, test=False):
     if train:
         sum_sig = df[df.Class == 1]['EventWeight'].sum()
         sum_back = df[df.Class == 0]['EventWeight'].sum()
-        size_sig = df[df.Class == 1]['EventWeight'].sum()
-        size_back = df[df.Class == 0]['EventWeight'].sum()
+        size_sig = df[df.Class == 1]['EventWeight'].size
+        size_back = df[df.Class == 0]['EventWeight'].size
 
         scale_sig = size_sig / sum_sig
         scale_back = size_back / sum_back
 
-        df[df.Class == 1]['EventWeight'] = df[df.Class == 1]['EventWeight'].apply(lambda a: a * scale_sig)
-        df[df.Class == 0]['EventWeight'] = df[df.Class == 0]['EventWeight'].apply(lambda a: a * scale_back)
+        sig_mask = (df['Class'] == 1)
+        sig_entries = df[sig_mask]
+        df.loc[sig_mask, 'EventWeight'] = sig_entries['EventWeight'].apply(lambda a: a * scale_sig)
+    
+        back_mask = (df['Class'] == 0)
+        back_entries = df[back_mask]
+        df.loc[back_mask, 'EventWeight'] = back_entries['EventWeight'].apply(lambda a: a * scale_back)
+
 
     # Configure weights test mode (post-fit).
     elif test:
-        weights = df['EventWeight']
-        scalings = df['sample'].apply(lambda a: scale_factor_map[njets][a])
-        df['EventWeight'] = weights * scalings
+        weights = df.loc[:,'EventWeight']
+        indices = df.index.values
+        samples = df.ix[:,'sample'].as_matrix().tolist()
+        samples = map(lambda a, b: scale_factor_map[njets][a] * b, samples, weights)
+        df['EventWeight'] = pd.Series(data=samples, index=indices)
 
     # Get the weights.
     w = df['EventWeight'].as_matrix()
-    w = np.reshape(w, (1,-1))
+    w = np.reshape(w, (-1,1))
     df = df.drop(['sample', 'EventWeight', 'EventNumber', 'nJ', 'nBJ'], axis=1)
 
 
 
     # Get the classes.
-    y = df['Class'].as_matrix()
-    df = df.drop(['Class'])
+    y = df['Class'].as_matrix().astype(int)
+    y = np.reshape(y, (-1, 1))
+    df = df.drop(['Class'], axis=1)
 
     # Get the feature vectors.
     x = df.as_matrix()
@@ -112,7 +122,33 @@ def main():
     df_3jet_odd = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
     print "CSV read-in complete."
 
-    x_A, y_A, z_A
+    X_A, Y_A, w_A = df_process(df_2jet_even, 2, train=True)
+    X_B, Y_B, w_B = df_process(df_2jet_odd, 2, test=True)
+
+    # NN model
+    model = Sequential()
+    model.add(Dense(12, input_dim=11, init='uniform', activation='relu'))
+    model.add(Dense(8, init='uniform', activation='relu'))
+    model.add(Dense(1, init='uniform', activation='sigmoid'))
+
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+    # Fit the model
+    model.fit(X_A, Y_A, nb_epoch=250, batch_size=10, sample_weight=w_A)
+
+    # Get decision scores.
+    Ystar_B = model.predict(X_B)
+    Ystar_B = np.reshape(Ystar_B, (1, -1))[0].tolist()
+    Y_B = np.reshape(Y_B, (1, -1))[0].tolist()
+
+    json.dump({'Ystar': Ystar_B, 'Y': Y_B}, open('keras_test_out.json', 'w'))
+
+    # Ystar_B = [int(round(a)) for a in Ystar_B]
+    #
+    # scores = [1 if a == b else 0 for a, b in zip(Y_B, Ystar_B)]
+    # truth_rate = scores.count(1) / len(scores)
+
+    print "Script completed."
 
 
 if __name__ == '__main__':
