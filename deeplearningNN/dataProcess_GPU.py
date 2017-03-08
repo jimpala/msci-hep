@@ -122,19 +122,24 @@ def main():
     df_3jet_odd = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_odd.csv', index_col=0)
     print "CSV read-in complete."
 
+    # Shuffle the DFs.
+    df_2jet_even = df_2jet_even.sample(frac=1)
+    df_2jet_odd = df_2jet_odd.sample(frac=1)
+
     X_A, Y_A, w_A = df_process(df_2jet_even, 2, train=True)
     X_B, Y_B, w_B = df_process(df_2jet_odd, 2, test=True)
+    validation = (X_B, Y_B, w_B)
 
     # NN model
     model = Sequential()
-    model.add(Dense(12, input_dim=11, init='uniform', activation='relu'))
-    model.add(Dense(8, init='uniform', activation='relu'))
+    model.add(Dense(300, input_dim=11, init='uniform', activation='relu'))
     model.add(Dense(1, init='uniform', activation='sigmoid'))
 
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     # Fit the model
-    model.fit(X_A, Y_A, nb_epoch=250, batch_size=10, sample_weight=w_A)
+    hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=150, sample_weight=w_A,
+                     validation_data=validation)
 
     # Get decision scores.
     Ystar_B = model.predict(X_B)
@@ -142,6 +147,7 @@ def main():
     Y_B = np.reshape(Y_B, (1, -1))[0].tolist()
 
     json.dump({'Ystar': Ystar_B, 'Y': Y_B}, open('keras_test_out.json', 'w'))
+    json.dump(hist.history, open('keras_history.json', 'w'))
 
     # Ystar_B = [int(round(a)) for a in Ystar_B]
     #
