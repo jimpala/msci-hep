@@ -337,11 +337,6 @@ def calc_sensitivity_tuples(y, y_pred, w, bins):
                          bins=bins,
                          weights=weights_sb)[0]
 
-    # TEST MORE THAN TWO BINS.
-    for count in counts_sb:
-        assert count[0] >= 0
-        assert count[1] >= 0
-
     # Reverse the counts before calculating.
     # Zip up S counts with B counts per bin.
     # If there's a negative log, return zero for that bin.
