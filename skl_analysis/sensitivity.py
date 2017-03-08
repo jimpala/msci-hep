@@ -288,14 +288,14 @@ def calc_sensitivity_with_error(events, bins, bin_sums_w2_s, bin_sums_w2_b):
     # Zip up S, B, DS and DB per bin.
     s_stack = counts_sb[0][::-1]
     b_stack = counts_sb[1][::-1]
-    ds_stack = bin_sums_w2_s[::-1]
-    db_stack = bin_sums_w2_b[::-1]
+    ds_sq_stack = bin_sums_w2_s[::-1]
+    db_sq_stack = bin_sums_w2_b[::-1]
 
-    for s, b, ds, db in zip(s_stack, b_stack, ds_stack, db_stack):
+    for s, b, ds_sq, db_sq in zip(s_stack, b_stack, ds_sq_stack, db_sq_stack):
         this_sens = 2 * ((s + b) * math.log(1 + s / b) - s)
         this_dsens_ds = 2 * math.log(1 + s/b)
         this_dsens_db = 2 * (math.log(1 + s/b) - s/b)
-        this_error = (this_dsens_ds * ds) ** 2 + (this_dsens_db * db) ** 2
+        this_error = (this_dsens_ds ** 2) * ds_sq + (this_dsens_db ** 2) * db_sq
         if not math.isnan(this_sens):
             sens_sq += this_sens
         if not math.isnan(this_error):

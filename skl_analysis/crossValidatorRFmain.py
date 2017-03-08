@@ -43,6 +43,7 @@ def main():
 
     # Shuffle the DF.
     df = df.sample(frac=1, random_state=42)
+    df = df.reset_index(drop=True)
 
     X_A, Y_A, w_A, post_w_A, train_w_A = extract_data(df, njets)
 
@@ -50,8 +51,8 @@ def main():
 
     rf = RandomForestClassifier(n_estimators=10, max_features=3, min_samples_split=2)
 
-    param_grid = {'n_estimators': np.arange(10, 501, 10),
-                  'max_features': [2, 3, 4, 5]}
+    param_grid = {'n_estimators': np.arange(10, 101, 10),
+                  'max_features': [3, 4, 5]}
 
     test_grid = {'n_estimators': [10],
                  'max_features': [3]}
@@ -59,7 +60,7 @@ def main():
     # With our SKL hack, enter fit_params as tuples of train and post fit weights.
     fit_params = {'sample_weight': zip(train_w_A, post_w_A)}
 
-    gs = GridSearchCV(rf, test_grid, scoring=sens_scorer,
+    gs = GridSearchCV(rf, param_grid, scoring=sens_scorer,
                       fit_params=fit_params, cv=2)
 
 
@@ -68,7 +69,7 @@ def main():
     gs.fit(X_A, Y_A)
     t2 = time.time()
     t = t2 - t1
-    print "GridSearch completed in {}".format(str(t))
+    print "GridSearch completed in {}s.".format(str(t))
 
     try:
         now = datetime.now().strftime('%d%m%y_%H%S')

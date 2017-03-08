@@ -43,6 +43,7 @@ def main():
 
     # Shuffle the DF.
     df = df.sample(frac=1, random_state=42)
+    df = df.reset_index(drop=True)
 
     X_A, Y_A, w_A, post_w_A, train_w_A = extract_data(df, njets)
 
@@ -51,7 +52,7 @@ def main():
     rf = RandomForestClassifier(n_estimators=10, max_features=3, min_samples_split=2)
 
     param_grid = {'n_estimators': np.arange(10, 501, 10),
-                  'max_features': [2, 3, 4, 5]}
+                  'max_features': [3, 4, 5]}
 
     test_grid = {'n_estimators': [10],
                  'max_features': [3]}
@@ -60,7 +61,7 @@ def main():
     fit_params = {'sample_weight': zip(train_w_A, post_w_A)}
 
     gs = GridSearchCV(rf, param_grid, scoring=sens_scorer,
-                      fit_params=fit_params, n_jobs=16, cv=2)
+                      fit_params=fit_params, n_jobs=8, cv=2)
 
 
     print "Beginning GridSearch."
