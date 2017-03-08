@@ -159,7 +159,7 @@ def main():
     model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     # Fit the model
-    hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=32, sample_weight=w_A,
+    hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=32,
                      validation_data=validation)
 
     # Get decision scores.
