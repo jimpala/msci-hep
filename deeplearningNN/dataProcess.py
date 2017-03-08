@@ -95,7 +95,7 @@ def df_process(df, njets, train=False, test=False):
 
     # Get the weights.
     w = df['EventWeight'].as_matrix()
-    w = np.reshape(w, (-1,1))
+    w = w.flatten()
     df = df.drop(['sample', 'EventWeight', 'EventNumber', 'nJ', 'nBJ'], axis=1)
 
 
