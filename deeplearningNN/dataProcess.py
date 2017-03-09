@@ -1,66 +1,67 @@
 from keras.models import Sequential
-from keras.layers import Dense
-from keras.optimizers import Adam, SGD
+from keras.layers import Dense, Activation, Dropout
+from keras.optimizers import Adam, Adadelta, SGD
+from keras.utils import np_utils
+from keras import initializations
+from keras.regularizers import l2
+
 import numpy as np
 import pandas as pd
 import json
-# fix random seed for reproducibility
-seed = 7
-np.random.seed(seed)
+
 
 scale_factor_map = {
-        2: {
-            'Zl': 1.0,
-            'Zcl': 1.41,
-            'Zcc': 1.15,
-            'Zbl': 1.15,
-            'Zbc': 1.15,
-            'Zbb': 1.15,
-            'Wl': 1.00,
-            'Wcl': 1.22,
-            'Wcc': 1.65,
-            'Wbl': 1.65,
-            'Wbc': 1.65,
-            'Wbb': 1.65,
-            'stopWt': 0.92,
-            'stopt': 0.92,
-            'stops': 0.92,
-            'ttbar': 0.80,
-            'multijet': 0.63,
-            'WW': 1.13,
-            'ZZ': 1.13,
-            'WZ': 1.13,
-            'qqZvvH125': 1.0,
-            'qqWlvH125': 1.0
-        }, 3: {
-            'Zl': 1.0,
-            'Zcl': 1.0,
-            'Zcc': 1.1,
-            'Zbl': 1.1,
-            'Zbc': 1.1,
-            'Zbb': 1.1,
-            'Wl': 1.00,
-            'Wcl': 1.27,
-            'Wcc': 1.59,
-            'Wbl': 1.59,
-            'Wbc': 1.59,
-            'Wbb': 1.59,
-            'stopWt': 0.99,
-            'stopt': 0.99,
-            'stops': 0.99,
-            'ttbar': 0.87,
-            'multijet': 0.6,
-            'WW': 1.12,
-            'ZZ': 1.12,
-            'WZ': 1.12,
-            'qqZvvH125': 1.0,
-            'qqWlvH125': 1.0
-        }
+    2: {
+        'Zl': 1.0,
+        'Zcl': 1.41,
+        'Zcc': 1.15,
+        'Zbl': 1.15,
+        'Zbc': 1.15,
+        'Zbb': 1.15,
+        'Wl': 1.00,
+        'Wcl': 1.22,
+        'Wcc': 1.65,
+        'Wbl': 1.65,
+        'Wbc': 1.65,
+        'Wbb': 1.65,
+        'stopWt': 0.92,
+        'stopt': 0.92,
+        'stops': 0.92,
+        'ttbar': 0.80,
+        'multijet': 0.63,
+        'WW': 1.13,
+        'ZZ': 1.13,
+        'WZ': 1.13,
+        'qqZvvH125': 1.0,
+        'qqWlvH125': 1.0
+    }, 3: {
+        'Zl': 1.0,
+        'Zcl': 1.0,
+        'Zcc': 1.1,
+        'Zbl': 1.1,
+        'Zbc': 1.1,
+        'Zbb': 1.1,
+        'Wl': 1.00,
+        'Wcl': 1.27,
+        'Wcc': 1.59,
+        'Wbl': 1.59,
+        'Wbc': 1.59,
+        'Wbb': 1.59,
+        'stopWt': 0.99,
+        'stopt': 0.99,
+        'stops': 0.99,
+        'ttbar': 0.87,
+        'multijet': 0.6,
+        'WW': 1.12,
+        'ZZ': 1.12,
+        'WZ': 1.12,
+        'qqZvvH125': 1.0,
+        'qqWlvH125': 1.0
     }
+}
 
 
 def df_process(df, njets, train=False, test=False):
-
     # train and test can't both be true.
     assert not (train and test)
 
@@ -80,7 +81,7 @@ def df_process(df, njets, train=False, test=False):
         sig_mask = (df['Class'] == 1)
         sig_entries = df[sig_mask]
         df.loc[sig_mask, 'EventWeight'] = sig_entries['EventWeight'].apply(lambda a: a * scale_sig)
-    
+
         back_mask = (df['Class'] == 0)
         back_entries = df[back_mask]
         df.loc[back_mask, 'EventWeight'] = back_entries['EventWeight'].apply(lambda a: a * scale_back)
@@ -88,9 +89,9 @@ def df_process(df, njets, train=False, test=False):
 
     # Configure weights test mode (post-fit).
     elif test:
-        weights = df.loc[:,'EventWeight']
+        weights = df.loc[:, 'EventWeight']
         indices = df.index.values
-        samples = df.ix[:,'sample'].as_matrix().tolist()
+        samples = df.ix[:, 'sample'].as_matrix().tolist()
         samples = map(lambda a, b: scale_factor_map[njets][a] * b, samples, weights)
         df['EventWeight'] = pd.Series(data=samples, index=indices)
 
@@ -98,8 +99,6 @@ def df_process(df, njets, train=False, test=False):
     w = df['EventWeight'].as_matrix()
     w = w.flatten()
     df = df.drop(['sample', 'EventWeight', 'EventNumber', 'nJ', 'nBJ'], axis=1)
-
-
 
     # Get the classes.
     y = df['Class'].as_matrix().astype(int)
@@ -110,8 +109,6 @@ def df_process(df, njets, train=False, test=False):
     x = df.as_matrix()
 
     return x, y, w
-
-
 
 
 def main():
@@ -127,30 +124,38 @@ def main():
     df_2jet_even = df_2jet_even.sample(frac=1)
     df_2jet_odd = df_2jet_odd.sample(frac=1)
 
-    X_A, Y_A, w_A = df_process(df_2jet_even, 2, train=True)
-    X_B, Y_B, w_B = df_process(df_2jet_odd, 2, test=True)
-    validation = (X_B, Y_B, w_B)
+    df_2jet = pd.concat([df_2jet_even, df_2jet_odd], axis=0, ignore_index=True)
+
+    X_A, Y_A, w_A = df_process(df_2jet, 2, train=True)
+    X_A = X_A.tolist()
+    Y_A = np_utils.to_categorical(Y_A, 2)
+
 
     # NN model
-    model = Sequential()
-    model.add(Dense(300, input_dim=11, init='uniform', activation='relu'))
-    model.add(Dense(300, init='uniform', activation='relu'))
-    model.add(Dense(1, init='uniform', activation='softmax'))
+    # Define initialization
+    def normal(shape, name=None):
+        return initializations.normal(shape, scale=0.05, name=name)
 
-    opt = Adam()
-    model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
+    # Define model
+    model = Sequential()
+    model.add(Dense(64, init=normal, activation='relu', W_regularizer=l2(1e-5), input_dim=11))
+    model.add(Dense(32, init=normal, activation='relu', W_regularizer=l2(1e-5)))
+    model.add(Dense(2, init=normal, activation='softmax'))
+
+    # Set loss and optimizer
+    model.compile(loss='categorical_crossentropy', optimizer=SGD(lr=0.01), metrics=['accuracy', ])
 
     # Fit the model
-    hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=16, sample_weight=w_A,
-                     validation_data=validation)
+    hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=1000,
+                     validation_split=0.25, shuffle='batch')
+    #
+    # # Get decision scores.
+    # Ystar_B = model.predict(X_B)
+    # Ystar_B = np.reshape(Ystar_B, (1, -1))[0].tolist()
+    # Y_B = np.reshape(Y_B, (1, -1))[0].tolist()
 
-    # Get decision scores.
-    Ystar_B = model.predict(X_B)
-    Ystar_B = np.reshape(Ystar_B, (1, -1))[0].tolist()
-    Y_B = np.reshape(Y_B, (1, -1))[0].tolist()
-
-    json.dump({'Ystar': Ystar_B, 'Y': Y_B}, open('keras_test_out.json', 'w'))
-    json.dump(hist.history, open('keras_history.json', 'w'))
+    # json.dump({'Ystar': Ystar_B, 'Y': Y_B}, open('keras_test_out.json', 'w'))
+    # json.dump(hist.history, open('keras_history.json', 'w'))
 
     # Ystar_B = [int(round(a)) for a in Ystar_B]
     #
