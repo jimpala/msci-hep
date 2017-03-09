@@ -303,7 +303,7 @@ def calc_sensitivity_with_error(events, bins, bin_sums_w2_s, bin_sums_w2_b):
 
     # Sqrt operations and error equation balancing.
     sens = math.sqrt(sens_sq)
-    error = math.sqrt(error_sq/sens_sq)
+    error = 0.5 * math.sqrt(error_sq/sens_sq)
 
     return sens, error
 
