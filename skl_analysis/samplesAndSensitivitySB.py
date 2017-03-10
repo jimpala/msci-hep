@@ -92,7 +92,6 @@ def main():
             this_sens, this_error = trafo_sensitivity(events)
             sens_2jet.append(this_sens)
             err_2jet.append(this_error)
-            decision_plot(events, block=True)
             print "Sens: {:f}".format(this_sens)
             print "2 jet iteration completed."
 
