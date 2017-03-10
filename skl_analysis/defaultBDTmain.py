@@ -41,13 +41,13 @@ def main():
     bdt_k1 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.01),
                                 learning_rate=0.15,
                                 algorithm="SAMME",
-                                n_estimators=200
+                                n_estimators=300
                                 )
 
     bdt_k2 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.01),
                                 learning_rate=0.15,
                                 algorithm="SAMME",
-                                n_estimators=200
+                                n_estimators=300
                                 )
 
     # Fit and train the events using the events lists, BDTs and DFs.

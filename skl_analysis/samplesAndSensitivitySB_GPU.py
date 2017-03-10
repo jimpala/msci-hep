@@ -99,8 +99,8 @@ def main():
         print "2 jet analysis fully completed."
 
     finally:
-        json_store['sens_2jet_background_varied'] = sens_2jet
-        json_store['err_2jet_background_varied'] = err_2jet
+        json_store['sens_2jet_signal_varied'] = sens_2jet
+        json_store['err_2jet_signal_varied'] = err_2jet
 
     # 3 JET VARIED SIGNAL
     #####################
@@ -187,8 +187,8 @@ def main():
         print "3 jet analysis fully completed."
 
     finally:
-        json_store['sens_3jet_background_varied'] = sens_3jet
-        json_store['err_3jet'] = err_3jet
+        json_store['sens_3jet_signal_varied'] = sens_3jet
+        json_store['err_3jet_signal_varied'] = err_3jet
 
     # 2 JET VARIED BACKGROUND
     ##########################
@@ -274,8 +274,8 @@ def main():
         print "2 jet analysis fully completed."
 
     finally:
-        json_store['sens_2jet_signal_varied'] = sens_2jet
-        json_store['err_2jet_signal_varied'] = err_2jet
+        json_store['sens_2jet_background_varied'] = sens_2jet
+        json_store['err_2jet_background_varied'] = err_2jet
 
     # 3 JET VARIED BACKGROUND
     ###########################
@@ -361,8 +361,8 @@ def main():
         print "3 jet analysis fully completed."
 
     finally:
-        json_store['sens_3jet_signal_varied'] = sens_3jet
-        json_store['err_3jet_signal_varied'] = err_3jet
+        json_store['sens_3jet_background_varied'] = sens_3jet
+        json_store['err_3jet_background_varied'] = err_3jet
 
     # Dump JSON to file.
     with open('samplesVsSensitivity_SB.json', 'w') as fp:
