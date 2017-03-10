@@ -34,6 +34,7 @@ def main():
             print "Loading randomly sampled data..."
             # Generate the next df with a sample fraction and reset the index.
             this_df = df_gen.next()
+            this_df = this_df.sample(frac=1)  # Need to mix up for lower/upper slicing to avoid zeros.
             this_df = this_df.reset_index(drop=True)
 
             # Segregate the upper and lower half for the swap fold.
@@ -103,6 +104,7 @@ def main():
             print "Loading randomly sampled data..."
             # Generate the next df with a sample fraction and reset the index.
             this_df = df_gen.next()
+            this_df = this_df.sample(frac=1)  # Need to mix up for lower/upper slicing to avoid zeros.
             this_df = this_df.reset_index(drop=True)
 
             # Segregate the upper and lower half for the swap fold.
@@ -172,6 +174,7 @@ def main():
             print "Loading randomly sampled data..."
             # Generate the next df with a sample fraction and reset the index.
             this_df = df_gen.next()
+            this_df = this_df.sample(frac=1)  # Need to mix up for lower/upper slicing to avoid zeros.
             this_df = this_df.reset_index(drop=True)
 
             # Segregate the upper and lower half for the swap fold.
@@ -240,6 +243,7 @@ def main():
             print "Loading randomly sampled data..."
             # Generate the next df with a sample fraction and reset the index.
             this_df = df_gen.next()
+            this_df = this_df.sample(frac=1)  # Need to mix up for lower/upper slicing to avoid zeros.
             this_df = this_df.reset_index(drop=True)
 
             # Segregate the upper and lower half for the swap fold.
