@@ -151,7 +151,7 @@ def main():
 
     finally:
         json_store['sens_3jet_background_varied'] = sens_3jet
-        json_store['err_3jet'] = err_3jet
+        json_store['err_3jet_background_varied'] = err_3jet
 
 
     # 2 JET VARIED BACKGROUND
