@@ -114,7 +114,7 @@ def trafo_sensitivity(events, error=True):
     return sens, error
 
 
-def decision_plot(events):
+def decision_plot(events, block=False):
 
     # Call TrafoD on Event list.
     bins, delta_bins_s, delta_bins_b = trafoD_with_error(events)
@@ -151,4 +151,4 @@ def decision_plot(events):
     plt.xlabel('Score')
     plt.title('Decision Scores')
 
-    plt.show(block=True)
+    plt.show(block=block)
