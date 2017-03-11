@@ -86,6 +86,30 @@ def fold_score(events_A, events_B, bdt_A, df_A, df_B):
     return events_B
 
 
+def fold_score_RF(events_A, events_B, bdt_A, df_A, df_B):
+    """Returns scored events_B for a BDT_A."""
+
+    # Get indices, train weights and classes for each of these splits.
+    # w and Y need to be numpy arrays to work with skl.
+    w_A = np.array([a.train_weight for a in events_A])
+    Y_A = np.array([a.classification for a in events_A])
+
+    # Index our X training sets by row; convert to ndarrays.
+    X_A = df_A.as_matrix()
+    X_B = df_B.as_matrix()
+
+    bdt_A.fit(X_A, Y_A, sample_weight=w_A)
+
+    # Get scores of X_A for BDT_B and vice-versa.
+    scores = bdt_A.predict_proba(X_B).tolist()
+    # Only want the second element of the prob tuple (prob of signal).
+    scores = map(lambda a: a[1], scores)
+
+    for e, s in zip(events_B, scores):
+        e.set_decision_value(s)
+
+    return events_B
+
 def normalise_scores(events):
 
     scores = [a.decision_value for a in events]
