@@ -143,7 +143,7 @@ def main():
     model.add(Dense(1, init='uniform', activation='sigmoid'))
 
     # Set loss and optimizer
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy', ])
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
     # Fit the model
     hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=100,
