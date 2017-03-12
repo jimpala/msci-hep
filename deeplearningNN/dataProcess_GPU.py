@@ -4,6 +4,7 @@ from keras.optimizers import Adam, Adadelta, SGD
 from keras.utils import np_utils
 from keras import initializations
 from keras.regularizers import l2
+from sklearn.preprocessing import scale
 
 import numpy as np
 import pandas as pd
@@ -127,8 +128,7 @@ def main():
     df_2jet = pd.concat([df_2jet_even, df_2jet_odd], axis=0, ignore_index=True)
 
     X_A, Y_A, w_A = df_process(df_2jet, 2, train=True)
-    X_A = X_A.tolist()
-    Y_A = np_utils.to_categorical(Y_A, 2)
+    X_A = scale(X_A)
 
 
     # NN model
@@ -138,12 +138,12 @@ def main():
 
     # Define model
     model = Sequential()
-    model.add(Dense(64, init=normal, activation='relu', W_regularizer=l2(1e-5), input_dim=11))
-    model.add(Dense(32, init=normal, activation='relu', W_regularizer=l2(1e-5)))
-    model.add(Dense(2, init=normal, activation='softmax'))
+    model.add(Dense(64, init='uniform', activation='relu', input_dim=11))
+    model.add(Dense(32, init='uniform', activation='relu'))
+    model.add(Dense(1, init='uniform', activation='sigmoid'))
 
     # Set loss and optimizer
-    model.compile(loss='categorical_crossentropy', optimizer=SGD(lr=0.01), metrics=['accuracy', ])
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
     # Fit the model
     hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=1000,
