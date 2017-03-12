@@ -146,16 +146,16 @@ def main():
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
     # Fit the model
-    hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=100,
+    hist = model.fit(X_A, Y_A, nb_epoch=500, batch_size=32,
                      validation_split=0.25, shuffle='batch')
-    #
-    # # Get decision scores.
-    # Ystar_B = model.predict(X_B)
-    # Ystar_B = np.reshape(Ystar_B, (1, -1))[0].tolist()
-    # Y_B = np.reshape(Y_B, (1, -1))[0].tolist()
 
-    # json.dump({'Ystar': Ystar_B, 'Y': Y_B}, open('keras_test_out.json', 'w'))
-    # json.dump(hist.history, open('keras_history.json', 'w'))
+    # Get decision scores.
+    Ystar_B = model.predict(X_B)
+    Ystar_B = np.reshape(Ystar_B, (1, -1))[0].tolist()
+    Y_B = np.reshape(Y_B, (1, -1))[0].tolist()
+
+    json.dump({'Ystar': Ystar_B, 'Y': Y_B}, open('keras_test_out.json', 'w'))
+    json.dump(hist.history, open('keras_history.json', 'w'))
 
     # Ystar_B = [int(round(a)) for a in Ystar_B]
     #
