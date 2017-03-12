@@ -10,8 +10,7 @@ from trainSwapFold import *
 import math
 import pandas as pd
 import sys
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
 
 def main():
     # Load in the NTuple CSVs as DataFrames.
@@ -39,15 +38,14 @@ def main():
     df_2jet_k1 = ready_df_for_training(df_2jet_k1, events_k1)
     df_2jet_k2 = ready_df_for_training(df_2jet_k2, events_k2)
 
-    rf_k1 = RandomForestClassifier(n_estimators=1000)
-
-    rf_k2 = RandomForestClassifier(n_estimators=1000)
+    knn_k1 = KNeighborsClassifier(n_neighbors=20, weights='distance')
+    knn_k2 = KNeighborsClassifier(n_neighbors=20, weights='distance')
 
     # Fit and train the events using the events lists, BDTs and DFs.
     # Notice the ordering!
     print "Training and decision scoring..."
-    events_k2 = fold_score_proba(events_k1, events_k2, rf_k1, df_2jet_k1, df_2jet_k2)
-    events_k1 = fold_score_proba(events_k2, events_k1, rf_k2, df_2jet_k2, df_2jet_k1)
+    events_k2 = fold_score_proba_knn(events_k1, events_k2, knn_k1, df_2jet_k1, df_2jet_k2)
+    events_k1 = fold_score_proba_knn(events_k2, events_k1, knn_k2, df_2jet_k2, df_2jet_k1)
     events = events_k1 + events_k2
     print "Done!"
 
@@ -62,7 +60,6 @@ def main():
 
     print "2 jet sensitivity is: {:f}".format(sens_2jet)
     print "2 jet error is: {:f}".format(error_2jet)
-
 
     # Plot BDT.
     print "Plotting BDT..."
@@ -86,14 +83,14 @@ def main():
     df_3jet_k1 = ready_df_for_training(df_3jet_k1, events_k1)
     df_3jet_k2 = ready_df_for_training(df_3jet_k2, events_k2)
 
-    rf_k1 = RandomForestClassifier(n_estimators=10000, min_samples_leaf=0.01)
-    rf_k2 = RandomForestClassifier(n_estimators=10000, min_samples_leaf=0.01)
+    knn_k1 = KNeighborsClassifier(n_neighbors=50, weights='distance')
+    knn_k2 = KNeighborsClassifier(n_neighbors=50, weights='distance')
 
     # Fit and train the events using the events lists, BDTs and DFs.
     # Notice the ordering!
     print "Training and decision scoring..."
-    events_k2 = fold_score_proba(events_k1, events_k2, rf_k1, df_3jet_k1, df_3jet_k2)
-    events_k1 = fold_score_proba(events_k2, events_k1, rf_k2, df_3jet_k2, df_3jet_k1)
+    events_k2 = fold_score_proba_knn(events_k1, events_k2, knn_k1, df_3jet_k1, df_3jet_k2)
+    events_k1 = fold_score_proba_knn(events_k2, events_k1, knn_k2, df_3jet_k2, df_3jet_k1)
     events = events_k1 + events_k2
     print "Done!"
 
