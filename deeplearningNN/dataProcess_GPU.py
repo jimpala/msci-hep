@@ -146,7 +146,7 @@ def main():
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
     # Fit the model
-    hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=1000,
+    hist = model.fit(X_A, Y_A, nb_epoch=50, batch_size=100,
                      validation_split=0.25, shuffle='batch')
     #
     # # Get decision scores.
