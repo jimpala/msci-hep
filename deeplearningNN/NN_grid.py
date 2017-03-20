@@ -167,7 +167,7 @@ def main():
 
         # Dump results to JSON.
         filename = 'basicMLP_{:d}nodes.json'.format(nodes)
-        json.dump({'params': hist.params, 'results': hist.history, 'best_val_acc': max(hist.history['val_acc'])},
+        json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
                   open(filename, 'w'))
         print "Results dumped to {}.".format(filename)
 
