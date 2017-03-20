@@ -1,14 +1,12 @@
 from keras.models import Sequential
-from keras.layers import Dense, Activation, Dropout
-from keras.optimizers import Adam, Adadelta, SGD
-from keras.utils import np_utils
-from keras import initializations
-from keras.regularizers import l2
+from keras.layers import Dense
+from keras.callbacks import EarlyStopping
 from sklearn.preprocessing import scale
 
 import numpy as np
 import pandas as pd
 import json
+import sys
 
 
 scale_factor_map = {
@@ -114,53 +112,64 @@ def df_process(df, njets, train=False, test=False):
 
 def main():
 
-    # Process the data.
-    df_2jet_even = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_even.csv', index_col=0)
-    df_3jet_even = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_even.csv', index_col=0)
-    df_2jet_odd = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_odd.csv', index_col=0)
-    df_3jet_odd = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_odd.csv', index_col=0)
-    print "CSV read-in complete."
+    try:
+        if sys.argv[1] == 'gpu':
+            # Process the data.
+            df_2jet_even = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_even.csv', index_col=0)
+            df_3jet_even = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_even.csv', index_col=0)
+            df_2jet_odd = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_odd.csv', index_col=0)
+            df_3jet_odd = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_odd.csv', index_col=0)
+            print "CSV read-in complete."
 
-    # Shuffle the DFs.
-    df_2jet_even = df_2jet_even.sample(frac=1)
-    df_2jet_odd = df_2jet_odd.sample(frac=1)
+        else:
+            # Process the data.
+            df_2jet_even = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
+            df_3jet_even = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
+            df_2jet_odd = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
+            df_3jet_odd = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
+            print "CSV read-in complete."
 
+    except IndexError:
+        print "No command line args passed. Running in local mode."
+
+        # Process the data.
+        df_2jet_even = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
+        df_3jet_even = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
+        df_2jet_odd = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
+        df_3jet_odd = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
+        print "CSV read-in complete."
+
+    # Concatenate odd and even into the same DF.
     df_2jet = pd.concat([df_2jet_even, df_2jet_odd], axis=0, ignore_index=True)
 
+    # Process df data into np feature arrays. Scale features.
     X_A, Y_A, w_A = df_process(df_2jet, 2, train=True)
     X_A = scale(X_A)
 
+    # SET RANGE OF HIDDEN NODES.
+    hidden_layers = range(2, 65)
 
-    # NN model
-    # Define initialization
-    def normal(shape, name=None):
-        return initializations.normal(shape, scale=0.05, name=name)
+    for nodes in hidden_layers:
 
-    # Define model
-    model = Sequential()
-    model.add(Dense(64, init='uniform', activation='relu', input_dim=11))
-    model.add(Dense(32, init='uniform', activation='relu'))
-    model.add(Dense(1, init='uniform', activation='sigmoid'))
+        # Define Keras NN.
+        model = Sequential()
+        model.add(Dense(nodes, init='uniform', activation='relu', input_dim=11))
+        model.add(Dense(1, init='uniform', activation='sigmoid'))
 
-    # Set loss and optimizer
-    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
+        # Compile.
+        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
-    # Fit the model
-    hist = model.fit(X_A, Y_A, nb_epoch=500, batch_size=32,
-                     validation_split=0.25, shuffle='batch')
+        # Fit.
+        print "Fitting..."
+        hist = model.fit(X_A, Y_A, nb_epoch=1000, batch_size=32,
+                            validation_split=0.25, callbacks=[EarlyStopping(patience=25)])
+        print "Fit completed."
 
-    # Get decision scores.
-    Ystar_B = model.predict(X_B)
-    Ystar_B = np.reshape(Ystar_B, (1, -1))[0].tolist()
-    Y_B = np.reshape(Y_B, (1, -1))[0].tolist()
-
-    json.dump({'Ystar': Ystar_B, 'Y': Y_B}, open('keras_test_out.json', 'w'))
-    json.dump(hist.history, open('keras_history.json', 'w'))
-
-    # Ystar_B = [int(round(a)) for a in Ystar_B]
-    #
-    # scores = [1 if a == b else 0 for a, b in zip(Y_B, Ystar_B)]
-    # truth_rate = scores.count(1) / len(scores)
+        # Dump results to JSON.
+        filename = 'basicMLP_{:d}nodes.json'.format(nodes)
+        json.dump({'params': hist.params, 'results': hist.history, 'best_val_acc': max(hist.history['val_acc'])},
+                  open(filename, 'w'))
+        print "Results dumped to {}.".format(filename)
 
     print "Script completed."
 

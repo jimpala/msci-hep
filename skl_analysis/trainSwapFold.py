@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 from event_obj import *
 from sensitivity import trafoD_with_error, calc_sensitivity_with_error
+from xgboost import XGBClassifier, DMatrix
 
 
 def populate_events(df, njets, train_weights=False):
@@ -79,6 +80,31 @@ def fold_score(events_A, events_B, bdt_A, df_A, df_B):
 
     # Get scores of X_A for BDT_B and vice-versa.
     scores = bdt_A.decision_function(X_B).tolist()
+
+    for e, s in zip(events_B, scores):
+        e.set_decision_value(s)
+
+    return events_B
+
+
+def fold_score_xgb(events_A, events_B, xgb_A, df_A, df_B):
+    """Returns scored events_B for a BDT_A."""
+
+    # Get indices, train weights and classes for each of these splits.
+    # w and Y need to be numpy arrays to work with skl.
+    w_A = np.array([a.train_weight for a in events_A])
+    Y_A = np.array([a.classification for a in events_A])
+
+    # Index our X training sets by row; convert to ndarrays.
+    X_A = df_A.as_matrix()
+    X_B = df_B.as_matrix()
+
+
+    xgb_A.fit(X_A, Y_A, sample_weight=w_A)
+
+    # Get scores of X_A for BDT_B and vice-versa.
+    prob_tuples = xgb_A.predict_proba(X_B).tolist()
+    scores = [a[1] for a in prob_tuples]
 
     for e, s in zip(events_B, scores):
         e.set_decision_value(s)
