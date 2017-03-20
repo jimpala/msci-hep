@@ -141,6 +141,7 @@ def main():
 
     # Concatenate odd and even into the same DF.
     df_2jet = pd.concat([df_2jet_even, df_2jet_odd], axis=0, ignore_index=True)
+    df_2jet = df_2jet.sample(frac=1, random_state=42)
 
     # Process df data into np feature arrays. Scale features.
     X_A, Y_A, w_A = df_process(df_2jet, 2, train=True)
