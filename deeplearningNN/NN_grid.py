@@ -142,35 +142,66 @@ def main():
     # Concatenate odd and even into the same DF.
     df_2jet = pd.concat([df_2jet_even, df_2jet_odd], axis=0, ignore_index=True)
     df_2jet = df_2jet.sample(frac=1, random_state=42)
+    df_3jet = pd.concat([df_3jet_even, df_3jet_odd], axis=0, ignore_index=True)
+    df_3jet = df_3jet.sample(frac=1, random_state=42)
 
     # Process df data into np feature arrays. Scale features.
-    X_A, Y_A, w_A = df_process(df_2jet, 2, train=True)
-    X_A = scale(X_A)
+    X_2jet, Y_2jet, w_2jet = df_process(df_2jet, 2, train=True)
+    X_2jet = scale(X_2jet)
+    X_3jet, Y_3jet, w_3jet = df_process(df_3jet, 3, train=True)
+    X_3jet = scale(X_3jet)
 
     # SET RANGE OF HIDDEN NODES.
-    hidden_layers = range(2, 65)
+    hidden_layers = range(2, 33)
 
-    for nodes in hidden_layers:
+    for h1 in hidden_layers:
+        for h2 in hidden_layers:
 
-        # Define Keras NN.
-        model = Sequential()
-        model.add(Dense(nodes, init='uniform', activation='relu', input_dim=11))
-        model.add(Dense(1, init='uniform', activation='sigmoid'))
+            # 2 JET
+            #######
+            # Define Keras NN.
+            model = Sequential()
+            model.add(Dense(h1, init='uniform', activation='relu', input_dim=11))
+            model.add(Dense(h2, init='uniform', activation='relu'))
+            model.add(Dense(1, init='uniform', activation='sigmoid'))
 
-        # Compile.
-        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
+            # Compile.
+            model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
-        # Fit.
-        print "Fitting..."
-        hist = model.fit(X_A, Y_A, nb_epoch=1000, batch_size=32,
-                            validation_split=0.25, callbacks=[EarlyStopping(patience=25)])
-        print "Fit completed."
+            # Fit.
+            print "Fitting..."
+            hist = model.fit(X_2jet, Y_2jet, nb_epoch=1000, batch_size=32,
+                                validation_split=0.25, callbacks=[EarlyStopping(patience=25)])
+            print "Fit completed."
 
-        # Dump results to JSON.
-        filename = 'basicMLP_{:d}nodes.json'.format(nodes)
-        json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
-                  open(filename, 'w'))
-        print "Results dumped to {}.".format(filename)
+            # Dump results to JSON.
+            filename = 'basic_2h_11-{:d}-{:d}-1_2jet.json'.format(h1, h2)
+            json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
+                      open(filename, 'w'))
+            print "Results dumped to {}.".format(filename)
+
+            # 3 JET
+            #######
+            # Define Keras NN.
+            model = Sequential()
+            model.add(Dense(h1, init='uniform', activation='relu', input_dim=13))
+            model.add(Dense(h2, init='uniform', activation='relu'))
+            model.add(Dense(1, init='uniform', activation='sigmoid'))
+
+            # Compile.
+            model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
+
+            # Fit.
+            print "Fitting..."
+            hist = model.fit(X_3jet, Y_3jet, nb_epoch=1000, batch_size=32,
+                             validation_split=0.25, callbacks=[EarlyStopping(patience=25)])
+            print "Fit completed."
+
+            # Dump results to JSON.
+            filename = 'basic_2h_11-{:d}-{:d}-1_3jet.json'.format(h1, h2)
+            json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
+                      open(filename, 'w'))
+            print "Results dumped to {}.".format(filename)
 
     print "Script completed."
 
