@@ -152,7 +152,7 @@ def main():
     X_3jet = scale(X_3jet)
 
     # SET RANGE OF HIDDEN NODES.
-    hidden_layers = range(2, 33)
+    hidden_layers = np.arange(2, 17, 2).astype(int)
 
     for h1 in hidden_layers:
         for h2 in hidden_layers:
