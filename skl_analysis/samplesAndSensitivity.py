@@ -4,6 +4,8 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 from trainSwapFold import *
 
+# TODO: Change x-axis to number of events, not percentage.
+# TODO: Isolate types of backgrounds.
 
 def main():
     # Read in 2 jet and 3 jet dataframes from csv.

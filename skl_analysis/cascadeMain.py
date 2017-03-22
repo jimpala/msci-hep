@@ -13,7 +13,7 @@ from xgboost import XGBClassifier, DMatrix
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 from event_obj import Event
-from copy import copy
+from copy import deepcopy
 import sys
 
 
@@ -103,27 +103,27 @@ def main():
     # Cascade train the events using the events lists, BDTs and DFs.
     # Notice the ordering!
     print "Training and decision scoring..."
-    events_k2_vjets_all = fold_score_xgb(events_k1_vjets, copy(events_k2),
+    events_k2_vjets_all = fold_score_xgb(events_k1_vjets, deepcopy(events_k2),
                                      xgb_k1_vjets, df_2jet_k1_vjets, df_2jet_k2)
-    events_k1_vjets_all = fold_score_xgb(events_k2_vjets, copy(events_k1),
+    events_k1_vjets_all = fold_score_xgb(events_k2_vjets, deepcopy(events_k1),
                                      xgb_k2_vjets, df_2jet_k2_vjets, df_2jet_k1)
     events_vjets = events_k1_vjets_all + events_k2_vjets_all
     
-    events_k2_ttbar_all = fold_score_xgb(events_k1_ttbar, copy(events_k2),
+    events_k2_ttbar_all = fold_score_xgb(events_k1_ttbar, deepcopy(events_k2),
                                      xgb_k1_ttbar, df_2jet_k1_ttbar, df_2jet_k2)
-    events_k1_ttbar_all = fold_score_xgb(events_k2_ttbar, copy(events_k1),
+    events_k1_ttbar_all = fold_score_xgb(events_k2_ttbar, deepcopy(events_k1),
                                      xgb_k2_ttbar, df_2jet_k2_ttbar, df_2jet_k1)
     events_ttbar = events_k1_ttbar_all + events_k2_ttbar_all
     
-    events_k2_stop_all = fold_score_xgb(events_k1_stop, copy(events_k2),
+    events_k2_stop_all = fold_score_xgb(events_k1_stop, deepcopy(events_k2),
                                     xgb_k1_stop, df_2jet_k1_stop, df_2jet_k2)
-    events_k1_stop_all = fold_score_xgb(events_k2_stop, copy(events_k1),
+    events_k1_stop_all = fold_score_xgb(events_k2_stop, deepcopy(events_k1),
                                     xgb_k2_stop, df_2jet_k2_stop, df_2jet_k1)
     events_stop = events_k1_stop_all + events_k2_stop_all
     
-    events_k2_diboson_all = fold_score_xgb(events_k1_diboson, copy(events_k2),
+    events_k2_diboson_all = fold_score_xgb(events_k1_diboson, deepcopy(events_k2),
                                        xgb_k1_diboson, df_2jet_k1_diboson, df_2jet_k2)
-    events_k1_diboson_all = fold_score_xgb(events_k2_diboson, copy(events_k1),
+    events_k1_diboson_all = fold_score_xgb(events_k2_diboson, deepcopy(events_k1),
                                        xgb_k2_diboson, df_2jet_k2_diboson, df_2jet_k1)
     events_diboson = events_k1_diboson_all + events_k2_diboson_all
     print "Done!"
