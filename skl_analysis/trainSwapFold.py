@@ -64,6 +64,17 @@ def ready_df_for_training(df, events):
     return df
 
 
+def ready_df_for_cascade_training(df, events):
+    """Returns df with non-training variables dropped and ordered by event list."""
+    # Drop unneeded cols.
+    df = df.drop(['sample', 'category', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)
+
+    # Order by event list.
+    df = df.ix[[a.index for a in events]]
+
+    return df
+
+
 def fold_score(events_A, events_B, bdt_A, df_A, df_B):
     """Returns scored events_B for a BDT_A."""
 
