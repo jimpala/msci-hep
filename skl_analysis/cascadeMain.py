@@ -13,6 +13,8 @@ from xgboost import XGBClassifier, DMatrix
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 from event_obj import Event
+from copy import copy
+import sys
 
 
 def main():
@@ -43,6 +45,10 @@ def main():
     df_2jet_k2_stop = df_2jet_k2.loc[(df_2jet_k2.category == 'VH') | (df_2jet_k2.category == 'stop')]
     df_2jet_k2_diboson = df_2jet_k2.loc[(df_2jet_k2.category == 'VH') | (df_2jet_k2.category == 'diboson')]
 
+    # Drop category column from original DFs.
+    df_2jet_k1 = df_2jet_k1.drop(['category'], axis=1)
+    df_2jet_k2 = df_2jet_k2.drop(['category'], axis=1)
+
     # Put the DFs through populate_events to get lists of workable events.
     events_k1_vjets = populate_events(df_2jet_k1_vjets, 2)
     events_k1_ttbar = populate_events(df_2jet_k1_ttbar, 2)
@@ -63,7 +69,7 @@ def main():
     events_k1_stop = renormalise_train_weights(events_k1_stop)
     events_k1_diboson = renormalise_train_weights(events_k1_diboson)
     events_k1 = renormalise_train_weights(events_k1)
-    
+
     events_k2_vjets = renormalise_train_weights(events_k2_vjets)
     events_k2_ttbar = renormalise_train_weights(events_k2_ttbar)
     events_k2_stop = renormalise_train_weights(events_k2_stop)
@@ -77,26 +83,106 @@ def main():
     df_2jet_k1_stop = ready_df_for_cascade_training(df_2jet_k1_stop, events_k1_stop)
     df_2jet_k1_diboson = ready_df_for_cascade_training(df_2jet_k1_diboson, events_k1_diboson)
     df_2jet_k1 = ready_df_for_training(df_2jet_k1, events_k1)
-    
+
     df_2jet_k2_vjets = ready_df_for_cascade_training(df_2jet_k2_vjets, events_k2_vjets)
     df_2jet_k2_ttbar = ready_df_for_cascade_training(df_2jet_k2_ttbar, events_k2_ttbar)
     df_2jet_k2_stop = ready_df_for_cascade_training(df_2jet_k2_stop, events_k2_stop)
     df_2jet_k2_diboson = ready_df_for_cascade_training(df_2jet_k2_diboson, events_k2_diboson)
     df_2jet_k2 = ready_df_for_training(df_2jet_k2, events_k2)
-    
+
     xgb_k1_vjets = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1)
     xgb_k1_ttbar = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1)
     xgb_k1_stop = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1)
     xgb_k1_diboson = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1)
-    xgb_k1 = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1)
-    
+
     xgb_k2_vjets = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1)
     xgb_k2_ttbar = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1)
     xgb_k2_stop = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1)
     xgb_k2_diboson = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1)
-    xgb_k2 = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1)
 
     # Cascade train the events using the events lists, BDTs and DFs.
+    # Notice the ordering!
+    print "Training and decision scoring..."
+    events_k2_vjets_all = fold_score_xgb(events_k1_vjets, copy(events_k2),
+                                     xgb_k1_vjets, df_2jet_k1_vjets, df_2jet_k2)
+    events_k1_vjets_all = fold_score_xgb(events_k2_vjets, copy(events_k1),
+                                     xgb_k2_vjets, df_2jet_k2_vjets, df_2jet_k1)
+    events_vjets = events_k1_vjets_all + events_k2_vjets_all
+    
+    events_k2_ttbar_all = fold_score_xgb(events_k1_ttbar, copy(events_k2),
+                                     xgb_k1_ttbar, df_2jet_k1_ttbar, df_2jet_k2)
+    events_k1_ttbar_all = fold_score_xgb(events_k2_ttbar, copy(events_k1),
+                                     xgb_k2_ttbar, df_2jet_k2_ttbar, df_2jet_k1)
+    events_ttbar = events_k1_ttbar_all + events_k2_ttbar_all
+    
+    events_k2_stop_all = fold_score_xgb(events_k1_stop, copy(events_k2),
+                                    xgb_k1_stop, df_2jet_k1_stop, df_2jet_k2)
+    events_k1_stop_all = fold_score_xgb(events_k2_stop, copy(events_k1),
+                                    xgb_k2_stop, df_2jet_k2_stop, df_2jet_k1)
+    events_stop = events_k1_stop_all + events_k2_stop_all
+    
+    events_k2_diboson_all = fold_score_xgb(events_k1_diboson, copy(events_k2),
+                                       xgb_k1_diboson, df_2jet_k1_diboson, df_2jet_k2)
+    events_k1_diboson_all = fold_score_xgb(events_k2_diboson, copy(events_k1),
+                                       xgb_k2_diboson, df_2jet_k2_diboson, df_2jet_k1)
+    events_diboson = events_k1_diboson_all + events_k2_diboson_all
+    print "Done!"
+
+    # Normalise the scores before DF entry.
+    events_k1_vjets_all = normalise_scores(events_k1_vjets_all)
+    events_k1_ttbar_all = normalise_scores(events_k1_ttbar_all)
+    events_k1_stop_all = normalise_scores(events_k1_stop_all)
+    events_k1_diboson_all = normalise_scores(events_k1_diboson_all)
+
+    events_k2_vjets_all = normalise_scores(events_k2_vjets_all)
+    events_k2_ttbar_all = normalise_scores(events_k2_ttbar_all)
+    events_k2_stop_all = normalise_scores(events_k2_stop_all)
+    events_k2_diboson_all = normalise_scores(events_k2_diboson_all)
+    
+    events_vjets = normalise_scores(events_vjets)
+    events_ttbar = normalise_scores(events_ttbar)
+    events_stop = normalise_scores(events_stop)
+    events_diboson = normalise_scores(events_diboson)
+    print "Decision scores normalised."
+
+    # Load in the NTuple CSVs as DataFrames.
+    df_2jet_k1 = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
+    df_2jet_k2 = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
+    print "DFs loaded."
+
+    print "Beginning 2 jet analysis."
+    # Reset indices just to make sure that nothing untoward happens.
+    df_2jet_k1 = df_2jet_k1.reset_index(drop=True)
+    df_2jet_k2 = df_2jet_k2.reset_index(drop=True)
+
+    # Enter metadata into main DFs.
+    df_2jet_k1['vjets_score'] = np.array([a.decision_value for a in events_k1_vjets_all])
+    df_2jet_k1['ttbar_score'] = np.array([a.decision_value for a in events_k1_ttbar_all])
+    df_2jet_k1['stop_score'] = np.array([a.decision_value for a in events_k1_stop_all])
+    df_2jet_k1['diboson_score'] = np.array([a.decision_value for a in events_k1_diboson_all])
+    
+    df_2jet_k2['vjets_score'] = np.array([a.decision_value for a in events_k2_vjets_all])
+    df_2jet_k2['ttbar_score'] = np.array([a.decision_value for a in events_k2_ttbar_all])
+    df_2jet_k2['stop_score'] = np.array([a.decision_value for a in events_k2_stop_all])
+    df_2jet_k2['diboson_score'] = np.array([a.decision_value for a in events_k2_diboson_all])
+
+    # Put the DFs through populate_events to get lists of workable events.
+    events_k1 = populate_events(df_2jet_k1, 2)
+    events_k2 = populate_events(df_2jet_k2, 2)
+
+    # Set the train weights for these events.
+    events_k1 = renormalise_train_weights(events_k1)
+    events_k2 = renormalise_train_weights(events_k2)
+    print "Event list ready."
+
+    # Ready the DFs for training and scoring.
+    df_2jet_k1 = ready_df_for_training(df_2jet_k1, events_k1)
+    df_2jet_k2 = ready_df_for_training(df_2jet_k2, events_k2)
+
+    xgb_k1 = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1, subsample=0.5)
+    xgb_k2 = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1, subsample=0.5)
+
+    # Fit and train the events using the events lists, BDTs and DFs.
     # Notice the ordering!
     print "Training and decision scoring..."
     events_k2 = fold_score_xgb(events_k1, events_k2, xgb_k1, df_2jet_k1, df_2jet_k2)
@@ -118,9 +204,9 @@ def main():
 
     # Plot BDT.
     print "Plotting BDT..."
-    decision_plot(events, block=False)
+    decision_plot(events, block=True)
 
-
+    sys.exit()
 
 
 
