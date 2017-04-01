@@ -177,7 +177,7 @@ def main():
                 print "Fit completed."
 
                 # Dump results to JSON.
-                filename = 'basic_2h_11-{:d}-{:d}-1_2jet.json'.format(h1, h2)
+                filename = 'basic_2h_11-{:d}-{:d}-{:d}-1_2jet.json'.format(h1, h2, h3)
                 json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
                           open(filename, 'w'))
                 print "Results dumped to {}.".format(filename)
@@ -200,7 +200,7 @@ def main():
                 print "Fit completed."
 
                 # Dump results to JSON.
-                filename = 'basic_2h_13-{:d}-{:d}-1_3jet.json'.format(h1, h2)
+                filename = 'basic_2h_13-{:d}-{:d}-{:d}-1_3jet.json'.format(h1, h2, h3)
                 json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
                           open(filename, 'w'))
                 print "Results dumped to {}.".format(filename)
