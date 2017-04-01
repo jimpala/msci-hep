@@ -152,56 +152,58 @@ def main():
     X_3jet = scale(X_3jet)
 
     # SET RANGE OF HIDDEN NODES.
-    hidden_layers = np.arange(2, 17, 2).astype(int)
+    hidden_layers = np.arange(6, 17, 4).astype(int)
 
     for h1 in hidden_layers:
         for h2 in hidden_layers:
+            for h3 in hidden_layers:
 
-            # 2 JET
-            #######
-            # Define Keras NN.
-            model = Sequential()
-            model.add(Dense(h1, init='uniform', activation='relu', input_dim=11))
-            model.add(Dense(h2, init='uniform', activation='relu'))
-            model.add(Dense(1, init='uniform', activation='sigmoid'))
+                # 2 JET
+                #######
+                # Define Keras NN.
+                model = Sequential()
+                model.add(Dense(h1, init='uniform', activation='relu', input_dim=11))
+                model.add(Dense(h2, init='uniform', activation='relu'))
+                model.add(Dense(h3, init='uniform', activation='relu'))
+                model.add(Dense(1, init='uniform', activation='sigmoid'))
 
-            # Compile.
-            model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
+                # Compile.
+                model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
-            # Fit.
-            print "Fitting..."
-            hist = model.fit(X_2jet, Y_2jet, nb_epoch=1000, batch_size=32,
-                                validation_split=0.25, callbacks=[EarlyStopping(patience=25)])
-            print "Fit completed."
+                # Fit.
+                print "Fitting..."
+                hist = model.fit(X_2jet, Y_2jet, nb_epoch=1000, batch_size=32,
+                                    validation_split=0.25, callbacks=[EarlyStopping(patience=25)])
+                print "Fit completed."
 
-            # Dump results to JSON.
-            filename = 'basic_2h_11-{:d}-{:d}-1_2jet.json'.format(h1, h2)
-            json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
-                      open(filename, 'w'))
-            print "Results dumped to {}.".format(filename)
+                # Dump results to JSON.
+                filename = 'basic_2h_11-{:d}-{:d}-1_2jet.json'.format(h1, h2)
+                json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
+                          open(filename, 'w'))
+                print "Results dumped to {}.".format(filename)
 
-            # 3 JET
-            #######
-            # Define Keras NN.
-            model = Sequential()
-            model.add(Dense(h1, init='uniform', activation='relu', input_dim=13))
-            model.add(Dense(h2, init='uniform', activation='relu'))
-            model.add(Dense(1, init='uniform', activation='sigmoid'))
+                # 3 JET
+                #######
+                # Define Keras NN.
+                model = Sequential()
+                model.add(Dense(h1, init='uniform', activation='relu', input_dim=13))
+                model.add(Dense(h2, init='uniform', activation='relu'))
+                model.add(Dense(1, init='uniform', activation='sigmoid'))
 
-            # Compile.
-            model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
+                # Compile.
+                model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
-            # Fit.
-            print "Fitting..."
-            hist = model.fit(X_3jet, Y_3jet, nb_epoch=1000, batch_size=32,
-                             validation_split=0.25, callbacks=[EarlyStopping(patience=25)])
-            print "Fit completed."
+                # Fit.
+                print "Fitting..."
+                hist = model.fit(X_3jet, Y_3jet, nb_epoch=1000, batch_size=32,
+                                 validation_split=0.25, callbacks=[EarlyStopping(patience=25)])
+                print "Fit completed."
 
-            # Dump results to JSON.
-            filename = 'basic_2h_13-{:d}-{:d}-1_3jet.json'.format(h1, h2)
-            json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
-                      open(filename, 'w'))
-            print "Results dumped to {}.".format(filename)
+                # Dump results to JSON.
+                filename = 'basic_2h_13-{:d}-{:d}-1_3jet.json'.format(h1, h2)
+                json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
+                          open(filename, 'w'))
+                print "Results dumped to {}.".format(filename)
 
     print "Script completed."
 
