@@ -6,8 +6,8 @@
 njet=2
 for (($njet; njet<=3; njet++))
 do
-	kfold=1 # Reset kFold.
-	for (($kfold; kfold<=2; kfold++))
+	kfold=0 # Reset kFold.
+	for (($kfold; kfold<=1; kfold++))
 	do
 		echo "Submitting training for $njet jets, $kfold iteration."
 		./tmvaTrain $njet $kfold 0 0

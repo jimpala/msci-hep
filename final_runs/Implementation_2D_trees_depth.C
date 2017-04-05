@@ -93,15 +93,103 @@ void Implementation(){
   myfile.open (openfile);
 
   bool usingV2=false;
+  bool MVADiboson=false;
 
   std::cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl;
+  std::cout << "DON'T FORGET THE MASSIVE BUG YOU'VE PUT IN WITH .AT(0)!!!!" << std::endl;
 
   std::vector<TString> mvaNames;
   mvaNames.push_back("0905_BDT_AdaBoost");
-  mvaNames.push_back("Sherpa221_TruthAll_correctWeights_BDT_AdaBoost_v9_245Tree_4Depth"); //3-jet
-  mvaNames.push_back("Sherpa221_TruthAll_correctWeights_BDT_AdaBoost_v9_150Tree_3Depth");
-  mvaNames.push_back("Sherpa221_correctWeights_BDT_AdaBoost_v9_321Tree_3Depth"); //3-jet
-  mvaNames.push_back("Sherpa221_correctWeights_BDT_AdaBoost_v9_200Tree_2Depth");
+
+
+  mvaNames.push_back("BDT_scan_100ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_120ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_140ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_160ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_180ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_200ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_220ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_240ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_260ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_280ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_300ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_320ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_340ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_360ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_380ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_400ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_420ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_440ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_460ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_480ntree_2depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_500ntree_2depth_0.01minnode");
+
+  mvaNames.push_back("BDT_scan_100ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_120ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_140ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_160ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_180ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_200ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_220ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_240ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_260ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_280ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_300ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_320ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_340ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_360ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_380ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_400ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_420ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_440ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_460ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_480ntree_3depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_500ntree_3depth_0.01minnode");
+
+  mvaNames.push_back("BDT_scan_100ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_120ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_140ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_160ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_180ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_200ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_220ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_240ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_260ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_280ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_300ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_320ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_340ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_360ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_380ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_400ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_420ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_440ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_460ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_480ntree_4depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_500ntree_4depth_0.01minnode");
+
+  mvaNames.push_back("BDT_scan_100ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_120ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_140ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_160ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_180ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_200ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_220ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_240ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_260ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_280ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_300ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_320ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_340ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_360ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_380ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_400ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_420ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_440ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_460ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_480ntree_5depth_0.01minnode");
+  mvaNames.push_back("BDT_scan_500ntree_5depth_0.01minnode");
+
 /*
 //  mvaNames.push_back("Sherpa221_BDT_AdaBoost_v9");
 mvaNames.push_back("Sherpa221_BDT_AdaBoost_v9");
@@ -120,6 +208,33 @@ mvaNames.push_back("Sherpa221_TruthAll_BDT_AdaBoost_v6_RENAMED");
 mvaNames.push_back("SystTTbar_Sherpa221_TruthAll_BDT_AdaBoost_v6_RENAMED");
 
 mvaNames.push_back("Sherpa221_correctWeights_BDT_AdaBoost_v6_RENAMED");
+
+/*
+mvaNames.push_back("Sherpa221_BDT_AdaBoost_v10");
+//  mvaNames.push_back("SystTTbar_Sherpa221_TruthAll_correctWeights_BDT_AdaBoost_v10");
+mvaNames.push_back("Sherpa221_mBBCut_BDT_AdaBoost_v11");
+mvaNames.push_back("Sherpa221_BDT_AdaBoost_v12");
+mvaNames.push_back("Sherpa221_BDT_AdaBoost_v13");
+*/
+/*
+  mvaNames.push_back("Sherpa221_BDT_AdaBoost_v17");
+  mvaNames.push_back("Sherpa221_BDT_AdaBoost_v18");
+  mvaNames.push_back("Sherpa221_BDT_AdaBoost_v19");
+*/
+/*
+  mvaNames.push_back("Sherpa221_TruthAll_BDT_AdaBoost_v5");
+  mvaNames.push_back("SystTTbar_Sherpa221_TruthAll_BDT_AdaBoost_v5");
+  mvaNames.push_back("Sherpa221_BDT_AdaBoost_v5");
+  mvaNames.push_back("Sherpa221_TruthAll_BDT_AdaBoost_v6");
+  mvaNames.push_back("SystTTbar_Sherpa221_TruthAll_BDT_AdaBoost_v6");
+*/
+/*
+  mvaNames.push_back("Sherpa221_TruthAll_BDT_AdaBoost_v7");
+  mvaNames.push_back("SystTTbar_Sherpa221_TruthAll_BDT_AdaBoost_v7");
+  mvaNames.push_back("Sherpa221_BDT_AdaBoost_v7");
+  mvaNames.push_back("Sherpa221_TruthAll_BDT_AdaBoost_v8");
+  mvaNames.push_back("SystTTbar_Sherpa221_TruthAll_BDT_AdaBoost_v8");
+  mvaNames.push_back("Sherpa221_BDT_AdaBoost_v8");
 */
   TMVA::Reader* reader_2jet = new TMVA::Reader();
 //  TMVA::Reader* reader_2jet_ICHEP = new TMVA::Reader();
@@ -157,14 +272,21 @@ mvaNames.push_back("Sherpa221_correctWeights_BDT_AdaBoost_v6_RENAMED");
   reader_3jet->AddVariable("mBBJ", &mBBJ);
   reader_3jet->AddVariable("pTJ3", &pTJ3);
 
+
 //  std::string dir    = "/unix/atlas3/abell/VHbb_MVATrain/train_v2/weights/";
-  std::string dir    = "/unix/atlas3/abell/CxAODFramework_trunk_060317/CxAODReader_VHbb/data/";
+  std::string dir    = "/unix/atlasvhbb/jpyne/VHbb_MVATrain/train_v3/weights/";
 
-
-  myT_Background=new TChain("Nominal");
-  myT_Background->Add( "/unix/atlas3/abell/VHbb_MVATrain/Implementation/Results_v3/background_Normal.root" );
-  myT_Signal=new TChain("Nominal");
-  myT_Signal->Add( "/unix/atlas3/abell/VHbb_MVATrain/Implementation/Results_v3/Direct_Signal.root" );
+  if(MVADiboson){
+    myT_Background=new TChain("Nominal");
+    myT_Background->Add( "/unix/atlas3/abell/VHbb_MVATrain/Implementation/Results_v3/background_Normal_Diboson.root" );
+    myT_Signal=new TChain("Nominal");
+    myT_Signal->Add( "/unix/atlas3/abell/VHbb_MVATrain/Implementation/Results_v3/Direct_Diboson_signal.root" );  }
+  else{
+    myT_Background=new TChain("Nominal");
+    myT_Background->Add( "/unix/atlas3/abell/VHbb_MVATrain/Implementation/Results_v3/background_Normal.root" );
+    myT_Signal=new TChain("Nominal");
+    myT_Signal->Add( "/unix/atlas3/abell/VHbb_MVATrain/Implementation/Results_v3/Direct_Signal.root" );
+  }
 
 //  myT_Background->SetBranchAddress("sample",&sample);
   myT_Background->SetBranchAddress("dRBB",&dRBB);
@@ -215,10 +337,15 @@ mvaNames.push_back("Sherpa221_correctWeights_BDT_AdaBoost_v6_RENAMED");
   for(int j=0;j<mvaNames.size();j++){
 
     std::cout << mvaNames.at(j) << std::endl;
-    reader_2jet->BookMVA("BDT_even"+mvaNames.at(j), dir + "TMVAClassification_1lep2jet_0of2_"+mvaNames.at(j)+".weights.xml");
-    reader_2jet->BookMVA("BDT_odd"+mvaNames.at(j), dir + "TMVAClassification_1lep2jet_1of2_"+mvaNames.at(j)+".weights.xml");
-    reader_3jet->BookMVA("BDT_even"+mvaNames.at(j), dir + "TMVAClassification_1lep3jet_0of2_"+mvaNames.at(j)+".weights.xml");
-    reader_3jet->BookMVA("BDT_odd"+mvaNames.at(j), dir + "TMVAClassification_1lep3jet_1of2_"+mvaNames.at(j)+".weights.xml");
+//    if(j!=1&&j!=3){
+      reader_2jet->BookMVA("BDT_even"+mvaNames.at(j), dir + "TMVAClassification_1lep2jet_0of2_Sherpa221_"+mvaNames.at(j)+".weights.xml");
+      reader_2jet->BookMVA("BDT_odd"+mvaNames.at(j), dir + "TMVAClassification_1lep2jet_1of2_Sherpa221_"+mvaNames.at(j)+".weights.xml");
+//    }
+//    if(j!=2&&j!=4){
+      reader_3jet->BookMVA("BDT_even"+mvaNames.at(j), dir + "TMVAClassification_1lep3jet_0of2_Sherpa221_"+mvaNames.at(j)+".weights.xml");
+      reader_3jet->BookMVA("BDT_odd"+mvaNames.at(j), dir + "TMVAClassification_1lep3jet_1of2_Sherpa221_"+mvaNames.at(j)+".weights.xml");
+//    }
+
     cout << "TOTAL number of background events is: " << myT_Background->GetEntries() << endl;
     cout << "TOTAL number of signal events is: " << myT_Signal->GetEntries() << endl;
 
@@ -231,6 +358,8 @@ mvaNames.push_back("Sherpa221_correctWeights_BDT_AdaBoost_v6_RENAMED");
     TH1F* background_2tag3jet_150ptv_SR_mva = new TH1F("background_2tag3jet_150ptv_SR_mva"+mvaNames.at(j),"background_2tag3jet_150ptv_SR_mva"+mvaNames.at(j),1000,-1,1);
     TH1F* signal_2tag2jet_150ptv_SR_mva = new TH1F("signal_2tag2jet_150ptv_SR_mva"+mvaNames.at(j),"signal_2tag2jet_150ptv_SR_mva"+mvaNames.at(j),1000,-1,1);
     TH1F* signal_2tag3jet_150ptv_SR_mva = new TH1F("signal_2tag3jet_150ptv_SR_mva"+mvaNames.at(j),"signal_2tag3jet_150ptv_SR_mva"+mvaNames.at(j),1000,-1,1);
+
+
 
     background_2tag2jet_150ptv_SR_mva->Sumw2();
     background_2tag3jet_150ptv_SR_mva->Sumw2();
@@ -295,16 +424,16 @@ mvaNames.push_back("Sherpa221_correctWeights_BDT_AdaBoost_v6_RENAMED");
       }
 
       if(nJ==2){
-	if(j==1||j==3)	bdt = (EventNumber%2!=0) ? reader_2jet->EvaluateMVA("BDT_odd"+mvaNames.at(0)) : reader_2jet->EvaluateMVA("BDT_even"+mvaNames.at(0));
-	else bdt = (EventNumber%2!=0) ? reader_2jet->EvaluateMVA("BDT_odd"+mvaNames.at(j)) : reader_2jet->EvaluateMVA("BDT_even"+mvaNames.at(j));
+//	if(j==1||j==3)	bdt = (EventNumber%2!=0) ? reader_2jet->EvaluateMVA("BDT_odd"+mvaNames.at(0)) : reader_2jet->EvaluateMVA("BDT_even"+mvaNames.at(0));
+        bdt = (EventNumber%2!=0) ? reader_2jet->EvaluateMVA("BDT_odd"+mvaNames.at(j)) : reader_2jet->EvaluateMVA("BDT_even"+mvaNames.at(j));
 	background_2tag2jet_150ptv_SR_mBB->Fill(mBB,EventWeight);
 	background_2tag2jet_150ptv_SR_mva->Fill(bdt,EventWeight); 
 	if(sample->find("ttbar") != std::string::npos) ttbar2jetWeight+=EventWeight;
 	if(sample->find("Wbb") != std::string::npos) Wbb2jetWeight+=EventWeight;
       }
       else if(nJ==3){
-	if(j==2||j==4) bdt = (EventNumber%2!=0) ? reader_3jet->EvaluateMVA("BDT_odd"+mvaNames.at(0)) : reader_3jet->EvaluateMVA("BDT_even"+mvaNames.at(0));
-	else bdt = (EventNumber%2!=0) ? reader_3jet->EvaluateMVA("BDT_odd"+mvaNames.at(j)) : reader_3jet->EvaluateMVA("BDT_even"+mvaNames.at(j));
+//	if(j==2||j==4) bdt = (EventNumber%2!=0) ? reader_3jet->EvaluateMVA("BDT_odd"+mvaNames.at(0)) : reader_3jet->EvaluateMVA("BDT_even"+mvaNames.at(0));
+	bdt = (EventNumber%2!=0) ? reader_3jet->EvaluateMVA("BDT_odd"+mvaNames.at(j)) : reader_3jet->EvaluateMVA("BDT_even"+mvaNames.at(j));
 	background_2tag3jet_150ptv_SR_mva->Fill(bdt,EventWeight);
 	background_2tag3jet_150ptv_SR_mBB->Fill(mBB,EventWeight);
         if(sample->find("ttbar") != std::string::npos) ttbar3jetWeight+=EventWeight;
@@ -347,15 +476,15 @@ mvaNames.push_back("Sherpa221_correctWeights_BDT_AdaBoost_v6_RENAMED");
       }
 
       if(nJ==2){
-	if(j==1||j==3)	bdt = (EventNumber%2!=0) ? reader_2jet->EvaluateMVA("BDT_odd"+mvaNames.at(0)) : reader_2jet->EvaluateMVA("BDT_even"+mvaNames.at(0));
-	else bdt = (EventNumber%2!=0) ? reader_2jet->EvaluateMVA("BDT_odd"+mvaNames.at(j)) : reader_2jet->EvaluateMVA("BDT_even"+mvaNames.at(j));
+//	if(j==1||j==3)	bdt = (EventNumber%2!=0) ? reader_2jet->EvaluateMVA("BDT_odd"+mvaNames.at(0)) : reader_2jet->EvaluateMVA("BDT_even"+mvaNames.at(0));
+        bdt = (EventNumber%2!=0) ? reader_2jet->EvaluateMVA("BDT_odd"+mvaNames.at(j)) : reader_2jet->EvaluateMVA("BDT_even"+mvaNames.at(j));
 	signal_2tag2jet_150ptv_SR_mBB->Fill(mBB,EventWeight);
 	signal_2tag2jet_150ptv_SR_mva->Fill(bdt,EventWeight);
 	signal2jetWeight+=EventWeight;
       }
       else if(nJ==3){
-	if(j==2||j==4) bdt = (EventNumber%2!=0) ? reader_3jet->EvaluateMVA("BDT_odd"+mvaNames.at(0)) : reader_3jet->EvaluateMVA("BDT_even"+mvaNames.at(0));
-	else bdt = (EventNumber%2!=0) ? reader_3jet->EvaluateMVA("BDT_odd"+mvaNames.at(j)) : reader_3jet->EvaluateMVA("BDT_even"+mvaNames.at(j));
+//	if(j==2||j==4) bdt = (EventNumber%2!=0) ? reader_3jet->EvaluateMVA("BDT_odd"+mvaNames.at(0)) : reader_3jet->EvaluateMVA("BDT_even"+mvaNames.at(0));
+	bdt = (EventNumber%2!=0) ? reader_3jet->EvaluateMVA("BDT_odd"+mvaNames.at(j)) : reader_3jet->EvaluateMVA("BDT_even"+mvaNames.at(j));
 	signal_2tag3jet_150ptv_SR_mBB->Fill(mBB,EventWeight);
 	signal_2tag3jet_150ptv_SR_mva->Fill(bdt,EventWeight);
 	signal3jetWeight+=EventWeight;
@@ -399,9 +528,9 @@ mvaNames.push_back("Sherpa221_correctWeights_BDT_AdaBoost_v6_RENAMED");
     myfile << "<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<" << std::endl;
     myfile << "MVA training" << mvaNames.at(j) << std::endl;
     myfile << "<<<<<<<<<<<Trafo D <<<<<<<<<<<<<<<<<<<<" << std::endl;
-    myfile << "sensitivity_2jet " << pow(sensitivity_2jet_D,0.5) << std::endl;
-    myfile << "sensitivity_3jet " << pow(sensitivity_3jet_D,0.5) << std::endl;
-    myfile << "Combined sensitivity " << pow(sensitivity_2jet_D+sensitivity_3jet_D,0.5) << std::endl;
+    myfile << "sensitivity_2jet " << pow(sensitivity_2jet_D,0.5) << " +/- " << 0.5 * pow(error_2jet_D / sensitivity_2jet_D,0.5) << std::endl;
+    myfile << "sensitivity_3jet " << pow(sensitivity_3jet_D,0.5) << " +/- " << 0.5 * pow(error_3jet_D / sensitivity_3jet_D,0.5) << std::endl;
+    myfile << "Combined sensitivity " << pow(sensitivity_2jet_D+sensitivity_3jet_D,0.5) << " +/- " << 0.5 * pow((error_2jet_D + error_3jet_D) / (sensitivity_2jet_D + sensitivity_3jet_D),0.5) << std::endl;
 //    myfile << "<<<<<<<<<<<Trafo F <<<<<<<<<<<<<<<<<<<<" << std::endl;
 //    myfile << "sensitivity_2jet " << pow(sensitivity_2jet_F,0.5) << std::endl;
 //    myfile << "sensitivity_3jet " << pow(sensitivity_3jet_F,0.5) << std::endl;
