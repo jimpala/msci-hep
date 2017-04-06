@@ -74,7 +74,7 @@ reduced_sample_map.update(ttbar_zipped)
 reduced_sample_map.update(stop_zipped)
 reduced_sample_map.update(diboson_zipped)
 
-branch_names = ["sample", "EventWeight", "EventNumber", "nJ", "nBJ", "mBB",
+branch_names = ["sample", "EventWeight", "EventNumber", "nJ", "nTags", "mBB",
                 "dRBB", "dPhiBB", "dEtaBB",
                 "dPhiVBB", "dPhiLBmin", "Mtop", "dYWH", "dEtaWH",
                 "dPhiLMET", "pTV", "pTB1", "pTB2", "pTL", "etaL",
@@ -92,9 +92,9 @@ classification_2jet = df_2jet['Class'].as_matrix()
 classification_3jet = df_3jet['Class'].as_matrix()
 
 # Drop unneeded columns for the training.
-df_2jet_filtered = df_2jet.drop(['sample','EventWeight','nJ','nBJ', 'dEtaBB', 'dPhiBB',
+df_2jet_filtered = df_2jet.drop(['sample','EventWeight','nJ','nTags', 'dEtaBB', 'dPhiBB',
                                  'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL', 'Class', 'mBBJ', 'pTJ3'], axis=1)
-df_3jet_filtered = df_3jet.drop(['sample','EventWeight','nJ','nBJ', 'dEtaBB', 'dPhiBB',
+df_3jet_filtered = df_3jet.drop(['sample','EventWeight','nJ','nTags', 'dEtaBB', 'dPhiBB',
                                  'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL', 'Class'], axis=1)
 
 

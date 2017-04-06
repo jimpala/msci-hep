@@ -158,7 +158,7 @@ mvaNames.push_back("Sherpa221_BDT_AdaBoost_v13");
 //  TMVA::Reader* reader_3jet_ICHEP = new TMVA::Reader();
   float dRBB,mBB,dPhiVBB,dPhiLBmin,pTV,pTB1,pTB2,mTW,Mtop,dYWH,MET,mBBJ,pTJ3;
   float EventWeight, BDT;
-  int nBJ, nJ;
+  int nTags, nJ;
   unsigned long long EventNumber;
 //  auto sample;
 
@@ -242,7 +242,7 @@ reader_3jet_ICHEP->AddVariable("pTJ3", &pTJ3);
   myT_Background->SetBranchAddress("EventNumber",&EventNumber);
   myT_Background->SetBranchAddress("EventWeight",&EventWeight);
   myT_Background->SetBranchAddress("nJ",&nJ);
-  myT_Background->SetBranchAddress("nBJ",&nBJ);
+  myT_Background->SetBranchAddress("nTags",&nTags);
 
 //  myT_Signal->SetBranchAddress("sample",&sample);
   myT_Signal->SetBranchAddress("dRBB",&dRBB);
@@ -261,7 +261,7 @@ reader_3jet_ICHEP->AddVariable("pTJ3", &pTJ3);
   myT_Signal->SetBranchAddress("EventNumber",&EventNumber);
   myT_Signal->SetBranchAddress("EventWeight",&EventWeight);
   myT_Signal->SetBranchAddress("nJ",&nJ);
-  myT_Signal->SetBranchAddress("nBJ",&nBJ);
+  myT_Signal->SetBranchAddress("nTags",&nTags);
   myT_Signal->SetBranchAddress("BDT",&BDT);
 
   TFile* outputFile=new TFile("output.root","RECREATE");
@@ -337,7 +337,7 @@ reader_3jet_ICHEP->AddVariable("pTJ3", &pTJ3);
 
 
 
-      if(nBJ!=2) continue;
+      if(nTags!=2) continue;
 //      if(Mtop>225e3&&mBB<75e3) continue;
       
       if(nJ!=2 && nJ!=3) continue;
@@ -386,7 +386,7 @@ reader_3jet_ICHEP->AddVariable("pTJ3", &pTJ3);
   }
 */
 
-      if(nBJ!=2) continue;
+      if(nTags!=2) continue;
 //      if(Mtop>225e3&&mBB<75e3) continue;
       if(nJ!=2 && nJ!=3) continue;
       if(mvaNames.at(j)=="Sherpa221_mBBCut_BDT_AdaBoost_v11"){

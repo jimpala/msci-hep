@@ -21,7 +21,7 @@ def extract_data(df, njets):
     this_events = renormalise_train_weights(this_events)
 
     # Drop some cols.
-    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)
+    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nTags'], axis=1)
 
     # Order by event list.
     df = df.ix[[a.index for a in this_events]]

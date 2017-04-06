@@ -56,7 +56,7 @@ def renormalise_train_weights(event_list):
 def ready_df_for_training(df, events):
     """Returns df with non-training variables dropped and ordered by event list."""
     # Drop unneeded cols.
-    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)
+    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nTags'], axis=1)
 
     # Order by event list.
     df = df.ix[[a.index for a in events]]
@@ -67,7 +67,7 @@ def ready_df_for_training(df, events):
 def ready_df_for_cascade_training(df, events):
     """Returns df with non-training variables dropped and ordered by event list."""
     # Drop unneeded cols.
-    df = df.drop(['sample', 'category', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)
+    df = df.drop(['sample', 'category', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nTags'], axis=1)
 
     # Order by event list.
     df = df.ix[[a.index for a in events]]

@@ -33,7 +33,7 @@ def main():
     df_2jet_even = df_2jet_even.sample(frac=1)
     df_2jet_odd = df_2jet_odd.sample(frac=1)
     df_2jet = pd.concat([df_2jet_even, df_2jet_odd], axis=0, ignore_index=True)
-    df_2jet = df_2jet.drop(['sample', 'EventWeight', 'EventNumber', 'nJ', 'nBJ'], axis=1)
+    df_2jet = df_2jet.drop(['sample', 'EventWeight', 'EventNumber', 'nJ', 'nTags'], axis=1)
 
     # Get the classes.
     y = df_2jet['Class'].as_matrix().astype(int)

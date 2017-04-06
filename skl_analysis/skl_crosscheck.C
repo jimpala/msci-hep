@@ -102,7 +102,7 @@ void Implementation(){
 //  TMVA::Reader* reader_3jet_ICHEP = new TMVA::Reader();
   float dRBB,mBB,dPhiVBB,dPhiLBmin,pTV,pTB1,pTB2,mTW,Mtop,dYWH,MET,mBBJ,pTJ3;
   float EventWeight, BDT;
-  int nBJ, nJ;
+  int nTags, nJ;
   unsigned long long EventNumber;
 
   reader_2jet->AddVariable("jjdR", &dRBB);
@@ -157,7 +157,7 @@ void Implementation(){
   myT_Background->SetBranchAddress("EventNumber",&EventNumber);
   myT_Background->SetBranchAddress("EventWeight",&EventWeight);
   myT_Background->SetBranchAddress("nJ",&nJ);
-  myT_Background->SetBranchAddress("nBJ",&nBJ);
+  myT_Background->SetBranchAddress("nTags",&nTags);
 
   myT_Signal->SetBranchAddress("dRBB",&dRBB);
   myT_Signal->SetBranchAddress("mBB",&mBB);
@@ -175,7 +175,7 @@ void Implementation(){
   myT_Signal->SetBranchAddress("EventNumber",&EventNumber);
   myT_Signal->SetBranchAddress("EventWeight",&EventWeight);
   myT_Signal->SetBranchAddress("nJ",&nJ);
-  myT_Signal->SetBranchAddress("nBJ",&nBJ);
+  myT_Signal->SetBranchAddress("nTags",&nTags);
   myT_Signal->SetBranchAddress("BDT",&BDT);
 
   TFile* outputFile=new TFile("output.root","RECREATE");
@@ -234,7 +234,7 @@ void Implementation(){
     Mtop/=1e3;
 */
 
-      if(nBJ!=2) continue;
+      if(nTags!=2) continue;
 //      if(Mtop>225e3&&mBB<75e3) continue;
       
       if(nJ!=2 && nJ!=3) continue;
@@ -275,7 +275,7 @@ void Implementation(){
     Mtop/=1e3;
 */
 
-      if(nBJ!=2) continue;
+      if(nTags!=2) continue;
 //      if(Mtop>225e3&&mBB<75e3) continue;
       if(nJ!=2 && nJ!=3) continue;
 

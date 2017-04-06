@@ -33,7 +33,7 @@ for df, njets, i in zip(dfs, (2, 3), range(2)):
     this_events = [Event(a, njets, b, c) for a, b, c in args_zipped]
     events += this_events
 
-    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)  # Drop some cols.
+    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nTags'], axis=1)  # Drop some cols.
 
     dfs[i] = df
 print "Event list populated."

@@ -48,7 +48,7 @@ for j, njets in zip(range(2), (2, 3)):
         this_events = [Event(a, njets, b, c) for a, b, c in args_zipped]
         this_events = renormalise_weights(this_events)
 
-        df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)  # Drop some cols.
+        df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nTags'], axis=1)  # Drop some cols.
 
         print "Event list populated."
 
@@ -179,7 +179,7 @@ name_type_ref = [('BDT', 'f4'),
                  ('mBB', 'f4'),
                  ('mBBJ', 'f4'),
                  ('mTW', 'f4'),
-                 ('nBJ', 'i4'),
+                 ('nTags', 'i4'),
                  ('nJ', 'i4'),
                  ('pTB1', 'f4'),
                  ('pTB2', 'f4'),

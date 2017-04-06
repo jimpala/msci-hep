@@ -97,7 +97,7 @@ def df_process(df, njets, train=False, test=False):
     # Get the weights.
     w = df['EventWeight'].as_matrix()
     w = w.flatten()
-    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'nJ', 'nBJ'], axis=1)
+    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'nJ', 'nTags'], axis=1)
 
     # Get the classes.
     y = df['Class'].as_matrix().astype(int)
