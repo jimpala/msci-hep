@@ -29,11 +29,13 @@ sample_map = {
 }
 
 
-branch_names = ["sample", "EventWeight", "EventNumber", "nJ", "nBJ", "mBB",
-                "dRBB", "dPhiBB", "dEtaBB",
-                "dPhiVBB", "dPhiLBmin", "Mtop", "dYWH", "dEtaWH",
-                "dPhiLMET", "pTV", "pTB1", "pTB2", "pTL", "etaL",
-                "mTW", "MET", "pTJ3", "mBBJ", "BDT"]
+branch_names = ["sample", "EventWeight", "EventNumber", "ChannelNumber", "isOdd", "weight",
+                "nJ", "nTags", "nSigJet", "nForwardJet", "mBB",
+                "dRBB", "dPhiBB", "dEtaBB", "sumPt", "pTB1", "pTB2", "pTBB",
+                "pTBBoverMET", "etaB1", "etaB2", "MET", "MPT", "HT", "METHT", "MV1cB1",
+                "MV1cB2", "MV1cJ3", "pTJ3", "etaJ3", "dRB1J3", "dRB2J3", "mBBJ",
+                "dPhiVBB", "dPhiMETMPT", "dPhiMETdijet", "mindPhi", "BDT",
+                "dPhiLBmin", "Mtop", "dYWH", "dEtaWH", "dPhiLMET", "pTL", "etaL", "mTW", "pTV"]
 
 # Read in NTuples.
 # Output S&B as pseudo 2D ndarrays (array of tuple rows).
@@ -71,7 +73,7 @@ df = pd.concat([signal_direct_df, background_df])
 
 
 # Cutflow.
-df = df[df['nBJ'] == 2]
+df = df[df['nTags'] == 2]
 
 # Split into 2 jet and 3 jet trainings.
 df_2jet = df[df['nJ'] == 2]
@@ -85,16 +87,45 @@ df_3jet_odd = df_3jet[df_3jet['EventNumber'] % 2 == 1]
 
 
 # Drop unneeded columns for the training.
-df_2jet_even_filtered = df_2jet_even.drop(['dEtaBB', 'dPhiBB',
-                                 'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL',
+df_2jet_even_filtered = df_2jet_even.drop(['dEtaBB', 'dPhiBB', 'weight',
+                                 'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL', "sumPt",
+                                 "ChannelNumber", "isOdd", "nSigJet", "nForwardJet",
+                                 "pTBB", "pTBBoverMET", "etaB1", "etaB2", "dEtaBB",
+                                 "HT", "METHT", "MV1cB1", "MV1cB2", "MV1cJ3", "MPT",
+                                 "etaJ3", "dRB1J3", "dRB2J3", "dPhiMETMPT", "dPhiMETdijet",
+                                 "mindPhi", "dEtaWH", "dPhiLMET",
                                  'mBBJ', 'pTJ3'], axis=1)
-df_3jet_even_filtered = df_3jet_even.drop(['dEtaBB', 'dPhiBB',
-                                 'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL'], axis=1)
-df_2jet_odd_filtered = df_2jet_odd.drop(['dEtaBB', 'dPhiBB',
-                                 'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL',
+df_3jet_even_filtered = df_3jet_even.drop(['dEtaBB', 'dPhiBB', 'weight',
+                                 'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL', "sumPt",
+                                 "ChannelNumber", "isOdd", "nSigJet", "nForwardJet",
+                                 "pTBB", "pTBBoverMET", "etaB1", "etaB2", "dEtaBB",
+                                 "HT", "METHT", "MV1cB1", "MV1cB2", "MV1cJ3", "MPT",
+                                 "etaJ3", "dRB1J3", "dRB2J3", "dPhiMETMPT", "dPhiMETdijet",
+                                 "mindPhi", "dEtaWH", "dPhiLMET"], axis=1)
+df_2jet_odd_filtered = df_2jet_odd.drop(['dEtaBB', 'dPhiBB', 'weight',
+                                 'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL', "sumPt",
+                                 "ChannelNumber", "isOdd", "nSigJet", "nForwardJet",
+                                 "pTBB", "pTBBoverMET", "etaB1", "etaB2", "dEtaBB",
+                                 "HT", "METHT", "MV1cB1", "MV1cB2", "MV1cJ3", "MPT",
+                                 "etaJ3", "dRB1J3", "dRB2J3", "dPhiMETMPT", "dPhiMETdijet",
+                                 "mindPhi", "dEtaWH", "dPhiLMET",
                                  'mBBJ', 'pTJ3'], axis=1)
-df_3jet_odd_filtered = df_3jet_odd.drop(['dEtaBB', 'dPhiBB',
-                                 'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL'], axis=1)
+df_3jet_odd_filtered = df_3jet_odd.drop(['dEtaBB', 'dPhiBB', 'weight',
+                                 'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL', "sumPt",
+                                 "ChannelNumber", "isOdd", "nSigJet", "nForwardJet",
+                                 "pTBB", "pTBBoverMET", "etaB1", "etaB2", "dEtaBB",
+                                 "HT", "METHT", "MV1cB1", "MV1cB2", "MV1cJ3", "MPT",
+                                 "etaJ3", "dRB1J3", "dRB2J3", "dPhiMETMPT", "dPhiMETdijet",
+                                 "mindPhi", "dEtaWH", "dPhiLMET"], axis=1)
+
+
+# df_3jet_even_filtered = df_3jet_even.drop(['dEtaBB', 'dPhiBB',
+#                                  'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL'], axis=1)
+# df_2jet_odd_filtered = df_2jet_odd.drop(['dEtaBB', 'dPhiBB',
+#                                  'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL',
+#                                  'mBBJ', 'pTJ3'], axis=1)
+# df_3jet_odd_filtered = df_3jet_odd.drop(['dEtaBB', 'dPhiBB',
+#                                  'dEtaWH', 'dPhiLMET', 'BDT', 'pTL', 'etaL'], axis=1)
 
 df_2jet_even_filtered.to_csv(path_or_buf='/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_even.csv')
 df_3jet_even_filtered.to_csv(path_or_buf='/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_even.csv')

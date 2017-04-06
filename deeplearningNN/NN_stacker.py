@@ -161,7 +161,7 @@ def main():
         # Define Keras NN.
         model = Sequential()
         model.add(Dense(layer_width, init='uniform', activation='relu', input_dim=11))
-        for _ in range(layer_i - 1):
+        for _ in range(layer_i):
             model.add(Dense(layer_width, init='uniform', activation='relu'))
         model.add(Dense(1, init='uniform', activation='sigmoid'))
 
@@ -171,7 +171,7 @@ def main():
         # Fit.
         print "Fitting..."
         hist = model.fit(X_2jet, Y_2jet, nb_epoch=1000, batch_size=32,
-                            validation_split=0.25, callbacks=[EarlyStopping(patience=25)])
+                            validation_split=0.25, callbacks=[EarlyStopping(patience=15)])
         print "Fit completed."
 
         # Dump results to JSON.
@@ -185,7 +185,7 @@ def main():
         # Define Keras NN.
         model = Sequential()
         model.add(Dense(layer_width, init='uniform', activation='relu', input_dim=13))
-        for _ in range(layer_i - 1):
+        for _ in range(layer_i):
             model.add(Dense(layer_width, init='uniform', activation='relu'))
         model.add(Dense(1, init='uniform', activation='sigmoid'))
 
@@ -195,7 +195,7 @@ def main():
         # Fit.
         print "Fitting..."
         hist = model.fit(X_3jet, Y_3jet, nb_epoch=1000, batch_size=32,
-                         validation_split=0.25, callbacks=[EarlyStopping(patience=25)])
+                         validation_split=0.25, callbacks=[EarlyStopping(patience=15)])
         print "Fit completed."
 
         # Dump results to JSON.
