@@ -79,25 +79,28 @@ def df_process(df, njets, train=False, test=False):
 
         sig_mask = (df['Class'] == 1)
         sig_entries = df[sig_mask]
-        df.loc[sig_mask, 'EventWeight'] = sig_entries['EventWeight'].apply(lambda a: a * scale_sig)
+        df.loc[sig_mask, 'EventWeight'] = sig_entries[
+            'EventWeight'].apply(lambda a: a * scale_sig)
 
         back_mask = (df['Class'] == 0)
         back_entries = df[back_mask]
-        df.loc[back_mask, 'EventWeight'] = back_entries['EventWeight'].apply(lambda a: a * scale_back)
-
+        df.loc[back_mask, 'EventWeight'] = back_entries[
+            'EventWeight'].apply(lambda a: a * scale_back)
 
     # Configure weights test mode (post-fit).
     elif test:
         weights = df.loc[:, 'EventWeight']
         indices = df.index.values
         samples = df.ix[:, 'sample'].as_matrix().tolist()
-        samples = map(lambda a, b: scale_factor_map[njets][a] * b, samples, weights)
+        samples = map(lambda a, b: scale_factor_map[
+                      njets][a] * b, samples, weights)
         df['EventWeight'] = pd.Series(data=samples, index=indices)
 
     # Get the weights.
     w = df['EventWeight'].as_matrix()
     w = w.flatten()
-    df = df.drop(['sample', 'EventWeight', 'EventNumber', 'nJ', 'nTags'], axis=1)
+    df = df.drop(['sample', 'EventWeight',
+                  'EventNumber', 'nJ', 'nTags'], axis=1)
 
     # Get the classes.
     y = df['Class'].as_matrix().astype(int)
@@ -115,28 +118,40 @@ def main():
     try:
         if sys.argv[1] == 'gpu':
             # Process the data.
-            df_2jet_even = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_even.csv', index_col=0)
-            df_3jet_even = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_even.csv', index_col=0)
-            df_2jet_odd = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_odd.csv', index_col=0)
-            df_3jet_odd = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_odd.csv', index_col=0)
+            df_2jet_even = pd.read_csv(
+                '/home/jpyne/CSV/VHbb_data_2jet_even.csv', index_col=0)
+            df_3jet_even = pd.read_csv(
+                '/home/jpyne/CSV/VHbb_data_3jet_even.csv', index_col=0)
+            df_2jet_odd = pd.read_csv(
+                '/home/jpyne/CSV/VHbb_data_2jet_odd.csv', index_col=0)
+            df_3jet_odd = pd.read_csv(
+                '/home/jpyne/CSV/VHbb_data_3jet_odd.csv', index_col=0)
             print "CSV read-in complete."
 
         else:
             # Process the data.
-            df_2jet_even = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
-            df_3jet_even = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
-            df_2jet_odd = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
-            df_3jet_odd = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
+            df_2jet_even = pd.read_csv(
+                '/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
+            df_3jet_even = pd.read_csv(
+                '/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
+            df_2jet_odd = pd.read_csv(
+                '/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
+            df_3jet_odd = pd.read_csv(
+                '/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
             print "CSV read-in complete."
 
     except IndexError:
         print "No command line args passed. Running in local mode."
 
         # Process the data.
-        df_2jet_even = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
-        df_3jet_even = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
-        df_2jet_odd = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
-        df_3jet_odd = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
+        df_2jet_even = pd.read_csv(
+            '/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
+        df_3jet_even = pd.read_csv(
+            '/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
+        df_2jet_odd = pd.read_csv(
+            '/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
+        df_3jet_odd = pd.read_csv(
+            '/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
         print "CSV read-in complete."
 
     # Concatenate odd and even into the same DF.
@@ -160,22 +175,25 @@ def main():
         #######
         # Define Keras NN.
         model = Sequential()
-        model.add(Dense(layer_width, init='uniform', activation='relu', input_dim=11))
+        model.add(Dense(layer_width, init='uniform',
+                        activation='relu', input_dim=11))
         for _ in range(layer_i):
             model.add(Dense(layer_width, init='uniform', activation='relu'))
         model.add(Dense(1, init='uniform', activation='sigmoid'))
 
         # Compile.
-        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
+        model.compile(loss='binary_crossentropy',
+                      optimizer='adam', metrics=['accuracy', ])
 
         # Fit.
         print "Fitting..."
         hist = model.fit(X_2jet, Y_2jet, nb_epoch=1000, batch_size=32,
-                            validation_split=0.25, callbacks=[EarlyStopping(patience=15)])
+                         validation_split=0.25, callbacks=[EarlyStopping(patience=15)])
         print "Fit completed."
 
         # Dump results to JSON.
-        filename = 'stacked_{:d}h_11-{:d}(x{:d})-1_2jet.json'.format(n_layers, layer_width, layer_i)
+        filename = 'stacked_{:d}h_11-{:d}(x{:d})-1_2jet.json'.format(
+            n_layers, layer_width, layer_i)
         json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
                   open(filename, 'w'))
         print "Results dumped to {}.".format(filename)
@@ -184,13 +202,15 @@ def main():
         #######
         # Define Keras NN.
         model = Sequential()
-        model.add(Dense(layer_width, init='uniform', activation='relu', input_dim=13))
+        model.add(Dense(layer_width, init='uniform',
+                        activation='relu', input_dim=13))
         for _ in range(layer_i):
             model.add(Dense(layer_width, init='uniform', activation='relu'))
         model.add(Dense(1, init='uniform', activation='sigmoid'))
 
         # Compile.
-        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
+        model.compile(loss='binary_crossentropy',
+                      optimizer='adam', metrics=['accuracy', ])
 
         # Fit.
         print "Fitting..."
@@ -199,7 +219,8 @@ def main():
         print "Fit completed."
 
         # Dump results to JSON.
-        filename = 'stacked_{:d}h_13-{:d}(x{:d})-1_3jet.json'.format(n_layers, layer_width, layer_1)
+        filename = 'stacked_{:d}h_13-{:d}(x{:d})-1_3jet.json'.format(
+            n_layers, layer_width, layer_i)
         json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
                   open(filename, 'w'))
         print "Results dumped to {}.".format(filename)
