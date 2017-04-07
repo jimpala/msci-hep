@@ -175,7 +175,7 @@ def main():
         print "Fit completed."
 
         # Dump results to JSON.
-        filename = 'stacked_{:d}h_11-{:d}(x{:d})-1_2jet.json'.format(n_layers, layer_width, n_layers)
+        filename = 'stacked_{:d}h_11-{:d}(x{:d})-1_2jet.json'.format(n_layers, layer_width, layer_i)
         json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
                   open(filename, 'w'))
         print "Results dumped to {}.".format(filename)
@@ -199,7 +199,7 @@ def main():
         print "Fit completed."
 
         # Dump results to JSON.
-        filename = 'stacked_{:d}h_13-{:d}(x{:d})-1_3jet.json'.format(n_layers, layer_width, n_layers)
+        filename = 'stacked_{:d}h_13-{:d}(x{:d})-1_3jet.json'.format(n_layers, layer_width, layer_1)
         json.dump({'params': hist.params, 'results': hist.history, 'low_val_loss': min(hist.history['val_loss'])},
                   open(filename, 'w'))
         print "Results dumped to {}.".format(filename)
