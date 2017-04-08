@@ -328,8 +328,8 @@ void makePlots() {
   config.addRegion("2tttag2jet_vpt0_120", "2tag2jet_vpt0_120", "2 tags, 2 jets, p_{T}^{V} < 120", "2 tags 2 jets low pTV");
   */
   // cut based regions  
-  config.addRegion(  "2tag2jet_150ptv_SR_WHfSR", "2tag2jet_150ptv_SR_WHfSR",   "2 tags, 2 jets, p_{T}^{V} >= 150 GeV", "2 tags, 2 jets");
-  config.addRegion(  "2tag3jet_150ptv_SR_WHfSR", "2tag3jet_150ptv_SR_WHfSR",   "2 tags, 3 jets, p_{T}^{V} >= 150 GeV", "2 tags, 3 jets");
+  config.addRegion(  "2tag2jet_150ptv_SR_WhfSR", "2tag2jet_150ptv_SR_WhfSR",   "2 tags, 2 jets, p_{T}^{V} >= 150 GeV", "2 tags, 2 jets");
+  config.addRegion(  "2tag3jet_150ptv_SR_WhfSR", "2tag3jet_150ptv_SR_WhfSR",   "2 tags, 3 jets, p_{T}^{V} >= 150 GeV", "2 tags, 3 jets");
   // config.addRegion(  "0tag2jet_vpt200",   "0 tags, 2 jets, p_{T}^{V} >= 200 GeV", "0 tags, 2 jets");
   // config.addRegion(  "1tag3jet_vpt200",   "1 tags, 3 jets, p_{T}^{V} >= 200 GeV", "1 tags, 3 jets");
   // config.addRegion(  "1tag2jet_vpt200",   "1 tags, 2 jets, p_{T}^{V} >= 200 GeV", "1 tags, 2 jets");

@@ -1,11 +1,4 @@
 <<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
-MVA training0905_BDT_AdaBoost
-<<<<<<<<<<<Trafo D <<<<<<<<<<<<<<<<<<<<
-sensitivity_2jet 2.74651 +/- 0.100146
-sensitivity_3jet 1.64655 +/- 0.0525893
-Combined sensitivity 3.20225 +/- 0.0900488
-<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
-<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
 MVA trainingBDT_scan_100ntree_2depth_0.01minnode
 <<<<<<<<<<<Trafo D <<<<<<<<<<<<<<<<<<<<
 sensitivity_2jet 2.69714 +/- 0.0895635
@@ -1180,13 +1173,6 @@ MVA trainingBDT_scan_500ntree_5depth_0.02minnode
 sensitivity_2jet 2.65038 +/- 0.0957901
 sensitivity_3jet 1.69911 +/- 0.0586767
 Combined sensitivity 3.14825 +/- 0.0866367
-<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
-<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
-MVA training0905_BDT_AdaBoost
-<<<<<<<<<<<Trafo D <<<<<<<<<<<<<<<<<<<<
-sensitivity_2jet 2.74651 +/- 0.100146
-sensitivity_3jet 1.64655 +/- 0.0525893
-Combined sensitivity 3.20225 +/- 0.0900488
 <<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
 <<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
 MVA trainingBDT_scan_100ntree_2depth_0.03minnode
@@ -2365,13 +2351,6 @@ sensitivity_3jet 1.68543 +/- 0.0550962
 Combined sensitivity 3.06505 +/- 0.0774466
 <<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
 <<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
-MVA training0905_BDT_AdaBoost
-<<<<<<<<<<<Trafo D <<<<<<<<<<<<<<<<<<<<
-sensitivity_2jet 2.74651 +/- 0.100146
-sensitivity_3jet 1.64655 +/- 0.0525893
-Combined sensitivity 3.20225 +/- 0.0900488
-<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
-<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
 MVA trainingBDT_scan_100ntree_2depth_0.05minnode
 <<<<<<<<<<<Trafo D <<<<<<<<<<<<<<<<<<<<
 sensitivity_2jet 2.68524 +/- 0.0867433
@@ -3548,13 +3527,6 @@ sensitivity_3jet 1.69889 +/- 0.0566617
 Combined sensitivity 3.08497 +/- 0.0756528
 <<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
 <<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
-MVA training0905_BDT_AdaBoost
-<<<<<<<<<<<Trafo D <<<<<<<<<<<<<<<<<<<<
-sensitivity_2jet 2.74651 +/- 0.100146
-sensitivity_3jet 1.64655 +/- 0.0525893
-Combined sensitivity 3.20225 +/- 0.0900488
-<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
-<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
 MVA trainingBDT_scan_100ntree_2depth_0.07minnode
 <<<<<<<<<<<Trafo D <<<<<<<<<<<<<<<<<<<<
 sensitivity_2jet 2.68848 +/- 0.088626
@@ -4729,13 +4701,6 @@ MVA trainingBDT_scan_500ntree_5depth_0.08minnode
 sensitivity_2jet 2.60728 +/- 0.0819589
 sensitivity_3jet 1.68201 +/- 0.0577927
 Combined sensitivity 3.10275 +/- 0.0756621
-<<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
-<<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
-MVA training0905_BDT_AdaBoost
-<<<<<<<<<<<Trafo D <<<<<<<<<<<<<<<<<<<<
-sensitivity_2jet 2.74651 +/- 0.100146
-sensitivity_3jet 1.64655 +/- 0.0525893
-Combined sensitivity 3.20225 +/- 0.0900488
 <<<<<<<<<<<END RESULT<<<<<<<<<<<<<<<<
 <<<<<<<<<<<BEGIN RESULT<<<<<<<<<<<<<<<<
 MVA trainingBDT_scan_100ntree_2depth_0.09minnode
