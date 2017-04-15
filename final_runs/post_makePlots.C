@@ -75,7 +75,7 @@ void makePlots() {
   /// Output
 
   // path to output plots
-  config.setOutputPath("./plotsFinalPre/");
+  config.setOutputPath("./plotsFinalPost/");
 
   // BDT transformations:
   // config.addBDTTransformation(""); // no transformation
@@ -208,9 +208,9 @@ void makePlots() {
   // Some pre-prepared set of scale factors are available and submitted to tag numbers
   // The complete set is available in the scaleFactors/ subdirectory of this package with the naming convention <tag>.txt
   
-  //std::string scaleFactorsTag = "SF_1L_nJ_0108";
-  //config.readScaleFactors("scaleFactors/"+scaleFactorsTag+".txt");
-  //config.setOutputPath(config.getOutputPath()+"/"+scaleFactorsTag);
+  std::string scaleFactorsTag = "SF_1L_nJ_0108";
+  config.readScaleFactors("scaleFactors/"+scaleFactorsTag+".txt");
+  // config.setOutputPath(config.getOutputPath()+"/"+scaleFactorsTag);
   
   // To optimize plot readability , samples that contribute less than a fraction X are dropped from the legend
   config.setLegendThreshold(0.0);
