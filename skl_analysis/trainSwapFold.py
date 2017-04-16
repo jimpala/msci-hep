@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from event_obj import *
 from sensitivity import trafoD_with_error, calc_sensitivity_with_error
 from xgboost import XGBClassifier, DMatrix
+from keras.callbacks import EarlyStopping
+from sklearn.preprocessing import scale
 
 
 def populate_events(df, njets, train_weights=False):
@@ -165,6 +167,38 @@ def fold_score_proba_knn(events_A, events_B, knn_A, df_A, df_B):
     scores = knn_A.predict_proba(X_B).tolist()
     # Only want the second element of the prob tuple (prob of signal).
     scores = map(lambda a: a[1], scores)
+
+    for e, s in zip(events_B, scores):
+        e.set_decision_value(s)
+
+    return events_B
+
+def fold_score_keras(events_A, events_B, model_A, df_A, df_B):
+    """Returns scored events_B for a BDT_A."""
+
+    # Get indices, train weights and classes for each of these splits.
+    # w and Y need to be numpy arrays to work with skl.
+    w_A = np.array([a.train_weight for a in events_A])
+    w_B = np.array([a.train_weight for a in events_B])
+    Y_A = np.array([a.classification for a in events_A])
+    Y_B = np.array([a.classification for a in events_B])
+
+    # Index our X training sets by row; convert to ndarrays.
+    X_A = df_A.as_matrix()
+    X_B = df_B.as_matrix()
+
+    # Scale for the NN.
+    X_A = scale(X_A)
+    X_B = scale(X_B)
+
+    # Fit model.
+    model_A.fit(X_A, Y_A, sample_weight=w_A, validation_data=(X_B, Y_B, w_B),
+                nb_epoch=1000, batch_size=32, callbacks=[EarlyStopping(patience=25)])
+
+    # Get scores of X_A for BDT_B and vice-versa.
+    prob_tuples = model_A.predict_proba(X_B).tolist()
+    # Only want the second element of the prob tuple (prob of signal).
+    scores = [a[1] for a in prob_tuples]
 
     for e, s in zip(events_B, scores):
         e.set_decision_value(s)
