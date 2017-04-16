@@ -168,7 +168,7 @@ def main():
 
     # SET HIDDEN LAYER PARAMS.
     n_layers = 10
-    layer_width = 32
+    layer_width = 64
 
     for layer_i in range(n_layers):
         # 2 JET
