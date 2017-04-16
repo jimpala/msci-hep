@@ -11,6 +11,7 @@ class Event:
     process_general_map = {
         'qqZvvH125': 'VH',
         'qqWlvH125': 'VH',
+        'qqZllH125': 'VH',
         'Wbb': 'V+jets',
         'Wbc': 'V+jets',
         'Wcc': 'V+jets',
@@ -55,7 +56,8 @@ class Event:
             'ZZ': 1.13,
             'WZ': 1.13,
             'qqZvvH125': 1.0,
-            'qqWlvH125': 1.0
+            'qqWlvH125': 1.0,
+            'qqZllH125': 1.0
         }, 3: {
             'Zl': 1.0,
             'Zcl': 1.0,
@@ -78,7 +80,8 @@ class Event:
             'ZZ': 1.12,
             'WZ': 1.12,
             'qqZvvH125': 1.0,
-            'qqWlvH125': 1.0
+            'qqWlvH125': 1.0,
+            'qqZllH125': 1.0
         }
     }
 

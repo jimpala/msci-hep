@@ -138,9 +138,9 @@ def fold_score_proba(events_A, events_B, bdt_A, df_A, df_B):
     bdt_A.fit(X_A, Y_A, sample_weight=w_A)
 
     # Get scores of X_A for BDT_B and vice-versa.
-    scores = bdt_A.predict_proba(X_B).tolist()
+    prob_tuples = bdt_A.predict_proba(X_B).tolist()
     # Only want the second element of the prob tuple (prob of signal).
-    scores = map(lambda a: a[1], scores)
+    scores = [a[1] for a in prob_tuples]
 
     for e, s in zip(events_B, scores):
         e.set_decision_value(s)

@@ -10,7 +10,7 @@ from trainSwapFold import *
 import math
 import pandas as pd
 from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.tree import DecisionTreeClassifier
+
 
 def main():
     # Load in the NTuple CSVs as DataFrames.
@@ -91,11 +91,13 @@ def main():
     df_3jet_k2 = ready_df_for_training(df_3jet_k2, events_k2)
 
     gbm_k1 = GradientBoostingClassifier(learning_rate=0.15,
-                                        n_estimators=300
+                                        n_estimators=300,
+                                        loss='exponential'
                                         )
 
     gbm_k2 = GradientBoostingClassifier(learning_rate=0.15,
-                                        n_estimators=300
+                                        n_estimators=300,
+                                        loss='exponential'
                                         )
 
     # Fit and train the events using the events lists, BDTs and DFs.
