@@ -142,6 +142,8 @@ def main():
     sens_3jet, error_3jet = trafo_sensitivity(events)
     print "Done!"
 
+    print "2 jet sensitivity is: {:f}".format(sens_2jet)
+    print "2 jet error is: {:f}".format(error_2jet)
     print "3 jet sensitivity is: {:f}".format(sens_3jet)
     print "3 jet error is: {:f}".format(error_3jet)
 
