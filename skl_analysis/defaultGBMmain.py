@@ -38,19 +38,21 @@ def main():
     df_2jet_k1 = ready_df_for_training(df_2jet_k1, events_k1)
     df_2jet_k2 = ready_df_for_training(df_2jet_k2, events_k2)
 
-    bdt_k1 = GradientBoostingClassifier(learning_rate=0.15,
-                                        n_estimators=300
+    gbm_k1 = GradientBoostingClassifier(learning_rate=0.15,
+                                        n_estimators=300,
+                                        loss='exponential'
                                         )
 
-    bdt_k2 = GradientBoostingClassifier(learning_rate=0.15,
-                                        n_estimators=300
+    gbm_k2 = GradientBoostingClassifier(learning_rate=0.15,
+                                        n_estimators=300,
+                                        loss='exponential'
                                         )
 
     # Fit and train the events using the events lists, BDTs and DFs.
     # Notice the ordering!
     print "Training and decision scoring..."
-    events_k2 = fold_score(events_k1, events_k2, bdt_k1, df_2jet_k1, df_2jet_k2)
-    events_k1 = fold_score(events_k2, events_k1, bdt_k2, df_2jet_k2, df_2jet_k1)
+    events_k2 = fold_score(events_k1, events_k2, gbm_k1, df_2jet_k1, df_2jet_k2)
+    events_k1 = fold_score(events_k2, events_k1, gbm_k2, df_2jet_k2, df_2jet_k1)
     events = events_k1 + events_k2
     print "Done!"
 
@@ -88,19 +90,19 @@ def main():
     df_3jet_k1 = ready_df_for_training(df_3jet_k1, events_k1)
     df_3jet_k2 = ready_df_for_training(df_3jet_k2, events_k2)
 
-    bdt_k1 = GradientBoostingClassifier(learning_rate=0.15,
+    gbm_k1 = GradientBoostingClassifier(learning_rate=0.15,
                                         n_estimators=300
                                         )
 
-    bdt_k2 = GradientBoostingClassifier(learning_rate=0.15,
+    gbm_k2 = GradientBoostingClassifier(learning_rate=0.15,
                                         n_estimators=300
                                         )
 
     # Fit and train the events using the events lists, BDTs and DFs.
     # Notice the ordering!
     print "Training and decision scoring..."
-    events_k2 = fold_score(events_k1, events_k2, bdt_k1, df_3jet_k1, df_3jet_k2)
-    events_k1 = fold_score(events_k2, events_k1, bdt_k2, df_3jet_k2, df_3jet_k1)
+    events_k2 = fold_score(events_k1, events_k2, gbm_k1, df_3jet_k1, df_3jet_k2)
+    events_k1 = fold_score(events_k2, events_k1, gbm_k2, df_3jet_k2, df_3jet_k1)
     events = events_k1 + events_k2
     print "Done!"
 
