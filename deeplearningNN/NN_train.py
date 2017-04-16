@@ -138,6 +138,7 @@ def main():
             first = False
             continue
         model_2.add(Dense(l, init='uniform', activation='relu'))
+    model_2.add(Dense(1, init='uniform', activation='sigmoid'))
     model_2.compile(loss='binary_crossentropy',
                     optimizer='adam', metrics=['accuracy', ])
 
@@ -152,6 +153,7 @@ def main():
             first = False
             continue
         model_3.add(Dense(l, init='uniform', activation='relu'))
+    model_3.add(Dense(1, init='uniform', activation='sigmoid'))
     model_3.compile(loss='binary_crossentropy',
                     optimizer='adam', metrics=['accuracy', ])
 
