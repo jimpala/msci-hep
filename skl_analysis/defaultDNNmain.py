@@ -14,6 +14,8 @@ from keras.models import Sequential
 from keras.layers import Dense
 import sys
 
+import matplotlib as mpl
+mpl.use('Agg')
 
 def main():
     try:

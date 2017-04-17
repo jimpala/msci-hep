@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 from event_obj import *
@@ -193,7 +195,7 @@ def fold_score_keras(events_A, events_B, model_A, df_A, df_B):
 
     # Fit model.
     model_A.fit(X_A, Y_A, sample_weight=w_A, validation_data=(X_B, Y_B, w_B),
-                nb_epoch=1000, batch_size=32, callbacks=[EarlyStopping(patience=25)])
+                nb_epoch=1000, batch_size=32, callbacks=[EarlyStopping(patience=50)])
 
     # Get scores of X_A for BDT_B and vice-versa.
     prob_tuples = model_A.predict_proba(X_B).tolist()
@@ -234,7 +236,7 @@ def trafo_sensitivity(events, error=True):
     return sens, error
 
 
-def decision_plot(events, block=False):
+def decision_plot(events, show=False, block=False):
 
     # Call TrafoD on Event list.
     bins, delta_bins_s, delta_bins_b = trafoD_with_error(events)
@@ -271,4 +273,5 @@ def decision_plot(events, block=False):
     plt.xlabel('Score')
     plt.title('Decision Scores')
 
-    plt.show(block=block)
+    if show:
+        plt.show(block=block)
