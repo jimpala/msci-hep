@@ -198,7 +198,7 @@ def fold_score_keras(events_A, events_B, model_A, df_A, df_B):
     # Get scores of X_A for BDT_B and vice-versa.
     prob_tuples = model_A.predict_proba(X_B).tolist()
     # Only want the second element of the prob tuple (prob of signal).
-    scores = [a[1] for a in prob_tuples]
+    scores = [a[0] for a in prob_tuples]
 
     for e, s in zip(events_B, scores):
         e.set_decision_value(s)
