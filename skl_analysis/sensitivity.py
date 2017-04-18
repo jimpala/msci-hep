@@ -244,8 +244,8 @@ def calc_sensitivity(events, bins):
     events_sb = [[a.decision_value for a in events if a.classification == 1],
                  [a.decision_value for a in events if a.classification == 0]]
 
-    weights_sb = [[a.post_fit_weight for a in events if a.classification == 1],
-                  [a.post_fit_weight for a in events if a.classification == 0]]
+    weights_sb = [[a.event_weight for a in events if a.classification == 1],
+                  [a.event_weight for a in events if a.classification == 0]]
 
     counts_sb = plt.hist(events_sb,
                          bins=bins,
@@ -277,8 +277,8 @@ def calc_sensitivity_with_error(events, bins, bin_sums_w2_s, bin_sums_w2_b):
     events_sb = [[a.decision_value for a in events if a.classification == 1],
                  [a.decision_value for a in events if a.classification == 0]]
 
-    weights_sb = [[a.post_fit_weight for a in events if a.classification == 1],
-                  [a.post_fit_weight for a in events if a.classification == 0]]
+    weights_sb = [[a.event_weight for a in events if a.classification == 1],
+                  [a.event_weight for a in events if a.classification == 0]]
 
     counts_sb = plt.hist(events_sb,
                          bins=bins,
