@@ -79,6 +79,7 @@ def main():
     model_k2.add(Dense(14, init='uniform', activation='relu', input_dim=11))
     model_k2.add(Dense(14, init='uniform', activation='relu'))
     model_k2.add(Dense(14, init='uniform', activation='relu'))
+    model_k2.add(Dense(1, init='uniform', activation='sigmoid'))
     model_k2.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
     # Fit and train the events using the events lists, BDTs and DFs.
@@ -141,6 +142,7 @@ def main():
     model_k2.add(Dense(14, init='uniform', activation='relu', input_dim=13))
     model_k2.add(Dense(14, init='uniform', activation='relu'))
     model_k2.add(Dense(14, init='uniform', activation='relu'))
+    model_k2.add(Dense(1, init='uniform', activation='sigmoid'))
     model_k2.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
     # Fit and train the events using the events lists, BDTs and DFs.
