@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 
 from event_obj import *
 from sensitivity import trafoD_with_error, calc_sensitivity_with_error
-from xgboost import XGBClassifier, DMatrix
 from keras.callbacks import EarlyStopping
 from sklearn.preprocessing import scale
 

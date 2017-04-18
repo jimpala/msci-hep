@@ -6,6 +6,9 @@ BDT analysis on the k1 and k2 2-jet DFs.
 # Authors: James Pyne
 # License: MIT
 
+import matplotlib as mpl
+mpl.use('Agg')
+
 from trainSwapFold import *
 import math
 import pandas as pd
@@ -13,9 +16,10 @@ from sklearn.ensemble import GradientBoostingClassifier
 from keras.models import Sequential
 from keras.layers import Dense
 import sys
+import json
+from datetime import datetime
 
-import matplotlib as mpl
-mpl.use('Agg')
+
 
 def main():
     try:
@@ -65,13 +69,16 @@ def main():
 
     # Set up NN models.
     model_k1 = Sequential()
-    model_k1.add(Dense(8, init='uniform', activation='relu', input_dim=11))
+    model_k1.add(Dense(14, init='uniform', activation='relu', input_dim=11))
+    model_k1.add(Dense(14, init='uniform', activation='relu'))
+    model_k1.add(Dense(14, init='uniform', activation='relu'))
     model_k1.add(Dense(1, init='uniform', activation='sigmoid'))
     model_k1.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
     model_k2 = Sequential()
-    model_k2.add(Dense(8, init='uniform', activation='relu', input_dim=11))
-    model_k2.add(Dense(1, init='uniform', activation='sigmoid'))
+    model_k2.add(Dense(14, init='uniform', activation='relu', input_dim=11))
+    model_k2.add(Dense(14, init='uniform', activation='relu'))
+    model_k2.add(Dense(14, init='uniform', activation='relu'))
     model_k2.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
     # Fit and train the events using the events lists, BDTs and DFs.
@@ -98,6 +105,12 @@ def main():
     print "Plotting BDT..."
     decision_plot(events, block=False)
 
+    # Dump decision values to JSON.
+    now = datetime.now().strftime('%d%m%y_%H%S')
+    filename = 'trainedNN_{}_2jet'.format(now)
+    json.dump({'decision_vals': [a.decision_value for a in events], 'samples': [a.process for a in events]},
+              open(filename + '.json', 'w'))
+
     print "Beginning 3 jet analysis."
     # Reset indices just to make sure that nothing untoward happens.
     df_3jet_k1 = df_3jet_k1.reset_index(drop=True)
@@ -118,13 +131,16 @@ def main():
 
     # Set up NN models.
     model_k1 = Sequential()
-    model_k1.add(Dense(8, init='uniform', activation='relu', input_dim=13))
+    model_k1.add(Dense(14, init='uniform', activation='relu', input_dim=13))
+    model_k1.add(Dense(14, init='uniform', activation='relu'))
+    model_k1.add(Dense(14, init='uniform', activation='relu'))
     model_k1.add(Dense(1, init='uniform', activation='sigmoid'))
     model_k1.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
     model_k2 = Sequential()
-    model_k2.add(Dense(8, init='uniform', activation='relu', input_dim=13))
-    model_k2.add(Dense(1, init='uniform', activation='sigmoid'))
+    model_k2.add(Dense(14, init='uniform', activation='relu', input_dim=13))
+    model_k2.add(Dense(14, init='uniform', activation='relu'))
+    model_k2.add(Dense(14, init='uniform', activation='relu'))
     model_k2.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', ])
 
     # Fit and train the events using the events lists, BDTs and DFs.
@@ -152,6 +168,12 @@ def main():
     # Plot BDT.
     print "Plotting BDT..."
     decision_plot(events, block=False)
+
+    # Dump decision values to JSON.
+    now = datetime.now().strftime('%d%m%y_%H%S')
+    filename = 'trainedNN_{}_3jet'.format(now)
+    json.dump({'decision_vals': [a.decision_value for a in events], 'samples': [a.process for a in events]},
+              open(filename + '.json', 'w'))
 
     combined_sens = math.sqrt(sens_2jet ** 2 + sens_3jet ** 2)
     combined_error = math.sqrt(error_2jet ** 2 + error_3jet ** 2)

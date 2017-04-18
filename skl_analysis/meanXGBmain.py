@@ -30,7 +30,7 @@ def fold_score_xgb_mean(events_A, events_B, xgb_list_A, df_A, df_B):
     # Fit all in list.
     for xgb_A in xgb_list_A:
         xgb_A.fit(X_A, Y_A, sample_weight=w_A, eval_set=[(X_B, Y_B)],
-                  eval_metric='auc', early_stopping_rounds=50, verbose=True)
+                  eval_metric='auc', early_stopping_rounds=200, verbose=True)
 
     scores_list = list()
 
@@ -51,11 +51,11 @@ def fold_score_xgb_mean(events_A, events_B, xgb_list_A, df_A, df_B):
     return events_B
 
 # Function to generate a list of XGB classifiers with different seeds.
-def generate_xgb_list(num, seed):
+def generate_xgb_list(num, seed, depth=1):
     clfs = list()
     for r in range(num):
-        clf = XGBClassifier(n_estimators=1500, max_depth=2, learning_rate=0.07,
-                            subsample=0.8, colsample_bytree=0.8, seed=seed+r)
+        clf = XGBClassifier(n_estimators=1500, max_depth=depth, learning_rate=0.07, gamma=28.75, reg_lambda=0.4,
+                            subsample=0.8, seed=seed+r)
         clfs.append(clf)
     return clfs
 
@@ -86,8 +86,8 @@ def main():
     df_2jet_k1 = ready_df_for_training(df_2jet_k1, events_k1)
     df_2jet_k2 = ready_df_for_training(df_2jet_k2, events_k2)
 
-    xgb_list_k1 = generate_xgb_list(15, 42)
-    xgb_list_k2 = generate_xgb_list(15, 88)
+    xgb_list_k1 = generate_xgb_list(15, 42, depth=2)
+    xgb_list_k2 = generate_xgb_list(15, 88, depth=2)
 
     # Fit and train the events using the events lists, BDTs and DFs.
     # Notice the ordering!
@@ -131,8 +131,8 @@ def main():
     df_3jet_k1 = ready_df_for_training(df_3jet_k1, events_k1)
     df_3jet_k2 = ready_df_for_training(df_3jet_k2, events_k2)
 
-    xgb_list_k1 = generate_xgb_list(15, 42)
-    xgb_list_k2 = generate_xgb_list(15, 88)
+    xgb_list_k1 = generate_xgb_list(15, 42, depth=3)
+    xgb_list_k2 = generate_xgb_list(15, 88, depth=3)
 
     # Fit and train the events using the events lists, BDTs and DFs.
     # Notice the ordering!

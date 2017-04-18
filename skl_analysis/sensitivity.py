@@ -5,7 +5,7 @@ from event_obj import *
 from copy import copy
 
 
-def trafoD(event_list, initial_bins=1000, z_s=10, z_b=10):
+def trafoD(event_list, initial_bins=1000, z_s=10, z_b=5):
     """Output optimised histogram bin widths from a list of events"""
 
     # Check that all event decision values are populated
@@ -159,7 +159,7 @@ def trafoD_with_error(event_list, initial_bins=1000, z_s=10, z_b=10):
         return bins, delta_bins_s, delta_bins_b
 
 
-def trafoD_tuples(y, y_pred, w, initial_bins=200, z_s=15, z_b=15):
+def trafoD_tuples(y, y_pred, w, initial_bins=200, z_s=10, z_b=5):
     """Output optimised histogram bin widths list of y, predicted y, and POSTFIT weights."""
 
     y = y.tolist()[0]

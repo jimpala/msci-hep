@@ -39,8 +39,8 @@ def main():
     df_2jet_k1 = ready_df_for_training(df_2jet_k1, events_k1)
     df_2jet_k2 = ready_df_for_training(df_2jet_k2, events_k2)
 
-    xgb_k1 = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1, subsample=0.5)
-    xgb_k2 = XGBClassifier(n_estimators=200, max_depth=2, learning_rate=0.1, subsample=0.5)
+    xgb_k1 = XGBClassifier(n_estimators=201, max_depth=2, learning_rate=0.1, subsample=0.45, gamma=28.75, reg_lambda=0.6)
+    xgb_k2 = XGBClassifier(n_estimators=201, max_depth=2, learning_rate=0.1, subsample=0.45, gamma=28.75, reg_lambda=0.6)
 
     # Fit and train the events using the events lists, BDTs and DFs.
     # Notice the ordering!
@@ -84,8 +84,8 @@ def main():
     df_3jet_k1 = ready_df_for_training(df_3jet_k1, events_k1)
     df_3jet_k2 = ready_df_for_training(df_3jet_k2, events_k2)
 
-    xgb_k1 = XGBClassifier(n_estimators=360, max_depth=2, learning_rate=0.1, subsample=0.5)
-    xgb_k2 = XGBClassifier(n_estimators=360, max_depth=2, learning_rate=0.1, subsample=0.5)
+    xgb_k1 = XGBClassifier(n_estimators=360, max_depth=2, learning_rate=0.1, subsample=0.5, reg_alpha=0.001)
+    xgb_k2 = XGBClassifier(n_estimators=360, max_depth=2, learning_rate=0.1, subsample=0.5, reg_alpha=0.001)
 
     # Fit and train the events using the events lists, BDTs and DFs.
     # Notice the ordering!
@@ -109,7 +109,7 @@ def main():
 
     # Plot BDT.
     print "Plotting BDT..."
-    decision_plot(events, block=False)
+    decision_plot(events, block=True)
     
     combined_sens = math.sqrt(sens_2jet ** 2 + sens_3jet ** 2)
     combined_error = math.sqrt(error_2jet ** 2 + error_3jet ** 2)
