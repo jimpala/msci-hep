@@ -72,7 +72,7 @@ def main():
 
     # Plot BDT.
     print "Plotting BDT..."
-    decision_plot(events, block=False)
+    decision_plot(events, block=True, show=True)
 
     print "Beginning 3 jet analysis."
     # Reset indices just to make sure that nothing untoward happens.
@@ -126,7 +126,7 @@ def main():
 
     # Plot BDT.
     print "Plotting BDT..."
-    decision_plot(events, block=False)
+    decision_plot(events, block=True, show=True)
     
     combined_sens = math.sqrt(sens_2jet ** 2 + sens_3jet ** 2)
     combined_error = math.sqrt(error_2jet ** 2 + error_3jet ** 2)

@@ -101,6 +101,7 @@ class Event:
                              'Zcl': '#6699CC',
                              'Zl': '#99CCFF',
                              'qqWlvH125': '#FF0000',
+                             'qqZllH125': '#FF0000',
                              'stopWt': '#FFFF66',
                              'stops': '#CC9900',
                              'stopt': '#CC9900',

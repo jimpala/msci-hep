@@ -1,7 +1,5 @@
 import numpy as np
 import pandas as pd
-import matplotlib as mpl
-mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 from event_obj import *
@@ -273,5 +271,4 @@ def decision_plot(events, show=False, block=False):
     plt.xlabel('Score')
     plt.title('Decision Scores')
 
-    if show:
-        plt.show(block=block)
+    plt.show(block=block)
