@@ -6,6 +6,7 @@ from event_obj import *
 from sensitivity import trafoD_with_error, calc_sensitivity_with_error
 from keras.callbacks import EarlyStopping
 from sklearn.preprocessing import scale
+from datetime import datetime
 
 
 def populate_events(df, njets, train_weights=False):
@@ -195,6 +196,8 @@ def fold_score_keras(events_A, events_B, model_A, df_A, df_B):
     # Fit model.
     model_A.fit(X_A, Y_A, sample_weight=w_A, validation_data=(X_B, Y_B, w_B),
                 nb_epoch=1000, batch_size=32, callbacks=[EarlyStopping(patience=50)])
+    model_A.save(datetime.now().strftime('%d%m%y_%H%S') + '_kerasmodel.h5')
+
 
     # Get scores of X_A for BDT_B and vice-versa.
     prob_tuples = model_A.predict_proba(X_B).tolist()
