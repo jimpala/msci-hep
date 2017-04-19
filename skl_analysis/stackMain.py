@@ -6,6 +6,8 @@ BDT analysis on the k1 and k2 2-jet DFs.
 # Authors: James Pyne
 # License: MIT
 
+import matplotlib as mpl
+mpl.use('Agg')
 from trainSwapFold import *
 import math
 import pandas as pd
@@ -17,8 +19,6 @@ import json
 from datetime import datetime
 from copy import deepcopy
 from xgboost import XGBClassifier
-import matplotlib as mpl
-mpl.use('Agg')
 
 
 
@@ -168,7 +168,7 @@ def main():
 
     # Plot BDT.
     print "Plotting BDT..."
-    decision_plot(events, block=False)
+    #decision_plot(events, block=False)
     
     # ---------------------------------------------------------------------------------------
     # ---------------------------------------------------------------------------------------
@@ -291,7 +291,7 @@ def main():
 
     # Plot BDT.
     print "Plotting BDT..."
-    decision_plot(events, block=False)
+    #decision_plot(events, block=False)
 
     combined_sens = math.sqrt(sens_2jet ** 2 + sens_3jet ** 2)
     combined_error = math.sqrt(error_2jet ** 2 + error_3jet ** 2)
