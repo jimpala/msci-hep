@@ -9,7 +9,6 @@ import json
 import sys
 from datetime import datetime
 
-
 scale_factor_map = {
     2: {
         'Zl': 1.0,

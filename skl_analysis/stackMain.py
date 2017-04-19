@@ -17,6 +17,8 @@ import json
 from datetime import datetime
 from copy import deepcopy
 from xgboost import XGBClassifier
+import matplotlib as mpl
+mpl.use('Agg')
 
 
 
@@ -290,6 +292,13 @@ def main():
     # Plot BDT.
     print "Plotting BDT..."
     decision_plot(events, block=False)
+
+    combined_sens = math.sqrt(sens_2jet ** 2 + sens_3jet ** 2)
+    combined_error = math.sqrt(error_2jet ** 2 + error_3jet ** 2)
+    print "Combined sensitivity is: {:f}".format(combined_sens)
+    print "Combined error is: {:f}".format(combined_error)
+
+    print "Script finished."
 
 if __name__ == '__main__':
     main()
