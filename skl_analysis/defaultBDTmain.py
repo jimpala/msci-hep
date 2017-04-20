@@ -38,13 +38,13 @@ def main():
     df_2jet_k1 = ready_df_for_training(df_2jet_k1, events_k1)
     df_2jet_k2 = ready_df_for_training(df_2jet_k2, events_k2)
 
-    bdt_k1 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.07),
+    bdt_k1 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.01),
                                 learning_rate=0.15,
                                 algorithm="SAMME",
                                 n_estimators=200
                                 )
 
-    bdt_k2 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.07),
+    bdt_k2 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.01),
                                 learning_rate=0.15,
                                 algorithm="SAMME",
                                 n_estimators=200
@@ -92,16 +92,16 @@ def main():
     df_3jet_k1 = ready_df_for_training(df_3jet_k1, events_k1)
     df_3jet_k2 = ready_df_for_training(df_3jet_k2, events_k2)
 
-    bdt_k1 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=5, min_samples_leaf=0.06),
+    bdt_k1 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.01),
                                 learning_rate=0.15,
                                 algorithm="SAMME",
-                                n_estimators=340
+                                n_estimators=200
                                 )
 
-    bdt_k2 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=5, min_samples_leaf=0.06),
+    bdt_k2 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=3, min_samples_leaf=0.01),
                                 learning_rate=0.15,
                                 algorithm="SAMME",
-                                n_estimators=340
+                                n_estimators=200
                                 )
 
     # Fit and train the events using the events lists, BDTs and DFs.
