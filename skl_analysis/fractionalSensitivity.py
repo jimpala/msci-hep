@@ -146,6 +146,9 @@ def main():
         json_out['sens_2jet_{}_varied'.format(variant)] = sensitivities
         json_out['err_2jet_{}_varied'.format(variant)] = errors
 
+    # Dump JSON.
+    with open('fractional_sensitivity.json', 'w') as fp:
+        json.dump(json_out, fp)
 
 
 
