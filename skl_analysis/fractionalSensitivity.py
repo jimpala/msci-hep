@@ -143,8 +143,8 @@ def main():
             errors.append(error_2jet)
 
         # Append sensitivities/errors to JSON.
-        json_out['sens_2jet_{}_varied'.format(variant)] = sens_2jet
-        json_out['err_2jet_{}_varied'.format(variant)] = error_2jet
+        json_out['sens_2jet_{}_varied'.format(variant)] = sensitivities
+        json_out['err_2jet_{}_varied'.format(variant)] = errors
 
 
 
@@ -242,8 +242,8 @@ def main():
             errors.append(error_3jet)
 
         # Append sensitivities/errors to JSON.
-        json_out['sens_3jet_{}_varied'.format(variant)] = sens_3jet
-        json_out['err_3jet_{}_varied'.format(variant)] = error_3jet
+        json_out['sens_3jet_{}_varied'.format(variant)] = sensitivities
+        json_out['err_3jet_{}_varied'.format(variant)] = errors
 
     # Dump JSON.
     with open('fractional_sensitivity.json', 'w') as fp:
