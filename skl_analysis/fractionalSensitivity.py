@@ -24,28 +24,28 @@ def main():
     try:
         if sys.argv[1] == 'gpu':
             # Process the data.
-            df_2jet_k1_orig = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_even.csv', index_col=0)
-            df_3jet_k1_orig = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_even.csv', index_col=0)
-            df_2jet_k2_orig = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_odd.csv', index_col=0)
-            df_3jet_k2_orig = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_odd.csv', index_col=0)
+            df_2jet_k1_orig = pd.read_csv('/home/jpyne/CSV_legacy/VHbb_data_2jet_even.csv', index_col=0)
+            df_3jet_k1_orig = pd.read_csv('/home/jpyne/CSV_legacy/VHbb_data_3jet_even.csv', index_col=0)
+            df_2jet_k2_orig = pd.read_csv('/home/jpyne/CSV_legacy/VHbb_data_2jet_odd.csv', index_col=0)
+            df_3jet_k2_orig = pd.read_csv('/home/jpyne/CSV_legacy/VHbb_data_3jet_odd.csv', index_col=0)
             print "CSV read-in complete."
 
         else:
             # Process the data.
-            df_2jet_k1_orig = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
-            df_3jet_k1_orig = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
-            df_2jet_k2_orig = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
-            df_3jet_k2_orig = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
+            df_2jet_k1_orig = pd.read_csv('/Volumes/THUMB/legacy-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
+            df_3jet_k1_orig = pd.read_csv('/Volumes/THUMB/legacy-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
+            df_2jet_k2_orig = pd.read_csv('/Volumes/THUMB/legacy-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
+            df_3jet_k2_orig = pd.read_csv('/Volumes/THUMB/legacy-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
             print "CSV read-in complete."
 
     except IndexError:
         print "No command line args passed. Running in local mode."
 
         # Process the data.
-        df_2jet_k1_orig = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
-        df_3jet_k1_orig = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
-        df_2jet_k2_orig = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
-        df_3jet_k2_orig = pd.read_csv('/Volumes/THUMB/VHbb-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
+        df_2jet_k1_orig = pd.read_csv('/Volumes/THUMB/legacy-data/CSV/VHbb_data_2jet_even.csv', index_col=0)
+        df_3jet_k1_orig = pd.read_csv('/Volumes/THUMB/legacy-data/CSV/VHbb_data_3jet_even.csv', index_col=0)
+        df_2jet_k2_orig = pd.read_csv('/Volumes/THUMB/legacy-data/CSV/VHbb_data_2jet_odd.csv', index_col=0)
+        df_3jet_k2_orig = pd.read_csv('/Volumes/THUMB/legacy-data/CSV/VHbb_data_3jet_odd.csv', index_col=0)
         print "CSV read-in complete."
 
     # Initialise JSON results.
@@ -146,9 +146,7 @@ def main():
         json_out['sens_2jet_{}_varied'.format(variant)] = sensitivities
         json_out['err_2jet_{}_varied'.format(variant)] = errors
 
-    # Dump JSON.
-    with open('fractional_sensitivity.json', 'w') as fp:
-        json.dump(json_out, fp)
+
 
 
 
@@ -249,7 +247,7 @@ def main():
         json_out['err_3jet_{}_varied'.format(variant)] = errors
 
     # Dump JSON.
-    with open('fractional_sensitivity.json', 'w') as fp:
+    with open('fractional_sensitivity_legacy.json', 'w') as fp:
         json.dump(json_out, fp)
 
     print "Results dumped to fractional_sensitivity.json."

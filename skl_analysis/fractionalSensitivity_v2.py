@@ -22,10 +22,10 @@ def main():
     try:
         if sys.argv[1] == 'gpu':
             # Process the data.
-            df_2jet_k1_orig = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_even.csv', index_col=0)
-            df_3jet_k1_orig = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_even.csv', index_col=0)
-            df_2jet_k2_orig = pd.read_csv('/home/jpyne/CSV/VHbb_data_2jet_odd.csv', index_col=0)
-            df_3jet_k2_orig = pd.read_csv('/home/jpyne/CSV/VHbb_data_3jet_odd.csv', index_col=0)
+            df_2jet_k1_orig = pd.read_csv('/home/jpyne/CSV_legacy/VHbb_data_2jet_even.csv', index_col=0)
+            df_3jet_k1_orig = pd.read_csv('/home/jpyne/CSV_legacy/VHbb_data_3jet_even.csv', index_col=0)
+            df_2jet_k2_orig = pd.read_csv('/home/jpyne/CSV_legacy/VHbb_data_2jet_odd.csv', index_col=0)
+            df_3jet_k2_orig = pd.read_csv('/home/jpyne/CSV_legacy/VHbb_data_3jet_odd.csv', index_col=0)
             print "CSV read-in complete."
 
         else:
@@ -228,7 +228,7 @@ def main():
         json_out['err_3jet_{}_varied'.format(variant)] = errors
 
     # Dump JSON.
-    with open('fractional_sensitivity_v2.json', 'w') as fp:
+    with open('fractional_sensitivity_v2_legacy.json', 'w') as fp:
         json.dump(json_out, fp)
 
     print "Results dumped to fractional_sensitivity.json."
