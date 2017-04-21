@@ -16,8 +16,6 @@ import sys
 import random
 import json
 
-random.seed(42)
-
 
 
 def main():
@@ -78,35 +76,27 @@ def main():
                 df_2jet_k2_back = df_2jet_k2_back.sample(frac=fraction)
             
             # Concatenate them back together.
-            df_2jet_k1_frac = pd.concat((df_2jet_k1_sig, df_2jet_k1_back), axis=0, ignore_index=True)
-            df_2jet_k2_frac = pd.concat((df_2jet_k2_sig, df_2jet_k2_back), axis=0, ignore_index=True)
+            df_2jet_k1 = pd.concat((df_2jet_k1_sig, df_2jet_k1_back), axis=0, ignore_index=True)
+            df_2jet_k2 = pd.concat((df_2jet_k2_sig, df_2jet_k2_back), axis=0, ignore_index=True)
 
             print "Beginning 2 jet analysis."
             # Reset indices just to make sure that nothing untoward happens.
-            df_2jet_k1_frac = df_2jet_k1_frac.reset_index(drop=True)
-            df_2jet_k2_frac = df_2jet_k2_frac.reset_index(drop=True)
-            df_2jet_k1 = df_2jet_k1_orig.reset_index(drop=True)
-            df_2jet_k2 = df_2jet_k2_orig.reset_index(drop=True)
-
+            df_2jet_k1 = df_2jet_k1.reset_index(drop=True)
+            df_2jet_k2 = df_2jet_k2.reset_index(drop=True)
+        
             # Put the DFs through populate_events to get lists of workable events.
             events_k1 = populate_events(df_2jet_k1, 2)
-            events_k1_frac = populate_events(df_2jet_k1_frac, 2)
             events_k2 = populate_events(df_2jet_k2, 2)
-            events_k2_frac = populate_events(df_2jet_k2_frac, 2)
-
+        
             # Set the train weights for these events.
             events_k1 = renormalise_train_weights(events_k1)
-            events_k1_frac = renormalise_train_weights(events_k1_frac)
             events_k2 = renormalise_train_weights(events_k2)
-            events_k2_frac = renormalise_train_weights(events_k2_frac)
             print "Event list ready."
         
             # Ready the DFs for training and scoring.
             df_2jet_k1 = ready_df_for_training(df_2jet_k1, events_k1)
-            df_2jet_k1_frac = ready_df_for_training(df_2jet_k1_frac, events_k1_frac)
             df_2jet_k2 = ready_df_for_training(df_2jet_k2, events_k2)
-            df_2jet_k2_frac = ready_df_for_training(df_2jet_k2_frac, events_k2_frac)
-
+        
             bdt_k1 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=2, min_samples_leaf=0.1),
                                         learning_rate=0.15,
                                         algorithm="SAMME",
@@ -122,8 +112,8 @@ def main():
             # Fit and train the events using the events lists, BDTs and DFs.
             # Notice the ordering!
             print "Training and decision scoring..."
-            events_k2 = fold_score(events_k1_frac, events_k2, bdt_k1, df_2jet_k1_frac, df_2jet_k2)
-            events_k1 = fold_score(events_k2_frac, events_k1, bdt_k2, df_2jet_k2_frac, df_2jet_k1)
+            events_k2 = fold_score(events_k1, events_k2, bdt_k1, df_2jet_k1, df_2jet_k2)
+            events_k1 = fold_score(events_k2, events_k1, bdt_k2, df_2jet_k2, df_2jet_k1)
             events = events_k1 + events_k2
             print "Done!"
         
@@ -146,9 +136,6 @@ def main():
         json_out['sens_2jet_{}_varied'.format(variant)] = sensitivities
         json_out['err_2jet_{}_varied'.format(variant)] = errors
 
-    # Dump JSON.
-    with open('fractional_sensitivity.json', 'w') as fp:
-        json.dump(json_out, fp)
 
 
 
@@ -180,34 +167,26 @@ def main():
                 df_3jet_k2_back = df_3jet_k2_back.sample(frac=fraction)
 
             # Concatenate them back together.
-            df_3jet_k1_frac = pd.concat((df_3jet_k1_sig, df_3jet_k1_back), axis=0, ignore_index=True)
-            df_3jet_k2_frac = pd.concat((df_3jet_k2_sig, df_3jet_k2_back), axis=0, ignore_index=True)
+            df_3jet_k1 = pd.concat((df_3jet_k1_sig, df_3jet_k1_back), axis=0, ignore_index=True)
+            df_3jet_k2 = pd.concat((df_3jet_k2_sig, df_3jet_k2_back), axis=0, ignore_index=True)
 
             print "Beginning 3 jet analysis."
             # Reset indices just to make sure that nothing untoward happens.
-            df_3jet_k1_frac = df_3jet_k1_frac.reset_index(drop=True)
-            df_3jet_k2_frac = df_3jet_k2_frac.reset_index(drop=True)
-            df_3jet_k1 = df_3jet_k1_orig.reset_index(drop=True)
-            df_3jet_k2 = df_3jet_k2_orig.reset_index(drop=True)
+            df_3jet_k1 = df_3jet_k1.reset_index(drop=True)
+            df_3jet_k2 = df_3jet_k2.reset_index(drop=True)
 
             # Put the DFs through populate_events to get lists of workable events.
-            events_k1 = populate_events(df_3jet_k1, 2)
-            events_k1_frac = populate_events(df_3jet_k1_frac, 3)
-            events_k2 = populate_events(df_3jet_k2, 2)
-            events_k2_frac = populate_events(df_3jet_k2_frac, 3)
+            events_k1 = populate_events(df_3jet_k1, 3)
+            events_k2 = populate_events(df_3jet_k2, 3)
 
             # Set the train weights for these events.
             events_k1 = renormalise_train_weights(events_k1)
-            events_k1_frac = renormalise_train_weights(events_k1_frac)
             events_k2 = renormalise_train_weights(events_k2)
-            events_k2_frac = renormalise_train_weights(events_k2_frac)
             print "Event list ready."
 
             # Ready the DFs for training and scoring.
             df_3jet_k1 = ready_df_for_training(df_3jet_k1, events_k1)
-            df_3jet_k1_frac = ready_df_for_training(df_3jet_k1_frac, events_k1_frac)
             df_3jet_k2 = ready_df_for_training(df_3jet_k2, events_k2)
-            df_3jet_k2_frac = ready_df_for_training(df_3jet_k2_frac, events_k2_frac)
 
             bdt_k1 = AdaBoostClassifier(DecisionTreeClassifier(max_depth=2, min_samples_leaf=0.1),
                                         learning_rate=0.15,
@@ -224,8 +203,8 @@ def main():
             # Fit and train the events using the events lists, BDTs and DFs.
             # Notice the ordering!
             print "Training and decision scoring..."
-            events_k2 = fold_score(events_k1_frac, events_k2, bdt_k1, df_3jet_k1_frac, df_3jet_k2)
-            events_k1 = fold_score(events_k2_frac, events_k1, bdt_k2, df_3jet_k2_frac, df_3jet_k1)
+            events_k2 = fold_score(events_k1, events_k2, bdt_k1, df_3jet_k1, df_3jet_k2)
+            events_k1 = fold_score(events_k2, events_k1, bdt_k2, df_3jet_k2, df_3jet_k1)
             events = events_k1 + events_k2
             print "Done!"
 
@@ -249,7 +228,7 @@ def main():
         json_out['err_3jet_{}_varied'.format(variant)] = errors
 
     # Dump JSON.
-    with open('fractional_sensitivity.json', 'w') as fp:
+    with open('fractional_sensitivity_v2.json', 'w') as fp:
         json.dump(json_out, fp)
 
     print "Results dumped to fractional_sensitivity.json."
