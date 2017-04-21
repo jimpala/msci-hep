@@ -60,7 +60,7 @@ def ready_df_for_training(df, events, drop=True):
 
     if drop:
         # Drop unneeded cols.
-        df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nTags'], axis=1)
+        df = df.drop(['sample', 'EventWeight', 'EventNumber', 'Class', 'nJ', 'nBJ'], axis=1)
 
     # Order by event list.
     df = df.ix[[a.index for a in events]]
