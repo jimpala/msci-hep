@@ -83,8 +83,8 @@ def main():
 
             print "Beginning 2 jet analysis."
             # Reset indices just to make sure that nothing untoward happens.
-            df_2jet_k1_frac = df_2jet_k1_frac.reset_index(drop=True)
-            df_2jet_k2_frac = df_2jet_k2_frac.reset_index(drop=True)
+            df_2jet_k1_frac = df_2jet_k1_frac.sample(frac=1).reset_index(drop=True)
+            df_2jet_k2_frac = df_2jet_k2_frac.sample(frac=1).reset_index(drop=True)
             df_2jet_k1 = df_2jet_k1_orig.reset_index(drop=True)
             df_2jet_k2 = df_2jet_k2_orig.reset_index(drop=True)
 
