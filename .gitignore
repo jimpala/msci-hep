@@ -17,3 +17,6 @@
 calibration/gridsearch/*.txt
 
 *.p
+
+*.scap
+*.pages

@@ -10,6 +10,8 @@ Welcome to UCL VHbb MSci Project's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   python_analysis
+
 
 
 Indices and tables
