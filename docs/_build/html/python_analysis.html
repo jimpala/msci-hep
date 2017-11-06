@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Python analysis &#8212; UCL VHbb MSci Project  documentation</title>
+    <title>Python Analysis &#8212; UCL VHbb MSci Project  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -40,37 +40,41 @@
           <div class="body" role="main">
             
   <div class="section" id="python-analysis">
-<span id="python-analysis"></span><h1>Python analysis<a class="headerlink" href="#python-analysis" title="Permalink to this headline">¶</a></h1>
+<span id="python-analysis"></span><h1>Python Analysis<a class="headerlink" href="#python-analysis" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="processing-data-for-use-in-python">
 <span id="processing-data-for-use-in-python"></span><h2>Processing data for use in Python<a class="headerlink" href="#processing-data-for-use-in-python" title="Permalink to this headline">¶</a></h2>
-<p>Root tends to work by storing files in NTuples on the hard drive as .root files, and relies on a fast I/O process to iterate through data when used with C++ (or the Python bindings). However, the analysis in Python tends to need data structures that are held in working memory. The method I used to make the large NTuples feasible to use in Python's working memory was to preprocess the NTuple data through the VHbb cuts using the root_numpy package, and then to save this processed data as a CSV file that can be loaded in by Pandas.</p>
-<p>Note that at the time of my analysis, the volume of MC data after applying cuts and loaded into a Pandas DataFrame was sufficiently small to fit into working memory on my (pretty weak) laptop. If this isn't the case for you, you may need to look into chunking the data somehow.</p>
-<p>The /skl_analysis/NTupleProcess.py script takes the NTuples given to me by Andy and processes them into CSV files. To clarify, the NTuples I used for the analysis were:</p>
-<p>Two signal MC NTuples, Direct_Signal.root and Truth_Signal.root.</p>
-<p>A background MC NTuple, background_Normal.root.</p>
-<p>These NTuples are loaded into Numpy arrays using the root2array function from the root_numpy library. Note that you need to provide the name of the tree and an array with all of the branch names of the NTuple in the correct order, which you can find by using the TBrowser. This is very likely to be necessary, as the column formatting of provided NTuples change a lot from version to version.</p>
-<p>The multidimensional arrays are then converted into DataFrames with the same column headers, and then concatenated into one bulk DataFrame.</p>
+<p>Root tends to work by storing files in NTuples on the hard drive as <em>.root</em> files, and relies on a fast I/O process to iterate through data when used with C++ (or alternatively with the Python bindings). However, the analysis in Python tends to need data structures that are held in working memory. The method I used to make the large NTuples feasible to use in Python's working memory was to preprocess the NTuple data through the VHbb cuts using the <strong>root_numpy</strong> package, and then to save this processed data as a CSV file that can be loaded in by Pandas.</p>
+<p>Note that at the time of my analysis, the volume of MC data after applying cuts and loaded into a Pandas <code class="docutils literal"><span class="pre">DataFrame</span></code> was sufficiently small to fit into working memory on my (pretty weak) laptop. If this isn't the case for you, you may need to look into chunking the data somehow.</p>
+<p>The <em>/skl_analysis/NTupleProcess.py</em> script takes the NTuples given to me by Andy and processes them into CSV files. To clarify, the NTuples I used for the analysis were:</p>
+<ul class="simple">
+<li>Two signal MC NTuples, <em>Direct_Signal.root</em> and <em>Truth_Signal.root</em>.</li>
+<li>A background MC NTuple, <em>background_Normal.root</em>.</li>
+</ul>
+<p>These NTuples are loaded into Numpy arrays using the <code class="docutils literal"><span class="pre">root2array</span></code> function from the <strong>root_numpy</strong> library. Note that you need to provide the name of the tree and an array with all of the branch names of the NTuple in the correct order, which you can find by using the TBrowser. This is very likely to be necessary, as the column formatting of provided NTuples change a lot from version to version.</p>
+<p>The multidimensional arrays are then converted into <code class="docutils literal"><span class="pre">DataFrame</span></code> objects with the same column headers, and then concatenated into one bulk DataFrame.</p>
 <p>The VHbb cuts based upon number of b-tags and number of jets is then executed using boolean indexing on the DataFrames. One DataFrame is created for two-tag events, and one for three-tag events. These are once again divided into two: an even DataFrame for events with even event numbers, and an odd DataFrame for odd event numbers. This is to replicate the train-test splitting that Andy implemented in his TMVA training code. All columns that will not be used in the analysis scripts are then dropped.</p>
 <p>Finally, the four DataFrames are written to four CSV files.</p>
 </div>
 <div class="section" id="training-and-testing-a-bdt-with-scikit-learn">
 <span id="training-and-testing-a-bdt-with-scikit-learn"></span><h2>Training and testing a BDT with Scikit-learn<a class="headerlink" href="#training-and-testing-a-bdt-with-scikit-learn" title="Permalink to this headline">¶</a></h2>
-<p>The /skl_analysis/defaultBDTmain.py script looks to replicate the entire BDT training and analysis process present on the HEP VHbb drive in a handful of Python scripts, the dependencies of which are outlined in the diagram below.</p>
-<p>DIAGRAM</p>
+<p>The /skl_analysis/defaultBDTmain.py script looks to replicate the entire BDT training and analysis process present on the HEP VHbb drive in a handful of Python scripts, the dependencies of which are outlined in the diagram below. The primary Python library used for this analysis is <strong>Scikit-learn</strong>.</p>
+<p><img alt="Alt text" src="_images/defaultBDTmain_process.png" /></p>
 <p>In summary, the analysis is processed as follows (separately for both the 2-jet and 3-jet data):</p>
-<p>Data is populated into a list of Event objects.</p>
-<p>Training DataFrames for each k-fold are readied into a format for use with Scikit-learn, and then input into ScikitLearn BDT objects for training.</p>
-<p>Both trained BDTs process classification probabilities (decision scores) for data from the opposite fold, and the list of Event objects are update with these scores.</p>
-<p>Decision scores for each event are normalised, transformed according to the VHbb TrafoD transform, before the corresponding sensitivity for the BDT is calculated.</p>
-<p>The events are plotted into a decision score histogram, labelled by signal or background process type.</p>
-<p>Firstly, data is loaded into Pandas DataFrame objects from the processed CSV file corresponding to each k-fold (odd and even events), and each entry is assigned to an Event object via the populate_events method, contained in a list. An Event object is a data structure made to encapsulate all relevant information for a candidate event.</p>
+<ul class="simple">
+<li>Data is populated into a list of Event objects.</li>
+<li>Training DataFrames for each k-fold are readied into a format for use with Scikit-learn, and then input into ScikitLearn BDT objects for training.</li>
+<li>Both trained BDTs process classification probabilities (decision scores) for data from the opposite fold, and the list of Event objects are update with these scores.</li>
+<li>Decision scores for each event are normalised, transformed according to the VHbb TrafoD transform, before the corresponding sensitivity for the BDT is calculated.</li>
+<li>The events are plotted into a decision score histogram, labelled by signal or background process type.</li>
+</ul>
+<p>Firstly, data is loaded into Pandas <code class="docutils literal"><span class="pre">DataFrame</span></code> objects from the processed CSV file corresponding to each k-fold (odd and even events), and each entry is assigned to an <code class="docutils literal"><span class="pre">Event</span></code> object via the populate_events method, contained in a list. An <code class="docutils literal"><span class="pre">Event</span></code> object is a data structure made to encapsulate all relevant information for a candidate event.</p>
 <p>Before training, events in each k-fold of the training set are renormalised. This means that weights of events in each training set will sum to 1, which replicates the training process of TMVA.</p>
-<p>The DataFrames are prepared for Scikit-learn training by using the ready_df_for_training method. This drops columns that do not correspond to input or response variables, and then rearranges the DataFrame entries to the same order of its corresponding Event object list.</p>
-<p>BDTs are created by using a ScikitLearn AdaBoostClassifier object, taking a DecisionTreeClassifier object as its base classifier argument. Hyperparameters to tune are taken as kwargs for either one of these objects. More kwargs to tune can be found by referencing the Scikit-learn docs for each of these objects. Both BDTs in the k-fold should obviously be set to the same hyperparameter values.</p>
-<p>Training and testing for each fold is applied using the fold_score method. Input variables for each sample (X) are converted into a 2D numpy array from theit DataFrame, whereas response variables and weights for each sample (Y and w) are retrieved from the Event lists and converted into numpy arrays. The BDT fit method trains the BDT on the training data, and then the BDT decision_function method processes the decision score for each event from the opposite k-fold. These decision values are then stored in their corresponding Event list, and returned. The Event lists updated with decision scores for each k-fold are then concatenated.</p>
-<p>The Scikit-learn BDT decision function will not generally create a distribution of decision scores that have have a range of 2, centred on 0. To replicate the TMVA BDT decision function, decision scores for each event must be normalised such that  they fulfil this property. To this end, the normalise_scores method is used to perform a simple translation and stretch upon the decision scores, and then update their corresponding Event objects with the new score.</p>
-<p>To judge the BDT efficacy, the trafo_sensitivity method is used with the Event list (updated with decision scores). This implements histogram transformation (TrafoD) and sensitivity calculation methods algorithmically to calculate the sensitivity metric of the BDT, along with corresponding uncertainty. Methods implementing these algorithms are stored in the sensitivity.py script. See the main VHbb ATLAS Note for details of how such TrafoD and sensitivity calculations are derived.</p>
-<p>BDT decision scores are finally plotted with the decision_plot method using Matplotlib, to crudely replicate ATLAS Internal plots using the VHbb PlottingTool script. The block kwarg necessarily blocks the thread of the current script in order for the plot window to remain open. This method can be easily augmented to save a copy of its plots, if ever necessary.</p>
+<p>The DataFrames are prepared for Scikit-learn training by using the <code class="docutils literal"><span class="pre">ready_df_for_training</span></code> method. This drops columns that do not correspond to input or response variables, and then rearranges the DataFrame entries to the same order of its corresponding <code class="docutils literal"><span class="pre">Event</span></code> object list.</p>
+<p>BDTs are created by using a Scikit-learn <code class="docutils literal"><span class="pre">AdaBoostClassifier</span></code> object, taking a <code class="docutils literal"><span class="pre">DecisionTreeClassifier</span></code> object as its base classifier argument. Hyperparameters to tune are taken as kwargs for either one of these objects. More kwargs to tune can be found by referencing the Scikit-learn docs for each of these objects. Both BDTs in the k-fold should obviously be set to the same hyperparameter values.</p>
+<p>Training and testing for each fold is applied using the <code class="docutils literal"><span class="pre">fold_score</span></code> method. Input variables for each sample (<em>X</em>) are converted into a 2D numpy array from theit DataFrame, whereas response variables and weights for each sample (<em>Y</em> and <em>w</em>) are retrieved from the <code class="docutils literal"><span class="pre">Event</span></code> lists and converted into numpy arrays. The BDT <code class="docutils literal"><span class="pre">fit</span></code> method trains the BDT on the training data, and then the BDT <code class="docutils literal"><span class="pre">decision_function</span></code> method processes the decision score for each event from the opposite k-fold. These decision values are then stored in their corresponding <code class="docutils literal"><span class="pre">Event</span></code> list, and returned. The <code class="docutils literal"><span class="pre">Event</span></code> lists updated with decision scores for each k-fold are then concatenated.</p>
+<p>The Scikit-learn BDT decision function will not generally create a distribution of decision scores that have have a range of 2, centred on 0. To replicate the TMVA BDT decision function, decision scores for each event must be transformed such that  they fulfil this property. To this end, the <code class="docutils literal"><span class="pre">normalise_scores</span></code> method is used to perform a simple translation and stretch upon the decision scores, and then update their corresponding <code class="docutils literal"><span class="pre">Event</span></code> objects with the new score.</p>
+<p>To judge the BDT efficacy, the <code class="docutils literal"><span class="pre">trafo_sensitivity</span></code> method is used with the Event list updated with its decision scores. This implements histogram transformation (TrafoD) and sensitivity calculation methods algorithmically to calculate the sensitivity metric of the BDT, along with corresponding uncertainty. Methods implementing these algorithms are stored in the <em>sensitivity.py</em> script. See the main VHbb ATLAS Note for details of how such TrafoD and sensitivity calculations are derived.</p>
+<p>BDT decision scores are finally plotted with the <code class="docutils literal"><span class="pre">decision_plot</span></code> method using <strong>Matplotlib</strong>, to crudely replicate ATLAS Internal plots created with the standard VHbb <em>PlottingTool</em> C++ script. The <code class="docutils literal"><span class="pre">block</span></code> kwarg necessarily blocks the thread of the current script in order for the plot window to remain open. This method can be easily augmented to save a copy of its plots, if ever necessary.</p>
 </div>
 </div>
 
@@ -92,7 +96,7 @@
 <h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Python analysis</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python Analysis</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#processing-data-for-use-in-python">Processing data for use in Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#training-and-testing-a-bdt-with-scikit-learn">Training and testing a BDT with Scikit-learn</a></li>
 </ul>
